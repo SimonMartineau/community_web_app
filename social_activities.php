@@ -129,7 +129,7 @@
 
             <!-- Add social activity button -->
             <div style="text-align: right; padding: 10px 20px;">
-                <a href="add_volunteer_page.php" style="text-decoration: none;">
+                <a href="add_social_activity.php" style="text-decoration: none;">
                     <button style="
                         padding: 10px 20px; 
                         background-color: #405d9b; 
