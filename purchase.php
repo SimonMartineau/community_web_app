@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Social Activity | Give and Receive</title>
+        <title>Add Purchase | Give and Receive</title>
     </head>
 
     <style>
@@ -89,7 +89,7 @@
 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Add Social Activity Form</span>
+                    <span style="font-size: 24px; font-weight: bold;">Add Volunteer Form</span>
                 </div>
 
                 <!-- Input area -->
@@ -98,64 +98,17 @@
                     <!-- Form text input -->
                     <form method="post" action="signup.php">
 
-                        <!-- Activity name text input -->
-                        <input name="activity_name" type="text" id="text_input" placeholder="Activity name"><br><br>
+                        <!-- Item name text input -->
+                        <input name="item_name" type="text" id="text_input" placeholder="Item Name"><br><br>
 
-                        <!-- Activity duration text input -->
-                        <input name="activity_duration" type="text" id="text_input" placeholder="Activity duration"><br><br>
+                        <!-- Item cost text input -->
+                        <input name="item_cost" type="text" id="text_input" placeholder="Item Points Cost"><br><br>
 
-                        <!-- Activity time period bubble check -->
-                        Activity time period:
-                        <input type="radio" name="activity_time_period" value="morning"> Morning
-                        <input type="radio" name="activity_time_period" value="afternoon"> Afternoon
-                        <input type="radio" name="activity_time_period" value="evening"> Evening
-                        <br><br>
-
-                        <!-- Activity domains table -->
-                        <h4 style="display: inline;">Activity Domains</h4> 
-                        <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
-                            <tr>
-                                <th>Activity</th>
-                                <th>Check</th>
-                            </tr>
-                            <?php
-                            $activities = [
-                                "Organization of community events", 
-                                "Library support", 
-                                "Help in the community store", 
-                                "Support in the community grocery store", 
-                                "Cleaning and maintenance of public spaces", 
-                                "Participation in urban gardening projects"
-                            ];
-                            foreach ($activities as $activity) {
-                                echo "<tr>";
-                                echo "<td>$activity</td>";
-                                echo "<td><input type='checkbox' name='activity_domain[]'></td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </table>
-                        <br>
-
+                        <!-- Purchase date input -->
+                        Purchase date: <input type="date" name="purchase_date"><br><br>
+                        
                         <!-- Registration Supervisor text input -->
                         <input name="registration_supervisor" type="text" id="text_input" placeholder="Registration Supervisor"><br><br>
-
-                        <!-- Assigned area dropdown -->
-                        Assigned Area: 
-                        <select name="assigned_area">
-                            <option value="">Select an area</option>
-                            <option value="Area 1">Area 1</option>
-                            <option value="Area 2">Area 2</option>
-                            <option value="Area 3">Area 3</option>
-                            <option value="Area 4">Area 4</option>
-                        </select>    
-                        <br><br>
-
-                        <!-- Additional notes text input -->
-                        Additional Notes:
-                        <br>
-                        <textarea name="notes" rows="10" cols="60" id="additional_notes"></textarea>
-                        <br><br>
 
                         <!-- Submit button -->
                         <input type="submit" id="submit_button" value="Submit">

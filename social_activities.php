@@ -128,7 +128,7 @@
             <br>
 
             <!-- Add social activity button -->
-            <div style="text-align: right; padding: 10px 20px;">
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="add_social_activity.php" style="text-decoration: none;">
                     <button style="
                         padding: 10px 20px; 
