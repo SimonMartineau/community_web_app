@@ -43,8 +43,7 @@
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
-            <br>
-        
+                    
             <!-- Below cover area -->
             <div style="display: flex;">
 

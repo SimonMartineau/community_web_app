@@ -43,7 +43,6 @@
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
-            <br>
 
             <!-- About content area -->
             <div id="post_bar" style="padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
