@@ -202,14 +202,14 @@
                         <!-- First name text input -->
                         <div class="input-container">
                             <input name="first_name" type="text" id="text_input" placeholder="First name" value="<?php echo $first_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->first_name_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Last name text input -->
                         <div class="input-container">
                             <input name="last_name" type="text" id="text_input" placeholder="Last name" value="<?php echo $last_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? ' *' . $volunteer->last_name_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
@@ -219,49 +219,49 @@
                             <input type="radio" name="gender" value="male" <?php echo ($gender == 'male') ? 'checked' : ''; ?>> Male
                             <input type="radio" name="gender" value="female" <?php echo ($gender == 'female') ? 'checked' : ''; ?>> Female
                             <input type="radio" name="gender" value="other" <?php echo ($gender == 'other') ? 'checked' : ''; ?>> Other
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->gender_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Date of birth input -->
                         <div class="input-container">
                             Date of Birth: <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->date_of_birth_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Address text input -->
                         <div class="input-container">
                             <input name="address" type="text" id="text_input" placeholder="Address" value="<?php echo $address ?>">
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->address_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- ZIP code text input -->
                         <div class="input-container">
                             <input name="zip_code" type="text" id="text_input" placeholder="ZIP code" value="<?php echo $zip_code ?>">
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->zip_code_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Telephone number text input -->
                         <div class="input-container">
                             <input name="telephone_number" type="text" id="text_input" placeholder="Telephone number" value="<?php echo $telephone_number ?>">
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->telephone_number_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                         </div>
                         <br><br>
                         
                         <!-- Email text input -->
                         <div class="input-container">
                             <input name="email" type="text" id="text_input" placeholder="Email" value="<?php echo $email ?>">
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->email_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Volunteer availability text input -->
                         <div class="input-container">
                             <h4 style="text-align: center;">Weekly Availability</h4>
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->volunteer_availability_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
                         </div>
                         <div style="text-align: center;">
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
@@ -293,7 +293,7 @@
                         <!-- Volunteer's Interests Table -->
                         <div class="input-container">
                             <h4 style="text-align: center;">Volunteer's Interests</h4> 
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->volunteer_interests_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
                         </div>
                         <div style="text-align: center;">
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%;   margin-left: auto; margin-right: auto;">
@@ -330,14 +330,14 @@
                         <!-- Registration Supervisor text input -->
                         <div class="input-container">
                             <input name="registration_supervisor" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $registration_supervisor ?>">
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->registration_supervisor_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->registration_supervisor_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Assigned area dropdown -->
                         <div class="input-container">
                             Assigned Area: 
-                            <span id="error"><?php echo isset($volunteer) ? '*' . $volunteer->assigned_area_error_mes : ''; ?></span>
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
                             <select name="assigned_area" value="<?php echo $assigned_area ?>">
                                 <option value="">Select an area</option>
                                 <option value="Area 1">Area 1</option>
