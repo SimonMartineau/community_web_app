@@ -1,3 +1,16 @@
+<?php
+
+    // Include classes
+    include("classes/connect.php");
+    include("classes/volunteers.php");
+
+    // Collect volunteer data
+    $volunteers = new Volunteers();
+    $volunteer_data = $volunteers->fetch_volunteer_data();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -136,53 +149,14 @@
                             <span>Recently Added Volunteers</span>
                         </div>
 
-                        <!-- Volunteer 1 -->
-                        <div id="volunteer_box">
-                            <h3 class="volunteer_name">John Doe</h3>
-                            <p class="volunteer_info">
-                                <strong>Email:</strong> john.doe@example.com<br>
-                                <strong>Address:</strong> 123 Elm Street, Springfield, IL<br>
-                                <strong>Phone:</strong> (555) 123-4567<br>
-                                <strong>Hours Completed:</strong> 3h<br>
-                                <strong>Points:</strong> 21<br>
-                            </p>
-                        </div>
-
-                        <!-- Volunteer 2 -->
-                        <div id="volunteer_box">
-                            <h3 class="volunteer_name">John Doe</h3>
-                            <p class="volunteer_info">
-                                <strong>Email:</strong> john.doe@example.com<br>
-                                <strong>Address:</strong> 123 Elm Street, Springfield, IL<br>
-                                <strong>Phone:</strong> (555) 123-4567<br>
-                                <strong>Hours Completed:</strong> 3h<br>
-                                <strong>Points:</strong> 21<br>
-                            </p>
-                        </div>
-
-                        <!-- Volunteer 3 -->
-                        <div id="volunteer_box">
-                            <h3 class="volunteer_name">John Doe</h3>
-                            <p class="volunteer_info">
-                                <strong>Email:</strong> john.doe@example.com<br>
-                                <strong>Address:</strong> 123 Elm Street, Springfield, IL<br>
-                                <strong>Phone:</strong> (555) 123-4567<br>
-                                <strong>Hours Completed:</strong> 3h<br>
-                                <strong>Points:</strong> 21<br>
-                            </p>
-                        </div>
-
-                        <!-- Volunteer 4 -->
-                        <div id="volunteer_box">
-                            <h3 class="volunteer_name">John Doe</h3>
-                            <p class="volunteer_info">
-                                <strong>Email:</strong> john.doe@example.com<br>
-                                <strong>Address:</strong> 123 Elm Street, Springfield, IL<br>
-                                <strong>Phone:</strong> (555) 123-4567<br>
-                                <strong>Hours Completed:</strong> 3h<br>
-                                <strong>Points:</strong> 21<br>
-                            </p>
-                        </div>
+                        <!-- Display volunteer widgets --> 
+                        <?php
+                            if($volunteer_data){
+                                foreach($volunteer_data as $volunteer_data_row){
+                                    include("volunteer_widget.php");
+                                }
+                            }
+                        ?>
 
                     </div>
                 </div>
