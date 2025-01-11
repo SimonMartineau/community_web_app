@@ -12,6 +12,7 @@
             background-color: white;
             margin-top: 20px;
             padding: 8px; /*Determines how an element will sit in a container */
+            border-radius: 8px;
         }
 
         #volunteer_box {
@@ -59,11 +60,11 @@
             width: 40px;
         }
 
-        #post_bar{
+        #volunteer_display{
             margin-top: 20px;
             background-color: white;
             padding: 10px;
-
+            border-radius: 8px;
         }
 
         #post{
@@ -91,31 +92,6 @@
             display: inline-block; /* Ensure the background fits tightly */
         }
 
-        #activity_box {
-        margin: 10px auto; /* Center the box horizontally */
-        padding: 15px; /* Add padding for spacing */
-        border: 1px solid #ddd; /* Light border */
-        border-radius: 8px; /* Rounded corners */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        background-color:rgb(184, 247, 243); /* Light background */
-        font-family: Arial, sans-serif; /* Clean font */
-        color: #333; /* Dark text color */
-        }
-
-        .activity_name {
-            font-size: 1.5em; /* Larger font for activity name */
-            margin-bottom: 10px; /* Space below the name */
-            color: #3c7a47; /* Optional: Green theme color */
-        }
-
-        .activity_info {
-            font-size: 0.9em; /* Smaller font for details */
-            line-height: 1.6; /* Line height for readability */
-        }
-
-        .activity_info strong {
-            color: #3c7a47; /* Highlight labels for distinction */
-        }
     </style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -195,9 +171,12 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="sort" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                 <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="alphabetically">Alphabetically</option>
-                                    <option value="date_of_inscription">Date of Inscription</option>
-                                    <option value="birthday">Birthday</option>
+                                    <option value="alphabetically_a_z">Alphabetically (a-z)</option>
+                                    <option value="alphabetically_z_a">Alphabetically (z-a)</option>
+                                    <option value="date_of_inscription_asc">Date of Inscription (asc)</option>
+                                    <option value="date_of_inscription_desc">Date of Inscription (desc)</option>
+                                    <option value="age_asc">Age (asc)</option>
+                                    <option value="age_desc">Age (desc)</option>
                                 </select>
                             </div>
 
@@ -263,7 +242,7 @@
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
 
                     <!-- Volunteer display -->
-                    <div id="post_bar">
+                    <div id="volunteer_display">
 
                         <!-- Section title of recent social activities section -->
                         <div id="section_title">

@@ -12,6 +12,7 @@
             background-color: white;
             margin-top: 20px;
             padding: 8px; /*Determines how an element will sit in a container */
+            border-radius: 8px;
         }
 
         #volunteer_box {
@@ -59,11 +60,11 @@
             width: 40px;
         }
 
-        #post_bar{
+        #activities_display{
             margin-top: 20px;
             background-color: white;
             padding: 10px;
-
+            border-radius: 8px;
         }
 
         #post{
@@ -71,7 +72,6 @@
             font-size: 13px;
             display: flex;
             margin-bottom: 20px;
-
         }
 
         #section_title {
@@ -230,7 +230,7 @@
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
 
                     <!-- Volunteer display -->
-                    <div id="post_bar">
+                    <div id="activities_display">
 
                         <!-- Section title of recent social activities section -->
                         <div id="section_title">

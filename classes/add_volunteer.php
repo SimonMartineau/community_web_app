@@ -173,30 +173,43 @@ class Add_Volunteer{
         $hours_worked = 0;
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
-        $other_interest = $data['volunteer_interests'];
+        $other_interest = $data['other_interest'];
         $registration_supervisor = $data['registration_supervisor'];
         $assigned_area = $data['assigned_area'];
         $additional_notes = $data['additional_notes'];
         $registration_date = date("Y-m-d");
 
+        // Initialise Database object
+        $DB = new Database();
 
         // SQL query into Members
         $members_query = "insert into Members (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_worked, assigned_area, organizer_name, notes, registration_date)
                   values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_worked', '$assigned_area', '$registration_supervisor', '$additional_notes', '$registration_date')";
-            
-        // SQL query into Member_Availability
-        //$member_availability_query = "insert into members (member_id, weekday, time_period)
-         //         values ()";
-                
-        // SQL query into Member_Interests
-        //$members_interests_query = "insert into members (member_id, interest)
-        //          values ()";
-                
-        // Send data to db
-        $DB = new Database();
         $DB->save($members_query);
-        //$DB->save($member_availability_query);
-        //$DB->save($members_interests_query);
+
+        // Set member_id to value of primary key in Members table
+        $member_id = $DB->last_insert_id;
+
+        // SQL query into Member_Availability
+        foreach($volunteer_availability as $availability){
+            list($weekday, $time_period) = explode('-', $availability);
+            $members_availability_query = "insert into Member_Availability (member_id, weekday, time_period)
+            values ('$member_id', '$weekday', '$time_period')";
+            $DB->save($members_availability_query);
+        }
+
+        // SQL query into Member_Interests
+        foreach($volunteer_interests as $interest){
+            $members_interests_query = "insert into Member_Interests (member_id, interest)
+            values ('$member_id', '$interest')";
+            $DB->save($members_interests_query);
+        }
+
+        // SQL query into Member_Interests for other_interest
+        $members_interests_query = "insert into Member_Interests (member_id, interest)
+            values ('$member_id', '$other_interest')";
+            $DB->save($members_interests_query);
+
     }
 
     

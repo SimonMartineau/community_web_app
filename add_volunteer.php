@@ -13,8 +13,8 @@
     $zip_code = "";
     $telephone_number = "";
     $email = "";
-    $volunteer_availability = "";
-    $volunteer_interests = "";
+    $volunteer_availability = [];
+    $volunteer_interests = [];
     $other_interest = "";
     $registration_supervisor = "";
     $assigned_area = "";
@@ -49,6 +49,7 @@
             $registration_supervisor = $_POST['registration_supervisor'];
             $assigned_area = $_POST['assigned_area'];
             $additional_notes = $_POST['additional_notes'];
+
         } else{
             // Reset the user input variables.
             $first_name = "";
@@ -59,8 +60,8 @@
             $zip_code = "";
             $telephone_number = "";
             $email = "";
-            $volunteer_availability = "";
-            $volunteer_interests = "";
+            $volunteer_availability = [];
+            $volunteer_interests = [];
             $other_interest = "";
             $registration_supervisor = "";
             $assigned_area = "";
@@ -280,8 +281,12 @@
                                     echo "<td>$day</td>";
                                     foreach ($time_periods as $time_period){
                                         $available_moment = "{$day}-{$time_period}";
-                                        echo "<td><input type='checkbox' name='volunteer_availability[]'></td>";
-                                        
+                                        if (in_array($available_moment, $volunteer_availability)){
+                                            echo "<td><input type='checkbox' name='volunteer_availability[]' value=$available_moment checked></td>";
+                                        } else {
+                                            echo "<td><input type='checkbox' name='volunteer_availability[]' value=$available_moment></td>";
+                                        }
+    
                                     }
                                     echo "</tr>";
                                 }
@@ -313,7 +318,11 @@
                                 foreach ($activities as $activity) {
                                     echo "<tr>";
                                     echo "<td>$activity</td>";
-                                    echo "<td><input type='checkbox' name='volunteer_interests[]'></td>";
+                                    if (in_array($activity, $volunteer_interests)){
+                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity' checked></td>";
+                                    } else {
+                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity'></td>";
+                                    }                                    
                                     echo "</tr>";
                                 }
                                 ?>
@@ -323,7 +332,7 @@
 
                         <!-- "Others" text input -->
                         <div class="input-container">
-                            <input name="other_interest" type="text" id="text_input" placeholder="Other Interest" value="<?php echo $other_interest ?>">
+                            <input name="other_interest" type="text" id="text_input" placeholder="Other Interest (Optional)" value="<?php echo $other_interest ?>">
                         </div>
                         <br><br>
 
@@ -334,25 +343,25 @@
                         </div>
                         <br><br>
 
-                        <!-- Assigned area dropdown -->
+                       <!-- Assigned area dropdown -->
                         <div class="input-container">
                             Assigned Area: 
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
-                            <select name="assigned_area" value="<?php echo $assigned_area ?>">
-                                <option value="">Select an area</option>
-                                <option value="Area 1">Area 1</option>
-                                <option value="Area 2">Area 2</option>
-                                <option value="Area 3">Area 3</option>
-                                <option value="Area 4">Area 4</option>
+                            <select name="assigned_area">
+                                <option value="" <?php echo ($assigned_area == '') ? 'selected' : ''; ?>>Select an area</option>
+                                <option value="Area 1" <?php echo ($assigned_area == 'Area 1') ? 'selected' : ''; ?>>Area 1</option>
+                                <option value="Area 2" <?php echo ($assigned_area == 'Area 2') ? 'selected' : ''; ?>>Area 2</option>
+                                <option value="Area 3" <?php echo ($assigned_area == 'Area 3') ? 'selected' : ''; ?>>Area 3</option>
+                                <option value="Area 4" <?php echo ($assigned_area == 'Area 4') ? 'selected' : ''; ?>>Area 4</option>
                             </select> 
-                        </div>   
+                        </div>
                         <br><br>
 
                         <!-- Additional notes text input -->
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
-                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" value="<?php echo $additional_notes ?>"></textarea>
+                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)" value="<?php echo $additional_notes ?>"></textarea>
                         </div>
                         <br><br>
 

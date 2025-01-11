@@ -7,6 +7,7 @@ class Database{
     private $username = "root";
     private $password = "";
     private $db = "association_database_v3";
+    public $last_insert_id;
 
 
     // Connects to db
@@ -42,8 +43,10 @@ class Database{
         if ($result == false){
             return false;
         } else{
+            $this->last_insert_id = mysqli_insert_id($conn);
             return true;
         }
     }
+
 }
 ?>

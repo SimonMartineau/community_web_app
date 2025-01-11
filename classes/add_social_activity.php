@@ -106,16 +106,8 @@ class Add_Social_Activity{
 
 
         // SQL query into Members
-        $activity_query = "insert into Activities (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_worked, assigned_area, organizer_name, notes, registration_date)
-                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_worked', '$assigned_area', '$registration_supervisor', '$additional_notes', '$registration_date')";
-            
-        // SQL query into Member_Availability
-        //$member_availability_query = "insert into members (member_id, weekday, time_period)
-         //         values ()";
-                
-        // SQL query into Member_Interests
-        //$members_interests_query = "insert into members (member_id, interest)
-        //          values ()";
+        $activity_query = "insert into Activities ()
+                values ()";
                 
         // Send data to db
         $DB = new Database();
