@@ -43,6 +43,71 @@
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
+            <br>
+
+            <!-- Add edit volunteer button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="volunteer_edit_data.php" style="text-decoration: none; display: inline-block;">
+                    <button style="
+                        padding: 10px 20px; 
+                        background-color: #405d9b; 
+                        color: white; 
+                        border: none; 
+                        border-radius: 15px; 
+                        font-size: 16px; 
+                        cursor: pointer;">
+                        Edit Data
+                    </button>
+                </a>
+            </div>
+
+            <!-- Add check button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="check.php" style="text-decoration: none; display: inline-block;">
+                    <button style="
+                        padding: 10px 20px; 
+                        background-color: #405d9b; 
+                        color: white; 
+                        border: none; 
+                        border-radius: 15px; 
+                        font-size: 16px; 
+                        cursor: pointer;">
+                        Add Check
+                    </button>
+                </a>
+            </div>
+
+            <!-- Add purchase button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
+                    <button style="
+                        padding: 10px 20px; 
+                        background-color: #405d9b; 
+                        color: white; 
+                        border: none; 
+                        border-radius: 15px; 
+                        font-size: 16px; 
+                        cursor: pointer;">
+                        Add Purchase
+                    </button>
+                </a>
+            </div>
+
+            <!-- Add delete volunteer button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
+                    <button style="
+                        padding: 10px 20px; 
+                        background-color: #405d9b; 
+                        color: white; 
+                        border: none; 
+                        border-radius: 15px; 
+                        font-size: 16px; 
+                        cursor: pointer;">
+                        Delete Volunteer
+                    </button>
+                </a>
+            </div>
                     
             <!-- Below cover area -->
             <div style="display: flex;">

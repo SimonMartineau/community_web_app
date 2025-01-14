@@ -16,7 +16,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>MyBook | Profile</title>
+        <title>Volunteers | Give and Receive</title>
     </head>
 
     <style>
@@ -128,38 +128,6 @@
                         font-size: 16px; 
                         cursor: pointer;">
                         Add Volunteer
-                    </button>
-                </a>
-            </div>
-            
-            <!-- Add check button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="check.php" style="text-decoration: none; display: inline-block;">
-                    <button style="
-                        padding: 10px 20px; 
-                        background-color: #405d9b; 
-                        color: white; 
-                        border: none; 
-                        border-radius: 15px; 
-                        font-size: 16px; 
-                        cursor: pointer;">
-                        Add Check
-                    </button>
-                </a>
-            </div>
-
-            <!-- Add purchase button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
-                    <button style="
-                        padding: 10px 20px; 
-                        background-color: #405d9b; 
-                        color: white; 
-                        border: none; 
-                        border-radius: 15px; 
-                        font-size: 16px; 
-                        cursor: pointer;">
-                        Add Purchase
                     </button>
                 </a>
             </div>

@@ -64,13 +64,13 @@
                         Explore the <a href="social_activities.php" style="color: #405d9b; text-decoration: none;">Social Activities</a> page to find events and initiatives in your area. You can check event details, including duration, location, and participant count.
                     </li>
                     <li><strong>Add a Volunteer:</strong> 
-                        If you’re organizing a community initiative and need volunteers, you can use the <a href="add_volunteer_page.php" style="color: #405d9b; text-decoration: none;">Add Volunteer</a> button to register new volunteers.
+                        If you’re organizing a community initiative and need volunteers, you can use the <a href="add_volunteer.php" style="color: #405d9b; text-decoration: none;">Add Volunteer</a> button to register new volunteers.
+                    </li>
+                    <li><strong>Add a Social Activity:</strong> 
+                        If you’re organizing a community initiative, you can use the <a href="add_social_activity.php" style="color: #405d9b; text-decoration: none;">Add Social Activity</a> button to register a new social activity.
                     </li>
                     <li><strong>Filter Options:</strong> 
                         Use the filter feature to find specific volunteers or activities that match your preferences, such as interests, gender, or availability.
-                    </li>
-                    <li><strong>About Us:</strong> 
-                        Learn more about the mission and goals of this platform in the <a href="about.php" style="color: #405d9b; text-decoration: none;">About</a> section.
                     </li>
                 </ul>
 
