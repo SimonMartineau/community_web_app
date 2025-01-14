@@ -24,10 +24,10 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $volunteer = new Add_Volunteer();
-        $result = $volunteer->evaluate($_POST);
+        $submit_success = $volunteer->evaluate($_POST);
 
         // If there are errors 
-        if(!$result){
+        if(!$submit_success){
             // Re-enter user input data in prompts
             $first_name = $_POST['first_name'];
             $last_name = $_POST['last_name'];
@@ -172,7 +172,12 @@
             margin-left: 10px; /* Adds space between the input and error message */
             color: red;
             font-weight: bold; /* Optional: Make it bold for emphasis */
+        }
 
+        #main_error {
+            text-align: center;
+            color: red;
+            font-weight: bold; /* Optional: Make it bold for emphasis */
         }
 
         
@@ -188,10 +193,18 @@
             
             <!-- Major rectangle area -->
             <div id="major_rectangle">
+                
 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
                     <span style="font-size: 24px; font-weight: bold;">Add Volunteer Form</span>
+                </div>
+
+                <!-- Error message -->
+                <div style="text-align: center;">
+                    <span id="main_error" style="color: red; font-weight: bold;">
+                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                    </span>
                 </div>
 
                 <!-- Input area -->
