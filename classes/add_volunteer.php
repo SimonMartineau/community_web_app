@@ -173,7 +173,6 @@ class Add_Volunteer{
         $hours_completed = 0;
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
-        $other_interest = $data['other_interest'];
         $organizer_name = $data['organizer_name'];
         $assigned_area = $data['assigned_area'];
         $additional_notes = $data['additional_notes'];
@@ -204,12 +203,6 @@ class Add_Volunteer{
             values ('$member_id', '$interest')";
             $DB->save($members_interests_query);
         }
-
-        // SQL query into Member_Interests for other_interest
-        $members_interests_query = "insert into Member_Interests (member_id, interest)
-            values ('$member_id', '$other_interest')";
-            $DB->save($members_interests_query);
-
     }
 
     

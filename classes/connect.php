@@ -48,5 +48,18 @@ class Database{
         }
     }
 
+    // Update data to db
+    function update($query){
+        $conn = $this->connect();
+        $result = mysqli_query($conn, $query); // return true or false if query worked or not
+
+        // If query fails, return false. Else, return true
+        if ($result == false){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
 }
 ?>

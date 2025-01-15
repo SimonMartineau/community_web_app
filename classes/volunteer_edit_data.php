@@ -17,7 +17,7 @@ class Edit_Volunteer{
 
 
     // Analyses data sent by user
-    public function evaluate($data){
+    public function evaluate($id, $data){
 
         $error = false; // Initialise error check variable
 
@@ -150,7 +150,7 @@ class Edit_Volunteer{
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
-            $this->add_volunteer($data);
+            $this->edit_volunteer($id, $data);
             return true;
         } else{
             // There is an error
@@ -159,9 +159,9 @@ class Edit_Volunteer{
     }
 
 
-    public function add_volunteer($data){
+    public function edit_volunteer($id, $data){
         // Creating all the varaibles for the SQL input
-        $first_name = ucfirst($data['first_name']); // ucfirst makes first letter capital.
+        $first_name = ucfirst($data['first_name']);
         $last_name = ucfirst($data['last_name']);
         $gender = $data['gender'];
         $date_of_birth = $data['date_of_birth'];
@@ -173,7 +173,6 @@ class Edit_Volunteer{
         $hours_completed = 0;
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
-        $other_interest = $data['other_interest'];
         $organizer_name = $data['organizer_name'];
         $assigned_area = $data['assigned_area'];
         $additional_notes = $data['additional_notes'];
@@ -183,20 +182,30 @@ class Edit_Volunteer{
         $DB = new Database();
 
         // SQL query into Members
-        $members_query = "insert into Members (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_completed, assigned_area, organizer_name, additional_notes, registration_date)
-                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_completed', '$assigned_area', '$organizer_name', '$additional_notes', '$registration_date')";
-        $DB->save($members_query);
+        $members_query = "UPDATE Members 
+                  SET first_name = '$first_name', 
+                      last_name = '$last_name', 
+                      gender = '$gender', 
+                      date_of_birth = '$date_of_birth', 
+                      address = '$address', 
+                      zip_code = '$zip_code', 
+                      telephone_number = '$telephone_number', 
+                      email = '$email', 
+                      points = '$points', 
+                      hours_completed = '$hours_completed', 
+                      assigned_area = '$assigned_area', 
+                      organizer_name = '$organizer_name', 
+                      additional_notes = '$additional_notes', 
+                      registration_date = '$registration_date'
+                  WHERE id = '$id';";
+        $DB->update($members_query);
 
         // Set member_id to value of primary key in Members table
-        $member_id = $DB->last_insert_id;
+        $member_id = $id;
 
-        // SQL query into Member_Availability
-        foreach($volunteer_availability as $availability){
-            list($weekday, $time_period) = explode('-', $availability);
-            $members_availability_query = "insert into Member_Availability (member_id, weekday, time_period)
-            values ('$member_id', '$weekday', '$time_period')";
-            $DB->save($members_availability_query);
-        }
+        // SQL query to delete data from Member_Interests table
+        $delete_interests_query = "DELETE FROM Member_Interests WHERE member_id = '$member_id'";
+        $DB->update($delete_interests_query);
 
         // SQL query into Member_Interests
         foreach($volunteer_interests as $interest){
@@ -205,10 +214,17 @@ class Edit_Volunteer{
             $DB->save($members_interests_query);
         }
 
-        // SQL query into Member_Interests for other_interest
-        $members_interests_query = "insert into Member_Interests (member_id, interest)
-            values ('$member_id', '$other_interest')";
-            $DB->save($members_interests_query);
+        // SQL query to delete data from Member_Availability table
+        $delete_availability_query = "DELETE FROM Member_Availability WHERE member_id = '$member_id'";
+        $DB->update($delete_availability_query);
+
+        // SQL query into Member_Availability
+        foreach($volunteer_availability as $availability){
+            list($weekday, $time_period) = explode('-', $availability);
+            $members_availability_query = "insert into Member_Availability (member_id, weekday, time_period)
+            values ('$member_id', '$weekday', '$time_period')";
+            $DB->save($members_availability_query);
+        }
 
     }
 

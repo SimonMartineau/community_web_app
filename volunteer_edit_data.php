@@ -9,13 +9,11 @@
         $id = $_GET['id'];
 
         $member_data = fetch_member_data($id);
-        $interest_data = fetch_interests($id);
+        $interests_data = fetch_member_interest_data($id);
         $availability_data = fetch_member_availability_data($id);
     }
 
-    print_r($availability_data);
-
-    // Variables to keep user input data if failed submit
+    // Default entry values on page startup.
     $first_name = $member_data[0]['first_name'];
     $last_name = $member_data[0]['last_name'];
     $gender = $member_data[0]['gender'];
@@ -27,17 +25,26 @@
     $points = $member_data[0]['points'];
     $hours_completed = $member_data[0]['hours_completed'];
     $volunteer_availability = $availability_data;
-    $volunteer_interests = $interest_data;
-    $other_interest = [];
+    // For interest data, we extract the interest column and insert the data in $volunteer_interests[].
+    foreach($interests_data as $interests_data_row){
+        $volunteer_interests[] = $interests_data_row['interest'];
+    }
+    // For availability data, we extract the weekday and timeperiod columns and insert the data in $volunteer_availability[].
+    foreach($availability_data as $availability_data_row){
+        $weekday = $availability_data_row['weekday'];
+        $time_period = $availability_data_row['time_period'];
+        $available_moment = "{$weekday}-{$time_period}";
+        $volunteer_availability[] = $available_moment;
+    }
     $organizer_name = $member_data[0]['organizer_name'];
     $assigned_area = $member_data[0]['assigned_area'];
     $additional_notes = $member_data[0]['additional_notes'];
 
-    // Check if user has submitted info
+    // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $volunteer = new Edit_Volunteer();
-        $submit_success = $volunteer->evaluate($_POST);
+        $submit_success = $volunteer->evaluate($id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -58,14 +65,13 @@
             if(isset($_POST['volunteer_interests'])){ // Due to uncertain entry
                 $volunteer_interests = $_POST['volunteer_interests'];
             }
-            $other_interest = $_POST['other_interest'];
             $organizer_name = $_POST['organizer_name'];
             $assigned_area = $_POST['assigned_area'];
             $additional_notes = $_POST['additional_notes'];
 
-        } else{
+        } else{ // If there are no errors in the submission.
             // Changing the page.
-            header("Location: volunteer_profile.php?id=<?php echo $member_data[0]['id']; ?>");
+            header("Location: volunteers.php");
             die; // Ending the script
         }    
     }
@@ -207,7 +213,7 @@
                 <div id="input_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="volunteer_profile.php">
+                    <form method="post" action="volunteer_edit_data.php?id=<?php echo $id; ?>">
 
                         <!-- First name text input -->
                         <div class="input-container">
@@ -283,13 +289,13 @@
                                 </tr>
                                 <?php
                                 
-                                $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                                $week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
                                 $time_periods = ["Morning", "Afternoon", "Evening"];
-                                foreach ($days as $day) {
+                                foreach ($week as $weekday) {
                                     echo "<tr>";
-                                    echo "<td>$day</td>";
+                                    echo "<td>$weekday</td>";
                                     foreach ($time_periods as $time_period){
-                                        $available_moment = "{$day}-{$time_period}";
+                                        $available_moment = "{$weekday}-{$time_period}";
                                         if (in_array($available_moment, $volunteer_availability)){
                                             echo "<td><input type='checkbox' name='volunteer_availability[]' value=$available_moment checked></td>";
                                         } else {
@@ -338,12 +344,6 @@
                             </table>
                         </div>
                         <br>
-
-                        <!-- "Others" text input -->
-                        <div class="input-container">
-                            <input name="other_interest" type="text" id="text_input" placeholder="Other Interest (Optional)" value="<?php echo $other_interest ?>">
-                        </div>
-                        <br><br>
 
                         <!-- Organizer Name text input -->
                         <div class="input-container">
