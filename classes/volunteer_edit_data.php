@@ -9,10 +9,14 @@ class Edit_Volunteer{
     public $zip_code_error_mes = "";
     public $telephone_number_error_mes = "";
     public $email_error_mes = "";
+    public $points_error_mes = "";
+    public $hours_completed_error_mes = "";
     public $volunteer_availability_error_mes = "";
     public $volunteer_interests_error_mes = "";
     public $organizer_name_error_mes = "";
     public $assigned_area_error_mes = "";
+    public $registration_date_error_mes = "";
+
 
 
 
@@ -105,6 +109,24 @@ class Edit_Volunteer{
             }
         }
 
+        // Check Points 
+        if (isset($_POST['points'])){
+            $value = $_POST['points'];
+            if (!is_numeric($value)){
+                $this->points_error_mes = "*Points is empty.<br>";
+                $error = true; // There is an error
+            }
+        }
+
+        // Check Hours completed
+        if (isset($_POST['hours_completed'])){
+            $value = $_POST['hours_completed'];
+            if (!is_numeric($value)){
+                $this->hours_completed_error_mes = "*Hours completed is empty.<br>";
+                $error = true; // There is an error
+            }
+        }
+
         // Check volunteer availability
         if (isset($_POST['volunteer_availability'])){
             $value = $_POST['volunteer_availability'];
@@ -147,6 +169,15 @@ class Edit_Volunteer{
             }
         }
 
+        // Check registration date completed
+        if (isset($_POST['registration_date'])){
+            $value = $_POST['registration_date'];
+            if (empty($value)){
+                $this->registration_date_error_mes = "*Registration date is empty.<br>";
+                $error = true; // There is an error
+            }
+        }
+
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
@@ -169,14 +200,14 @@ class Edit_Volunteer{
         $zip_code = $data['zip_code'];
         $telephone_number = $data['telephone_number'];
         $email = $data['email'];
-        $points = 0;
-        $hours_completed = 0;
+        $points = $data['points'];
+        $hours_completed = $data['hours_completed'];
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
         $organizer_name = $data['organizer_name'];
         $assigned_area = $data['assigned_area'];
         $additional_notes = $data['additional_notes'];
-        $registration_date = date("Y-m-d");
+        $registration_date = $data['registration_date'];
 
         // Initialise Database object
         $DB = new Database();

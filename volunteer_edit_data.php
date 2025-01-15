@@ -8,22 +8,22 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
-        $member_data = fetch_member_data($id);
+        $member_data = fetch_member_data($id)[0];
         $interests_data = fetch_member_interest_data($id);
         $availability_data = fetch_member_availability_data($id);
     }
 
     // Default entry values on page startup.
-    $first_name = $member_data[0]['first_name'];
-    $last_name = $member_data[0]['last_name'];
-    $gender = $member_data[0]['gender'];
-    $date_of_birth = $member_data[0]['date_of_birth'];
-    $address = $member_data[0]['address'];
-    $zip_code = $member_data[0]['zip_code'];
-    $telephone_number = $member_data[0]['telephone_number'];
-    $email = $member_data[0]['email'];
-    $points = $member_data[0]['points'];
-    $hours_completed = $member_data[0]['hours_completed'];
+    $first_name = $member_data['first_name'];
+    $last_name = $member_data['last_name'];
+    $gender = $member_data['gender'];
+    $date_of_birth = $member_data['date_of_birth'];
+    $address = $member_data['address'];
+    $zip_code = $member_data['zip_code'];
+    $telephone_number = $member_data['telephone_number'];
+    $email = $member_data['email'];
+    $points = $member_data['points'];
+    $hours_completed = $member_data['hours_completed'];
     $volunteer_availability = $availability_data;
     // For interest data, we extract the interest column and insert the data in $volunteer_interests[].
     foreach($interests_data as $interests_data_row){
@@ -36,10 +36,12 @@
         $available_moment = "{$weekday}-{$time_period}";
         $volunteer_availability[] = $available_moment;
     }
-    $organizer_name = $member_data[0]['organizer_name'];
-    $assigned_area = $member_data[0]['assigned_area'];
-    $additional_notes = $member_data[0]['additional_notes'];
+    $organizer_name = $member_data['organizer_name'];
+    $assigned_area = $member_data['assigned_area'];
+    $additional_notes = $member_data['additional_notes'];
+    $registration_date = $member_data['registration_date'];
 
+    
     // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -59,6 +61,8 @@
             $zip_code = $_POST['zip_code'];
             $telephone_number = $_POST['telephone_number'];
             $email = $_POST['email'];
+            $points = $_POST['points'];
+            $hours_completed = $_POST['hours_completed'];
             if(isset($_POST['volunteer_availability'])){ // Due to uncertain entry
                 $volunteer_availability = $_POST['volunteer_availability'];
             }
@@ -68,10 +72,12 @@
             $organizer_name = $_POST['organizer_name'];
             $assigned_area = $_POST['assigned_area'];
             $additional_notes = $_POST['additional_notes'];
+            $registration_date = $_POST['registration_date'];
+
 
         } else{ // If there are no errors in the submission.
             // Changing the page.
-            header("Location: volunteers.php");
+            header("Location: volunteer_profile.php?id=" . $id);
             die; // Ending the script
         }    
     }
@@ -217,6 +223,7 @@
 
                         <!-- First name text input -->
                         <div class="input-container">
+                            First name:
                             <input name="first_name" type="text" id="text_input" placeholder="First name" value="<?php echo $first_name ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                         </div>
@@ -224,6 +231,7 @@
 
                         <!-- Last name text input -->
                         <div class="input-container">
+                            Last name:
                             <input name="last_name" type="text" id="text_input" placeholder="Last name" value="<?php echo $last_name ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                         </div>
@@ -241,13 +249,14 @@
 
                         <!-- Date of birth input -->
                         <div class="input-container">
-                            Date of Birth: <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
+                            Date of birth: <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Address text input -->
                         <div class="input-container">
+                            Address:
                             <input name="address" type="text" id="text_input" placeholder="Address" value="<?php echo $address ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                         </div>
@@ -255,6 +264,7 @@
 
                         <!-- ZIP code text input -->
                         <div class="input-container">
+                            ZIP code:
                             <input name="zip_code" type="text" id="text_input" placeholder="ZIP code" value="<?php echo $zip_code ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                         </div>
@@ -262,6 +272,7 @@
 
                         <!-- Telephone number text input -->
                         <div class="input-container">
+                            Telephone number:
                             <input name="telephone_number" type="text" id="text_input" placeholder="Telephone number" value="<?php echo $telephone_number ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                         </div>
@@ -269,8 +280,25 @@
                         
                         <!-- Email text input -->
                         <div class="input-container">
+                            Email:
                             <input name="email" type="text" id="text_input" placeholder="Email" value="<?php echo $email ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
+                        </div>
+                        <br><br>
+
+                        <!-- Points text input -->
+                        <div class="input-container">
+                            Points:
+                            <input name="points" type="text" id="text_input" placeholder="Points" value="<?php echo $points ?>">
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->points_error_mes : ''; ?></span>
+                        </div>
+                        <br><br>
+
+                        <!-- Hours completed text input -->
+                        <div class="input-container">
+                            Hours completed:
+                            <input name="hours_completed" type="text" id="text_input" placeholder="Hours Completed" value="<?php echo $hours_completed ?>">
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->hours_completed_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
@@ -347,6 +375,7 @@
 
                         <!-- Organizer Name text input -->
                         <div class="input-container">
+                            Organizer name:
                             <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
                         </div>
@@ -371,6 +400,14 @@
                             Additional Notes:
                             <br>
                             <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                        </div>
+                        <br><br>
+
+                        <!-- Registration date text input -->
+                        <div class="input-container">
+                            Registration date:
+                            <input name="registration_date" type="date" id="text_input" placeholder="Email" value="<?php echo $registration_date ?>">
+                            <span id="error"><?php echo isset($volunteer) ? $volunteer->registration_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

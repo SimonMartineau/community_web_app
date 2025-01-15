@@ -7,7 +7,7 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
-        $member_data = fetch_member_data($id);
+        $member_data = fetch_member_data($id)[0];
         $interest_data = fetch_member_interest_data($id);
         $availability_data = fetch_member_availability_data($id);
     }
@@ -51,7 +51,6 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             display: inline-block; /* Ensure the background fits tightly */
         }
-
 
         body {
             font-family: Arial, sans-serif;
@@ -107,7 +106,7 @@
 
             <!-- Add edit volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="volunteer_edit_data.php?id=<?php echo $member_data[0]['id']; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="volunteer_edit_data.php?id=<?php echo $member_data['id']; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Data
                     </button>
@@ -182,23 +181,23 @@
                     <!-- Personal Information -->
                     <div class="info-section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
-                        <p><strong>First Name:</strong> <?php echo htmlspecialchars($member_data[0]['first_name']); ?></p>
-                        <p><strong>Last Name:</strong> <?php echo htmlspecialchars($member_data[0]['last_name']); ?></p>
-                        <p><strong>Gender:</strong> <?php echo htmlspecialchars($member_data[0]['gender']); ?></p>
-                        <p><strong>Date of Birth:</strong> <?php echo htmlspecialchars($member_data[0]['date_of_birth']); ?></p>
-                        <p><strong>Address:</strong> <?php echo htmlspecialchars($member_data[0]['address']); ?></p>
-                        <p><strong>Zip Code:</strong> <?php echo htmlspecialchars($member_data[0]['zip_code']); ?></p>
-                        <p><strong>Phone:</strong> <?php echo htmlspecialchars($member_data[0]['telephone_number']); ?></p>
-                        <p><strong>Email:</strong> <?php echo htmlspecialchars($member_data[0]['email']); ?></p>
+                        <p><strong>First Name:</strong> <?php echo htmlspecialchars($member_data['first_name']); ?></p>
+                        <p><strong>Last Name:</strong> <?php echo htmlspecialchars($member_data['last_name']); ?></p>
+                        <p><strong>Gender:</strong> <?php echo htmlspecialchars($member_data['gender']); ?></p>
+                        <p><strong>Date of Birth:</strong> <?php echo htmlspecialchars($member_data['date_of_birth']); ?></p>
+                        <p><strong>Address:</strong> <?php echo htmlspecialchars($member_data['address']); ?></p>
+                        <p><strong>Zip Code:</strong> <?php echo htmlspecialchars($member_data['zip_code']); ?></p>
+                        <p><strong>Phone:</strong> <?php echo htmlspecialchars($member_data['telephone_number']); ?></p>
+                        <p><strong>Email:</strong> <?php echo htmlspecialchars($member_data['email']); ?></p>
                     </div>
                     
                     <!-- Volunteer Contributions -->
                     <div class="info-section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
-                        <p><strong>Points:</strong> <span><?php echo htmlspecialchars($member_data[0]['points']); ?></span></p>
-                        <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($member_data[0]['hours_completed']); ?></span></p>
-                        <p><strong>Assigned Area:</strong> <?php echo htmlspecialchars($member_data[0]['assigned_area']); ?></p>
-                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($member_data[0]['organizer_name']); ?></p>
+                        <p><strong>Points:</strong> <span><?php echo htmlspecialchars($member_data['points']); ?></span></p>
+                        <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($member_data['hours_completed']); ?></span></p>
+                        <p><strong>Assigned Area:</strong> <?php echo htmlspecialchars($member_data['assigned_area']); ?></p>
+                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($member_data['organizer_name']); ?></p>
                     </div>
                     
                     <!-- Interests -->
@@ -268,8 +267,8 @@
                     <!-- Additional Details -->
                     <div class="info-section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($member_data[0]['additional_notes']) ?: 'None'; ?></p>
-                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars($member_data[0]['registration_date']); ?></p>
+                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($member_data['additional_notes']) ?: 'None'; ?></p>
+                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars($member_data['registration_date']); ?></p>
                     </div>
                     
                 </div>
