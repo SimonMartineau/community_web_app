@@ -1,6 +1,6 @@
 <?php
 
-class Add_Volunteer{
+class Edit_Volunteer{
     public $first_name_error_mes = "";
     public $last_name_error_mes = "";
     public $gender_error_mes = "";
@@ -133,7 +133,7 @@ class Add_Volunteer{
         if (isset($_POST['organizer_name'])){
             $value = $_POST['organizer_name'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer name is empty.<br>";
+                $this->organizer_name_error_mes = "*Organizer Name is empty.<br>";
                 $error = true; // There is an error
             }
         }

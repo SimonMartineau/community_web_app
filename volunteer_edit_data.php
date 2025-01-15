@@ -2,28 +2,41 @@
 
     // Include classes
     include("classes/connect.php");
-    include("classes/add_volunteer.php");
+    include("classes/volunteer_edit_data.php");
+    include("classes/volunteer_functions.php");
+
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+
+        $member_data = fetch_member_data($id);
+        $interest_data = fetch_interests($id);
+        $availability_data = fetch_member_availability_data($id);
+    }
+
+    print_r($availability_data);
 
     // Variables to keep user input data if failed submit
-    $first_name = "";
-    $last_name = "";
-    $gender = "";
-    $date_of_birth = "";
-    $address = "";
-    $zip_code = "";
-    $telephone_number = "";
-    $email = "";
-    $volunteer_availability = [];
-    $volunteer_interests = [];
-    $other_interest = "";
-    $organizer_name = "";
-    $assigned_area = "";
-    $additional_notes = "";
+    $first_name = $member_data[0]['first_name'];
+    $last_name = $member_data[0]['last_name'];
+    $gender = $member_data[0]['gender'];
+    $date_of_birth = $member_data[0]['date_of_birth'];
+    $address = $member_data[0]['address'];
+    $zip_code = $member_data[0]['zip_code'];
+    $telephone_number = $member_data[0]['telephone_number'];
+    $email = $member_data[0]['email'];
+    $points = $member_data[0]['points'];
+    $hours_completed = $member_data[0]['hours_completed'];
+    $volunteer_availability = $availability_data;
+    $volunteer_interests = $interest_data;
+    $other_interest = [];
+    $organizer_name = $member_data[0]['organizer_name'];
+    $assigned_area = $member_data[0]['assigned_area'];
+    $additional_notes = $member_data[0]['additional_notes'];
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        $volunteer = new Add_Volunteer();
+        $volunteer = new Edit_Volunteer();
         $submit_success = $volunteer->evaluate($_POST);
 
         // If there are errors 
@@ -51,24 +64,8 @@
             $additional_notes = $_POST['additional_notes'];
 
         } else{
-            // Reset the user input variables.
-            $first_name = "";
-            $last_name = "";
-            $gender = "";
-            $date_of_birth = "";
-            $address = "";
-            $zip_code = "";
-            $telephone_number = "";
-            $email = "";
-            $volunteer_availability = [];
-            $volunteer_interests = [];
-            $other_interest = "";
-            $organizer_name = "";
-            $assigned_area = "";
-            $additional_notes = "";
-
             // Changing the page.
-            header("Location: add_volunteer.php");
+            header("Location: volunteer_profile.php?id=<?php echo $member_data[0]['id']; ?>");
             die; // Ending the script
         }    
     }
@@ -80,7 +77,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Volunteer | Give and Receive</title>
+        <title>Edit Volunteer Data | Give and Receive</title>
     </head>
 
     <style>
@@ -196,7 +193,7 @@
                 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Add Volunteer Form</span>
+                    <span style="font-size: 24px; font-weight: bold;">Edit Volunteer Data</span>
                 </div>
 
                 <!-- Error message -->
@@ -210,7 +207,7 @@
                 <div id="input_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="add_volunteer.php">
+                    <form method="post" action="volunteer_profile.php">
 
                         <!-- First name text input -->
                         <div class="input-container">
@@ -313,7 +310,7 @@
                             <span id="error"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
                         </div>
                         <div style="text-align: center;">
-                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%;   margin-left: auto; margin-right: auto;">
+                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
                                 <tr>
                                     <th>Activity</th>
                                     <th>Check</th>

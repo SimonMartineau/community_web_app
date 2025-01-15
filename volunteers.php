@@ -2,11 +2,10 @@
 
     // Include classes
     include("classes/connect.php");
-    include("classes/volunteers.php");
+    include("classes/volunteer_functions.php");
 
     // Collect volunteer data
-    $volunteers = new Volunteers();
-    $volunteer_data = $volunteers->fetch_volunteer_data();
+    $volunteer_data = fetch_all_volunteer_data();
 
 ?>
 
