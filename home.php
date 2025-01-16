@@ -19,7 +19,7 @@
     </head>
 
     <style>
-        #recent_volunteers_bar{
+        #medium_rectangle{
             min-height: 400px;
             background-color: white;
             margin-top: 20px;
@@ -27,7 +27,7 @@
             border-radius: 8px;
         }
 
-        #volunteer_box {
+        #volunteer_widget {
             margin: 10px auto; /* Center the box horizontally */
             padding: 15px; /* Add padding for better spacing */
             border: 1px solid #ddd; /* Add a light border */
@@ -38,45 +38,19 @@
             color: #333; /* Dark text color for readability */
         }
 
-        .volunteer_name {
+        .volunteer_widget_name {
             font-size: 1.5em; /* Larger font size for the name */
             margin-bottom: 10px; /* Add space below the name */
             color: #405d9b; /* Optional: Match your theme color */
         }
 
-        .volunteer_info {
+        .volunteer_widget_info {
             font-size: 0.9em; /* Slightly smaller font for details */
             line-height: 1.6; /* Increase line height for readability */
         }
 
-        .volunteer_info strong {
+        .volunteer_widget_info strong {
             color: #405d9b; /* Highlight labels for better distinction */
-        }
-
-        #post_button{
-            float: right;
-            background-color: #405d9b;
-            border: none;
-            color: white;
-            padding: 4px;
-            font-size: 14px;
-            border-radius: 2px;
-            width: 40px;
-        }
-
-        #activities_display{
-            margin-top: 20px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        #post{
-            padding: 4px;
-            font-size: 13px;
-            display: flex;
-            margin-bottom: 20px;
-
         }
 
         #section_title {
@@ -130,10 +104,10 @@
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
-            <div style="background-color: white;">
+            <div>
                 <br>
             </div>
-            <img src="images/mountain.jpg" style="width:100%">
+            <img src="images/mountain.jpg" style="width:100%; border-radius: 8px;">
         
             <!-- Below cover area -->
             <div style="display: flex;">
@@ -141,7 +115,7 @@
                 <!-- Recent volunteers area -->
                 <div style="min-height: 400px; flex:1;">
 
-                    <div id="recent_volunteers_bar">
+                    <div id="medium_rectangle">
 
                         <!-- Section title of recent volunteer section -->
                         <div id="section_title">
@@ -164,7 +138,7 @@
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
 
                     <!-- Social activities -->
-                    <div id="activities_display">
+                    <div id="medium_rectangle">
                         <!-- Section title of recent social activities section -->
                             <div id="section_title">
                                 <span>Recently Added Social Activities</span>

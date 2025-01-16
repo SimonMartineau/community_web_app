@@ -13,8 +13,8 @@
     $zip_code = "";
     $telephone_number = "";
     $email = "";
-    $volunteer_availability = [];
     $volunteer_interests = [];
+    $volunteer_availability = [];
     $organizer_name = "";
     $assigned_area = "";
     $additional_notes = "";
@@ -38,11 +38,11 @@
             $zip_code = $_POST['zip_code'];
             $telephone_number = $_POST['telephone_number'];
             $email = $_POST['email'];
-            if(isset($_POST['volunteer_availability'])){ // Due to uncertain entry
-                $volunteer_availability = $_POST['volunteer_availability'];
-            }
             if(isset($_POST['volunteer_interests'])){ // Due to uncertain entry
                 $volunteer_interests = $_POST['volunteer_interests'];
+            }
+            if(isset($_POST['volunteer_availability'])){ // Due to uncertain entry
+                $volunteer_availability = $_POST['volunteer_availability'];
             }
             $organizer_name = $_POST['organizer_name'];
             $assigned_area = $_POST['assigned_area'];
@@ -58,8 +58,8 @@
             $zip_code = "";
             $telephone_number = "";
             $email = "";
-            $volunteer_availability = [];
             $volunteer_interests = [];
+            $volunteer_availability = [];
             $organizer_name = "";
             $assigned_area = "";
             $additional_notes = "";
@@ -94,10 +94,11 @@
             border-radius: 8px;
         }
 
-        #section_title {
+        #section_title{
             text-align: center; /* Center the title */
             margin: 20px 0; /* Add space above and below */
             font-family: Arial, sans-serif; /* Use a clean font */
+            margin-bottom: 20px;
         }
 
         #section_title span {
@@ -111,7 +112,7 @@
             display: inline-block; /* Ensure the background fits tightly */
         }
 
-        #input_section{
+        #entries_section{
             background-color: white; 
             width:1000px; 
             margin: auto; 
@@ -126,11 +127,6 @@
             border: solid 1px #ccc;
             padding: 4px;
             font-size: 14px;
-        }
-
-        #error {
-            color: red;
-            font-weight: bold; /* Optional: Make it bold for emphasis */
         }
 
         #additional_notes{
@@ -152,7 +148,7 @@
             font-weight: bold;
         }
 
-        .input-container {
+        .input_container {
             display: flex;
             justify-content: center; /* Centers the input field */
             align-items: center; /* Aligns vertically (in case the input field has a different height from the error message) */
@@ -163,7 +159,7 @@
             margin-right: 10px; /* Adds space between input and error message */
         }
 
-        #error {
+        #error_message {
             position: absolute;
             left: 70%; /* Places the error message to the right of the input */
             margin-left: 10px; /* Adds space between the input and error message */
@@ -192,7 +188,7 @@
             <div id="major_rectangle">
                 
                 <!-- Title -->
-                <div id="section_title" style="margin-bottom: 20px;">
+                <div id="section_title">
                     <span style="font-size: 24px; font-weight: bold;">Add Volunteer Form</span>
                 </div>
 
@@ -204,74 +200,109 @@
                 </div>
 
                 <!-- Input area -->
-                <div id="input_section">
+                <div id="entries_section">
 
                     <!-- Form text input -->
                     <form method="post" action="add_volunteer.php">
 
                         <!-- First name text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input name="first_name" type="text" id="text_input" placeholder="First name" value="<?php echo $first_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Last name text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input name="last_name" type="text" id="text_input" placeholder="Last name" value="<?php echo $last_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Gender bubble check -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Gender:
                             <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> Male
                             <input type="radio" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>> Female
                             <input type="radio" name="gender" value="Other" <?php echo ($gender == 'Other') ? 'checked' : ''; ?>> Other
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Date of birth input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Date of Birth: <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Address text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input name="address" type="text" id="text_input" placeholder="Address" value="<?php echo $address ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- ZIP code text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input name="zip_code" type="text" id="text_input" placeholder="ZIP code" value="<?php echo $zip_code ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Telephone number text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input name="telephone_number" type="text" id="text_input" placeholder="Telephone number" value="<?php echo $telephone_number ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                         </div>
                         <br><br>
                         
                         <!-- Email text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input name="email" type="text" id="text_input" placeholder="Email" value="<?php echo $email ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
+                        <!-- Volunteer's Interests Table -->
+                        <div class="input_container">
+                            <h4 style="text-align: center;">Volunteer's Interests</h4> 
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
+                        </div>
+                        <div style="text-align: center;">
+                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%;   margin-left: auto; margin-right: auto;">
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Check</th>
+                                </tr>
+                                <?php
+                                $activities = [
+                                    "Organization of community events", 
+                                    "Library support", 
+                                    "Help in the community store", 
+                                    "Support in the community grocery store", 
+                                    "Cleaning and maintenance of public spaces", 
+                                    "Participation in urban gardening projects"
+                                ];
+                                foreach ($activities as $activity) {
+                                    echo "<tr>";
+                                    echo "<td>$activity</td>";
+                                    if (in_array($activity, $volunteer_interests)){
+                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity' checked></td>";
+                                    } else {
+                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity'></td>";
+                                    }                                    
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </table>
+                        </div>
+                        <br>
+
                         <!-- Volunteer availability text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <h4 style="text-align: center;">Weekly Availability</h4>
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
                         </div>
                         <div style="text-align: center;">
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
@@ -304,52 +335,17 @@
                         </div>
                         <br>
 
-                        <!-- Volunteer's Interests Table -->
-                        <div class="input-container">
-                            <h4 style="text-align: center;">Volunteer's Interests</h4> 
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
-                        </div>
-                        <div style="text-align: center;">
-                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%;   margin-left: auto; margin-right: auto;">
-                                <tr>
-                                    <th>Activity</th>
-                                    <th>Check</th>
-                                </tr>
-                                <?php
-                                $activities = [
-                                    "Organization of community events", 
-                                    "Library support", 
-                                    "Help in the community store", 
-                                    "Support in the community grocery store", 
-                                    "Cleaning and maintenance of public spaces", 
-                                    "Participation in urban gardening projects"
-                                ];
-                                foreach ($activities as $activity) {
-                                    echo "<tr>";
-                                    echo "<td>$activity</td>";
-                                    if (in_array($activity, $volunteer_interests)){
-                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity' checked></td>";
-                                    } else {
-                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity'></td>";
-                                    }                                    
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </table>
-                        </div>
-                        <br>
-
                         <!-- Organizer Name text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                        <!-- Assigned area dropdown -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Assigned Area: 
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
                             <select name="assigned_area">
                                 <option value="" <?php echo ($assigned_area == '') ? 'selected' : ''; ?>>Select an area</option>
                                 <option value="Area 1" <?php echo ($assigned_area == 'Area 1') ? 'selected' : ''; ?>>Area 1</option>
@@ -369,7 +365,7 @@
                         <br><br>
 
                         <!-- Submit button -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input type="submit" id="submit_button" value="Submit">
                         </div>
                         <br><br>

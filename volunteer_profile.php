@@ -25,20 +25,18 @@
     </head>
 
     <style>
-        #post_bar{
+        #medium_rectangle{
             margin-top: 20px;
             background-color: white;
             padding: 10px;
-            min-height: 400px; 
-            flex:1.5; 
-            padding-left: 20px; 
-            padding-right: 0px;
+            border-radius: 8px;
         }
 
         #section_title {
-        text-align: center; /* Center the title */
-        margin: 20px 0; /* Add space above and below */
-        font-family: Arial, sans-serif; /* Use a clean font */
+            text-align: center; /* Center the title */
+            margin: 20px 0; /* Add space above and below */
+            font-family: sans-serif; /* Use a clean font */
+            margin-bottom: 20px;
         }
 
         #section_title span {
@@ -52,37 +50,6 @@
             display: inline-block; /* Ensure the background fits tightly */
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .info-section {
-            margin-bottom: 20px;
-        }
-        .info-section strong {
-            display: inline-block;
-            width: 150px;
-            color: #555;
-        }
-        .highlight {
-            font-weight: bold;
-            color: #007BFF;
-        }
-
         #submenu_button{
             padding: 10px 20px; 
             background-color: #405d9b; 
@@ -92,10 +59,26 @@
             font-size: 16px; 
             cursor: pointer;
         }
+        
+        .information_section {
+            margin-bottom: 20px;
+        }
+        .information_section strong {
+            display: inline-block;
+            width: 150px;
+            color: #555;
+        }
+
+        #volunteer_display{
+            margin-top: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
 
     </style>
 
-    <body style="font-family: sans-serif ; background-color: #d0d8e4;">
+    <body style="font-family: sans-serif; line-height: 1.6; background-color: #d0d8e4;">
 
         <!-- Header bar -->
         <?php include("header.php"); ?>
@@ -103,6 +86,8 @@
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
+
+            <!-- Submenu Button Area -->
 
             <!-- Add edit volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
@@ -170,16 +155,16 @@
             <!-- Below cover area -->
             <div style="display: flex;">
 
-                <!-- Contact content area -->
-                <div id="post_bar" style="padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+                <!-- Left area; Volunteer information area -->
+                <div id="medium_rectangle" style="flex:0.7;">
 
                     <!-- Section title of contact section -->
-                    <div id="section_title" style="margin-bottom: 20px;">
-                        <span style="font-size: 24px; font-weight: bold;">Volunteer Info</span>
+                    <div id="section_title">
+                        <span>Volunteer Info</span>
                     </div>
 
                     <!-- Personal Information -->
-                    <div class="info-section" style="margin-bottom: 20px;">
+                    <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
                         <p><strong>First Name:</strong> <?php echo htmlspecialchars($member_data['first_name']); ?></p>
                         <p><strong>Last Name:</strong> <?php echo htmlspecialchars($member_data['last_name']); ?></p>
@@ -192,16 +177,16 @@
                     </div>
                     
                     <!-- Volunteer Contributions -->
-                    <div class="info-section" style="margin-bottom: 20px;">
+                    <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
                         <p><strong>Points:</strong> <span><?php echo htmlspecialchars($member_data['points']); ?></span></p>
                         <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($member_data['hours_completed']); ?></span></p>
                         <p><strong>Assigned Area:</strong> <?php echo htmlspecialchars($member_data['assigned_area']); ?></p>
                         <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($member_data['organizer_name']); ?></p>
                     </div>
-                    
+
                     <!-- Interests -->
-                    <div class="info-section" style="margin-bottom: 20px;">
+                    <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Interests</h2>
                         <?php if (!empty($interest_data)): ?>
                             <ul style="list-style-type: disc; padding-left: 20px;">
@@ -213,9 +198,9 @@
                             <p>No interests provided.</p>
                         <?php endif; ?>
                     </div>
-                    
+
                     <!-- Weekly Availability -->
-                    <div class="info-section" style="margin-bottom: 20px;">
+                    <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Weekly Availability</h2>
                         <?php
                         // Define the weekdays and time periods
@@ -240,7 +225,7 @@
                         }
                         ?>
                         
-                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <table style="width: 50%; border-collapse: collapse; margin-top: 10px;">
                             <thead>
                                 <tr style="background-color: #f1f1f1;">
                                     <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Weekday</th>
@@ -265,13 +250,31 @@
                     </div>
 
                     <!-- Additional Details -->
-                    <div class="info-section" style="margin-bottom: 20px;">
+                    <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
                         <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($member_data['additional_notes']) ?: 'None'; ?></p>
                         <p><strong>Registration Date:</strong> <?php echo htmlspecialchars($member_data['registration_date']); ?></p>
                     </div>
                     
                 </div>
+
+                <!-- Right area -->
+                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
+
+                    <!-- Widget display -->
+                    <div id="medium_rectangle">
+
+                        <!-- Section title of recent social activities section -->
+                        <div id="section_title">
+                            <span>Volunteers</span>
+                        </div>
+                        
+                        
+
+                    </div>
+
+                </div>
+
             </div>
             
         </div>

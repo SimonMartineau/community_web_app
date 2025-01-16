@@ -24,11 +24,11 @@
     $email = $member_data['email'];
     $points = $member_data['points'];
     $hours_completed = $member_data['hours_completed'];
-    $volunteer_availability = $availability_data;
     // For interest data, we extract the interest column and insert the data in $volunteer_interests[].
     foreach($interests_data as $interests_data_row){
         $volunteer_interests[] = $interests_data_row['interest'];
     }
+    $volunteer_availability = $availability_data;
     // For availability data, we extract the weekday and timeperiod columns and insert the data in $volunteer_availability[].
     foreach($availability_data as $availability_data_row){
         $weekday = $availability_data_row['weekday'];
@@ -140,11 +140,6 @@
             font-size: 14px;
         }
 
-        #error {
-            color: red;
-            font-weight: bold; /* Optional: Make it bold for emphasis */
-        }
-
         #additional_notes{
             width: 80%;
             height: 150px;
@@ -164,7 +159,7 @@
             font-weight: bold;
         }
 
-        .input-container {
+        .input_container {
             display: flex;
             justify-content: center; /* Centers the input field */
             align-items: center; /* Aligns vertically (in case the input field has a different height from the error message) */
@@ -175,7 +170,7 @@
             margin-right: 10px; /* Adds space between input and error message */
         }
 
-        #error {
+        #error_message{
             position: absolute;
             left: 70%; /* Places the error message to the right of the input */
             margin-left: 10px; /* Adds space between the input and error message */
@@ -222,90 +217,125 @@
                     <form method="post" action="volunteer_edit_data.php?id=<?php echo $id; ?>">
 
                         <!-- First name text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             First name:
                             <input name="first_name" type="text" id="text_input" placeholder="First name" value="<?php echo $first_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Last name text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Last name:
                             <input name="last_name" type="text" id="text_input" placeholder="Last name" value="<?php echo $last_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Gender bubble check -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Gender:
                             <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> Male
                             <input type="radio" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>> Female
                             <input type="radio" name="gender" value="Other" <?php echo ($gender == 'Other') ? 'checked' : ''; ?>> Other
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Date of birth input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Date of birth: <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Address text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Address:
                             <input name="address" type="text" id="text_input" placeholder="Address" value="<?php echo $address ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- ZIP code text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             ZIP code:
                             <input name="zip_code" type="text" id="text_input" placeholder="ZIP code" value="<?php echo $zip_code ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Telephone number text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Telephone number:
                             <input name="telephone_number" type="text" id="text_input" placeholder="Telephone number" value="<?php echo $telephone_number ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                         </div>
                         <br><br>
                         
                         <!-- Email text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Email:
                             <input name="email" type="text" id="text_input" placeholder="Email" value="<?php echo $email ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Points text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Points:
                             <input name="points" type="text" id="text_input" placeholder="Points" value="<?php echo $points ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->points_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->points_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Hours completed text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Hours completed:
                             <input name="hours_completed" type="text" id="text_input" placeholder="Hours Completed" value="<?php echo $hours_completed ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->hours_completed_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->hours_completed_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
+                        <!-- Volunteer's Interests Table -->
+                        <div class="input_container">
+                            <h4 style="text-align: center;">Volunteer's Interests</h4> 
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
+                        </div>
+                        <div style="text-align: center;">
+                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Check</th>
+                                </tr>
+                                <?php
+                                $activities = [
+                                    "Organization of community events", 
+                                    "Library support", 
+                                    "Help in the community store", 
+                                    "Support in the community grocery store", 
+                                    "Cleaning and maintenance of public spaces", 
+                                    "Participation in urban gardening projects"
+                                ];
+                                foreach ($activities as $activity) {
+                                    echo "<tr>";
+                                    echo "<td>$activity</td>";
+                                    if (in_array($activity, $volunteer_interests)){
+                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity' checked></td>";
+                                    } else {
+                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity'></td>";
+                                    }                                    
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </table>
+                        </div>
+                        <br>
+
                         <!-- Volunteer availability text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <h4 style="text-align: center;">Weekly Availability</h4>
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
                         </div>
                         <div style="text-align: center;">
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
@@ -338,53 +368,18 @@
                         </div>
                         <br>
 
-                        <!-- Volunteer's Interests Table -->
-                        <div class="input-container">
-                            <h4 style="text-align: center;">Volunteer's Interests</h4> 
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
-                        </div>
-                        <div style="text-align: center;">
-                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
-                                <tr>
-                                    <th>Activity</th>
-                                    <th>Check</th>
-                                </tr>
-                                <?php
-                                $activities = [
-                                    "Organization of community events", 
-                                    "Library support", 
-                                    "Help in the community store", 
-                                    "Support in the community grocery store", 
-                                    "Cleaning and maintenance of public spaces", 
-                                    "Participation in urban gardening projects"
-                                ];
-                                foreach ($activities as $activity) {
-                                    echo "<tr>";
-                                    echo "<td>$activity</td>";
-                                    if (in_array($activity, $volunteer_interests)){
-                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity' checked></td>";
-                                    } else {
-                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity'></td>";
-                                    }                                    
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </table>
-                        </div>
-                        <br>
-
                         <!-- Organizer Name text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Organizer name:
                             <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                        <!-- Assigned area dropdown -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Assigned Area: 
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
                             <select name="assigned_area">
                                 <option value="" <?php echo ($assigned_area == '') ? 'selected' : ''; ?>>Select an area</option>
                                 <option value="Area 1" <?php echo ($assigned_area == 'Area 1') ? 'selected' : ''; ?>>Area 1</option>
@@ -404,15 +399,15 @@
                         <br><br>
 
                         <!-- Registration date text input -->
-                        <div class="input-container">
+                        <div class="input_container">
                             Registration date:
                             <input name="registration_date" type="date" id="text_input" placeholder="Email" value="<?php echo $registration_date ?>">
-                            <span id="error"><?php echo isset($volunteer) ? $volunteer->registration_date_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->registration_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Submit button -->
-                        <div class="input-container">
+                        <div class="input_container">
                             <input type="submit" id="submit_button" value="Submit">
                         </div>
                         <br><br>

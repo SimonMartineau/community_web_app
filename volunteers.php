@@ -5,7 +5,7 @@
     include("classes/volunteer_functions.php");
 
     // Collect volunteer data
-    $volunteer_data = fetch_all_volunteer_data();
+    $all_volunteer_data = fetch_all_volunteer_data();
 
 ?>
 
@@ -19,15 +19,14 @@
     </head>
 
     <style>
-        #filter_bar{
-            min-height: 400px;
-            background-color: white;
+        #medium_rectangle{
             margin-top: 20px;
-            padding: 8px; /*Determines how an element will sit in a container */
+            background-color: white;
+            padding: 10px;
             border-radius: 8px;
         }
 
-        #volunteer_box {
+        #volunteer_widget {
             margin: 10px auto; /* Center the box horizontally */
             padding: 15px; /* Add padding for better spacing */
             border: 1px solid #ddd; /* Add a light border */
@@ -38,59 +37,33 @@
             color: #333; /* Dark text color for readability */
         }
 
-        .volunteer_name {
+        .volunteer_widget_name {
             font-size: 1.5em; /* Larger font size for the name */
             margin-bottom: 10px; /* Add space below the name */
             color: #405d9b; /* Optional: Match your theme color */
         }
 
-        .volunteer_info {
+        .volunteer_widget_info {
             font-size: 0.9em; /* Slightly smaller font for details */
             line-height: 1.6; /* Increase line height for readability */
         }
 
-        .volunteer_info strong {
+        .volunteer_widget_info strong {
             color: #405d9b; /* Highlight labels for better distinction */
-        }
-
-        /*No # because this is going to affect all textareas, not id=textarea */
-        textarea{
-            width: 100%;
-            border: none;
-            font-family: sans-serif;
-            height: 60px;
-        }
-
-        #post_button{
-            float: right;
-            background-color: #405d9b;
-            border: none;
-            color: white;
-            padding: 4px;
-            font-size: 14px;
-            border-radius: 2px;
-            width: 40px;
-        }
-
-        #volunteer_display{
-            margin-top: 20px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
-        }
+        }       
 
         #post{
             padding: 4px;
             font-size: 13px;
             display: flex;
             margin-bottom: 20px;
-
         }
 
         #section_title {
         text-align: center; /* Center the title */
         margin: 20px 0; /* Add space above and below */
-        font-family: Arial, sans-serif; /* Use a clean font */
+        font-family: sans-serif; /* Use a clean font */
+        margin-bottom: 20px;
         }
 
         #section_title span {
@@ -115,6 +88,8 @@
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
+            <!-- Submenu Button Area -->
+
             <!-- Add volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="add_volunteer.php" style="text-decoration: none; display: inline-block;">
@@ -131,14 +106,14 @@
                 </a>
             </div>
      
-        
             <!-- Below cover area -->
             <div style="display: flex;">
 
-                <!-- Filter area -->
-                <div style="min-height: 400px; flex:0.6;">
+                <!-- Left area -->
+                <div style="flex:0.6;">
 
-                    <div id="filter_bar">
+                    <!-- Filter form area -->
+                    <div id="medium_rectangle">
 
                         <!-- Section title of filter area -->
                         <div id="section_title">
@@ -218,11 +193,11 @@
                     </div>
                 </div>
 
-                <!-- Volunteer area -->
-                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
+                <!-- Right area -->
+                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
 
-                    <!-- Volunteer display -->
-                    <div id="volunteer_display">
+                    <!-- Volunteer widget display -->
+                    <div id="medium_rectangle">
 
                         <!-- Section title of recent social activities section -->
                         <div id="section_title">
@@ -231,8 +206,8 @@
 
                         <!-- Display volunteer widgets --> 
                         <?php
-                            if($volunteer_data){
-                                foreach($volunteer_data as $volunteer_data_row){
+                            if($all_volunteer_data){
+                                foreach($all_volunteer_data as $volunteer_data_row){
                                     include("volunteer_widget.php");
                                 }
                             }
