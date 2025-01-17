@@ -22,8 +22,6 @@
     $zip_code = $member_data['zip_code'];
     $telephone_number = $member_data['telephone_number'];
     $email = $member_data['email'];
-    $points = $member_data['points'];
-    $hours_completed = $member_data['hours_completed'];
     // For interest data, we extract the interest column and insert the data in $volunteer_interests[].
     foreach($interests_data as $interests_data_row){
         $volunteer_interests[] = $interests_data_row['interest'];
@@ -61,8 +59,6 @@
             $zip_code = $_POST['zip_code'];
             $telephone_number = $_POST['telephone_number'];
             $email = $_POST['email'];
-            $points = $_POST['points'];
-            $hours_completed = $_POST['hours_completed'];
             if(isset($_POST['volunteer_availability'])){ // Due to uncertain entry
                 $volunteer_availability = $_POST['volunteer_availability'];
             }
@@ -90,102 +86,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit Volunteer Data | Give and Receive</title>
+        <link rel="stylesheet" href="style.css">
     </head>
 
-    <style>
-        #major_rectangle{
-            margin-top: 20px;
-            background-color: white;
-            padding: 10px;
-            min-height: 400px; 
-            flex:1.5; 
-            padding: 20px;
-            padding-left: 20px; 
-            padding-right: 0px;
-            background-color: #f9f9f9; 
-            border-radius: 8px;
-        }
-
-        #section_title {
-            text-align: center; /* Center the title */
-            margin: 20px 0; /* Add space above and below */
-            font-family: Arial, sans-serif; /* Use a clean font */
-        }
-
-        #section_title span {
-            font-size: 1.2em; /* Larger font size for emphasis */
-            font-weight: bold; /* Make the text bold */
-            color: #405d9b; /* Theme color for text */
-            padding: 10px 20px; /* Add some padding around the text */
-            background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Subtle gradient background */
-            border-radius: 10px; /* Rounded corners for the background */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            display: inline-block; /* Ensure the background fits tightly */
-        }
-
-        #input_section{
-            background-color: white; 
-            width:1000px; 
-            margin: auto; 
-            padding: 10px;
-            padding-top: 50px;
-        }
-
-        #text_input{
-            height: 40px;
-            width: 300px;
-            border-radius: 4px;
-            border: solid 1px #ccc;
-            padding: 4px;
-            font-size: 14px;
-        }
-
-        #additional_notes{
-            width: 80%;
-            height: 150px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        #submit_button{
-            width: 300px;
-            height: 40px;
-            border-radius: 8px;
-            border: none;
-            background-color: rgb(59,89,152);
-            color: white;
-            font-weight: bold;
-        }
-
-        .input_container {
-            display: flex;
-            justify-content: center; /* Centers the input field */
-            align-items: center; /* Aligns vertically (in case the input field has a different height from the error message) */
-            position: relative;
-        }
-
-        #text_input {
-            margin-right: 10px; /* Adds space between input and error message */
-        }
-
-        #error_message{
-            position: absolute;
-            left: 70%; /* Places the error message to the right of the input */
-            margin-left: 10px; /* Adds space between the input and error message */
-            color: red;
-            font-weight: bold; /* Optional: Make it bold for emphasis */
-        }
-
-        #main_error {
-            text-align: center;
-            color: red;
-            font-weight: bold; /* Optional: Make it bold for emphasis */
-        }
-
-        
-    </style>
+    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -210,8 +114,8 @@
                     </span>
                 </div>
 
-                <!-- Input area -->
-                <div id="input_section">
+                <!-- Form area -->
+                <div id="form_section">
 
                     <!-- Form text input -->
                     <form method="post" action="volunteer_edit_data.php?id=<?php echo $id; ?>">
@@ -278,22 +182,6 @@
                             Email:
                             <input name="email" type="text" id="text_input" placeholder="Email" value="<?php echo $email ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
-
-                        <!-- Points text input -->
-                        <div class="input_container">
-                            Points:
-                            <input name="points" type="text" id="text_input" placeholder="Points" value="<?php echo $points ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->points_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
-
-                        <!-- Hours completed text input -->
-                        <div class="input_container">
-                            Hours completed:
-                            <input name="hours_completed" type="text" id="text_input" placeholder="Hours Completed" value="<?php echo $hours_completed ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->hours_completed_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

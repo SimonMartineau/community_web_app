@@ -9,8 +9,6 @@ class Edit_Volunteer{
     public $zip_code_error_mes = "";
     public $telephone_number_error_mes = "";
     public $email_error_mes = "";
-    public $points_error_mes = "";
-    public $hours_completed_error_mes = "";
     public $volunteer_availability_error_mes = "";
     public $volunteer_interests_error_mes = "";
     public $organizer_name_error_mes = "";
@@ -109,24 +107,6 @@ class Edit_Volunteer{
             }
         }
 
-        // Check Points 
-        if (isset($_POST['points'])){
-            $value = $_POST['points'];
-            if (!is_numeric($value)){
-                $this->points_error_mes = "*Points is empty.<br>";
-                $error = true; // There is an error
-            }
-        }
-
-        // Check Hours completed
-        if (isset($_POST['hours_completed'])){
-            $value = $_POST['hours_completed'];
-            if (!is_numeric($value)){
-                $this->hours_completed_error_mes = "*Hours completed is empty.<br>";
-                $error = true; // There is an error
-            }
-        }
-
         // Check volunteer availability
         if (isset($_POST['volunteer_availability'])){
             $value = $_POST['volunteer_availability'];
@@ -200,8 +180,6 @@ class Edit_Volunteer{
         $zip_code = $data['zip_code'];
         $telephone_number = $data['telephone_number'];
         $email = $data['email'];
-        $points = $data['points'];
-        $hours_completed = $data['hours_completed'];
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
         $organizer_name = $data['organizer_name'];
@@ -222,8 +200,6 @@ class Edit_Volunteer{
                       zip_code = '$zip_code', 
                       telephone_number = '$telephone_number', 
                       email = '$email', 
-                      points = '$points', 
-                      hours_completed = '$hours_completed', 
                       assigned_area = '$assigned_area', 
                       organizer_name = '$organizer_name', 
                       additional_notes = '$additional_notes', 

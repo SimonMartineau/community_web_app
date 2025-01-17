@@ -16,68 +16,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Volunteers | Give and Receive</title>
+        <link rel="stylesheet" href="style.css">
     </head>
 
-    <style>
-        #medium_rectangle{
-            margin-top: 20px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        #volunteer_widget {
-            margin: 10px auto; /* Center the box horizontally */
-            padding: 15px; /* Add padding for better spacing */
-            border: 1px solid #ddd; /* Add a light border */
-            border-radius: 8px; /* Round the corners */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
-            background-color: rgb(196, 253, 148); /* Light background for contrast */
-            font-family: Arial, sans-serif; /* Use a clean font */
-            color: #333; /* Dark text color for readability */
-        }
-
-        .volunteer_widget_name {
-            font-size: 1.5em; /* Larger font size for the name */
-            margin-bottom: 10px; /* Add space below the name */
-            color: #405d9b; /* Optional: Match your theme color */
-        }
-
-        .volunteer_widget_info {
-            font-size: 0.9em; /* Slightly smaller font for details */
-            line-height: 1.6; /* Increase line height for readability */
-        }
-
-        .volunteer_widget_info strong {
-            color: #405d9b; /* Highlight labels for better distinction */
-        }       
-
-        #post{
-            padding: 4px;
-            font-size: 13px;
-            display: flex;
-            margin-bottom: 20px;
-        }
-
-        #section_title {
-        text-align: center; /* Center the title */
-        margin: 20px 0; /* Add space above and below */
-        font-family: sans-serif; /* Use a clean font */
-        margin-bottom: 20px;
-        }
-
-        #section_title span {
-            font-size: 1.2em; /* Larger font size for emphasis */
-            font-weight: bold; /* Make the text bold */
-            color: #405d9b; /* Theme color for text */
-            padding: 10px 20px; /* Add some padding around the text */
-            background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Subtle gradient background */
-            border-radius: 10px; /* Rounded corners for the background */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            display: inline-block; /* Ensure the background fits tightly */
-        }
-
-    </style>
+    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -93,14 +35,7 @@
             <!-- Add volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="add_volunteer.php" style="text-decoration: none; display: inline-block;">
-                    <button style="
-                        padding: 10px 20px; 
-                        background-color: #405d9b; 
-                        color: white; 
-                        border: none; 
-                        border-radius: 15px; 
-                        font-size: 16px; 
-                        cursor: pointer;">
+                    <button id="submenu_button">
                         Add Volunteer
                     </button>
                 </a>

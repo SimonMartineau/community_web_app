@@ -1,0 +1,195 @@
+/* This file contains the styles used in the majority of the files of the community_web_app. */
+
+
+/* Background rectangle styles*/
+/*#################################################################################################################################################################*/
+/* Single background rectangle*/
+#major_rectangle{
+    margin-top: 20px;
+    background-color: white;
+    padding: 10px;
+    min-height: 400px; 
+    flex:1.5; 
+    padding: 20px;
+    padding-left: 20px; 
+    padding-right: 0px;
+    background-color: #f9f9f9; 
+    border-radius: 8px;
+}
+
+/* Half background rectangle*/
+#medium_rectangle{
+    margin-top: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Section title styles */
+/*#################################################################################################################################################################*/
+/* Title area */
+#section_title {
+    text-align: center; /* Center the title */
+    margin: 20px 0; /* Add space above and below */
+    font-family: sans-serif; /* Use a clean font */
+    margin-bottom: 20px;
+}
+
+/* Title text */
+#section_title span {
+    font-size: 1.2em; /* Larger font size for emphasis */
+    font-weight: bold; /* Make the text bold */
+    color: #405d9b; /* Theme color for text */
+    padding: 10px 20px; /* Add some padding around the text */
+    background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Subtle gradient background */
+    border-radius: 10px; /* Rounded corners for the background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: inline-block; /* Ensure the background fits tightly */
+}
+
+/* Buttons styles*/
+/*#################################################################################################################################################################*/
+/* Buttons located under menu area */
+#submenu_button{
+    padding: 10px 20px; 
+    background-color: #405d9b; 
+    color: white; 
+    border: none; 
+    border-radius: 15px; 
+    font-size: 16px; 
+    cursor: pointer;
+}
+
+/* Form submit button */
+#submit_button{
+    width: 300px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: rgb(59,89,152);
+    color: white;
+    font-weight: bold;
+}
+
+/* Error styles*/
+/*#################################################################################################################################################################*/
+/* Error located at the top of the page*/
+#main_error {
+    text-align: center;
+    color: red;
+    font-weight: bold; /* Optional: Make it bold for emphasis */
+}
+
+/* individual error message */
+#error_message{
+    position: absolute;
+    left: 70%; /* Places the error message to the right of the input */
+    margin-left: 10px; /* Adds space between the input and error message */
+    color: red;
+    font-weight: bold; /* Optional: Make it bold for emphasis */
+}
+
+/* Form styles */
+/*#################################################################################################################################################################*/
+/* Form area */
+#form_section{
+    background-color: white; 
+    width:1000px; 
+    margin: auto; 
+    padding: 10px;
+    padding-top: 50px;
+}
+
+/* Area to place a user input */
+.input_container {
+    display: flex;
+    justify-content: center; /* Centers the input field */
+    align-items: center; /* Aligns vertically (in case the input field has a different height from the error message) */
+    position: relative;
+}
+
+/* Text input */
+#text_input{
+    height: 40px;
+    width: 300px;
+    border-radius: 4px;
+    border: solid 1px #ccc;
+    padding: 4px;
+    font-size: 14px;
+}
+
+/* Additional notes input */
+#additional_notes{
+    width: 80%;
+    height: 150px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Widget styles */
+/*#################################################################################################################################################################*/
+/* Volunteer widget box area */
+#volunteer_widget {
+    margin: 10px auto; /* Center the box horizontally */
+    padding: 15px; /* Add padding for better spacing */
+    border: 1px solid #ddd; /* Add a light border */
+    border-radius: 8px; /* Round the corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
+    background-color: rgb(196, 253, 148); /* Light background for contrast */
+    font-family: sans-serif; /* Use a clean font */
+    color: #333; /* Dark text color for readability */
+}
+
+/* Volunteer widget name */
+.volunteer_widget_name {
+    font-size: 1.5em; /* Larger font size for the name */
+    margin-bottom: 10px; /* Add space below the name */
+    color: #405d9b; /* Optional: Match your theme color */
+}
+
+/* Volunteer widget information text */
+.volunteer_widget_info {
+    font-size: 0.9em; /* Slightly smaller font for details */
+    line-height: 1.6; /* Increase line height for readability */
+}
+
+/* Volunteer widget text highlights */
+.volunteer_widget_info strong {
+    color: #405d9b; /* Highlight labels for better distinction */
+}
+
+/* Widget styles */
+/*#################################################################################################################################################################*/
+/* Activity widget box area */
+#activity_widget {
+    margin: 10px auto; /* Center the box horizontally */
+    padding: 15px; /* Add padding for spacing */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color:rgb(184, 247, 243); /* Light background */
+    font-family: sans-serif; /* Clean font */
+    color: #333; /* Dark text color */
+    }
+
+/* Activity widget name */
+.activity_widget_name {
+    font-size: 1.5em; /* Larger font for activity name */
+    margin-bottom: 10px; /* Space below the name */
+    color: #3c7a47; /* Optional: Green theme color */
+}
+
+/* Activity widget information text */
+.activity_widget_info {
+    font-size: 0.9em; /* Smaller font for details */
+    line-height: 1.6; /* Line height for readability */
+}
+
+/* Activity widget text highlights */
+.activity_widget_info strong {
+    color: #3c7a47; /* Highlight labels for distinction */
+}
+
+/*#################################################################################################################################################################*/

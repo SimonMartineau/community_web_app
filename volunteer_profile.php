@@ -22,58 +22,18 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Volunteer Profile | Give and Receive</title>
+        <link rel="stylesheet" href="style.css">
     </head>
 
-    <style>
-        #medium_rectangle{
-            margin-top: 20px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        #section_title {
-            text-align: center; /* Center the title */
-            margin: 20px 0; /* Add space above and below */
-            font-family: sans-serif; /* Use a clean font */
-            margin-bottom: 20px;
-        }
-
-        #section_title span {
-            font-size: 1.2em; /* Larger font size for emphasis */
-            font-weight: bold; /* Make the text bold */
-            color: #405d9b; /* Theme color for text */
-            padding: 10px 20px; /* Add some padding around the text */
-            background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Subtle gradient background */
-            border-radius: 10px; /* Rounded corners for the background */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            display: inline-block; /* Ensure the background fits tightly */
-        }
-
-        #submenu_button{
-            padding: 10px 20px; 
-            background-color: #405d9b; 
-            color: white; 
-            border: none; 
-            border-radius: 15px; 
-            font-size: 16px; 
-            cursor: pointer;
-        }
-        
+    <style>        
         .information_section {
             margin-bottom: 20px;
         }
+        
         .information_section strong {
             display: inline-block;
             width: 150px;
             color: #555;
-        }
-
-        #volunteer_display{
-            margin-top: 20px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
         }
 
     </style>
@@ -98,15 +58,6 @@
                 </a>
             </div>
 
-            <!-- Add purchase button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        All Corresponding Activities
-                    </button>
-                </a>
-            </div>
-
             <!-- Add check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="check.php" style="text-decoration: none; display: inline-block;">
@@ -116,29 +67,11 @@
                 </a>
             </div>
 
-            <!-- All checks button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="check.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        All Checks
-                    </button>
-                </a>
-            </div>
-
             <!-- Add purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="purchase.php" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Add Purchase
-                    </button>
-                </a>
-            </div>
-
-            <!-- All purchases button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        All Purchases
                     </button>
                 </a>
             </div>
