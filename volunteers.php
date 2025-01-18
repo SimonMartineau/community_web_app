@@ -2,7 +2,7 @@
 
     // Include classes
     include("classes/connect.php");
-    include("classes/volunteer_functions.php");
+    include("classes/functions.php");
 
     // Collect volunteer data
     $all_volunteer_data = fetch_all_volunteer_data();

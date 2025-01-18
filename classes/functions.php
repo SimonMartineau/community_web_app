@@ -74,4 +74,34 @@ function fetch_member_availability_data($id){
     }
 }
 
+function fetch_check_data($id){
+    $query = "select * from Checks where id='$id'";
+
+    $DB = new Database();
+    $DB->save($query);
+        
+    $result = $DB->read($query);
+
+    if($result){
+        return $result[0]; // To only return the row
+    }else{
+        return false;
+    }
+}
+
+function fetch_purchase_data($id){
+    $query = "select * from Purchases where id='$id'";
+
+    $DB = new Database();
+    $DB->save($query);
+        
+    $result = $DB->read($query);
+
+    if($result){
+        return $result[0]; // To only return the row
+    }else{
+        return false;
+    }
+}
+
 ?>

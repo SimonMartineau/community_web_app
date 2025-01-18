@@ -4,8 +4,8 @@
         <p class="widget_info">
             <strong>Issuance date:</strong> <?php echo $check_data_row['issuance_date']?><br>
             <strong>Validity date:</strong> <?php echo $check_data_row['validity_date']?><br>
-            <strong>Points deposit:</strong> <?php echo $check_data_row['points_deposit'] . " points"?><br>
-            <strong>Required time:</strong> <?php echo $check_data_row['required_time'] . " hours"?><br>
+            <strong>Points deposit:</strong> <?php echo $check_data_row['points_deposit'] . " Points"?><br>
+            <strong>Required time:</strong> <?php echo $check_data_row['required_time'] . " Hours"?><br>
         </p>
     </div>
 </a>

@@ -2,7 +2,7 @@
 
     // Include classes
     include("classes/connect.php");
-    include("classes/volunteer_functions.php");
+    include("classes/functions.php");
 
     // Collect volunteer data
     $volunteer_data = fetch_data("select * from Members order by id desc limit 3");

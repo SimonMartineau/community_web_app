@@ -2,7 +2,7 @@
 
     // Include classes
     include("classes/connect.php");
-    include("classes/volunteer_functions.php");
+    include("classes/functions.php");
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -49,11 +49,11 @@
 
             <!-- Submenu Button Area -->
 
-            <!-- Add edit volunteer button -->
+            <!-- Edit volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="volunteer_edit_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Edit Data
+                        Edit Volunteer Info
                     </button>
                 </a>
             </div>
@@ -76,7 +76,7 @@
                 </a>
             </div>
 
-            <!-- Add delete volunteer button -->
+            <!-- Delete volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="purchase.php" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">

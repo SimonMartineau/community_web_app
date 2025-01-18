@@ -5,8 +5,8 @@
             <strong>Email:</strong> <?php echo $volunteer_data_row['email']?><br>
             <strong>Address:</strong> <?php echo $volunteer_data_row['address']?><br>
             <strong>Phone:</strong> <?php echo $volunteer_data_row['telephone_number']?><br>
-            <strong>Hours Completed:</strong> <?php echo $volunteer_data_row['hours_completed']?><br>
-            <strong>Points:</strong> <?php echo $volunteer_data_row['points']?><br>
+            <strong>Hours Completed:</strong> <?php echo $volunteer_data_row['hours_completed'] . " Hours"?><br>
+            <strong>Points:</strong> <?php echo $volunteer_data_row['points'] . " Points"?><br>
         </p>
     </div>
 </a>

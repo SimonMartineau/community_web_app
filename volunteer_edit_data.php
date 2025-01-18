@@ -3,7 +3,7 @@
     // Include classes
     include("classes/connect.php");
     include("classes/volunteer_edit_data.php");
-    include("classes/volunteer_functions.php");
+    include("classes/functions.php");
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
