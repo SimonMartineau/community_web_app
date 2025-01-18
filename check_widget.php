@@ -1,7 +1,7 @@
 <a href="check_profile.php?id=<?php echo $check_data_row['id']; ?>" style="text-decoration: none;">
-    <div id="check_widget">
-        <h3 class="check_widget_name"><?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s " . $month . " Check" ?></h3>
-        <p class="check_widget_info">
+    <div id="widget" class="check_widget">
+        <h3 class="widget_name"><?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s " . $month . " Check" ?></h3>
+        <p class="widget_info">
             <strong>Issuance date:</strong> <?php echo $check_data_row['issuance_date']?><br>
             <strong>Validity date:</strong> <?php echo $check_data_row['validity_date']?><br>
             <strong>Points deposit:</strong> <?php echo $check_data_row['points_deposit'] . " points"?><br>

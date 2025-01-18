@@ -130,134 +130,85 @@
 
 /* Widget styles */
 /*#################################################################################################################################################################*/
-/* Volunteer widget box area */
-#volunteer_widget {
-    margin: 10px auto; /* Center the box horizontally */
-    padding: 15px; /* Add padding for better spacing */
-    border: 1px solid #ddd; /* Add a light border */
-    border-radius: 8px; /* Round the corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
-    background-color: rgb(196, 253, 148); /* Light background for contrast */
-    font-family: sans-serif; /* Use a clean font */
-    color: #333; /* Dark text color for readability */
+/* Base widget styles */
+#widget {
+    margin: 10px auto;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+    color: #333; /* Default text color */
 }
 
-/* Volunteer widget name */
-.volunteer_widget_name {
-    font-size: 1.5em; /* Larger font size for the name */
-    margin-bottom: 10px; /* Add space below the name */
-    color: #405d9b; /* Optional: Match your theme color */
+/* Base widget name styles */
+.widget_name {
+    font-size: 1.5em;
+    margin-bottom: 10px;
 }
 
-/* Volunteer widget information text */
-.volunteer_widget_info {
-    font-size: 0.9em; /* Slightly smaller font for details */
-    line-height: 1.6; /* Increase line height for readability */
+/* Base widget information text */
+.widget_info {
+    font-size: 0.9em;
+    line-height: 1.6;
 }
 
-/* Volunteer widget text highlights */
-.volunteer_widget_info strong {
-    color: #405d9b; /* Highlight labels for better distinction */
-}
-
-/* Widget styles */
+/* Volunteer-specific styles */
 /*#################################################################################################################################################################*/
-/* Activity widget box area */
-#activity_widget {
-    margin: 10px auto; /* Center the box horizontally */
-    padding: 15px; /* Add padding for spacing */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    background-color:rgb(184, 247, 243); /* Light background */
-    font-family: sans-serif; /* Clean font */
-    color: #333; /* Dark text color */
-    }
-
-/* Activity widget name */
-.activity_widget_name {
-    font-size: 1.5em; /* Larger font for activity name */
-    margin-bottom: 10px; /* Space below the name */
-    color: #3c7a47; /* Optional: Green theme color */
+.volunteer_widget {
+    background-color: rgb(196, 253, 148); /* Light green */
+    color: #333; /* Dark text */
 }
 
-/* Activity widget information text */
-.activity_widget_info {
-    font-size: 0.9em; /* Smaller font for details */
-    line-height: 1.6; /* Line height for readability */
+.volunteer_widget .widget_name {
+    color: #405d9b; /* Volunteer name color */
 }
 
-/* Activity widget text highlights */
-.activity_widget_info strong {
-    color: #3c7a47; /* Highlight labels for distinction */
+.volunteer_widget .widget_info strong {
+    color: #405d9b; /* Volunteer strong text color */
 }
 
+/* Activity-specific styles */
 /*#################################################################################################################################################################*/
+.activity_widget {
+    background-color: rgb(184, 247, 243); /* Light blue */
+    color: #333; /* Light text */
+}
 
-/* Widget styles */
+.activity_widget .widget_name {
+    color: #3c7a47; /* Activity name color */
+}
+
+.activity_widget .widget_info strong {
+    color: #3c7a47; /* Activity strong text color */
+}
+
+/* Check-specific styles */
 /*#################################################################################################################################################################*/
-/* Check widget box area */
-#check_widget {
-    margin: 10px auto; /* Center the box horizontally */
-    padding: 15px; /* Add padding for spacing */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    background-color:rgb(245, 218, 231); /* Light background */
-    font-family: sans-serif; /* Clean font */
-    color: #333; /* Dark text color */
-    }
-
-/* Check widget name */
-.check_widget_name {
-    font-size: 1.5em; /* Larger font for check name */
-    margin-bottom: 10px; /* Space below the name */
-    color: #7a3c72; /* Optional: Green theme color */
+.check_widget {
+    background-color: rgb(245, 218, 231); /* Light orange */
+    color: #333; /* Dark text */
 }
 
-/* Check widget information text */
-.check_widget_info {
-    font-size: 0.9em; /* Smaller font for details */
-    line-height: 1.6; /* Line height for readability */
+.check_widget .widget_name {
+    color: #7a3c72; /* Check name color */
 }
 
-/* Check widget text highlights */
-.check_widget_info strong {
-    color: #7a3c72; /* Highlight labels for distinction */
+.check_widget .widget_info strong {
+    color: #7a3c72; /* Check strong text color */
 }
 
+/* Purchase-specific styles */
 /*#################################################################################################################################################################*/
-
-/* Widget styles */
-/*#################################################################################################################################################################*/
-/* Purchase widget box area */
-#purchase_widget {
-    margin: 10px auto; /* Center the box horizontally */
-    padding: 15px; /* Add padding for spacing */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    background-color:rgb(227, 244, 255); /* Light background */
-    font-family: sans-serif; /* Clean font */
-    color: #333; /* Dark text color */
-    }
-
-/* Purchase widget name */
-.purchase_widget_name {
-    font-size: 1.5em; /* Larger font for purchase name */
-    margin-bottom: 10px; /* Space below the name */
-    color: #3c4a7a; /* Optional: Green theme color */
+.purchase_widget {
+    background-color: rgb(227, 244, 255); /* Light pink */
+    color: #333; /* Light text */
 }
 
-/* Purchase widget information text */
-.purchase_widget_info {
-    font-size: 0.9em; /* Smaller font for details */
-    line-height: 1.6; /* Line height for readability */
+.purchase_widget .widget_name {
+    color: #3c4a7a; /* Purchase name color */
 }
 
-/* Purchase widget text highlights */
-.purchase_widget_info strong {
-    color: #3c4a7a; /* Highlight labels for distinction */
+.purchase_widget .widget_info strong {
+    color: #3c4a7a; /* Purchase strong text color */
 }
-
-/*#################################################################################################################################################################*/

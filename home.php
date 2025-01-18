@@ -89,16 +89,16 @@
                             
 
                         <!-- Social activity 1 -->
-                        <div id="activity_widget">
-                            <h3 class="activity_widget_name">Community Cleanup</h3>
-                            <p class="activity_widget_info">
+                        <div id="widget" class="activity_widget">
+                            <h3 class="widget_name">Community Cleanup</h3>
+                            <p class="widget_info">
                                 <strong>Duration:</strong> 3 hours<br>
                                 <strong>Area:</strong> Central Park, Springfield<br>
                                 <strong>Participants:</strong> 25 people<br>
                             </p>
-                            <p class="activity_info">
+                            <p>
                                 <strong>Domain:</strong>
-                                <ul class="activity_domain">
+                                <ul>
                                     <li>Organization of community events</li>
                                     <li>Cleaning and maintenance of public spaces</li>
                                     <li>Participation in urban gardening projects</li>
@@ -106,17 +106,17 @@
                             </p>
                         </div>
 
-                        <!-- Social activity 2 -->
-                        <div id="activity_widget">
-                            <h3 class="activity_widget_name">Community Cleanup</h3>
-                            <p class="activity_widget_info">
+                        <!-- Social activity 1 -->
+                        <div id="widget" class="activity_widget">
+                            <h3 class="widget_name">Community Cleanup</h3>
+                            <p class="widget_info">
                                 <strong>Duration:</strong> 3 hours<br>
                                 <strong>Area:</strong> Central Park, Springfield<br>
                                 <strong>Participants:</strong> 25 people<br>
                             </p>
-                            <p class="activity_info">
+                            <p>
                                 <strong>Domain:</strong>
-                                <ul class="activity_domain">
+                                <ul>
                                     <li>Organization of community events</li>
                                     <li>Cleaning and maintenance of public spaces</li>
                                     <li>Participation in urban gardening projects</li>
