@@ -10,6 +10,10 @@
         $member_data = fetch_member_data($id);
         $interest_data = fetch_member_interest_data($id);
         $availability_data = fetch_member_availability_data($id);
+
+        // Collect volunteer data
+        $checks_data = fetch_data("select * from Checks where member_id='$id' order by id desc limit 3");
+        $purchases_data = fetch_data("select * from Purchases where member_id='$id' order by id desc limit 3");
     }
 
     // Add list of purchases, checks, activities done (other pages) and doing in this month, availability and interests
@@ -36,9 +40,47 @@
             color: #555;
         }
 
+        #widget_toggle_buttons {
+            display: flex; /* Enable flexbox */
+            justify-content: center; /* Center buttons horizontally */
+            align-items: center; /* Center buttons vertically (if needed) */
+        }
+
+        /* Styling for toggle buttons */
+        #widget_toggle_buttons button {
+            text-align: center; /* Center the text */
+            font-family: sans-serif; /* Use the same font as the title */
+            font-size: 1em; /* Adjust font size for a balanced look */
+            font-weight: bold; /* Make the text bold */
+            color: #405d9b; /* Match the theme color */
+            padding: 10px 20px; /* Add padding for clickable space */
+            background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Subtle gradient background */
+            border: none; /* Remove default borders */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            cursor: pointer; /* Indicate that it's clickable */
+            margin: 20px 5px 20px 5px ; /* Add spacing between buttons */
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        /* Hover effect for buttons */
+        #widget_toggle_buttons button:hover {
+            background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
+        }
+
+        /* Active button style */
+        #widget_toggle_buttons button:active {
+            transform: translateY(0); /* Reset the lift effect */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly smaller shadow */
+        }
+
     </style>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
+
+    <script src="functions.js"></script>
 
         <!-- Header bar -->
         <?php include("header.php"); ?>
@@ -192,20 +234,49 @@
                     
                 </div>
 
+
                 <!-- Right area -->
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
 
                     <!-- Widget display -->
                     <div id="medium_rectangle">
 
-                        <!-- Section title of recent social activities section -->
-                        <div id="section_title">
-                            <span>Volunteers</span>
-                        </div>
-                        
-                        
+                    <!-- Toggle buttons -->
+                    <div id="widget_toggle_buttons">
+                        <button onclick="showWidgets('checks')">Show Checks</button>
+                        <button onclick="showWidgets('purchases')">Show Purchases</button>
+                        <button onclick="showWidgets('activities')">Show Activities</button>
+                    </div>
+
+
+                    <!-- Display checks widgets -->
+                    <div id="checks_widgets" class="widget-container">
+                        <?php
+                        if ($checks_data) {
+                            foreach ($checks_data as $check_data_row) {
+                                $member_data = fetch_member_data($check_data_row['member_id']);
+                                $date = new DateTime($check_data_row['issuance_date']);
+                                $month = $date->format('F'); // Full month name (e.g., "January")
+                                include("check_widget.php");
+                            }
+                        }
+                        ?>
+                    </div>
+
+                    <!-- Display purchase widgets -->
+                    <div id="purchases_widgets" class="widget-container" style="display: none;">
+                        <?php
+                        if ($purchases_data) {
+                            foreach ($purchases_data as $purchase_data_row) {
+                                $member_data = fetch_member_data($purchase_data_row['member_id']);
+                                include("purchase_widget.php");
+                            }
+                        }
+                        ?>
+                    </div>
 
                     </div>
+
 
                 </div>
 

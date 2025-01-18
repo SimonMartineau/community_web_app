@@ -30,9 +30,8 @@
 /* Title area */
 #section_title {
     text-align: center; /* Center the title */
-    margin: 20px 0; /* Add space above and below */
+    margin: 20px 0 20px 0; /* Add space above and below */
     font-family: sans-serif; /* Use a clean font */
-    margin-bottom: 20px;
 }
 
 /* Title text */
@@ -139,6 +138,14 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: sans-serif;
     color: #333; /* Default text color */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for the widget */
+#widget:hover {
+    background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Gradient background on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+    transform: translateY(-2px); /* Slight lift effect */
 }
 
 /* Base widget name styles */
