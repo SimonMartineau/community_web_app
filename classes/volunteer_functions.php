@@ -1,5 +1,19 @@
 <?php
 
+function fetch_data($query){
+
+    $DB = new Database();
+    $DB->save($query);
+        
+    $result = $DB->read($query);
+
+    if($result){
+        return $result;
+    }else{
+        return false;
+    }
+}
+
 function fetch_all_volunteer_data(){
     $query = "select * from Members order by id desc";
 
@@ -24,7 +38,7 @@ function fetch_member_data($id){
     $result = $DB->read($query);
 
     if($result){
-        return $result;
+        return $result[0]; // To only return the row
     }else{
         return false;
     }

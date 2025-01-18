@@ -19,7 +19,7 @@ class Add_Volunteer{
     // Analyses data sent by user
     public function evaluate($data){
 
-        $error = false; // Initialise error check variable
+        $error = false; // Initialize error check variable
 
         // Check first name
         if (isset($_POST['first_name'])){
@@ -177,13 +177,14 @@ class Add_Volunteer{
         $assigned_area = $data['assigned_area'];
         $additional_notes = $data['additional_notes'];
         $registration_date = date("Y-m-d");
+        $trashed = 0;  // By default the volunteer isn't trashed
 
         // Initialise Database object
         $DB = new Database();
 
         // SQL query into Members
-        $members_query = "insert into Members (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_completed, assigned_area, organizer_name, additional_notes, registration_date)
-                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_completed', '$assigned_area', '$organizer_name', '$additional_notes', '$registration_date')";
+        $members_query = "insert into Members (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_completed, assigned_area, organizer_name, additional_notes, registration_date, trashed)
+                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_completed', '$assigned_area', '$organizer_name', '$additional_notes', '$registration_date', '$trashed')";
         $DB->save($members_query);
 
         // Set member_id to value of primary key in Members table

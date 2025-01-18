@@ -8,7 +8,7 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
-        $member_data = fetch_member_data($id)[0];
+        $member_data = fetch_member_data($id);
         $interests_data = fetch_member_interest_data($id);
         $availability_data = fetch_member_availability_data($id);
     }

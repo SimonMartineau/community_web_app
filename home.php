@@ -5,7 +5,9 @@
     include("classes/volunteer_functions.php");
 
     // Collect volunteer data
-    $volunteer_data = fetch_all_volunteer_data();
+    $volunteer_data = fetch_data("select * from Members order by id desc limit 3");
+    $checks_data = fetch_data("select * from Checks order by id desc limit 3");
+    $purchases_data = fetch_data("select * from Purchases order by id desc limit 3");
 
 ?>
 
@@ -55,6 +57,23 @@
                             }
                         ?>
 
+                        <!-- Section title of recent checks section -->
+                        <div id="section_title">
+                            <span>Recently Added Checks</span>
+                        </div>
+
+                        <!-- Display checks widgets --> 
+                        <?php
+                            if($checks_data){
+                                foreach($checks_data as $check_data_row){
+                                    $member_data = fetch_member_data($check_data_row['member_id']);
+                                    $date = new DateTime($check_data_row['issuance_date']);
+                                    $month = $date->format('F'); // Full month name (e.g., "January")
+                                    include("check_widget.php");
+                                }
+                            }
+                        ?>
+
                     </div>
                 </div>
 
@@ -64,9 +83,9 @@
                     <!-- Social activities -->
                     <div id="medium_rectangle">
                         <!-- Section title of recent social activities section -->
-                            <div id="section_title">
-                                <span>Recently Added Social Activities</span>
-                            </div>
+                        <div id="section_title">
+                            <span>Recently Added Social Activities</span>
+                        </div>
                             
 
                         <!-- Social activity 1 -->
@@ -104,6 +123,21 @@
                                 </ul>
                             </p>
                         </div>
+
+                        <!-- Section title of recent purchases section -->
+                        <div id="section_title">
+                            <span>Recent Purchases</span>
+                        </div>
+
+                        <!-- Display purchase widgets --> 
+                        <?php
+                            if($purchases_data){
+                                foreach($purchases_data as $purchase_data_row){
+                                    $member_data = fetch_member_data($purchase_data_row['member_id']);
+                                    include("purchase_widget.php");
+                                }
+                            }
+                        ?>
                         
 
                     </div>

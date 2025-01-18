@@ -49,21 +49,6 @@
             $additional_notes = $_POST['additional_notes'];
 
         } else{
-            // Reset the user input variables.
-            $first_name = "";
-            $last_name = "";
-            $gender = "";
-            $date_of_birth = "";
-            $address = "";
-            $zip_code = "";
-            $telephone_number = "";
-            $email = "";
-            $volunteer_interests = [];
-            $volunteer_availability = [];
-            $organizer_name = "";
-            $assigned_area = "";
-            $additional_notes = "";
-
             // Changing the page.
             header("Location: add_volunteer.php");
             die; // Ending the script

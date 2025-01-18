@@ -193,3 +193,71 @@
 }
 
 /*#################################################################################################################################################################*/
+
+/* Widget styles */
+/*#################################################################################################################################################################*/
+/* Check widget box area */
+#check_widget {
+    margin: 10px auto; /* Center the box horizontally */
+    padding: 15px; /* Add padding for spacing */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color:rgb(245, 218, 231); /* Light background */
+    font-family: sans-serif; /* Clean font */
+    color: #333; /* Dark text color */
+    }
+
+/* Check widget name */
+.check_widget_name {
+    font-size: 1.5em; /* Larger font for check name */
+    margin-bottom: 10px; /* Space below the name */
+    color: #7a3c72; /* Optional: Green theme color */
+}
+
+/* Check widget information text */
+.check_widget_info {
+    font-size: 0.9em; /* Smaller font for details */
+    line-height: 1.6; /* Line height for readability */
+}
+
+/* Check widget text highlights */
+.check_widget_info strong {
+    color: #7a3c72; /* Highlight labels for distinction */
+}
+
+/*#################################################################################################################################################################*/
+
+/* Widget styles */
+/*#################################################################################################################################################################*/
+/* Purchase widget box area */
+#purchase_widget {
+    margin: 10px auto; /* Center the box horizontally */
+    padding: 15px; /* Add padding for spacing */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color:rgb(227, 244, 255); /* Light background */
+    font-family: sans-serif; /* Clean font */
+    color: #333; /* Dark text color */
+    }
+
+/* Purchase widget name */
+.purchase_widget_name {
+    font-size: 1.5em; /* Larger font for purchase name */
+    margin-bottom: 10px; /* Space below the name */
+    color: #3c4a7a; /* Optional: Green theme color */
+}
+
+/* Purchase widget information text */
+.purchase_widget_info {
+    font-size: 0.9em; /* Smaller font for details */
+    line-height: 1.6; /* Line height for readability */
+}
+
+/* Purchase widget text highlights */
+.purchase_widget_info strong {
+    color: #3c4a7a; /* Highlight labels for distinction */
+}
+
+/*#################################################################################################################################################################*/

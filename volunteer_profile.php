@@ -7,7 +7,7 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
-        $member_data = fetch_member_data($id)[0];
+        $member_data = fetch_member_data($id);
         $interest_data = fetch_member_interest_data($id);
         $availability_data = fetch_member_availability_data($id);
     }
@@ -38,7 +38,7 @@
 
     </style>
 
-    <body style="font-family: sans-serif; line-height: 1.6; background-color: #d0d8e4;">
+    <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
         <!-- Header bar -->
         <?php include("header.php"); ?>
@@ -51,7 +51,7 @@
 
             <!-- Add edit volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="volunteer_edit_data.php?id=<?php echo $member_data['id']; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="volunteer_edit_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Data
                     </button>
@@ -60,7 +60,7 @@
 
             <!-- Add check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="check.php" style="text-decoration: none; display: inline-block;">
+                <a href="add_check.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Add Check
                     </button>
@@ -69,7 +69,7 @@
 
             <!-- Add purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
+                <a href="add_purchase.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Add Purchase
                     </button>
@@ -187,6 +187,7 @@
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
                         <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($member_data['additional_notes']) ?: 'None'; ?></p>
                         <p><strong>Registration Date:</strong> <?php echo htmlspecialchars($member_data['registration_date']); ?></p>
+                        <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($member_data['trashed'] ? "Yes" : "No"); ?></p>
                     </div>
                     
                 </div>
