@@ -8,8 +8,28 @@
         $id = $_GET['id'];
 
         $purchase_data = fetch_purchase_data($id);
-        $volunteer_data_row = fetch_member_data($purchase_data['member_id']); // We link the correct owner of the purchase.
+        $member_id = $purchase_data['member_id'];
+        $volunteer_data_row = fetch_member_data($member_id); // We link the correct owner of the purchase.
 
+    }
+
+    // Check if user has submitted info
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+        // Ensure the delete purchase button has been pressed
+        if (isset($_POST['delete_purchase']) && $_POST['delete_purchase'] === '1') {
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $delete_purchase_query = "delete from Purchases where id='$id'";
+            $DB->update($delete_purchase_query);
+
+            // Changing the page.
+            header("Location: volunteer_profile.php?id=" . $member_id);
+            die; // Ending the script
+        }
     }
 
 ?>
@@ -58,11 +78,13 @@
 
             <!-- Delete purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
+                <form method="POST" action="purchase_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
+                    <!-- Hidden input to confirm source -->
+                    <input type="hidden" name="delete_purchase" value="1">
                     <button id="submenu_button">
                         Delete Purchase
                     </button>
-                </a>
+                </form>
             </div>
                     
             <!-- Below cover area -->

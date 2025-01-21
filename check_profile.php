@@ -8,8 +8,27 @@
         $id = $_GET['id'];
 
         $check_data = fetch_check_data($id);
-        $volunteer_data_row = fetch_member_data($check_data['member_id']); // We link the correct owner of the check.
+        $member_id = $check_data['member_id'];
+        $volunteer_data_row = fetch_member_data($member_id); // We link the correct owner of the check.
+    }
 
+    // Check if user has submitted info
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+        // Ensure the delete check button has been pressed
+        if (isset($_POST['delete_check']) && $_POST['delete_check'] === '1') {
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Checks
+            $delete_check_query = "delete from Checks where id='$id'";
+            $DB->update($delete_check_query);
+
+            // Changing the page.
+            header("Location: volunteer_profile.php?id=" . $member_id);
+            die; // Ending the script
+        }
     }
 
 ?>
@@ -58,13 +77,15 @@
 
             <!-- Delete check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
+                <form method="POST" action="check_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this check?')">
+                    <!-- Hidden input to confirm source -->
+                    <input type="hidden" name="delete_check" value="1">
                     <button id="submenu_button">
                         Delete Check
                     </button>
-                </a>
+                </form>
             </div>
-                    
+
             <!-- Below cover area -->
             <div style="display: flex;">
 

@@ -16,7 +16,6 @@
         $purchases_data = fetch_data("select * from Purchases where member_id='$id' order by id desc limit 3");
     }
 
-    // Add list of purchases, checks, activities done (other pages) and doing in this month, availability and interests
 
 ?>
 
@@ -80,7 +79,7 @@
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
-    <script src="functions.js"></script>
+        <script src="functions.js"></script>
 
         <!-- Header bar -->
         <?php include("header.php"); ?>
