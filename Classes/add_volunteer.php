@@ -182,27 +182,27 @@ class Add_Volunteer{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Members
-        $members_query = "insert into Members (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_completed, assigned_area, organizer_name, additional_notes, registration_date, trashed)
+        // SQL query into Volunteer
+        $volunteers_query = "insert into Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_completed, assigned_area, organizer_name, additional_notes, registration_date, trashed)
                   values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_completed', '$assigned_area', '$organizer_name', '$additional_notes', '$registration_date', '$trashed')";
-        $DB->save($members_query);
+        $DB->save($volunteers_query);
 
-        // Set member_id to value of primary key in Members table
-        $member_id = $DB->last_insert_id;
+        // Set volunteer_id to value of primary key in Volunteers table
+        $volunteer_id = $DB->last_insert_id;
 
-        // SQL query into Member_Availability
+        // SQL query into Volunteer_Availability
         foreach($volunteer_availability as $availability){
             list($weekday, $time_period) = explode('-', $availability);
-            $members_availability_query = "insert into Member_Availability (member_id, weekday, time_period)
-            values ('$member_id', '$weekday', '$time_period')";
-            $DB->save($members_availability_query);
+            $volunteers_availability_query = "insert into Volunteer_Availability (volunteer_id, weekday, time_period)
+            values ('$volunteer_id', '$weekday', '$time_period')";
+            $DB->save($volunteers_availability_query);
         }
 
-        // SQL query into Member_Interests
+        // SQL query into Volunteer_Interests
         foreach($volunteer_interests as $interest){
-            $members_interests_query = "insert into Member_Interests (member_id, interest)
-            values ('$member_id', '$interest')";
-            $DB->save($members_interests_query);
+            $volunteers_interests_query = "insert into Volunteer_Interests (volunteer_id, interest)
+            values ('$volunteer_id', '$interest')";
+            $DB->save($volunteers_interests_query);
         }
     }
 

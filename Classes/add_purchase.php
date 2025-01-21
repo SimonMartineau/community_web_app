@@ -76,7 +76,7 @@ class Add_Purchase{
         $DB = new Database();
 
         // SQL query into Purchases
-        $purchase_query = "insert into Purchases (member_id, item_names, total_cost, purchase_date, organizer_name, additional_notes)
+        $purchase_query = "insert into Purchases (volunteer_id, item_names, total_cost, purchase_date, organizer_name, additional_notes)
                   values ('$id', '$item_names', '$total_cost', '$purchase_date', '$organizer_name', '$additional_notes')";
         $DB->save($purchase_query);
     }

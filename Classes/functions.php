@@ -15,7 +15,7 @@ function fetch_data($query){
 }
 
 function fetch_all_volunteer_data(){
-    $query = "select * from Members order by id desc";
+    $query = "select * from Volunteers order by id desc";
 
     $DB = new Database();
     $DB->save($query);
@@ -29,8 +29,8 @@ function fetch_all_volunteer_data(){
     }
 }
 
-function fetch_member_data($id){
-    $query = "select * from Members where id='$id'";
+function fetch_Volunteer_data($id){
+    $query = "select * from Volunteers where id='$id'";
 
     $DB = new Database();
     $DB->save($query);
@@ -44,8 +44,8 @@ function fetch_member_data($id){
     }
 }
 
-function fetch_member_interest_data($id){
-    $query = "select * from Member_Interests where member_id='$id'";
+function fetch_volunteer_interest_data($id){
+    $query = "select * from Volunteer_Interests where volunteer_id='$id'";
 
     $DB = new Database();
     $DB->save($query);
@@ -59,8 +59,8 @@ function fetch_member_interest_data($id){
     }
 }
 
-function fetch_member_availability_data($id){
-    $query = "select * from Member_Availability where member_id='$id'";
+function fetch_volunteer_availability_data($id){
+    $query = "select * from Volunteer_Availability where volunteer_id='$id'";
 
     $DB = new Database();
     $DB->save($query);

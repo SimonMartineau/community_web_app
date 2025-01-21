@@ -89,7 +89,7 @@ class Edit_Check{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Members
+        // SQL query into Volunteers
         $check_query = "UPDATE Checks 
                   SET issuance_date = '$issuance_date', 
                       validity_date = '$validity_date', 

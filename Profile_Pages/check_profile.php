@@ -8,8 +8,8 @@
         $id = $_GET['id'];
 
         $check_data = fetch_check_data($id);
-        $member_id = $check_data['member_id'];
-        $volunteer_data_row = fetch_member_data($member_id); // We link the correct owner of the check.
+        $volunteer_id = $check_data['volunteer_id'];
+        $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the check.
     }
 
     // Check if user has submitted info
@@ -26,7 +26,7 @@
             $DB->update($delete_check_query);
 
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $member_id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $volunteer_id);
             die; // Ending the script
         }
     }

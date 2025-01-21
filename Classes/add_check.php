@@ -90,7 +90,7 @@ class Add_Check{
         $DB = new Database();
 
         // SQL query into Checks
-        $check_query = "insert into Checks (member_id, issuance_date, validity_date, points_deposit, required_time, organizer_name, additional_notes)
+        $check_query = "insert into Checks (volunteer_id, issuance_date, validity_date, points_deposit, required_time, organizer_name, additional_notes)
                   values ('$id', '$issuance_date', '$validity_date', '$points_deposit', '$required_time', '$organizer_name', '$additional_notes')";
         $DB->save($check_query);
     }

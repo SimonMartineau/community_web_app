@@ -105,15 +105,13 @@ class Add_Social_Activity{
         $registration_date = date("Y-m-d");
 
 
-        // SQL query into Members
+        // SQL query into Volunteer
         $activity_query = "insert into Activities ()
                 values ()";
                 
         // Send data to db
         $DB = new Database();
         $DB->save($activity_query);
-        //$DB->save($member_availability_query);
-        //$DB->save($members_interests_query);
     }
 
     

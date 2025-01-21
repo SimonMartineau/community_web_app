@@ -75,7 +75,7 @@ class Edit_Purchase{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Members
+        // SQL query into Volunteers
         $purchase_query = "UPDATE Purchases 
                   SET item_names = '$item_names', 
                       total_cost = '$total_cost', 

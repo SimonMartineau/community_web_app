@@ -7,15 +7,15 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
-        $member_data = fetch_member_data($id);
-        $interest_data = fetch_member_interest_data($id);
-        $availability_data = fetch_member_availability_data($id);
+        $volunteer_data = fetch_volunteer_data($id);
+        $interest_data = fetch_volunteer_interest_data($id);
+        $availability_data = fetch_volunteer_availability_data($id);
 
         // Collect volunteer data
         $checks_data = fetch_data("
             SELECT * 
             FROM Checks 
-            WHERE member_id='$id' 
+            WHERE volunteer_id='$id' 
             ORDER BY id desc 
             LIMIT 6"
         );
@@ -23,7 +23,7 @@
         $purchases_data = fetch_data("
             SELECT * 
             FROM Purchases 
-            WHERE member_id='$id' 
+            WHERE volunteer_id='$id' 
             ORDER BY id desc 
             LIMIT 6"
         );
@@ -39,7 +39,7 @@
             $DB = new Database();
 
             // SQL query into Purchases
-            $delete_volunteer_query = "UPDATE `Members` SET `trashed`='1' WHERE `id`='$id'";
+            $delete_volunteer_query = "UPDATE `Volunteers` SET `trashed`='1' WHERE `id`='$id'";
             $DB->update($delete_volunteer_query);
 
             // Changing the page.
@@ -54,7 +54,7 @@
             $DB = new Database();
 
             // SQL query into Purchases
-            $restore_volunteer_query = "UPDATE `Members` SET `trashed`='0' WHERE `id`='$id'";
+            $restore_volunteer_query = "UPDATE `Volunteers` SET `trashed`='0' WHERE `id`='$id'";
             $DB->update($restore_volunteer_query);
 
             // Changing the page.
@@ -167,7 +167,7 @@
             <!-- Check if volunteer is deleted or not -->
             <?php 
                 // If the volunteer is not trashed, propose delete option
-                if($member_data['trashed'] == 0){
+                if($volunteer_data['trashed'] == 0){
                     // Show delete button (default case)
                 ?>
                     <div style="text-align: right; padding: 10px 20px; display: inline-block;">
@@ -211,23 +211,23 @@
                     <!-- Personal Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
-                        <p><strong>First Name:</strong> <?php echo htmlspecialchars($member_data['first_name']); ?></p>
-                        <p><strong>Last Name:</strong> <?php echo htmlspecialchars($member_data['last_name']); ?></p>
-                        <p><strong>Gender:</strong> <?php echo htmlspecialchars($member_data['gender']); ?></p>
-                        <p><strong>Date of Birth:</strong> <?php echo htmlspecialchars($member_data['date_of_birth']); ?></p>
-                        <p><strong>Address:</strong> <?php echo htmlspecialchars($member_data['address']); ?></p>
-                        <p><strong>Zip Code:</strong> <?php echo htmlspecialchars($member_data['zip_code']); ?></p>
-                        <p><strong>Phone:</strong> <?php echo htmlspecialchars($member_data['telephone_number']); ?></p>
-                        <p><strong>Email:</strong> <?php echo htmlspecialchars($member_data['email']); ?></p>
+                        <p><strong>First Name:</strong> <?php echo htmlspecialchars($volunteer_data['first_name']); ?></p>
+                        <p><strong>Last Name:</strong> <?php echo htmlspecialchars($volunteer_data['last_name']); ?></p>
+                        <p><strong>Gender:</strong> <?php echo htmlspecialchars($volunteer_data['gender']); ?></p>
+                        <p><strong>Date of Birth:</strong> <?php echo htmlspecialchars($volunteer_data['date_of_birth']); ?></p>
+                        <p><strong>Address:</strong> <?php echo htmlspecialchars($volunteer_data['address']); ?></p>
+                        <p><strong>Zip Code:</strong> <?php echo htmlspecialchars($volunteer_data['zip_code']); ?></p>
+                        <p><strong>Phone:</strong> <?php echo htmlspecialchars($volunteer_data['telephone_number']); ?></p>
+                        <p><strong>Email:</strong> <?php echo htmlspecialchars($volunteer_data['email']); ?></p>
                     </div>
                     
                     <!-- Volunteer Contributions -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
-                        <p><strong>Points:</strong> <span><?php echo htmlspecialchars($member_data['points']); ?></span></p>
-                        <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($member_data['hours_completed']); ?></span></p>
-                        <p><strong>Assigned Area:</strong> <?php echo htmlspecialchars($member_data['assigned_area']); ?></p>
-                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($member_data['organizer_name']); ?></p>
+                        <p><strong>Points:</strong> <span><?php echo htmlspecialchars($volunteer_data['points']); ?></span></p>
+                        <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_completed']); ?></span></p>
+                        <p><strong>Assigned Area:</strong> <?php echo htmlspecialchars($volunteer_data['assigned_area']); ?></p>
+                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($volunteer_data['organizer_name']); ?></p>
                     </div>
 
                     <!-- Interests -->
@@ -297,9 +297,9 @@
                     <!-- Additional Details -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($member_data['additional_notes']) ?: 'None'; ?></p>
-                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars($member_data['registration_date']); ?></p>
-                        <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($member_data['trashed'] ? "Yes" : "No"); ?></p>
+                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($volunteer_data['additional_notes']) ?: 'None'; ?></p>
+                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars($volunteer_data['registration_date']); ?></p>
+                        <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($volunteer_data['trashed'] ? "Yes" : "No"); ?></p>
                     </div>
                     
                 </div>
@@ -324,7 +324,7 @@
                         <?php
                         if ($checks_data) {
                             foreach ($checks_data as $check_data_row) {
-                                $member_data = fetch_member_data($check_data_row['member_id']);
+                                $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
                                 $date = new DateTime($check_data_row['issuance_date']);
                                 $month = $date->format('F'); // Full month name (e.g., "January")
                                 include("../Widget_Pages/check_widget.php");
@@ -337,7 +337,7 @@
                     <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: none;">
                         <a href="../Listing_Pages/volunteer_specific_checks.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_checks_button" id="submenu_button">
-                                All <?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s" ?> Checks
+                                All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Checks
                             </button>
                         </a>
                     </div>
@@ -347,7 +347,7 @@
                         <?php
                         if ($purchases_data) {
                             foreach ($purchases_data as $purchase_data_row) {
-                                $member_data = fetch_member_data($purchase_data_row['member_id']);
+                                $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
                                 include("../Widget_Pages/purchase_widget.php");
                             }
                         }
@@ -358,7 +358,7 @@
                     <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;display: inline-block;">
                         <a href="../Listing_Pages/volunteer_specific_purchases.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_purchases_button" id="submenu_button">
-                                All <?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s" ?> Purchases
+                                All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
                             </button>
                         </a>
                     </div>

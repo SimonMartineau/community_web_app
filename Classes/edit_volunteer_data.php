@@ -190,8 +190,8 @@ class Edit_Volunteer{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Members
-        $members_query = "UPDATE Members 
+        // SQL query into Volunteers
+        $volunteers_query = "UPDATE Volunteers 
                   SET first_name = '$first_name', 
                       last_name = '$last_name', 
                       gender = '$gender', 
@@ -205,32 +205,32 @@ class Edit_Volunteer{
                       additional_notes = '$additional_notes', 
                       registration_date = '$registration_date'
                   WHERE id = '$id';";
-        $DB->update($members_query);
+        $DB->update($volunteers_query);
 
-        // Set member_id to value of primary key in Members table
-        $member_id = $id;
+        // Set volunteer_id to value of primary key in Volunteers table
+        $volunteer_id = $id;
 
-        // SQL query to delete data from Member_Interests table
-        $delete_interests_query = "DELETE FROM Member_Interests WHERE member_id = '$member_id'";
+        // SQL query to delete data from Volunteer_Interests table
+        $delete_interests_query = "DELETE FROM Volunteer_Interests WHERE volunteer_id = '$volunteer_id'";
         $DB->update($delete_interests_query);
 
-        // SQL query into Member_Interests
+        // SQL query into Volunteer_Interests
         foreach($volunteer_interests as $interest){
-            $members_interests_query = "insert into Member_Interests (member_id, interest)
-            values ('$member_id', '$interest')";
-            $DB->save($members_interests_query);
+            $volunteers_interests_query = "insert into Volunteer_Interests (volunteer_id, interest)
+            values ('$volunteer_id', '$interest')";
+            $DB->save($volunteers_interests_query);
         }
 
-        // SQL query to delete data from Member_Availability table
-        $delete_availability_query = "DELETE FROM Member_Availability WHERE member_id = '$member_id'";
+        // SQL query to delete data from Volunteer_Availability table
+        $delete_availability_query = "DELETE FROM Volunteer_Availability WHERE volunteer_id = '$volunteer_id'";
         $DB->update($delete_availability_query);
 
-        // SQL query into Member_Availability
+        // SQL query into Volunteer_Availability
         foreach($volunteer_availability as $availability){
             list($weekday, $time_period) = explode('-', $availability);
-            $members_availability_query = "insert into Member_Availability (member_id, weekday, time_period)
-            values ('$member_id', '$weekday', '$time_period')";
-            $DB->save($members_availability_query);
+            $volunteers_availability_query = "insert into Volunteer_Availability (volunteer_id, weekday, time_period)
+            values ('$volunteer_id', '$weekday', '$time_period')";
+            $DB->save($volunteers_availability_query);
         }
 
     }

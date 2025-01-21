@@ -12,7 +12,7 @@
     $all_purchases_data = fetch_data("
         SELECT * 
         FROM Purchases 
-        WHERE member_id='$id' 
+        WHERE volunteer_id='$id' 
         ORDER BY id desc"
     );
 
@@ -118,7 +118,7 @@
                         <?php
                             if($all_purchases_data){
                                 foreach($all_purchases_data as $purchase_data_row){
-                                    $member_data = fetch_member_data($purchase_data_row['member_id']);
+                                    $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
                                     include("../Widget_Pages/purchase_widget.php");
                                 }
                             }

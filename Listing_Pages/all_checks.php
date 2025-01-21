@@ -8,7 +8,7 @@
     $all_checks_data = fetch_data("
         SELECT c.* 
         FROM Checks c
-        INNER JOIN Members m ON c.member_id = m.id
+        INNER JOIN Volunteers m ON c.volunteer_id = m.id
         WHERE m.trashed = 0
         ORDER BY c.id DESC"
     );
@@ -114,7 +114,7 @@
                         <?php
                             if($all_checks_data){
                                 foreach($all_checks_data as $check_data_row){
-                                    $member_data = fetch_member_data($check_data_row['member_id']);
+                                    $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
                                     $date = new DateTime($check_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")
                                     include("../Widget_Pages/check_widget.php");

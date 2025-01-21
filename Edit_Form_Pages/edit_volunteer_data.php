@@ -8,20 +8,20 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
-        $member_data = fetch_member_data($id);
-        $interests_data = fetch_member_interest_data($id);
-        $availability_data = fetch_member_availability_data($id);
+        $volunteer_data = fetch_volunteer_data($id);
+        $interests_data = fetch_volunteer_interest_data($id);
+        $availability_data = fetch_volunteer_availability_data($id);
     }
 
     // Default entry values on page startup.
-    $first_name = $member_data['first_name'];
-    $last_name = $member_data['last_name'];
-    $gender = $member_data['gender'];
-    $date_of_birth = $member_data['date_of_birth'];
-    $address = $member_data['address'];
-    $zip_code = $member_data['zip_code'];
-    $telephone_number = $member_data['telephone_number'];
-    $email = $member_data['email'];
+    $first_name = $volunteer_data['first_name'];
+    $last_name = $volunteer_data['last_name'];
+    $gender = $volunteer_data['gender'];
+    $date_of_birth = $volunteer_data['date_of_birth'];
+    $address = $volunteer_data['address'];
+    $zip_code = $volunteer_data['zip_code'];
+    $telephone_number = $volunteer_data['telephone_number'];
+    $email = $volunteer_data['email'];
     // For interest data, we extract the interest column and insert the data in $volunteer_interests[].
     foreach($interests_data as $interests_data_row){
         $volunteer_interests[] = $interests_data_row['interest'];
@@ -34,10 +34,10 @@
         $available_moment = "{$weekday}-{$time_period}";
         $volunteer_availability[] = $available_moment;
     }
-    $organizer_name = $member_data['organizer_name'];
-    $assigned_area = $member_data['assigned_area'];
-    $additional_notes = $member_data['additional_notes'];
-    $registration_date = $member_data['registration_date'];
+    $organizer_name = $volunteer_data['organizer_name'];
+    $assigned_area = $volunteer_data['assigned_area'];
+    $additional_notes = $volunteer_data['additional_notes'];
+    $registration_date = $volunteer_data['registration_date'];
 
     
     // Check if user has submitted info, we update entries.

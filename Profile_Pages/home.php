@@ -7,7 +7,7 @@
     // Collect volunteer data
     $all_volunteer_data = fetch_data("
         SELECT * 
-        FROM Members 
+        FROM Volunteers 
         WHERE `trashed` = 0 
         ORDER BY id desc 
         LIMIT 5"
@@ -16,7 +16,7 @@
     $all_checks_data = fetch_data("
         SELECT c.* 
         FROM Checks c
-        INNER JOIN Members m ON c.member_id = m.id
+        INNER JOIN Volunteers m ON c.volunteer_id = m.id
         WHERE m.trashed = 0
         ORDER BY c.id DESC 
         LIMIT 5"
@@ -25,7 +25,7 @@
     $all_purchases_data = fetch_data("
         SELECT p.* 
         FROM Purchases p
-        INNER JOIN Members m ON p.member_id = m.id
+        INNER JOIN Volunteers m ON p.volunteer_id = m.id
         WHERE m.trashed = 0
         ORDER BY p.id DESC 
         LIMIT 5"
@@ -88,7 +88,7 @@
                         <?php
                             if($all_checks_data){
                                 foreach($all_checks_data as $check_data_row){
-                                    $member_data = fetch_member_data($check_data_row['member_id']);
+                                    $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
                                     $date = new DateTime($check_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")
                                     include("../Widget_Pages/check_widget.php");
@@ -155,7 +155,7 @@
                         <?php
                             if($all_purchases_data){
                                 foreach($all_purchases_data as $purchase_data_row){
-                                    $member_data = fetch_member_data($purchase_data_row['member_id']);
+                                    $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
                                     include("../Widget_Pages/purchase_widget.php");
                                 }
                             }

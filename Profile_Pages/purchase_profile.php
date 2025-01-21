@@ -8,8 +8,8 @@
         $id = $_GET['id'];
 
         $purchase_data = fetch_purchase_data($id);
-        $member_id = $purchase_data['member_id'];
-        $volunteer_data_row = fetch_member_data($member_id); // We link the correct owner of the purchase.
+        $volunteer_id = $purchase_data['volunteer_id'];
+        $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the purchase.
 
     }
 
@@ -27,7 +27,7 @@
             $DB->update($delete_purchase_query);
 
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $member_id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $volunteer_id);
             die; // Ending the script
         }
     }
