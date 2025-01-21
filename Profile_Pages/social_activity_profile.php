@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Activity Profile | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style></style>
@@ -12,7 +12,7 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -20,7 +20,7 @@
 
             <!-- Add edit social actiivty button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="volunteer_edit_data.php" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_volunteer_data.php" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Data
                     </button>
@@ -29,7 +29,7 @@
 
             <!-- Add delete social activity button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
+                <a href="../Profile_Pages/purchase.php" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Delete Social Activity
                     </button>

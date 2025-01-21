@@ -1,8 +1,8 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/add_social_activity.php");
+    include("../Classes/connect.php");
+    include("../Classes/add_social_activity.php");
 
     // Variables to keep user input data if failed submit
     $activity_name = "";
@@ -44,7 +44,7 @@
             $additional_notes = "";
 
             // Changing the page.
-            header("Location: add_social_activity.php");
+            header("Location: ../Add_Form_Pages/add_social_activity.php");
             die; // Ending the script
         }    
     }
@@ -57,7 +57,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add Social Activity | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style></style>
@@ -65,7 +65,7 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Middle area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -82,7 +82,7 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="add_social_activity.php">
+                    <form method="post" action="../Add_Form_Pages/add_social_activity.php">
 
                         <!-- Activity name text input -->
                         <div class="input_container">

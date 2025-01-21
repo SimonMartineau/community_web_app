@@ -81,15 +81,15 @@
 <div id="blue_bar">
     <div>
         <!-- Logo -->
-        <a href="home.php" class="logo">Give and Receive</a>
+        <a href="../Profile_Pages/home.php" class="logo">Give and Receive</a>
 
         <!-- Navigation Menu -->
         <div id="menu_container">
-            <a href="volunteers.php"><div id="menu_buttons">Volunteers</div></a>
-            <a href="social_activities.php"><div id="menu_buttons">Social Activities</div></a>
-            <a href="data.php"><div id="menu_buttons">Data</div></a>
-            <a href="about.php"><div id="menu_buttons">About</div></a>
-            <a href="contact.php"><div id="menu_buttons">Contact</div></a>
+            <a href="../Listing_Pages/all_volunteers.php"><div id="menu_buttons">Volunteers</div></a>
+            <a href="../Listing_Pages/all_social_activities.php"><div id="menu_buttons">Social Activities</div></a>
+            <a href="../Profile_Pages/data.php"><div id="menu_buttons">Data</div></a>
+            <a href="../Profile_Pages/about.php"><div id="menu_buttons">About</div></a>
+            <a href="../Profile_Pages/contact.php"><div id="menu_buttons">Contact</div></a>
         </div>
 
         <!-- Logout -->

@@ -1,8 +1,8 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/functions.php");
+    include("../Classes/connect.php");
+    include("../Classes/functions.php");
 
     // Collect volunteer data
     $all_purchases_data = fetch_data("
@@ -22,7 +22,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Purchases | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style></style>
@@ -30,7 +30,7 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -116,7 +116,7 @@
                             if($all_purchases_data){
                                 foreach($all_purchases_data as $purchase_data_row){
                                     $member_data = fetch_member_data($purchase_data_row['member_id']);
-                                    include("purchase_widget.php");
+                                    include("../Widget_Pages/purchase_widget.php");
                                 }
                             }
                         ?>

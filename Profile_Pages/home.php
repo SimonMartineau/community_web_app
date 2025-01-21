@@ -1,8 +1,8 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/functions.php");
+    include("../Classes/connect.php");
+    include("../Classes/functions.php");
 
     // Collect volunteer data
     $all_volunteer_data = fetch_data("
@@ -40,7 +40,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style></style>
@@ -48,14 +48,14 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <div>
                 <br>
             </div>
-            <img src="images/mountain.jpg" style="width:100%; border-radius: 8px;">
+            <img src="../Images/mountain.jpg" style="width:100%; border-radius: 8px;">
         
             <!-- Below cover area -->
             <div style="display: flex;">
@@ -74,7 +74,7 @@
                         <?php
                             if($all_volunteer_data){
                                 foreach($all_volunteer_data as $volunteer_data_row){
-                                    include("volunteer_widget.php");
+                                    include("../Widget_Pages/volunteer_widget.php");
                                 }
                             }
                         ?>
@@ -91,7 +91,7 @@
                                     $member_data = fetch_member_data($check_data_row['member_id']);
                                     $date = new DateTime($check_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")
-                                    include("check_widget.php");
+                                    include("../Widget_Pages/check_widget.php");
                                 }
                             }
                         ?>
@@ -156,7 +156,7 @@
                             if($all_purchases_data){
                                 foreach($all_purchases_data as $purchase_data_row){
                                     $member_data = fetch_member_data($purchase_data_row['member_id']);
-                                    include("purchase_widget.php");
+                                    include("../Widget_Pages/purchase_widget.php");
                                 }
                             }
                         ?>

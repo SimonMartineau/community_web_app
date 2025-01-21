@@ -1,4 +1,4 @@
-<a href="volunteer_profile.php?id=<?php echo $volunteer_data_row['id']; ?>" style="text-decoration: none;">
+<a href="../Profile_Pages/volunteer_profile.php?id=<?php echo $volunteer_data_row['id']; ?>" style="text-decoration: none;">
     <div id="widget" class="volunteer_widget">
         <h3 class="widget_name"><?php echo $volunteer_data_row['first_name'] . " " . $volunteer_data_row['last_name'] ?></h3>
         <p class="widget_info">

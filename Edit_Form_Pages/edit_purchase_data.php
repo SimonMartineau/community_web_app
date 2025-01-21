@@ -1,24 +1,27 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/add_purchase.php");
+    include("../Classes/connect.php");
+    include("../Classes/edit_purchase_data.php");
+    include("../Classes/functions.php");
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
+
+        $purchase_data = fetch_purchase_data($id);
     }
 
     // Default entry values on page startup.
-    $item_names = "";
-    $total_cost = "";
-    $purchase_date = date("Y-m-d");
-    $organizer_name = "";
-    $additional_notes = "";
-
-    // Check if user has submitted info
+    $item_names = $purchase_data['item_names'];
+    $total_cost = $purchase_data['total_cost'];
+    $purchase_date = $purchase_data['purchase_date'];
+    $organizer_name = $purchase_data['organizer_name'];
+    $additional_notes = $purchase_data['additional_notes'];
+    
+    // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        $purchase = new Add_Purchase();
+        $purchase = new Edit_Purchase();
         $submit_success = $purchase->evaluate($id, $_POST);
 
         // If there are errors 
@@ -29,10 +32,10 @@
             $purchase_date = $_POST['purchase_date'];
             $organizer_name = $_POST['organizer_name'];
             $additional_notes = $_POST['additional_notes'];
-
-        } else{
+            
+        } else{ // If there are no errors in the submission.
             // Changing the page.
-            header("Location: volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/purchase_profile.php?id=" . $id);
             die; // Ending the script
         }    
     }
@@ -44,8 +47,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Purchase | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <title>Edit Purchase Data | Give and Receive</title>
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style></style>
@@ -53,17 +56,17 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Middle area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             
             <!-- Major rectangle area -->
             <div id="major_rectangle">
-
+                
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Purchase Form</span>
+                    <span style="font-size: 24px; font-weight: bold;">Edit Purchase Data</span>
                 </div>
 
                 <!-- Error message -->
@@ -77,18 +80,18 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="add_purchase.php?id=<?php echo $id; ?>">
+                    <form method="post" action="../Edit_Form_Pages/edit_purchase_data.php?id=<?php echo $id; ?>">
 
                         <!-- Item names text input -->
                         <div class="input_container">
-                            <input name="item_names" type="text" id="text_input" placeholder="Item Names" value="<?php echo $item_names ?>">
+                            Item names: <input name="item_names" type="text" id="text_input" placeholder="Item Names" value="<?php echo $item_names ?>">
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->item_names_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Total cost text input -->
                         <div class="input_container">
-                            <input name="total_cost" type="text" id="text_input" placeholder="Total Points Cost" value="<?php echo $total_cost ?>">
+                            Total cost: <input name="total_cost" type="text" id="text_input" placeholder="Total Points Cost" value="<?php echo $total_cost ?>">
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->total_cost_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -99,10 +102,10 @@
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->purchase_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
-                        
+
                         <!-- Organizer Name text input -->
                         <div class="input_container">
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
+                            Organizer name: <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->organizer_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -120,13 +123,12 @@
                             <input type="submit" id="submit_button" value="Submit">
                         </div>
                         <br><br>
+                        
                     </form>
                 </div>
 
-                
             </div>
         </div>
-            
         
     </body>
 </html>

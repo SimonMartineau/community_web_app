@@ -1,15 +1,20 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/functions.php");
+    include("../Classes/connect.php");
+    include("../Classes/functions.php");
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
     }
 
     // Collect volunteer data
-    $all_checks_data = fetch_data("select * from Checks where member_id='$id' order by id desc");
+    $all_purchases_data = fetch_data("
+        SELECT * 
+        FROM Purchases 
+        WHERE member_id='$id' 
+        ORDER BY id desc"
+    );
 
 ?>
 
@@ -19,8 +24,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Checks | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <title>Purchases | Give and Receive</title>
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style></style>
@@ -28,7 +33,7 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -106,17 +111,15 @@
 
                         <!-- Section title of recent social activities section -->
                         <div id="section_title">
-                            <span>Checks</span>
+                            <span>Purchases</span>
                         </div>
 
-                        <!-- Display checks widgets --> 
+                        <!-- Display purchases widgets --> 
                         <?php
-                            if($all_checks_data){
-                                foreach($all_checks_data as $check_data_row){
-                                    $member_data = fetch_member_data($check_data_row['member_id']);
-                                    $date = new DateTime($check_data_row['issuance_date']);
-                                    $month = $date->format('F'); // Full month name (e.g., "January")
-                                    include("check_widget.php");
+                            if($all_purchases_data){
+                                foreach($all_purchases_data as $purchase_data_row){
+                                    $member_data = fetch_member_data($purchase_data_row['member_id']);
+                                    include("../Widget_Pages/purchase_widget.php");
                                 }
                             }
                         ?>

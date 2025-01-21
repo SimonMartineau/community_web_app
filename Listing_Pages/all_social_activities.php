@@ -1,22 +1,10 @@
-<?php
-
-    // Include classes
-    include("classes/connect.php");
-    include("classes/functions.php");
-
-    // Collect volunteer data
-    $all_volunteer_data = fetch_all_volunteer_data();
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Volunteers | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <title>Social Activities | Give and Receive</title>
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style></style>
@@ -24,48 +12,27 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
-            <!-- Submenu Button Area -->
-
-            <!-- Add volunteer button -->
+            <!-- Add social activity button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="add_volunteer.php" style="text-decoration: none; display: inline-block;">
+                <a href="../Add_Form_Pages/add_social_activity.php" style="text-decoration: none;">
                     <button id="submenu_button">
-                        Add Volunteer
+                        Add Social Activity
                     </button>
                 </a>
             </div>
-
-            <!-- See all Checks button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="all_checks.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        See All Checks
-                    </button>
-                </a>
-            </div>
-
-            <!-- See all Purchases button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="all_purchases.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        See All Purchases
-                    </button>
-                </a>
-            </div>
-     
+        
             <!-- Below cover area -->
             <div style="display: flex;">
 
-                <!-- Left area -->
-                <div style="flex:0.6;">
+                <!-- Filter area -->
+                <div style="min-height: 400px; flex:0.6;">
 
-                    <!-- Filter form area -->
                     <div id="medium_rectangle">
 
                         <!-- Section title of filter area -->
@@ -79,22 +46,9 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="sort" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                 <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="alphabetically_a_z">Alphabetically (a-z)</option>
-                                    <option value="alphabetically_z_a">Alphabetically (z-a)</option>
-                                    <option value="date_of_inscription_asc">Date of Inscription (asc)</option>
-                                    <option value="date_of_inscription_desc">Date of Inscription (desc)</option>
-                                    <option value="age_asc">Age (asc)</option>
-                                    <option value="age_desc">Age (desc)</option>
-                                </select>
-                            </div>
-
-                            <!-- Trash filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="sort" style="font-weight: bold;">Is in the trash bin:</label><br>
-                                <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                <option value="any">Any</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="alphabetically">Alphabetically</option>
+                                    <option value="date_of_inscription">Date of Inscription</option>
+                                    <option value="birthday">Birthday</option>
                                 </select>
                             </div>
 
@@ -156,25 +110,54 @@
                     </div>
                 </div>
 
-                <!-- Right area -->
-                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
+                <!-- Volunteer area -->
+                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
 
-                    <!-- Volunteer widget display -->
+                    <!-- Activity widget display -->
                     <div id="medium_rectangle">
 
                         <!-- Section title of recent social activities section -->
                         <div id="section_title">
-                            <span>Volunteers</span>
+                            <span>Social Activities</span>
                         </div>
 
-                        <!-- Display volunteer widgets --> 
-                        <?php
-                            if($all_volunteer_data){
-                                foreach($all_volunteer_data as $volunteer_data_row){
-                                    include("volunteer_widget.php");
-                                }
-                            }
-                        ?>
+                        <!-- Social activity 1 -->
+                        <div id="activity_widget">
+                            <h3 class="activity_name">Community Cleanup</h3>
+                            <p class="activity_info">
+                                <strong>Duration:</strong> 3 hours<br>
+                                <strong>Area:</strong> Central Park, Springfield<br>
+                                <strong>Participants:</strong> 25 people<br>
+                            </p>
+                            <p class="activity_info">
+                                <strong>Domain:</strong>
+                                <ul class="activity_widget">
+                                    <li>Organization of community events</li>
+                                    <li>Cleaning and maintenance of public spaces</li>
+                                    <li>Participation in urban gardening projects</li>
+                                </ul>
+                            </p>
+                        </div>
+
+                        <!-- Social activity 2 -->
+                        <div id="activity_widget">
+                            <h3 class="activity_name">Community Cleanup</h3>
+                            <p>
+                                <strong>Duration:</strong> 3 hours<br>
+                                <strong>Area:</strong> Central Park, Springfield<br>
+                                <strong>Participants:</strong> 25 people<br>
+                            </p>
+                            <p class="activity_info">
+                                <strong>Domain:</strong>
+                                <ul>
+                                    <li>Organization of community events</li>
+                                    <li>Cleaning and maintenance of public spaces</li>
+                                    <li>Participation in urban gardening projects</li>
+                                </ul>
+                            </p>
+                        </div>
+
+          
                         
 
                     </div>

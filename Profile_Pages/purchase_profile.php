@@ -1,8 +1,8 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/functions.php");
+    include("../Classes/connect.php");
+    include("../Classes/functions.php");
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -27,7 +27,7 @@
             $DB->update($delete_purchase_query);
 
             // Changing the page.
-            header("Location: volunteer_profile.php?id=" . $member_id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $member_id);
             die; // Ending the script
         }
     }
@@ -40,7 +40,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Purchase Profile | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style>        
@@ -59,7 +59,7 @@
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -69,7 +69,7 @@
 
             <!-- Edit purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase_edit_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_purchase_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Purchase Info
                     </button>
@@ -78,7 +78,7 @@
 
             <!-- Delete purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <form method="POST" action="purchase_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
+                <form method="POST" action="../Profile_Pages/purchase_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
                     <!-- Hidden input to confirm source -->
                     <input type="hidden" name="delete_purchase" value="1">
                     <button id="submenu_button">
@@ -129,7 +129,7 @@
 
                         <!-- Display volunteer widgets --> 
                         <?php
-                            include("volunteer_widget.php");
+                            include("../Widget_Pages/volunteer_widget.php");
                         ?>
                         
                     </div>

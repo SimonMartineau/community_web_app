@@ -1,8 +1,8 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/functions.php");
+    include("../Classes/connect.php");
+    include("../Classes/functions.php");
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -12,8 +12,21 @@
         $availability_data = fetch_member_availability_data($id);
 
         // Collect volunteer data
-        $checks_data = fetch_data("select * from Checks where member_id='$id' order by id desc limit 3");
-        $purchases_data = fetch_data("select * from Purchases where member_id='$id' order by id desc limit 3");
+        $checks_data = fetch_data("
+            SELECT * 
+            FROM Checks 
+            WHERE member_id='$id' 
+            ORDER BY id desc 
+            LIMIT 6"
+        );
+
+        $purchases_data = fetch_data("
+            SELECT * 
+            FROM Purchases 
+            WHERE member_id='$id' 
+            ORDER BY id desc 
+            LIMIT 6"
+        );
     }
 
     // Check if user has submitted info
@@ -30,7 +43,7 @@
             $DB->update($delete_volunteer_query);
 
             // Changing the page.
-            header("Location: volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $id);
             die; // Ending the script
         }
 
@@ -45,7 +58,7 @@
             $DB->update($restore_volunteer_query);
 
             // Changing the page.
-            header("Location: volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $id);
             die; // Ending the script
         }
     }
@@ -59,7 +72,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Volunteer Profile | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style>        
@@ -113,10 +126,10 @@
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
-        <script src="functions.js"></script>
+        <script src="../functions.js"></script>
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -126,7 +139,7 @@
 
             <!-- Edit volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="volunteer_edit_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_volunteer_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Volunteer Info
                     </button>
@@ -135,7 +148,7 @@
 
             <!-- Add check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="add_check.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Add_Form_Pages/add_check.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Add Check
                     </button>
@@ -144,7 +157,7 @@
 
             <!-- Add purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="add_purchase.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Add_Form_Pages/add_purchase.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Add Purchase
                     </button>
@@ -158,7 +171,7 @@
                     // Show delete button (default case)
                 ?>
                     <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this profile? It will be placed in the trash.')">
+                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this profile? It will be placed in the trash.')">
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="delete_volunteer" value="1">
@@ -171,7 +184,7 @@
                     // Propose restore option for trashed volunteer
                 ?>
                     <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
+                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="restore_volunteer" value="1">
@@ -314,21 +327,20 @@
                                 $member_data = fetch_member_data($check_data_row['member_id']);
                                 $date = new DateTime($check_data_row['issuance_date']);
                                 $month = $date->format('F'); // Full month name (e.g., "January")
-                                include("check_widget.php");
+                                include("../Widget_Pages/check_widget.php");
                             }
                         }
                         ?>
                     </div>                    
 
                     <!-- All volunteer checks button (Initially hidden) -->
-                    <div id="all_volunteer_checks_button" style="text-align: right; padding: 10px 20px; display: none;">
-                        <a href="all_volunteer_checks.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="all_volunteer_checks_button" id="submenu_button">
+                    <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: none;">
+                        <a href="../Listing_Pages/volunteer_specific_checks.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                            <button name="volunteer_specific_checks_button" id="submenu_button">
                                 All <?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s" ?> Checks
                             </button>
                         </a>
                     </div>
-
                     
                     <!-- Display purchase widgets -->
                     <div id="purchases_widgets" class="widget-container" style="display: none;">
@@ -336,16 +348,16 @@
                         if ($purchases_data) {
                             foreach ($purchases_data as $purchase_data_row) {
                                 $member_data = fetch_member_data($purchase_data_row['member_id']);
-                                include("purchase_widget.php");
+                                include("../Widget_Pages/purchase_widget.php");
                             }
                         }
                         ?>
                     </div>
 
                     <!-- All volunteer purchases button (Initially hidden) -->
-                    <div id="all_volunteer_purchases_button" style="text-align: right; padding: 10px 20px;display: inline-block;">
-                        <a href="all_volunteer_purchases.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="all_volunteer_purchases_button" id="submenu_button">
+                    <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;display: inline-block;">
+                        <a href="../Listing_Pages/volunteer_specific_purchases.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                            <button name="volunteer_specific_purchases_button" id="submenu_button">
                                 All <?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s" ?> Purchases
                             </button>
                         </a>

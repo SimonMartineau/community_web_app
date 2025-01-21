@@ -1,8 +1,8 @@
 <?php
 
     // Include classes
-    include("classes/connect.php");
-    include("classes/functions.php");
+    include("../Classes/connect.php");
+    include("../Classes/functions.php");
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -26,7 +26,7 @@
             $DB->update($delete_check_query);
 
             // Changing the page.
-            header("Location: volunteer_profile.php?id=" . $member_id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $member_id);
             die; // Ending the script
         }
     }
@@ -39,7 +39,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Check Profile | Give and Receive</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
 
     <style>        
@@ -58,7 +58,7 @@
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
         <!-- Header bar -->
-        <?php include("header.php"); ?>
+        <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -68,7 +68,7 @@
 
             <!-- Edit check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="check_edit_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_check_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Check Info
                     </button>
@@ -77,7 +77,7 @@
 
             <!-- Delete check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <form method="POST" action="check_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this check?')">
+                <form method="POST" action="../Profile_Pages/check_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this check?')">
                     <!-- Hidden input to confirm source -->
                     <input type="hidden" name="delete_check" value="1">
                     <button id="submenu_button">
@@ -129,7 +129,7 @@
 
                         <!-- Display volunteer widgets --> 
                         <?php
-                            include("volunteer_widget.php");
+                            include("../Widget_Pages/volunteer_widget.php");
                         ?>
                         
                     </div>
