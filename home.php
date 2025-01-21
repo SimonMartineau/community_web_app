@@ -5,9 +5,31 @@
     include("classes/functions.php");
 
     // Collect volunteer data
-    $volunteer_data = fetch_data("select * from Members order by id desc limit 3");
-    $checks_data = fetch_data("select * from Checks order by id desc limit 3");
-    $purchases_data = fetch_data("select * from Purchases order by id desc limit 3");
+    $all_volunteer_data = fetch_data("
+        SELECT * 
+        FROM Members 
+        WHERE `trashed` = 0 
+        ORDER BY id desc 
+        LIMIT 5"
+    );
+
+    $all_checks_data = fetch_data("
+        SELECT c.* 
+        FROM Checks c
+        INNER JOIN Members m ON c.member_id = m.id
+        WHERE m.trashed = 0
+        ORDER BY c.id DESC 
+        LIMIT 5"
+    );
+
+    $all_purchases_data = fetch_data("
+        SELECT p.* 
+        FROM Purchases p
+        INNER JOIN Members m ON p.member_id = m.id
+        WHERE m.trashed = 0
+        ORDER BY p.id DESC 
+        LIMIT 5"
+    );
 
 ?>
 
@@ -50,8 +72,8 @@
 
                         <!-- Display volunteer widgets --> 
                         <?php
-                            if($volunteer_data){
-                                foreach($volunteer_data as $volunteer_data_row){
+                            if($all_volunteer_data){
+                                foreach($all_volunteer_data as $volunteer_data_row){
                                     include("volunteer_widget.php");
                                 }
                             }
@@ -64,8 +86,8 @@
 
                         <!-- Display checks widgets --> 
                         <?php
-                            if($checks_data){
-                                foreach($checks_data as $check_data_row){
+                            if($all_checks_data){
+                                foreach($all_checks_data as $check_data_row){
                                     $member_data = fetch_member_data($check_data_row['member_id']);
                                     $date = new DateTime($check_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")
@@ -131,8 +153,8 @@
 
                         <!-- Display purchase widgets --> 
                         <?php
-                            if($purchases_data){
-                                foreach($purchases_data as $purchase_data_row){
+                            if($all_purchases_data){
+                                foreach($all_purchases_data as $purchase_data_row){
                                     $member_data = fetch_member_data($purchase_data_row['member_id']);
                                     include("purchase_widget.php");
                                 }

@@ -16,6 +16,40 @@
         $purchases_data = fetch_data("select * from Purchases where member_id='$id' order by id desc limit 3");
     }
 
+    // Check if user has submitted info
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+        // Ensure the delete volunteer button has been pressed
+        if (isset($_POST['delete_volunteer']) && $_POST['delete_volunteer'] === '1') {
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $delete_volunteer_query = "UPDATE `Members` SET `trashed`='1' WHERE `id`='$id'";
+            $DB->update($delete_volunteer_query);
+
+            // Changing the page.
+            header("Location: volunteer_profile.php?id=" . $id);
+            die; // Ending the script
+        }
+
+        // Ensure the restore volunteer button has been pressed
+        if (isset($_POST['restore_volunteer']) && $_POST['restore_volunteer'] === '1') {
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $restore_volunteer_query = "UPDATE `Members` SET `trashed`='0' WHERE `id`='$id'";
+            $DB->update($restore_volunteer_query);
+
+            // Changing the page.
+            header("Location: volunteer_profile.php?id=" . $id);
+            die; // Ending the script
+        }
+    }
+
 
 ?>
 
@@ -117,14 +151,38 @@
                 </a>
             </div>
 
-            <!-- Delete volunteer button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="purchase.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        Delete Volunteer
-                    </button>
-                </a>
-            </div>
+            <!-- Check if volunteer is deleted or not -->
+            <?php 
+                // If the volunteer is not trashed, propose delete option
+                if($member_data['trashed'] == 0){
+                    // Show delete button (default case)
+                ?>
+                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                        <form method="POST" action="volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this profile? It will be placed in the trash.')">
+                            <button id="submenu_button">
+                                <!-- Hidden input to confirm source -->
+                                <input type="hidden" name="delete_volunteer" value="1">
+                                Delete Volunteer
+                            </button>
+                        </form>
+                    </div>
+                <?php
+                } else {
+                    // Propose restore option for trashed volunteer
+                ?>
+                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                        <form method="POST" action="volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
+                            <button id="submenu_button">
+                                <!-- Hidden input to confirm source -->
+                                <input type="hidden" name="restore_volunteer" value="1">
+                                Restore Volunteer
+                            </button>
+                        </form>
+                    </div>
+                <?php
+                }
+            ?>
+
                     
             <!-- Below cover area -->
             <div style="display: flex;">
@@ -260,8 +318,18 @@
                             }
                         }
                         ?>
+                    </div>                    
+
+                    <!-- All volunteer checks button (Initially hidden) -->
+                    <div id="all_volunteer_checks_button" style="text-align: right; padding: 10px 20px; display: none;">
+                        <a href="all_volunteer_checks.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                            <button name="all_volunteer_checks_button" id="submenu_button">
+                                All <?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s" ?> Checks
+                            </button>
+                        </a>
                     </div>
 
+                    
                     <!-- Display purchase widgets -->
                     <div id="purchases_widgets" class="widget-container" style="display: none;">
                         <?php
@@ -274,7 +342,17 @@
                         ?>
                     </div>
 
+                    <!-- All volunteer purchases button (Initially hidden) -->
+                    <div id="all_volunteer_purchases_button" style="text-align: right; padding: 10px 20px;display: inline-block;">
+                        <a href="all_volunteer_purchases.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                            <button name="all_volunteer_purchases_button" id="submenu_button">
+                                All <?php echo $member_data['first_name'] . " " . $member_data['last_name'] . "'s" ?> Purchases
+                            </button>
+                        </a>
                     </div>
+
+
+                </div>
 
 
                 </div>

@@ -40,6 +40,24 @@
                     </button>
                 </a>
             </div>
+
+            <!-- See all Checks button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="all_checks.php" style="text-decoration: none; display: inline-block;">
+                    <button id="submenu_button">
+                        See All Checks
+                    </button>
+                </a>
+            </div>
+
+            <!-- See all Purchases button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="all_purchases.php" style="text-decoration: none; display: inline-block;">
+                    <button id="submenu_button">
+                        See All Purchases
+                    </button>
+                </a>
+            </div>
      
             <!-- Below cover area -->
             <div style="display: flex;">
@@ -67,6 +85,16 @@
                                     <option value="date_of_inscription_desc">Date of Inscription (desc)</option>
                                     <option value="age_asc">Age (asc)</option>
                                     <option value="age_desc">Age (desc)</option>
+                                </select>
+                            </div>
+
+                            <!-- Trash filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="sort" style="font-weight: bold;">Is in the trash bin:</label><br>
+                                <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <option value="any">Any</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
 
