@@ -1,4 +1,4 @@
-function showWidgets(type) {
+function showWidgets(type){
     // Hide all widget containers and the buttons initially
     document.getElementById('checks_widgets').style.display = 'none';
     document.getElementById('purchases_widgets').style.display = 'none';

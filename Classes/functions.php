@@ -14,21 +14,6 @@ function fetch_data($query){
     }
 }
 
-function fetch_all_volunteer_data(){
-    $query = "select * from Volunteers order by id desc";
-
-    $DB = new Database();
-    $DB->save($query);
-        
-    $result = $DB->read($query);
-
-    if($result){
-        return $result;
-    }else{
-        return false;
-    }
-}
-
 function fetch_Volunteer_data($volunteer_id){
     $query = "select * from Volunteers where id='$volunteer_id'";
 

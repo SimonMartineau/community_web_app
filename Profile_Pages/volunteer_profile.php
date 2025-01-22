@@ -100,7 +100,7 @@
             font-weight: bold; /* Make the text bold */
             color: #405d9b; /* Match the theme color */
             padding: 10px 20px; /* Add padding for clickable space */
-            background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Subtle gradient background */
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
             border: none; /* Remove default borders */
             border-radius: 10px; /* Rounded corners */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
@@ -339,7 +339,7 @@
                     <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: none;">
                         <a href="../Listing_Pages/volunteer_specific_checks.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_checks_button" id="submenu_button">
-                                All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Checks
+                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Checks
                             </button>
                         </a>
                     </div>
@@ -361,7 +361,7 @@
                     <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;display: inline-block;">
                         <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_purchases_button" id="submenu_button">
-                                All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
+                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
                             </button>
                         </a>
                     </div>
