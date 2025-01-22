@@ -10,7 +10,7 @@ class Edit_Check{
 
 
     // Analyses data sent by user
-    public function evaluate($id, $data){
+    public function evaluate($check_id, $data){
 
         $error = false; // Initialize error check variable
 
@@ -68,7 +68,7 @@ class Edit_Check{
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
-            $this->edit_check($id, $data);
+            $this->edit_check($check_id, $data);
             return true;
         } else{
             // There is an error
@@ -77,7 +77,7 @@ class Edit_Check{
     }
 
 
-    public function edit_check($id, $data){
+    public function edit_check($check_id, $data){
         // Creating all the varaibles for the SQL input
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
@@ -97,7 +97,7 @@ class Edit_Check{
                       required_time = '$required_time', 
                       organizer_name = '$organizer_name', 
                       additional_notes = '$additional_notes'
-                  WHERE id = '$id';";
+                  WHERE id = '$check_id';";
         $DB->update($check_query);
 
     }

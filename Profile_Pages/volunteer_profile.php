@@ -4,18 +4,18 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['volunteer_id'])) {
+        $volunteer_id = $_GET['volunteer_id'];
 
-        $volunteer_data = fetch_volunteer_data($id);
-        $interest_data = fetch_volunteer_interest_data($id);
-        $availability_data = fetch_volunteer_availability_data($id);
+        $volunteer_data = fetch_volunteer_data($volunteer_id);
+        $interest_data = fetch_volunteer_interest_data($volunteer_id);
+        $availability_data = fetch_volunteer_availability_data($volunteer_id);
 
         // Collect volunteer data
         $checks_data = fetch_data("
             SELECT * 
             FROM Checks 
-            WHERE volunteer_id='$id' 
+            WHERE volunteer_id='$volunteer_id' 
             ORDER BY id desc 
             LIMIT 6"
         );
@@ -23,7 +23,7 @@
         $purchases_data = fetch_data("
             SELECT * 
             FROM Purchases 
-            WHERE volunteer_id='$id' 
+            WHERE volunteer_id='$volunteer_id' 
             ORDER BY id desc 
             LIMIT 6"
         );
@@ -39,11 +39,11 @@
             $DB = new Database();
 
             // SQL query into Purchases
-            $delete_volunteer_query = "UPDATE `Volunteers` SET `trashed`='1' WHERE `id`='$id'";
-            $DB->update($delete_volunteer_query);
+            $trash_volunteer_query = "UPDATE `Volunteers` SET `trashed`='1' WHERE `id`='$volunteer_id'";
+            $DB->update($trash_volunteer_query);
 
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }
 
@@ -54,11 +54,11 @@
             $DB = new Database();
 
             // SQL query into Purchases
-            $restore_volunteer_query = "UPDATE `Volunteers` SET `trashed`='0' WHERE `id`='$id'";
+            $restore_volunteer_query = "UPDATE `Volunteers` SET `trashed`='0' WHERE `id`='$volunteer_id'";
             $DB->update($restore_volunteer_query);
 
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }
     }
@@ -139,7 +139,7 @@
 
             <!-- Edit volunteer button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_volunteer_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Volunteer Info
                     </button>
@@ -148,7 +148,7 @@
 
             <!-- Add check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_check.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Add_Form_Pages/add_check.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Add Check
                     </button>
@@ -157,7 +157,7 @@
 
             <!-- Add purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_purchase.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Add Purchase
                     </button>
@@ -171,7 +171,7 @@
                     // Show delete button (default case)
                 ?>
                     <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this profile? It will be placed in the trash.')">
+                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" onsubmit="return confirm('Are you sure you want to delete this profile? It will be placed in the trash.')">
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="delete_volunteer" value="1">
@@ -184,7 +184,7 @@
                     // Propose restore option for trashed volunteer
                 ?>
                     <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
+                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="restore_volunteer" value="1">
@@ -315,7 +315,8 @@
                     <div id="widget_toggle_buttons">
                         <button onclick="showWidgets('checks')">Show Checks</button>
                         <button onclick="showWidgets('purchases')">Show Purchases</button>
-                        <button onclick="showWidgets('activities')">Show Activities</button>
+                        <button onclick="showWidgets('current_activities')">Show Current Activities</button>
+                        <button onclick="showWidgets('matching_activities')">Show Matching Activities</button>
                     </div>
 
 
@@ -324,6 +325,7 @@
                         <?php
                         if ($checks_data) {
                             foreach ($checks_data as $check_data_row) {
+                                $check_id = $check_data_row['id'];
                                 $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
                                 $date = new DateTime($check_data_row['issuance_date']);
                                 $month = $date->format('F'); // Full month name (e.g., "January")
@@ -335,7 +337,7 @@
 
                     <!-- All volunteer checks button (Initially hidden) -->
                     <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: none;">
-                        <a href="../Listing_Pages/volunteer_specific_checks.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                        <a href="../Listing_Pages/volunteer_specific_checks.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_checks_button" id="submenu_button">
                                 All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Checks
                             </button>
@@ -347,6 +349,7 @@
                         <?php
                         if ($purchases_data) {
                             foreach ($purchases_data as $purchase_data_row) {
+                                $purchase_id = $purchase_data_row['id'];
                                 $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
                                 include("../Widget_Pages/purchase_widget.php");
                             }
@@ -356,7 +359,7 @@
 
                     <!-- All volunteer purchases button (Initially hidden) -->
                     <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;display: inline-block;">
-                        <a href="../Listing_Pages/volunteer_specific_purchases.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                        <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_purchases_button" id="submenu_button">
                                 All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
                             </button>

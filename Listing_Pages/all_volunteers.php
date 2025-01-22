@@ -79,12 +79,14 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="sort" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                 <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="alphabetically_a_z">Alphabetically (a-z)</option>
-                                    <option value="alphabetically_z_a">Alphabetically (z-a)</option>
-                                    <option value="date_of_inscription_asc">Date of Inscription (asc)</option>
-                                    <option value="date_of_inscription_desc">Date of Inscription (desc)</option>
-                                    <option value="age_asc">Age (asc)</option>
-                                    <option value="age_desc">Age (desc)</option>
+                                    <option value="date_of_inscription_desc">Registration Date (Newest to Oldest)</option>
+                                    <option value="date_of_inscription_asc">Registration Date (Oldest to Newest)</option>
+                                    <option value="first_name_asc">First Name (A-Z)</option>
+                                    <option value="first_name_desc">First Name (Z-A)</option>
+                                    <option value="last_name_asc">Last Name (A-Z)</option>
+                                    <option value="last_name_desc">Last Name (Z-A)</option>
+                                    <option value="age_asc">Age (Youngest to Oldest)</option>
+                                    <option value="age_desc">Age (Oldest to Youngest)</option>
                                 </select>
                             </div>
 
@@ -171,6 +173,7 @@
                         <?php
                             if($all_volunteer_data){
                                 foreach($all_volunteer_data as $volunteer_data_row){
+                                    $volunteer_id = $volunteer_data_row['id'];
                                     include("../Widget_Pages/volunteer_widget.php");
                                 }
                             }

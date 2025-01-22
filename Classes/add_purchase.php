@@ -9,7 +9,7 @@ class Add_Purchase{
 
 
     // Analyses data sent by user
-    public function evaluate($id, $data){
+    public function evaluate($volunteer_id, $data){
 
         $error = false; // Initialize error check variable
 
@@ -55,7 +55,7 @@ class Add_Purchase{
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
-            $this->add_purchase($id, $data);
+            $this->add_purchase($volunteer_id, $data);
             return true;
         } else{
             // There is an error
@@ -64,7 +64,7 @@ class Add_Purchase{
     }
 
 
-    public function add_purchase($id, $data){
+    public function add_purchase($volunteer_id, $data){
         // Creating all the varaibles for the SQL input
         $item_names = $data['item_names'];
         $total_cost = $data['total_cost'];
@@ -77,7 +77,7 @@ class Add_Purchase{
 
         // SQL query into Purchases
         $purchase_query = "insert into Purchases (volunteer_id, item_names, total_cost, purchase_date, organizer_name, additional_notes)
-                  values ('$id', '$item_names', '$total_cost', '$purchase_date', '$organizer_name', '$additional_notes')";
+                  values ('$volunteer_id', '$item_names', '$total_cost', '$purchase_date', '$organizer_name', '$additional_notes')";
         $DB->save($purchase_query);
     }
 

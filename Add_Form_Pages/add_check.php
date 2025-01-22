@@ -4,8 +4,8 @@
     include("../Classes/connect.php");
     include("../Classes/add_check.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['volunteer_id'])) {
+        $volunteer_id = $_GET['volunteer_id'];
     }
 
     // Default entry values on page startup.
@@ -20,7 +20,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $check = new Add_Check();
-        $submit_success = $check->evaluate($id, $_POST);
+        $submit_success = $check->evaluate($volunteer_id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -34,7 +34,7 @@
 
         } else{
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }    
     }
@@ -79,7 +79,7 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Add_Form_Pages/add_check.php?id=<?php echo $id; ?>">
+                    <form method="post" action="../Add_Form_Pages/add_check.php?volunteer_id=<?php echo $volunteer_id; ?>">
 
                         <!-- Issuance date input -->
                         <div class="input_container">

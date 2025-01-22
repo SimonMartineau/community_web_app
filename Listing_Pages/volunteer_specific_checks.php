@@ -4,15 +4,15 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['volunteer_id'])) {
+        $volunteer_id = $_GET['volunteer_id'];
     }
 
     // Collect volunteer data
     $all_checks_data = fetch_data("
         SELECT * 
         FROM Checks 
-        WHERE volunteer_id='$id' 
+        WHERE volunteer_id='$volunteer_id' 
         ORDER BY id desc"
     );
 
@@ -118,6 +118,7 @@
                         <?php
                             if($all_checks_data){
                                 foreach($all_checks_data as $check_data_row){
+                                    $check_id = $check_data_row['id'];
                                     $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
                                     $date = new DateTime($check_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")

@@ -4,15 +4,15 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['volunteer_id'])) {
+        $volunteer_id = $_GET['volunteer_id'];
     }
 
     // Collect volunteer data
     $all_purchases_data = fetch_data("
         SELECT * 
         FROM Purchases 
-        WHERE volunteer_id='$id' 
+        WHERE volunteer_id='$volunteer_id' 
         ORDER BY id desc"
     );
 
@@ -118,6 +118,7 @@
                         <?php
                             if($all_purchases_data){
                                 foreach($all_purchases_data as $purchase_data_row){
+                                    $purchase_id = $purchase_data_row['id'];
                                     $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
                                     include("../Widget_Pages/purchase_widget.php");
                                 }

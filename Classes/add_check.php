@@ -10,7 +10,7 @@ class Add_Check{
 
 
     // Analyses data sent by user
-    public function evaluate($id, $data){
+    public function evaluate($volunteer_id, $data){
 
         $error = false; // Initialize error check variable
 
@@ -68,7 +68,7 @@ class Add_Check{
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
-            $this->add_check($id, $data);
+            $this->add_check($volunteer_id, $data);
             return true;
         } else{
             // There is an error
@@ -77,7 +77,7 @@ class Add_Check{
     }
 
 
-    public function add_check($id, $data){
+    public function add_check($volunteer_id, $data){
         // Creating all the varaibles for the SQL input
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
@@ -91,7 +91,7 @@ class Add_Check{
 
         // SQL query into Checks
         $check_query = "insert into Checks (volunteer_id, issuance_date, validity_date, points_deposit, required_time, organizer_name, additional_notes)
-                  values ('$id', '$issuance_date', '$validity_date', '$points_deposit', '$required_time', '$organizer_name', '$additional_notes')";
+                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$required_time', '$organizer_name', '$additional_notes')";
         $DB->save($check_query);
     }
 

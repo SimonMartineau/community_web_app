@@ -5,10 +5,10 @@
     include("../Classes/edit_purchase_data.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['purchase_id'])) {
+        $purchase_id = $_GET['purchase_id'];
 
-        $purchase_data = fetch_purchase_data($id);
+        $purchase_data = fetch_purchase_data($purchase_id);
     }
 
     // Default entry values on page startup.
@@ -22,7 +22,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $purchase = new Edit_Purchase();
-        $submit_success = $purchase->evaluate($id, $_POST);
+        $submit_success = $purchase->evaluate($purchase_id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -35,7 +35,7 @@
             
         } else{ // If there are no errors in the submission.
             // Changing the page.
-            header("Location: ../Profile_Pages/purchase_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/purchase_profile.php?purchase_id=" . $purchase_id);
             die; // Ending the script
         }    
     }
@@ -80,7 +80,7 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Edit_Form_Pages/edit_purchase_data.php?id=<?php echo $id; ?>">
+                    <form method="post" action="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?php echo $purchase_id; ?>">
 
                         <!-- Item names text input -->
                         <div class="input_container">

@@ -114,6 +114,7 @@
                         <?php
                             if($all_checks_data){
                                 foreach($all_checks_data as $check_data_row){
+                                    $check_id = $check_data_row['id'];
                                     $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
                                     $date = new DateTime($check_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")

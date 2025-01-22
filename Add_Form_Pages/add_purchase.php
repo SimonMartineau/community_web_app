@@ -4,8 +4,8 @@
     include("../Classes/connect.php");
     include("../Classes/add_purchase.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['volunteer_id'])) {
+        $volunteer_id = $_GET['volunteer_id'];
     }
 
     // Default entry values on page startup.
@@ -19,7 +19,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $purchase = new Add_Purchase();
-        $submit_success = $purchase->evaluate($id, $_POST);
+        $submit_success = $purchase->evaluate($volunteer_id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -32,7 +32,7 @@
 
         } else{
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }    
     }
@@ -77,7 +77,7 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Add_Form_Pages/add_purchase.php?id=<?php echo $id; ?>">
+                    <form method="post" action="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>">
 
                         <!-- Item names text input -->
                         <div class="input_container">

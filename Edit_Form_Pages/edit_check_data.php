@@ -5,10 +5,10 @@
     include("../Classes/edit_check_data.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['check_id'])) {
+        $check_id = $_GET['check_id'];
 
-        $check_data = fetch_check_data($id);
+        $check_data = fetch_check_data($check_id);
     }
 
     // Default entry values on page startup.
@@ -23,7 +23,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $check = new Edit_Check();
-        $submit_success = $check->evaluate($id, $_POST);
+        $submit_success = $check->evaluate($check_id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -37,7 +37,7 @@
             
         } else{ // If there are no errors in the submission.
             // Changing the page.
-            header("Location: ../Profile_Pages/check_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/check_profile.php?check_id=" . $check_id);
             die; // Ending the script
         }    
     }
@@ -82,7 +82,7 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Edit_Form_Pages/edit_check_data.php?id=<?php echo $id; ?>">
+                    <form method="post" action="../Edit_Form_Pages/edit_check_data.php?check_id=<?php echo $check_id; ?>">
 
                         <!-- Issuance date input -->
                         <div class="input_container">

@@ -4,10 +4,10 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['purchase_id'])) {
+        $purchase_id = $_GET['purchase_id'];
 
-        $purchase_data = fetch_purchase_data($id);
+        $purchase_data = fetch_purchase_data($purchase_id);
         $volunteer_id = $purchase_data['volunteer_id'];
         $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the purchase.
 
@@ -23,11 +23,11 @@
             $DB = new Database();
 
             // SQL query into Purchases
-            $delete_purchase_query = "delete from Purchases where id='$id'";
+            $delete_purchase_query = "delete from Purchases where id='$purchase_id'";
             $DB->update($delete_purchase_query);
 
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $volunteer_id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }
     }
@@ -69,7 +69,7 @@
 
             <!-- Edit purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_purchase_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?php echo $purchase_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Purchase Info
                     </button>
@@ -78,7 +78,7 @@
 
             <!-- Delete purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <form method="POST" action="../Profile_Pages/purchase_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
+                <form method="POST" action="../Profile_Pages/purchase_profile.php?purchase_id=<?php echo $purchase_id; ?>" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
                     <!-- Hidden input to confirm source -->
                     <input type="hidden" name="delete_purchase" value="1">
                     <button id="submenu_button">

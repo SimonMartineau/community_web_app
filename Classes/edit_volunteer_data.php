@@ -19,7 +19,7 @@ class Edit_Volunteer{
 
 
     // Analyses data sent by user
-    public function evaluate($id, $data){
+    public function evaluate($volunteer_id, $data){
 
         $error = false; // Initialise error check variable
 
@@ -161,7 +161,7 @@ class Edit_Volunteer{
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
-            $this->edit_volunteer($id, $data);
+            $this->edit_volunteer($volunteer_id, $data);
             return true;
         } else{
             // There is an error
@@ -170,7 +170,7 @@ class Edit_Volunteer{
     }
 
 
-    public function edit_volunteer($id, $data){
+    public function edit_volunteer($volunteer_id, $data){
         // Creating all the varaibles for the SQL input
         $first_name = ucfirst($data['first_name']);
         $last_name = ucfirst($data['last_name']);
@@ -204,11 +204,8 @@ class Edit_Volunteer{
                       organizer_name = '$organizer_name', 
                       additional_notes = '$additional_notes', 
                       registration_date = '$registration_date'
-                  WHERE id = '$id';";
+                  WHERE id = '$volunteer_id';";
         $DB->update($volunteers_query);
-
-        // Set volunteer_id to value of primary key in Volunteers table
-        $volunteer_id = $id;
 
         // SQL query to delete data from Volunteer_Interests table
         $delete_interests_query = "DELETE FROM Volunteer_Interests WHERE volunteer_id = '$volunteer_id'";

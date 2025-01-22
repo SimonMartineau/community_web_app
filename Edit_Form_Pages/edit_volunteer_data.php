@@ -5,12 +5,12 @@
     include("../Classes/edit_volunteer_data.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['volunteer_id'])) {
+        $volunteer_id = $_GET['volunteer_id'];
 
-        $volunteer_data = fetch_volunteer_data($id);
-        $interests_data = fetch_volunteer_interest_data($id);
-        $availability_data = fetch_volunteer_availability_data($id);
+        $volunteer_data = fetch_volunteer_data($volunteer_id);
+        $interests_data = fetch_volunteer_interest_data($volunteer_id);
+        $availability_data = fetch_volunteer_availability_data($volunteer_id);
     }
 
     // Default entry values on page startup.
@@ -44,7 +44,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $volunteer = new Edit_Volunteer();
-        $submit_success = $volunteer->evaluate($id, $_POST);
+        $submit_success = $volunteer->evaluate($volunteer_id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -73,7 +73,7 @@
 
         } else{ // If there are no errors in the submission.
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }    
     }
@@ -118,7 +118,7 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Edit_Form_Pages/edit_volunteer_data.php?id=<?php echo $id; ?>">
+                    <form method="post" action="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>">
 
                         <!-- First name text input -->
                         <div class="input_container">

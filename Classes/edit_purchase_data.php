@@ -9,7 +9,7 @@ class Edit_Purchase{
 
 
     // Analyses data sent by user
-    public function evaluate($id, $data){
+    public function evaluate($purchase_id, $data){
 
         $error = false; // Initialize error check variable
 
@@ -55,7 +55,7 @@ class Edit_Purchase{
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
-            $this->edit_purchase($id, $data);
+            $this->edit_purchase($purchase_id, $data);
             return true;
         } else{
             // There is an error
@@ -64,7 +64,7 @@ class Edit_Purchase{
     }
 
 
-    public function edit_purchase($id, $data){
+    public function edit_purchase($purchase_id, $data){
         // Creating all the varaibles for the SQL input
         $item_names = $data['item_names'];
         $total_cost = $data['total_cost'];
@@ -82,7 +82,7 @@ class Edit_Purchase{
                       purchase_date = '$purchase_date', 
                       organizer_name = '$organizer_name', 
                       additional_notes = '$additional_notes'
-                  WHERE id = '$id';";
+                  WHERE id = '$purchase_id';";
         $DB->update($purchase_query);
 
     }

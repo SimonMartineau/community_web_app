@@ -74,6 +74,7 @@
                         <?php
                             if($all_volunteer_data){
                                 foreach($all_volunteer_data as $volunteer_data_row){
+                                    $volunteer_id = $volunteer_data_row['id'];
                                     include("../Widget_Pages/volunteer_widget.php");
                                 }
                             }
@@ -88,6 +89,7 @@
                         <?php
                             if($all_checks_data){
                                 foreach($all_checks_data as $check_data_row){
+                                    $check_id = $check_data_row['id'];
                                     $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
                                     $date = new DateTime($check_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")
@@ -155,6 +157,7 @@
                         <?php
                             if($all_purchases_data){
                                 foreach($all_purchases_data as $purchase_data_row){
+                                    $purchase_id = $purchase_data_row['id'];
                                     $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
                                     include("../Widget_Pages/purchase_widget.php");
                                 }

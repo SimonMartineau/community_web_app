@@ -4,10 +4,10 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['check_id'])) {
+        $check_id = $_GET['check_id'];
 
-        $check_data = fetch_check_data($id);
+        $check_data = fetch_check_data($check_id);
         $volunteer_id = $check_data['volunteer_id'];
         $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the check.
     }
@@ -22,11 +22,11 @@
             $DB = new Database();
 
             // SQL query into Checks
-            $delete_check_query = "delete from Checks where id='$id'";
+            $delete_check_query = "delete from Checks where id='$check_id'";
             $DB->update($delete_check_query);
 
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?id=" . $volunteer_id);
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }
     }
@@ -68,7 +68,7 @@
 
             <!-- Edit check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_check_data.php?id=<?php echo $id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_check_data.php?check_id=<?php echo $check_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         Edit Check Info
                     </button>
@@ -77,7 +77,7 @@
 
             <!-- Delete check button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <form method="POST" action="../Profile_Pages/check_profile.php?id=<?php echo $id; ?>" onsubmit="return confirm('Are you sure you want to delete this check?')">
+                <form method="POST" action="../Profile_Pages/check_profile.php?check_id=<?php echo $check_id; ?>" onsubmit="return confirm('Are you sure you want to delete this check?')">
                     <!-- Hidden input to confirm source -->
                     <input type="hidden" name="delete_check" value="1">
                     <button id="submenu_button">
