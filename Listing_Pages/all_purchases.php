@@ -71,10 +71,10 @@
                                 <input name="points_deposit" type="text" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                             </div>
 
-                            <!-- Required time filter -->
+                            <!-- Hours required filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="gender" style="font-weight: bold;">Required time:</label><br>
-                                <input name="required_time" type="text" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <label for="gender" style="font-weight: bold;">Hours required:</label><br>
+                                <input name="hours_required" type="text" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                             </div>
 
                             <!-- Earliest date filter -->

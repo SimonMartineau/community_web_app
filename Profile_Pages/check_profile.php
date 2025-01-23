@@ -103,7 +103,8 @@
                         <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars($check_data['issuance_date']); ?></p>
                         <p><strong>Validity Date:</strong> <?php echo htmlspecialchars($check_data['validity_date']); ?></p>
                         <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($check_data['points_deposit']) . " Points"; ?></p>
-                        <p><strong>Required Time:</strong> <?php echo htmlspecialchars($check_data['required_time']) . " Hours"; ?></p>
+                        <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($check_data['hours_required']) . " Hours"; ?></p>
+                        <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($check_data['hours_completed']) . " Hours"; ?></p>
                         <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($check_data['organizer_name']); ?></p>
 
                     </div>

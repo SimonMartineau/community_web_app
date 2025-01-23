@@ -15,7 +15,7 @@
     $issuance_date = $check_data['issuance_date'];
     $validity_date = $check_data['validity_date'];
     $points_deposit = $check_data['points_deposit'];
-    $required_time = $check_data['required_time'];
+    $hours_required = $check_data['hours_required'];
     $organizer_name = $check_data['organizer_name'];
     $additional_notes = $check_data['additional_notes'];
     
@@ -31,7 +31,7 @@
             $issuance_date = $_POST['issuance_date'];
             $validity_date = $_POST['validity_date'];
             $points_deposit = $_POST['points_deposit'];
-            $required_time = $_POST['required_time'];
+            $hours_required = $_POST['hours_required'];
             $organizer_name = $_POST['organizer_name'];
             $additional_notes = $_POST['additional_notes'];
             
@@ -107,8 +107,8 @@
 
                         <!-- Time requirement input -->
                         <div class="input_container">
-                            Required time: <input name="required_time" type="text" id="text_input" placeholder="Number of hours to do" value="<?php echo $required_time ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->required_time_error_mes : ''; ?></span>
+                            Hours required: <input name="hours_required" type="text" id="text_input" placeholder="Number of hours to do" value="<?php echo $hours_required ?>">
+                            <span id="error_message"><?php echo isset($check) ? $check->hours_required_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

@@ -12,7 +12,7 @@
     $issuance_date = date(format: "Y-m-d");
     $validity_date = date("Y-m-d", strtotime("+30 days")); // Add 30 days to the current date
     $points_deposit = "30";
-    $required_time = "6";
+    $hours_required = "6";
     $organizer_name = "";
     $additional_notes = "";
 
@@ -28,7 +28,7 @@
             $issuance_date = $_POST['issuance_date'];
             $validity_date = $_POST['validity_date'];
             $points_deposit = $_POST['points_deposit'];
-            $required_time = $_POST['required_time'];
+            $hours_required = $_POST['hours_required'];
             $organizer_name = $_POST['organizer_name'];
             $additional_notes = $_POST['additional_notes'];
 
@@ -104,8 +104,8 @@
                         
                         <!-- Time requirement input -->
                         <div class="input_container">
-                            <input name="required_time" type="text" id="text_input" placeholder="Number of hours to do" value="<?php echo $required_time ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->required_time_error_mes : ''; ?></span>
+                            <input name="hours_required" type="text" id="text_input" placeholder="Number of hours to do" value="<?php echo $hours_required ?>">
+                            <span id="error_message"><?php echo isset($check) ? $check->hours_required_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

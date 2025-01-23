@@ -170,6 +170,7 @@ class Add_Volunteer{
         $telephone_number = $data['telephone_number'];
         $email = $data['email'];
         $points = 0;
+        $hours_required = 0;
         $hours_completed = 0;
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
@@ -183,8 +184,8 @@ class Add_Volunteer{
         $DB = new Database();
 
         // SQL query into Volunteer
-        $volunteers_query = "insert into Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_completed, assigned_area, organizer_name, additional_notes, registration_date, trashed)
-                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_completed', '$assigned_area', '$organizer_name', '$additional_notes', '$registration_date', '$trashed')";
+        $volunteers_query = "insert into Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_required, hours_completed, assigned_area, organizer_name, additional_notes, registration_date, trashed)
+                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_required', '$hours_completed', '$assigned_area', '$organizer_name', '$additional_notes', '$registration_date', '$trashed')";
         $DB->save($volunteers_query);
 
         // Set volunteer_id to value of primary key in Volunteers table

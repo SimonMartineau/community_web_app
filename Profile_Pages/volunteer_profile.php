@@ -225,7 +225,8 @@
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
                         <p><strong>Points:</strong> <span><?php echo htmlspecialchars($volunteer_data['points']); ?></span></p>
-                        <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_completed']); ?></span></p>
+                        <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_required'] . " Hours"); ?></span></p>
+                        <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_completed'] . " Hours"); ?></span></p>
                         <p><strong>Assigned Area:</strong> <?php echo htmlspecialchars($volunteer_data['assigned_area']); ?></p>
                         <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($volunteer_data['organizer_name']); ?></p>
                     </div>

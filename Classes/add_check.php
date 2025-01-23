@@ -4,7 +4,7 @@ class Add_Check{
     public $issuance_date_error_mes = "";
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
-    public $required_time_error_mes = "";
+    public $hours_required_error_mes = "";
     public $organizer_name_error_mes = "";
 
 
@@ -44,14 +44,14 @@ class Add_Check{
             }
         }
 
-        // Check required time
-        if (isset($_POST['required_time'])){
-            $value = $_POST['required_time'];
+        // Check hours required
+        if (isset($_POST['hours_required'])){
+            $value = $_POST['hours_required'];
             if (empty($value)){
-                $this->required_time_error_mes = "*Required time is empty.<br>";
+                $this->hours_required_error_mes = "*Hours required is empty.<br>";
                 $error = true; // There is an error
             } elseif (!is_numeric($value)){
-                $this->required_time_error_mes = "*Please enter a valid number.<br>";
+                $this->hours_required_error_mes = "*Please enter a valid number.<br>";
                 $error = true; // There is an error
             }
         }
@@ -82,7 +82,8 @@ class Add_Check{
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
         $points_deposit = $data['points_deposit'];
-        $required_time = $data['required_time'];
+        $hours_required = $data['hours_required'];
+        $hours_completed = 0;
         $organizer_name = $data['organizer_name'];
         $additional_notes = $data['additional_notes'];
 
@@ -90,8 +91,8 @@ class Add_Check{
         $DB = new Database();
 
         // SQL query into Checks
-        $check_query = "insert into Checks (volunteer_id, issuance_date, validity_date, points_deposit, required_time, organizer_name, additional_notes)
-                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$required_time', '$organizer_name', '$additional_notes')";
+        $check_query = "insert into Checks (volunteer_id, issuance_date, validity_date, points_deposit, hours_required, hours_completed, organizer_name, additional_notes)
+                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$hours_required', '$hours_completed', '$organizer_name', '$additional_notes')";
         $DB->save($check_query);
     }
 

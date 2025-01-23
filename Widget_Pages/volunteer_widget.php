@@ -5,6 +5,7 @@
             <strong>Email:</strong> <?php echo $volunteer_data_row['email']?><br>
             <strong>Address:</strong> <?php echo $volunteer_data_row['address']?><br>
             <strong>Phone:</strong> <?php echo $volunteer_data_row['telephone_number']?><br>
+            <strong>Hours Required:</strong> <?php echo $volunteer_data_row['hours_required'] . " Hours"?><br>
             <strong>Hours Completed:</strong> <?php echo $volunteer_data_row['hours_completed'] . " Hours"?><br>
             <strong>Points:</strong> <?php echo $volunteer_data_row['points'] . " Points"?><br>
         </p>

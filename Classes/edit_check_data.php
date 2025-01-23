@@ -4,7 +4,7 @@ class Edit_Check{
     public $issuance_date_error_mes = "";
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
-    public $required_time_error_mes = "";
+    public $hours_required_error_mes = "";
     public $organizer_name_error_mes = "";
 
 
@@ -44,14 +44,14 @@ class Edit_Check{
             }
         }
 
-        // Check required time
-        if (isset($_POST['required_time'])){
-            $value = $_POST['required_time'];
+        // Check hours required
+        if (isset($_POST['hours_required'])){
+            $value = $_POST['hours_required'];
             if (empty($value)){
-                $this->required_time_error_mes = "*Required time is empty.<br>";
+                $this->hours_required_error_mes = "*Hours required is empty.<br>";
                 $error = true; // There is an error
             } elseif (!is_numeric($value)){
-                $this->required_time_error_mes = "*Please enter a valid number.<br>";
+                $this->hours_required_error_mes = "*Please enter a valid number.<br>";
                 $error = true; // There is an error
             }
         }
@@ -82,7 +82,7 @@ class Edit_Check{
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
         $points_deposit = $data['points_deposit'];
-        $required_time = $data['required_time'];
+        $hours_required = $data['hours_required'];
         $organizer_name = $data['organizer_name'];
         $additional_notes = $data['additional_notes'];
 
@@ -94,7 +94,7 @@ class Edit_Check{
                   SET issuance_date = '$issuance_date', 
                       validity_date = '$validity_date', 
                       points_deposit = '$points_deposit', 
-                      required_time = '$required_time', 
+                      hours_required = '$hours_required', 
                       organizer_name = '$organizer_name', 
                       additional_notes = '$additional_notes'
                   WHERE id = '$check_id';";

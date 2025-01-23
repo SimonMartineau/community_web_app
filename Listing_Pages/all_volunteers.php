@@ -41,8 +41,10 @@
             $sql_filter_query .= " JOIN Volunteer_Availability va ON v.id = va.volunteer_id";
         }
 
+        // Initialize Where clause
         $sql_filter_query .= " WHERE 1=1";
 
+        // Trash filter
         if (!empty($trash_filter)){
             switch ($trash_filter){
                 case 'only_active_volunteers':
@@ -51,13 +53,34 @@
                 case 'only_in_trash':
                     $sql_filter_query .= " AND v.trashed = '1'";
                     break;
+                case 'all_volunteers':
+                    // No additional condition needed (show all volunteers)
+                    break;
             }
         }
 
+        // Time filter
+        if (!empty($time_filter)) {
+            switch ($time_filter) {
+                case 'time_completed':
+                    // Volunteers who have a time contract and have completed the hours.
+                    $sql_filter_query .= " AND v.hours_required > 0 AND v.hours_required <= hours_completed";
+                    break;
+                case 'time_not_completed':
+                    // Volunteers who have a time contract and have not yet completed the hours.
+                    $sql_filter_query .= " AND v.hours_required > 0 AND v.hours_required > hours_completed";
+                    break;
+                case 'no_check':
+                    // Volunteers who do not currently have a check
+                    $sql_filter_query .= " AND v.hours_required = 0";
+                    break;
+                case 'all_volunteers':
+                    // No additional condition needed (show all volunteers)
+                    break;
+            }
+        }
 
-
-        
-
+        // Area filter
         if (!empty($area_filter)){
             switch ($area_filter){
                 case 'area_1':
@@ -72,9 +95,13 @@
                 case 'area_4':
                     $sql_filter_query .= " AND v.assigned_area = 'Area 4'";
                     break;
+                case 'all_areas':
+                    // No additional condition needed (show all volunteers)
+                    break;
             }
         }
 
+        // Gender filter
         if (!empty($gender_filter)){
             switch ($gender_filter){
                 case 'only_male':
@@ -85,6 +112,9 @@
                     break;
                 case 'only_other':
                     $sql_filter_query .= " AND v.gender = 'Other'";
+                    break;
+                case 'all_volunteers':
+                    // No additional condition needed (show all volunteers)
                     break;
             }
         }
@@ -107,7 +137,7 @@
             $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
         }
 
-
+        // Order of appearance filter
         if (!empty($order_filter)){
             switch ($order_filter){
                 case 'registration_date_desc':
@@ -137,7 +167,6 @@
             }
         }
 
-        
 
         $all_volunteer_data = fetch_data($sql_filter_query);
 
@@ -240,9 +269,9 @@
 
                             <!-- Time filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="time_filter" style="font-weight: bold;">Check Status:</label><br>
+                                <label for="time_filter" style="font-weight: bold;">Contract Status:</label><br>
                                 <select name="time_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="all_volunteers" <?php echo ($time_filter == 'all_volunteers') ? 'selected' : ''; ?>>All</option>
+                                    <option value="all_volunteers" <?php echo ($time_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
                                     <option value="time_completed" <?php echo ($time_filter == 'time_completed') ? 'selected' : ''; ?>>Check Time Requirement Completed</option>
                                     <option value="time_not_completed" <?php echo ($time_filter == 'time_not_completed') ? 'selected' : ''; ?>>Check Time Requirement Not Yet Completed</option>
                                     <option value="no_check" <?php echo ($time_filter == 'no_check') ? 'selected' : ''; ?>>Volunteer Doesn't Currently Have A Check</option>
@@ -265,7 +294,7 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="gender_filter" style="font-weight: bold;">Gender:</label><br>
                                 <select name="gender_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="all_volunteers" <?php echo ($gender_filter == 'all_volunteers') ? 'selected' : ''; ?>>All</option>
+                                    <option value="all_volunteers" <?php echo ($gender_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
                                     <option value="only_male" <?php echo ($gender_filter == 'only_male') ? 'selected' : ''; ?>>Male</option>
                                     <option value="only_female" <?php echo ($gender_filter == 'only_female') ? 'selected' : ''; ?>>Female</option>
                                     <option value="only_other" <?php echo ($gender_filter == 'only_other') ? 'selected' : ''; ?>>Other</option>
