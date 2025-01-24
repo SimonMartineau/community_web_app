@@ -72,10 +72,10 @@
                 case 'validity_date_asc':
                     $sql_filter_query .= " ORDER BY c.validity_date ASC";
                     break;
-                case 'order_purchase_desc':
+                case 'addition_order_desc':
                     $sql_filter_query .= " ORDER BY c.id DESC";
                     break;
-                case 'order_purchase_asc':
+                case 'addition_order_asc':
                     $sql_filter_query .= " ORDER BY c.id ASC";
                     break;
                 case 'first_name_asc':
@@ -144,8 +144,8 @@
                                     <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Newest)</option>
                                     <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Newest to Oldest)</option>
                                     <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Newest)</option>
-                                    <option value="order_purchase_desc" <?php echo ($order_filter == 'order_purchase_desc') ? 'selected' : ''; ?>>Order of Purchase (Newest to Oldest)</option>
-                                    <option value="order_purchase_asc" <?php echo ($order_filter == 'order_purchase_asc') ? 'selected' : ''; ?>>Order of Purchase (Oldest to Newest)</option>
+                                    <option value="addition_order_desc" <?php echo ($order_filter == 'addition_order_desc') ? 'selected' : ''; ?>>Order of Addition (Newest to Oldest)</option>
+                                    <option value="addition_order_asc" <?php echo ($order_filter == 'addition_order_asc') ? 'selected' : ''; ?>>Order of Addition (Oldest to Newest)</option>
                                     <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
                                     <option value="first_name_desc" <?php echo ($order_filter == 'first_name_desc') ? 'selected' : ''; ?>>First Name (Z-A)</option>
                                     <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
