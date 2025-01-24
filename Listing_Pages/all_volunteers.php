@@ -4,6 +4,9 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
+    // Updating all backend processes
+    update_volunteer_data();
+
     // Default entry values on page startup.
     $order_filter = "date_of_inscription_desc";
     $trash_filter = "only_active_volunteers";
@@ -171,9 +174,6 @@
         $all_volunteer_data = fetch_data($sql_filter_query);
 
     }
-
-
-
 ?>
 
 
