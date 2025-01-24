@@ -224,6 +224,9 @@
                     <!-- Volunteer Contributions -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
+                        <?php if ($volunteer_data['hours_required'] == 0): ?>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't currently have a check.</strong><br>
+                        <?php endif; ?>
                         <p><strong>Points:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_required'] . " Hours"); ?></span></p>
                         <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_completed'] . " Hours"); ?></span></p>

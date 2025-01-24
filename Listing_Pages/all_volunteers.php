@@ -16,9 +16,14 @@
     $interests_filter = [];
     $available_days_filter = [];
 
-
     // Default page volunteer data
-    $all_volunteer_data = fetch_data("select * from Volunteers where `trashed` = '0' order by id desc");
+    $all_volunteer_data = fetch_data("
+        SELECT * 
+        FROM Volunteers 
+        WHERE `trashed` = '0' 
+        ORDER BY id DESC"
+    );
+
 
     // Getting filter form data
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,7 +52,7 @@
         // Initialize Where clause
         $sql_filter_query .= " WHERE 1=1";
 
-        // Trash filter
+        // Volunteer status filter
         if (!empty($trash_filter)){
             switch ($trash_filter){
                 case 'only_active_volunteers':
@@ -170,7 +175,7 @@
             }
         }
 
-
+        // Final query
         $all_volunteer_data = fetch_data($sql_filter_query);
 
     }
@@ -257,7 +262,7 @@
                                 </select>
                             </div>
 
-                            <!-- Trash filter -->
+                            <!-- Volunteer status filter -->
                             <div style="margin-bottom: 15px;">
                                 <label for="trash_filter" style="font-weight: bold;">Volunteer Status:</label><br>
                                 <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">

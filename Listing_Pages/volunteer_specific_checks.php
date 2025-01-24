@@ -8,14 +8,70 @@
         $volunteer_id = $_GET['volunteer_id'];
     }
 
+    // Default entry values on page startup
+    $order_filter = "date_of_inscription_desc";
+    $trash_filter = "only_active_volunteers";
+    $earliest_date_filter = "";
+    $latest_date_filter = "";
+
     // Collect volunteer data
     $all_checks_data = fetch_data("
         SELECT * 
-        FROM Checks 
-        WHERE volunteer_id='$volunteer_id' 
-        ORDER BY id desc"
+        FROM Checks c
+        WHERE c.volunteer_id='$volunteer_id' 
+        ORDER BY c.issuance_date DESC"
     );
 
+
+    // Getting filter form data
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        // Retrieve filter form data
+        $order_filter = $_POST['order_filter'] ?? '';
+        $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
+        $latest_date_filter = $_POST['latest_date_filter'] ?? '';
+
+        // Default sql query
+        $sql_filter_query = "SELECT DISTINCT c.* FROM Checks c WHERE c.volunteer_id = '$volunteer_id' ";
+
+        // Earliest date filter
+        if (!empty($earliest_date_filter)){
+            $sql_filter_query .= " AND '$earliest_date_filter' < c.issuance_date";
+        }
+
+        // Latest date filter
+        if (!empty($latest_date_filter)){
+            $sql_filter_query .= " AND  c.validity_date < '$latest_date_filter'";
+        }
+
+        // Order of appearance filter
+        if (!empty($order_filter)){
+            switch ($order_filter){
+                case 'issuance_date_desc':
+                    $sql_filter_query .= " ORDER BY c.issuance_date DESC";
+                    break;
+                case 'issuance_date_asc':
+                    $sql_filter_query .= " ORDER BY c.issuance_date ASC";
+                    break;
+                case 'validity_date_desc':
+                    $sql_filter_query .= " ORDER BY c.validity_date DESC";
+                    break;
+                case 'validity_date_asc':
+                    $sql_filter_query .= " ORDER BY c.validity_date ASC";
+                    break;
+                case 'order_purchase_desc':
+                    $sql_filter_query .= " ORDER BY c.id DESC";
+                    break;
+                case 'order_purchase_asc':
+                    $sql_filter_query .= " ORDER BY c.id ASC";
+                    break;
+            }
+        }
+
+        // Final query
+        $all_checks_data = fetch_data($sql_filter_query);
+
+    }
 ?>
 
 
@@ -57,39 +113,27 @@
                         <form action="" method="post">
                             <!-- Sort by options -->
                             <div style="margin-bottom: 15px;">
-                                <label for="sort" style="font-weight: bold;">Sort Volunteers By:</label><br>
-                                <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="alphabetically_a_z">Alphabetically (a-z)</option>
-                                    <option value="alphabetically_z_a">Alphabetically (z-a)</option>
-                                    <option value="issuance_date_asc">Issuance date (asc)</option>
-                                    <option value="issuance_date_desc">Issuance date (desc)</option>
-                                    <option value="validity_date_asc">Validity date (asc)</option>
-                                    <option value="validity_date_desc">Validity date (desc)</option>
+                                <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
+                                <select name="order_filter" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Newest to Oldest)</option>
+                                    <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Newest)</option>
+                                    <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Newest to Oldest)</option>
+                                    <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Newest)</option>
+                                    <option value="order_purchase_desc" <?php echo ($order_filter == 'order_purchase_desc') ? 'selected' : ''; ?>>Order of Purchase (Newest to Oldest)</option>
+                                    <option value="order_purchase_asc" <?php echo ($order_filter == 'order_purchase_asc') ? 'selected' : ''; ?>>Order of Purchase (Oldest to Newest)</option>
                                 </select>
-                            </div>
-
-                            <!-- Points deposit filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="sort" style="font-weight: bold;">Points deposit:</label><br>
-                                <input name="points_deposit" type="text" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                            </div>
-
-                            <!-- Hours required filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="gender" style="font-weight: bold;">Hours required:</label><br>
-                                <input name="hours_required" type="text" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                             </div>
 
                             <!-- Earliest date filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="sort" style="font-weight: bold;">Earliest date:</label><br>
-                                <input name="earliest_date" type="date" value="<?php echo $earliest_date ?>" value="<?php echo $earliest_date ?>"style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <label for="earliest_date_filter" style="font-weight: bold;">Earliest date:</label><br>
+                                <input name="earliest_date_filter" type="date" value="<?php echo $earliest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                             </div>
 
                             <!-- Latest date filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="sort" style="font-weight: bold;">Latest date:</label><br>
-                                <input name="latest_date" type="date" value="<?php echo $latest_date ?>" value="<?php echo $latest_date ?>"style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
+                                <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                             </div>
 
                             <!-- Submit button -->
