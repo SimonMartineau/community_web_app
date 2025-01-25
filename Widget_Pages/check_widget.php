@@ -5,8 +5,14 @@
             <strong>Issuance date:</strong> <?php echo $check_data_row['issuance_date']?><br>
             <strong>Validity date:</strong> <?php echo $check_data_row['validity_date']?><br>
             <strong>Points deposit:</strong> <?php echo $check_data_row['points_deposit'] . " Points"?><br>
+            <strong>Points spent:</strong> <?php echo $check_data_row['points_spent'] . " Points"?><br>
             <strong>Hours required:</strong> <?php echo $check_data_row['hours_required'] . " Hours"?><br>
             <strong>Hours completed:</strong> <?php echo $check_data_row['hours_completed'] . " Hours"?><br>
+            <?php if ($check_data_row['check_active'] == 1): ?>
+                <span style="color: green; font-weight: bold;">Current Volunteer's Check</span><br>
+            <?php else: ?>
+                <span style="color: orange; font-weight: bold;">Past Volunteer's Check</span><br>
+            <?php endif; ?>
         </p>
     </div>
 </a>

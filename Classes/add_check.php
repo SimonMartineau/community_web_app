@@ -82,17 +82,19 @@ class Add_Check{
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
         $points_deposit = $data['points_deposit'];
+        $points_spent = 0;
         $hours_required = $data['hours_required'];
         $hours_completed = 0;
         $organizer_name = $data['organizer_name'];
+        $check_active = 1;
         $additional_notes = $data['additional_notes'];
 
         // Initialise Database object
         $DB = new Database();
 
         // SQL query into Checks
-        $check_query = "insert into Checks (volunteer_id, issuance_date, validity_date, points_deposit, hours_required, hours_completed, organizer_name, additional_notes)
-                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$hours_required', '$hours_completed', '$organizer_name', '$additional_notes')";
+        $check_query = "insert into Checks (volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, organizer_name, check_active, additional_notes)
+                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$points_spent' ,'$hours_required', '$hours_completed', '$organizer_name', '$check_active', '$additional_notes')";
         $DB->save($check_query);
     }
 

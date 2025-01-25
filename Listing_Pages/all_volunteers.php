@@ -5,7 +5,7 @@
     include("../Classes/functions.php");
 
     // Updating all backend processes
-    update_volunteer_data();
+    update_backend_data();
 
     // Default entry values on page startup.
     $order_filter = "date_of_inscription_desc";

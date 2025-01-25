@@ -3,6 +3,8 @@
     // Include classes
     include("../Classes/connect.php");
     include("../Classes/add_purchase.php");
+    include("../Classes/functions.php");
+
 
     if (isset($_GET['volunteer_id'])) {
         $volunteer_id = $_GET['volunteer_id'];

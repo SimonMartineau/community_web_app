@@ -127,52 +127,81 @@ function update_volunteer_data(){
             $points = $current_check_row['points_deposit'];
             $hours_required = $current_check_row['hours_required'];
 
-            // Getting the issuance_date and validity_date from the current check
-            $issuance_date = $current_check_row['issuance_date'];
-            $validity_date = $current_check_row['validity_date'];
+            $points -= $current_check_row['points_spent'];
 
-            // Looking at purchases done between issuance_date and validity_date.
-            $current_purchase_query = "SELECT * FROM Purchases WHERE purchase_date BETWEEN '$issuance_date' AND '$validity_date' AND volunteer_id = '$volunteer_id'";
-            $current_purchases_data = fetch_data($current_purchase_query);
-
-            $total_cost = 0;
-
-            if($current_purchases_data && !empty($current_purchases_data)){
-                foreach($current_purchases_data as $purchase){
-                    $total_cost += $purchase['total_cost'];
-                }
-                $points -= $total_cost;
-            }
-
-    } else{
-            // The volunteer has no check so no points;
-            $points = 0;
-            $hours_required = 0;
+        } else{
+                // The volunteer has no check so no points;
+                $points = 0;
+                $hours_required = 0;
         }
 
         // SQL query into Volunteers
         $volunteers_query = "UPDATE Volunteers 
-        SET points = '$points',
-            hours_required = '$hours_required'
-        WHERE id = '$volunteer_id';";
+            SET points = '$points',
+                hours_required = '$hours_required'
+            WHERE id = '$volunteer_id';";
 
         $DB->update($volunteers_query);
     }
 }
 
 
-    
-
-
-
-
-    
-
-
-
 
 function update_check_data(){
     // This function updates the hours_required and hours_completed for Checks table.
-    echo "";
+
+    // Fetching all volunteer data
+    $all_checks_data = fetch_data("select * from Checks");
+
+    // Initialise Database object
+    $DB = new Database();
+
+    // Navigating each volunteer to update one by one
+    foreach($all_checks_data as $check_data){
+
+        // Current volunteer id
+        $check_id = $check_data['id'];
+
+        // Getting the issuance_date and validity_date from the current check
+        $issuance_date = $check_data['issuance_date'];
+        $validity_date = $check_data['validity_date'];
+
+        $points_spent = fetch_data("
+            SELECT SUM(total_cost) 
+            FROM Purchases 
+            WHERE check_id='$check_id'
+            AND purchase_date BETWEEN '$issuance_date' AND '$validity_date'"
+        )[0]['SUM(total_cost)'] ?? 0;
+
+        // Placeholder for hours_completed
+        $hours_completed = 0;
+
+        $check_active = fetch_data("
+            SELECT 
+                CASE 
+                    WHEN CURRENT_DATE BETWEEN '$issuance_date' AND '$validity_date' THEN 1
+                    ELSE 0
+                END AS check_active
+            FROM Checks
+            WHERE id = '$check_id'
+        ")[0]['check_active'] ?? 0;
+
+        // SQL query into Volunteers
+        $volunteers_query = "UPDATE Checks 
+            SET points_spent = '$points_spent',
+                hours_completed = '$hours_completed',
+                check_active = '$check_active'
+            WHERE id = '$check_id';";
+
+        $DB->update($volunteers_query);
+
+
+
+
+
+    }
+
+
+
 }
 ?>

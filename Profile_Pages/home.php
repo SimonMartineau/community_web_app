@@ -4,13 +4,16 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
+    // Updating all backend processes
+    update_backend_data();
+
     // Collect volunteer data
     $all_volunteer_data = fetch_data("
         SELECT * 
         FROM Volunteers 
         WHERE `trashed` = 0 
         ORDER BY id desc 
-        LIMIT 5"
+        LIMIT 3"
     );
 
     $all_checks_data = fetch_data("
@@ -19,7 +22,7 @@
         INNER JOIN Volunteers m ON c.volunteer_id = m.id
         WHERE m.trashed = 0
         ORDER BY c.id DESC 
-        LIMIT 5"
+        LIMIT 3"
     );
 
     $all_purchases_data = fetch_data("
@@ -28,7 +31,7 @@
         INNER JOIN Volunteers m ON p.volunteer_id = m.id
         WHERE m.trashed = 0
         ORDER BY p.id DESC 
-        LIMIT 5"
+        LIMIT 3"
     );
 
 ?>

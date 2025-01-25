@@ -86,6 +86,8 @@ class Edit_Check{
         $organizer_name = $data['organizer_name'];
         $additional_notes = $data['additional_notes'];
 
+        // points_spent does not get updated here.
+
         // Initialise Database object
         $DB = new Database();
 

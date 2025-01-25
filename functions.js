@@ -1,4 +1,4 @@
-function showWidgets(type){
+function showWidgets_volunteer_page(type){
     // Hide all widget containers and the buttons initially
     document.getElementById('checks_widgets').style.display = 'none';
     document.getElementById('purchases_widgets').style.display = 'none';
@@ -17,5 +17,31 @@ function showWidgets(type){
 
 // Set "checks" as the default when the page loads
 window.onload = function() {
-    showWidgets('checks');
+    showWidgets_volunteer_page('checks');
 };
+
+
+function showWidgets_check_page(type) {
+    // Hide all widget containers initially
+    document.getElementById('volunteer_widget').style.display = 'none';
+    document.getElementById('purchases_widgets').style.display = 'none';
+    const activitiesWidget = document.getElementById('activities_widgets');
+    if (activitiesWidget) {
+        activitiesWidget.style.display = 'none';
+    }
+
+    // Show the selected widget container
+    if (type === 'volunteer') {
+        document.getElementById('volunteer_widget').style.display = 'block';
+    } else if (type === 'purchases') {
+        document.getElementById('purchases_widgets').style.display = 'block';
+    } else if (type === 'activities' && activitiesWidget) {
+        activitiesWidget.style.display = 'block';
+    }
+}
+
+// Set "volunteer" as the default when the page loads
+window.onload = function () {
+    showWidgets_check_page('volunteer');
+};
+

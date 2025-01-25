@@ -4,6 +4,9 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
+    // Updating all backend processes
+    update_backend_data();
+
     if (isset($_GET['volunteer_id'])) {
         $volunteer_id = $_GET['volunteer_id'];
 
@@ -317,10 +320,10 @@
 
                     <!-- Toggle buttons -->
                     <div id="widget_toggle_buttons">
-                        <button onclick="showWidgets('checks')">Show Checks</button>
-                        <button onclick="showWidgets('purchases')">Show Purchases</button>
-                        <button onclick="showWidgets('current_activities')">Show Current Activities</button>
-                        <button onclick="showWidgets('matching_activities')">Show Matching Activities</button>
+                        <button onclick="showWidgets_volunteer_page('checks')">Show Recent Checks</button>
+                        <button onclick="showWidgets_volunteer_page('purchases')">Show Recent Purchases</button>
+                        <button onclick="showWidgets_volunteer_page('current_activities')">Show Recent Activities</button>
+                        <button onclick="showWidgets_volunteer_page('matching_activities')">Show Matching Activities</button>
                     </div>
 
 

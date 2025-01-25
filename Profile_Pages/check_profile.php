@@ -4,12 +4,23 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
+    // Updating all backend processes
+    update_backend_data();
+
     if (isset($_GET['check_id'])) {
         $check_id = $_GET['check_id'];
 
         $check_data = fetch_check_data($check_id);
         $volunteer_id = $check_data['volunteer_id'];
         $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the check.
+
+        $purchases_data = fetch_data("
+            SELECT * 
+            FROM Purchases 
+            WHERE check_id='$check_id' 
+            ORDER BY id desc 
+            LIMIT 6"
+        );
     }
 
     // Check if user has submitted info
@@ -50,12 +61,50 @@
         .information_section strong {
             display: inline-block;
             width: 150px;
-            color: #555;
+            color: #555;            
+        }
+
+        #widget_toggle_buttons {
+            display: flex; /* Enable flexbox */
+            justify-content: center; /* Center buttons horizontally */
+            align-items: center; /* Center buttons vertically (if needed) */
+        }
+
+        /* Styling for toggle buttons */
+        #widget_toggle_buttons button {
+            text-align: center; /* Center the text */
+            font-family: sans-serif; /* Use the same font as the title */
+            font-size: 1em; /* Adjust font size for a balanced look */
+            font-weight: bold; /* Make the text bold */
+            color: #405d9b; /* Match the theme color */
+            padding: 10px 20px; /* Add padding for clickable space */
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            border: none; /* Remove default borders */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            cursor: pointer; /* Indicate that it's clickable */
+            margin: 20px 5px 20px 5px ; /* Add spacing between buttons */
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        /* Hover effect for buttons */
+        #widget_toggle_buttons button:hover {
+            background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
+        }
+
+        /* Active button style */
+        #widget_toggle_buttons button:active {
+            transform: translateY(0); /* Reset the lift effect */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly smaller shadow */
         }
 
     </style>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
+
+        <script src="../functions.js"></script>
 
         <!-- Header bar -->
         <?php include("../Misc/header.php"); ?>
@@ -100,9 +149,27 @@
                     <!-- Check Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
-                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars($check_data['issuance_date']); ?></p>
+
+                        <?php
+                            // Determine the message and color based on $check_active
+                            if ($check_data['check_active'] == 1) {
+                                $message = "Current Volunteer's Check";
+                                $messageColor = "green";
+                            } else {
+                                $message = "Past Volunteer's Check";
+                                $messageColor = "orange";
+                            }
+                        ?>
+
+                        <!-- Display the message with dynamic color -->
+                        <p style="font-size: 16px; color: <?php echo $messageColor; ?>; font-weight: bold;">
+                            <?php echo $message; ?>
+                        </p>
+
+                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: $check_data['issuance_date']); ?></p>
                         <p><strong>Validity Date:</strong> <?php echo htmlspecialchars($check_data['validity_date']); ?></p>
                         <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($check_data['points_deposit']) . " Points"; ?></p>
+                        <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($check_data['points_spent']) . " Points"; ?></p>
                         <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($check_data['hours_required']) . " Hours"; ?></p>
                         <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($check_data['hours_completed']) . " Hours"; ?></p>
                         <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($check_data['organizer_name']); ?></p>
@@ -123,15 +190,35 @@
                     <!-- Widget display -->
                     <div id="medium_rectangle">
 
-                        <!-- Section title of recent social activities section -->
-                        <div id="section_title">
-                            <span>Volunteer</span>
+                        <!-- Toggle buttons -->
+                        <div id="widget_toggle_buttons">
+                            <button onclick="showWidgets_check_page('volunteer')">Show Volunteer</button>
+                            <button onclick="showWidgets_check_page('purchases')">Show Purchases</button>
+                            <button onclick="showWidgets_check_page('activities')">Show Activities</button>
                         </div>
 
-                        <!-- Display volunteer widgets --> 
-                        <?php
-                            include("../Widget_Pages/volunteer_widget.php");
-                        ?>
+
+                        <!-- Display volunteer widget -->
+                        <div id="volunteer_widget" class="widget-container">
+                            <?php
+                            if ($volunteer_data_row) {
+                                include("../Widget_Pages/volunteer_widget.php");
+                            }
+                            ?>
+                        </div>                    
+                        
+                        <!-- Display purchase widgets -->
+                        <div id="purchases_widgets" class="widget-container" style="display: none;">
+                            <?php
+                            if ($purchases_data) {
+                                foreach ($purchases_data as $purchase_data_row) {
+                                    $purchase_id = $purchase_data_row['id'];
+                                    $volunteer_data = fetch_volunteer_data($volunteer_id);
+                                    include("../Widget_Pages/purchase_widget.php");
+                                }
+                            }
+                            ?>
+                        </div>
                         
                     </div>
 

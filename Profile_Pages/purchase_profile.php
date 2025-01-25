@@ -4,6 +4,9 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
+    // Updating all backend processes
+    update_backend_data();
+
     if (isset($_GET['purchase_id'])) {
         $purchase_id = $_GET['purchase_id'];
 
