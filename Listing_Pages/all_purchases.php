@@ -72,6 +72,18 @@
                 case 'purchase_cost_desc':
                     $sql_filter_query .= " ORDER BY p.total_cost DESC";
                     break;
+                case 'first_name_asc':
+                    $sql_filter_query .= " ORDER BY v.first_name ASC";
+                    break;
+                case 'first_name_desc':
+                    $sql_filter_query .= " ORDER BY v.first_name DESC";
+                    break;
+                case 'last_name_asc':
+                    $sql_filter_query .= " ORDER BY v.last_name ASC";
+                    break;
+                case 'last_name_desc':
+                    $sql_filter_query .= " ORDER BY v.last_name DESC";
+                    break;
             }
         }
 
@@ -127,6 +139,10 @@
                                     <option value="purchase_date_asc" <?php echo ($order_filter == 'purchase_date_asc') ? 'selected' : ''; ?>>Purchase Date (Oldest to Newest)</option>
                                     <option value="purchase_cost_asc" <?php echo ($order_filter == 'purchase_cost_asc') ? 'selected' : ''; ?>>Purchase Cost (Lowest to Highest)</option>
                                     <option value="purchase_cost_desc" <?php echo ($order_filter == 'purchase_cost_desc') ? 'selected' : ''; ?>>Purchase Cost (Highest to Lowest)</option>
+                                    <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
+                                    <option value="first_name_desc" <?php echo ($order_filter == 'first_name_desc') ? 'selected' : ''; ?>>First Name (Z-A)</option>
+                                    <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
+                                    <option value="last_name_desc" <?php echo ($order_filter == 'last_name_desc') ? 'selected' : ''; ?>>Last Name (Z-A)</option>
                                 </select>
                             </div>
 
@@ -173,6 +189,14 @@
                         <div id="section_title">
                             <span>Purchases</span>
                         </div>
+
+                        <!-- Counting the number of elements post filter -->
+                        <?php 
+                        if (empty($all_purchases_data)) {
+                            echo "No purchases found.";
+                        } else {
+                            echo count($all_purchases_data) . " purchases found.";
+                        } ?>
 
                         <!-- Display purchases widgets --> 
                         <?php

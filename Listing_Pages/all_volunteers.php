@@ -355,6 +355,14 @@
                             <span>Volunteers</span>
                         </div>
 
+                        <!-- Counting the number of elements post filter -->
+                        <?php 
+                        if (empty($all_volunteer_data)) {
+                            echo "No purchases found.";
+                        } else {
+                            echo count($all_volunteer_data) . " volunteers found.";
+                        } ?>
+
                         <!-- Display volunteer widgets --> 
                         <?php
                             if($all_volunteer_data){

@@ -150,6 +150,14 @@
                             <span>Purchases</span>
                         </div>
 
+                        <!-- Counting the number of elements post filter -->
+                        <?php 
+                        if (empty($all_purchases_data)) {
+                            echo "No purchases found.";
+                        } else {
+                            echo count($all_purchases_data) . " purchases found.";
+                        } ?>
+
                         <!-- Display purchases widgets --> 
                         <?php
                             if($all_purchases_data){
