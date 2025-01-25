@@ -10,6 +10,7 @@
     // Default entry values on page startup
     $order_filter = "date_of_inscription_desc";
     $trash_filter = "only_active_volunteers";
+    $active_check_filter = "all_checks";
     $earliest_date_filter = "";
     $latest_date_filter = "";
 
@@ -29,6 +30,7 @@
         // Retrieve filter form data
         $order_filter = $_POST['order_filter'] ?? '';
         $trash_filter = $_POST['trash_filter'] ?? '';
+        $active_check_filter = $_POST['active_check_filter'] ?? '';
         $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
         $latest_date_filter = $_POST['latest_date_filter'] ?? '';
 
@@ -46,6 +48,21 @@
                     break;
                 case 'all_volunteers':
                     // No additional condition needed (show all volunteers)
+                    break;
+            }
+        }
+
+        // Active check filter
+        if (!empty($active_check_filter)){
+            switch ($active_check_filter){
+                case 'active_checks_only':
+                    $sql_filter_query .= " AND check_active = 1";
+                    break;
+                case 'past_checks_only':
+                    $sql_filter_query .= " AND check_active = 0";
+                    break;
+                case 'all_checks':
+                    // No filter added
                     break;
             }
         }
@@ -163,6 +180,16 @@
                                     <option value="only_active_volunteers" <?php echo ($trash_filter == 'only_active_volunteers') ? 'selected' : ''; ?>>Only Active Volunteers</option>
                                     <option value="only_in_trash" <?php echo ($trash_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
                                     <option value="all_volunteers" <?php echo ($trash_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
+                                </select>
+                            </div>
+
+                            <!-- Active check filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="active_check_filter" style="font-weight: bold;">Check Status:</label><br>
+                                <select name="active_check_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="active_checks_only" <?php echo ($active_check_filter == 'active_checks_only') ? 'selected' : ''; ?>>Active Checks</option>
+                                    <option value="past_checks_only" <?php echo ($active_check_filter == 'past_checks_only') ? 'selected' : ''; ?>>Past Checks</option>
+                                    <option value="all_checks" <?php echo ($active_check_filter == 'all_checks') ? 'selected' : ''; ?>>All Checks</option>
                                 </select>
                             </div>
 

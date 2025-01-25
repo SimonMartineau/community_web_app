@@ -14,6 +14,7 @@
     // Default entry values on page startup
     $order_filter = "date_of_inscription_desc";
     $trash_filter = "only_active_volunteers";
+    $active_check_filter = "all_checks";
     $earliest_date_filter = "";
     $latest_date_filter = "";
 
@@ -31,11 +32,27 @@
 
         // Retrieve filter form data
         $order_filter = $_POST['order_filter'] ?? '';
+        $active_check_filter = $_POST['active_check_filter'] ?? '';
         $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
         $latest_date_filter = $_POST['latest_date_filter'] ?? '';
 
         // Default sql query
         $sql_filter_query = "SELECT DISTINCT c.* FROM Checks c WHERE c.volunteer_id = '$volunteer_id' ";
+
+        // Active check filter
+        if (!empty($active_check_filter)){
+            switch ($active_check_filter){
+                case 'active_checks_only':
+                    $sql_filter_query .= " AND check_active = 1";
+                    break;
+                case 'past_checks_only':
+                    $sql_filter_query .= " AND check_active = 0";
+                    break;
+                case 'all_checks':
+                    // No filter added
+                    break;
+            }
+        }
 
         // Earliest date filter
         if (!empty($earliest_date_filter)){
@@ -117,13 +134,23 @@
                             <!-- Sort by options -->
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
-                                <select name="order_filter" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Newest to Oldest)</option>
+                                <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Newest to Oldest)</option>
                                     <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Newest)</option>
                                     <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Newest to Oldest)</option>
                                     <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Newest)</option>
                                     <option value="addition_order_desc" <?php echo ($order_filter == 'addition_order_desc') ? 'selected' : ''; ?>>Newest to Oldest Addition</option>
                                     <option value="addition_order_asc" <?php echo ($order_filter == 'addition_order_asc') ? 'selected' : ''; ?>>Oldest to Newest Addition</option>
+                                </select>
+                            </div>
+
+                            <!-- Active check filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="active_check_filter" style="font-weight: bold;">Check Status:</label><br>
+                                <select name="active_check_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="active_checks_only" <?php echo ($active_check_filter == 'active_checks_only') ? 'selected' : ''; ?>>Active Checks</option>
+                                    <option value="past_checks_only" <?php echo ($active_check_filter == 'past_checks_only') ? 'selected' : ''; ?>>Past Checks</option>
+                                    <option value="all_checks" <?php echo ($active_check_filter == 'all_checks') ? 'selected' : ''; ?>>All Checks</option>
                                 </select>
                             </div>
 
