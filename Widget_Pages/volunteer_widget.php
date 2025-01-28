@@ -13,6 +13,9 @@
                 <strong>Hours Required:</strong> <?php echo $volunteer_data_row['hours_required'] . " Hours"; ?><br>
                 <strong>Hours Completed:</strong> <?php echo $volunteer_data_row['hours_completed'] . " Hours"; ?><br>
             <?php endif; ?>
+            <?php if ($volunteer_data_row['points'] < 0): ?>
+                <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points.</strong><br>
+            <?php endif; ?>
         </p>
     </div>
 </a>

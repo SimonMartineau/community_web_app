@@ -28,7 +28,7 @@
             FROM Purchases 
             WHERE volunteer_id='$volunteer_id' 
             ORDER BY id desc 
-            LIMIT 6"
+            LIMIT 7"
         );
     }
 
@@ -229,6 +229,9 @@
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
                         <?php if ($volunteer_data['hours_required'] == 0): ?>
                             <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't currently have a check.</strong><br>
+                        <?php endif; ?>
+                        <?php if ($volunteer_data['points'] < 0): ?>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points.</strong><br>
                         <?php endif; ?>
                         <p><strong>Points:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_required'] . " Hours"); ?></span></p>

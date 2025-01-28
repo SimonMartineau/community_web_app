@@ -161,6 +161,10 @@
                             }
                         ?>
 
+                        <?php if ($check_data['points_deposit'] - $check_data['points_spent'] < 0): ?>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points for this check.</strong><br>
+                        <?php endif; ?>
+
                         <!-- Display the message with dynamic color -->
                         <p style="font-size: 16px; color: <?php echo $messageColor; ?>; font-weight: bold;">
                             <?php echo $message; ?>

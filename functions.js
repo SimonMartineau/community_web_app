@@ -46,3 +46,23 @@ window.onload = function () {
     showWidgets_check_page('volunteer');
 };
 
+
+
+function showWidgets_purchase_page(type) {
+    // Hide all widget containers initially
+    document.getElementById('volunteer_widget').style.display = 'none';
+    document.getElementById('check_widget').style.display = 'none';
+
+    // Show the selected widget container
+    if (type === 'volunteer') {
+        document.getElementById('volunteer_widget').style.display = 'block';
+    } else if (type === 'check') {
+        document.getElementById('check_widget').style.display = 'block';
+    }
+}
+
+// Set "volunteer" as the default when the page loads
+window.onload = function () {
+    showWidgets_purchase_page('volunteer');
+};
+

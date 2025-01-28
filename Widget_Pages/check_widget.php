@@ -13,6 +13,9 @@
             <?php else: ?>
                 <span style="color: orange; font-weight: bold;">Past Volunteer's Check</span><br>
             <?php endif; ?>
+            <?php if ($check_data_row['points_deposit'] - $check_data_row['points_spent'] < 0): ?>
+                <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points for this check.</strong><br>
+            <?php endif; ?>
         </p>
     </div>
 </a>
