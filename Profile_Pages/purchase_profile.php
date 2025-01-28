@@ -10,8 +10,8 @@
     if (isset($_GET['purchase_id'])) {
         $purchase_id = $_GET['purchase_id'];
 
-        $purchase_data = fetch_purchase_data($purchase_id);
-        $volunteer_id = $purchase_data['volunteer_id'];
+        $purchase_data_row = fetch_purchase_data($purchase_id);
+        $volunteer_id = $purchase_data_row['volunteer_id'];
         $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the purchase.
 
     }
@@ -104,17 +104,20 @@
                     <!-- Purchase Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
-                        <p><strong>Item Names:</strong> <?php echo htmlspecialchars($purchase_data['item_names']); ?></p>
-                        <p><strong>Total Cost:</strong> <?php echo htmlspecialchars($purchase_data['total_cost']) . " Points"; ?></p>
-                        <p><strong>purchase Date:</strong> <?php echo htmlspecialchars($purchase_data['purchase_date']); ?></p>
-                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($purchase_data['organizer_name']); ?></p>
+                        <p><strong>Item Names:</strong> <?php echo htmlspecialchars($purchase_data_row['item_names']); ?></p>
+                        <p><strong>Total Cost:</strong> <?php echo htmlspecialchars($purchase_data_row['total_cost']) . " Points"; ?></p>
+                        <p><strong>purchase Date:</strong> <?php echo htmlspecialchars($purchase_data_row['purchase_date']); ?></p>
+                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($purchase_data_row['organizer_name']); ?></p>
 
                     </div>
 
                     <!-- Additional Details -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($purchase_data['additional_notes']) ?: 'None'; ?></p>
+                        <?php if ($purchase_data_row['check_id'] == -1): ?>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't have a check at this purchase date.</strong><br>
+                        <?php endif; ?>
+                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($purchase_data_row['additional_notes']) ?: 'None'; ?></p>
                     </div>
                     
                 </div>

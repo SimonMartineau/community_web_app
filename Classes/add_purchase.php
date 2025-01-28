@@ -80,7 +80,7 @@ class Add_Purchase{
 
         // Check if the query returned any rows
         if (empty($check_data_row)) {
-            $check_id = 0; // No results found, set check_id to 0
+            $check_id = -1; // No results found, set check_id to -1
         } else {
             $check_id = $check_data_row[0]['id']; // Use the first row's ID
         }

@@ -97,7 +97,10 @@ function update_backend_data(){
     // This function updates the backend data of the website and database.
     update_volunteer_data();
     update_check_data();
+    update_purchase_data();
 }
+
+
 
 function update_volunteer_data(){
     // This function updates the points, hours_required and hours_completed for Volunteers table.
@@ -194,14 +197,42 @@ function update_check_data(){
             WHERE id = '$check_id';";
 
         $DB->update($volunteers_query);
-
-
-
-
-
     }
+}
 
 
 
+function update_purchase_data(){
+    // This function updates the hours_required and hours_completed for Checks table.
+
+    // Fetching all volunteer data
+    $all_purchases_data = fetch_data("select * from Purchases");
+
+    // Initialise Database object
+    $DB = new Database();
+
+    // Navigating each volunteer to update one by one
+    foreach($all_purchases_data as $purchase_data){
+
+        $purchase_id = $purchase_data['id'];
+        $purchase_date = $purchase_data['purchase_date'];
+        $volunteer_id = $purchase_data['volunteer_id'];
+
+        $result = fetch_data("
+            SELECT id 
+            FROM Checks
+            WHERE '$purchase_date' BETWEEN issuance_date AND validity_date
+            AND '$volunteer_id' = volunteer_id");
+
+        // Get the first matching check ID or -1 if none found
+        $check_id = $result[0]['id'] ?? -1;
+
+        // SQL query into Purchases
+        $purchases_query = "UPDATE Purchases 
+            SET check_id = '$check_id'
+            WHERE id = '$purchase_id';";
+
+        $DB->update($purchases_query);
+    }
 }
 ?>

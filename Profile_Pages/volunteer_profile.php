@@ -342,8 +342,8 @@
                         ?>
                     </div>                    
 
-                    <!-- All volunteer checks button (Initially hidden) -->
-                    <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: none;">
+                    <!-- All volunteer checks button (Initially shown) -->
+                    <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
                         <a href="../Listing_Pages/volunteer_specific_checks.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_checks_button" id="submenu_button">
                                 See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Checks
@@ -365,7 +365,7 @@
                     </div>
 
                     <!-- All volunteer purchases button (Initially hidden) -->
-                    <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;display: inline-block;">
+                    <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px; display: none;">
                         <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_purchases_button" id="submenu_button">
                                 See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases

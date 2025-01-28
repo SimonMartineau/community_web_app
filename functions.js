@@ -21,6 +21,7 @@ window.onload = function() {
 };
 
 
+
 function showWidgets_check_page(type) {
     // Hide all widget containers initially
     document.getElementById('volunteer_widget').style.display = 'none';
