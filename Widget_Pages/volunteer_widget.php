@@ -5,7 +5,6 @@
             <strong>Email:</strong> <?php echo $volunteer_data_row['email']?><br>
             <strong>Address:</strong> <?php echo $volunteer_data_row['address']?><br>
             <strong>Phone:</strong> <?php echo $volunteer_data_row['telephone_number']?><br>
-            <strong>Assigned Area:</strong> <?php echo $volunteer_data_row['assigned_area']?><br>
             <strong>Points:</strong> <?php echo $volunteer_data_row['points'] . " Points"; ?><br>
             <?php if ($volunteer_data_row['hours_required'] == 0): ?>
                 <strong style="color: rgb(226, 65, 65)">Volunteer doesn't currently have a check.</strong><br>

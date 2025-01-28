@@ -136,7 +136,7 @@
             </div>
 
             <!-- Below cover area -->
-            <div style="display: flex;">
+            <div style="display: flex; align-items: flex-start;">
 
                 <!-- Left area; Check information area -->
                 <div id="medium_rectangle" style="flex:0.7;">

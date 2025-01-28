@@ -12,7 +12,6 @@ class Edit_Volunteer{
     public $volunteer_availability_error_mes = "";
     public $volunteer_interests_error_mes = "";
     public $organizer_name_error_mes = "";
-    public $assigned_area_error_mes = "";
     public $registration_date_error_mes = "";
 
 
@@ -140,15 +139,6 @@ class Edit_Volunteer{
             }
         }
 
-        // Check assigned area
-        if (isset($_POST['assigned_area'])){
-            $value = $_POST['assigned_area'];
-            if (empty($value)){
-                $this->assigned_area_error_mes = "*Assigned area is empty.<br>";
-                $error = true; // There is an error
-            }
-        }
-
         // Check registration date completed
         if (isset($_POST['registration_date'])){
             $value = $_POST['registration_date'];
@@ -183,7 +173,6 @@ class Edit_Volunteer{
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
         $organizer_name = $data['organizer_name'];
-        $assigned_area = $data['assigned_area'];
         $additional_notes = $data['additional_notes'];
         $registration_date = $data['registration_date'];
 
@@ -200,7 +189,6 @@ class Edit_Volunteer{
                       zip_code = '$zip_code', 
                       telephone_number = '$telephone_number', 
                       email = '$email', 
-                      assigned_area = '$assigned_area', 
                       organizer_name = '$organizer_name', 
                       additional_notes = '$additional_notes', 
                       registration_date = '$registration_date'

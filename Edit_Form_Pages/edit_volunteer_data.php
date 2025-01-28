@@ -35,7 +35,6 @@
         $volunteer_availability[] = $available_moment;
     }
     $organizer_name = $volunteer_data['organizer_name'];
-    $assigned_area = $volunteer_data['assigned_area'];
     $additional_notes = $volunteer_data['additional_notes'];
     $registration_date = $volunteer_data['registration_date'];
 
@@ -66,7 +65,6 @@
                 $volunteer_interests = $_POST['volunteer_interests'];
             }
             $organizer_name = $_POST['organizer_name'];
-            $assigned_area = $_POST['assigned_area'];
             $additional_notes = $_POST['additional_notes'];
             $registration_date = $_POST['registration_date'];
 
@@ -261,20 +259,6 @@
                             Organizer name:
                             <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
-
-                       <!-- Assigned area dropdown -->
-                        <div class="input_container">
-                            Assigned Area: 
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
-                            <select name="assigned_area">
-                                <option value="" <?php echo ($assigned_area == '') ? 'selected' : ''; ?>>Select an area</option>
-                                <option value="Area 1" <?php echo ($assigned_area == 'Area 1') ? 'selected' : ''; ?>>Area 1</option>
-                                <option value="Area 2" <?php echo ($assigned_area == 'Area 2') ? 'selected' : ''; ?>>Area 2</option>
-                                <option value="Area 3" <?php echo ($assigned_area == 'Area 3') ? 'selected' : ''; ?>>Area 3</option>
-                                <option value="Area 4" <?php echo ($assigned_area == 'Area 4') ? 'selected' : ''; ?>>Area 4</option>
-                            </select> 
                         </div>
                         <br><br>
 

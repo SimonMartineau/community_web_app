@@ -14,7 +14,7 @@ function fetch_data($query){
     }
 }
 
-function fetch_Volunteer_data($volunteer_id){
+function fetch_volunteer_data($volunteer_id){
     $query = "select * from Volunteers where id='$volunteer_id'";
 
     $DB = new Database();

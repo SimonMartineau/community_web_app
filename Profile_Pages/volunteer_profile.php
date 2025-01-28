@@ -201,7 +201,7 @@
 
                     
             <!-- Below cover area -->
-            <div style="display: flex;">
+            <div style="display: flex; align-items: flex-start;">
 
                 <!-- Left area; Volunteer information area -->
                 <div id="medium_rectangle" style="flex:0.7;">
@@ -236,7 +236,6 @@
                         <p><strong>Points:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_required'] . " Hours"); ?></span></p>
                         <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_completed'] . " Hours"); ?></span></p>
-                        <p><strong>Assigned Area:</strong> <?php echo htmlspecialchars($volunteer_data['assigned_area']); ?></p>
                         <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($volunteer_data['organizer_name']); ?></p>
                     </div>
 

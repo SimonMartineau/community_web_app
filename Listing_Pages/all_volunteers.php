@@ -11,7 +11,6 @@
     $order_filter = "date_of_inscription_desc";
     $trash_filter = "only_active_volunteers";
     $time_filter = "all_volunteers";
-    $area_filter = "all_areas";
     $gender_filter = "any_volunteer";
     $interests_filter = [];
     $available_days_filter = [];
@@ -31,7 +30,6 @@
         $order_filter = $_POST['order_filter'] ?? '';
         $trash_filter = $_POST['trash_filter'] ?? '';
         $time_filter = $_POST['time_filter'] ?? '';
-        $area_filter = $_POST['area_filter'] ?? '';
         $gender_filter = $_POST['gender_filter'] ?? '';
         $interests_filter = $_POST['interests_filter'] ?? [];
         $available_days_filter = $_POST['available_days_filter'] ?? [];
@@ -83,27 +81,6 @@
                     $sql_filter_query .= " AND v.hours_required = 0";
                     break;
                 case 'all_volunteers':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
-        }
-
-        // Area filter
-        if (!empty($area_filter)){
-            switch ($area_filter){
-                case 'area_1':
-                    $sql_filter_query .= " AND v.assigned_area = 'Area 1'";
-                    break;
-                case 'area_2':
-                    $sql_filter_query .= " AND v.assigned_area = 'Area 2'";
-                    break;
-                case 'area_3':
-                    $sql_filter_query .= " AND v.assigned_area = 'Area 3'";
-                    break;
-                case 'area_4':
-                    $sql_filter_query .= " AND v.assigned_area = 'Area 4'";
-                    break;
-                case 'all_areas':
                     // No additional condition needed (show all volunteers)
                     break;
             }
@@ -280,18 +257,6 @@
                                     <option value="time_completed" <?php echo ($time_filter == 'time_completed') ? 'selected' : ''; ?>>Check Time Requirement Completed</option>
                                     <option value="time_not_completed" <?php echo ($time_filter == 'time_not_completed') ? 'selected' : ''; ?>>Check Time Requirement Not Yet Completed</option>
                                     <option value="no_check" <?php echo ($time_filter == 'no_check') ? 'selected' : ''; ?>>Volunteer Doesn't Currently Have A Check</option>
-                                </select>
-                            </div>
-
-                            <!-- Area filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="area_filter" style="font-weight: bold;">Assigned Area:</label><br>
-                                <select name="area_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="all_areas" <?php echo ($area_filter == 'all_areas') ? 'selected' : ''; ?>>All Areas</option>
-                                    <option value="area_1" <?php echo ($area_filter == 'area_1') ? 'selected' : ''; ?>>Area 1</option>
-                                    <option value="area_2" <?php echo ($area_filter == 'area_2') ? 'selected' : ''; ?>>Area 2</option>
-                                    <option value="area_3" <?php echo ($area_filter == 'area_3') ? 'selected' : ''; ?>>Area 3</option>
-                                    <option value="area_4" <?php echo ($area_filter == 'area_4') ? 'selected' : ''; ?>>Area 4</option>
                                 </select>
                             </div>
 

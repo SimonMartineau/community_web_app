@@ -132,7 +132,7 @@
             </div>
                     
             <!-- Below cover area -->
-            <div style="display: flex;">
+            <div style="display: flex; align-items: flex-start;">
 
                 <!-- Left area; Purchase information area -->
                 <div id="medium_rectangle" style="flex:0.7;">
@@ -175,7 +175,7 @@
                             <button onclick="showWidgets_purchase_page('check')">Show Check</button>
                         </div>
 
-                        
+
                         <!-- Display volunteer widget -->
                         <div id="volunteer_widget" class="widget-container">
                             <?php

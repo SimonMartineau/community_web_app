@@ -15,11 +15,6 @@ function showWidgets_volunteer_page(type){
     }
 }
 
-// Set "checks" as the default when the page loads
-window.onload = function() {
-    showWidgets_volunteer_page('checks');
-};
-
 
 
 function showWidgets_check_page(type) {
@@ -41,12 +36,6 @@ function showWidgets_check_page(type) {
     }
 }
 
-// Set "volunteer" as the default when the page loads
-window.onload = function () {
-    showWidgets_check_page('volunteer');
-};
-
-
 
 function showWidgets_purchase_page(type) {
     // Hide all widget containers initially
@@ -60,9 +49,4 @@ function showWidgets_purchase_page(type) {
         document.getElementById('check_widget').style.display = 'block';
     }
 }
-
-// Set "volunteer" as the default when the page loads
-window.onload = function () {
-    showWidgets_purchase_page('volunteer');
-};
 

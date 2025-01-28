@@ -16,7 +16,6 @@
     $volunteer_interests = [];
     $volunteer_availability = [];
     $organizer_name = "";
-    $assigned_area = "";
     $additional_notes = "";
 
     // Check if user has submitted info
@@ -45,12 +44,11 @@
                 $volunteer_availability = $_POST['volunteer_availability'];
             }
             $organizer_name = $_POST['organizer_name'];
-            $assigned_area = $_POST['assigned_area'];
             $additional_notes = $_POST['additional_notes'];
 
         } else{
             // Changing the page.
-            header("Location: ../Add_Form_Pages/add_volunteer.php");
+            header("Location: ../Listing_Pages/all_volunteers.php");
             die; // Ending the script
         }    
     }
@@ -231,20 +229,6 @@
                         <div class="input_container">
                             <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
-
-                       <!-- Assigned area dropdown -->
-                        <div class="input_container">
-                            Assigned Area: 
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->assigned_area_error_mes : ''; ?></span>
-                            <select name="assigned_area">
-                                <option value="" <?php echo ($assigned_area == '') ? 'selected' : ''; ?>>Select an area</option>
-                                <option value="Area 1" <?php echo ($assigned_area == 'Area 1') ? 'selected' : ''; ?>>Area 1</option>
-                                <option value="Area 2" <?php echo ($assigned_area == 'Area 2') ? 'selected' : ''; ?>>Area 2</option>
-                                <option value="Area 3" <?php echo ($assigned_area == 'Area 3') ? 'selected' : ''; ?>>Area 3</option>
-                                <option value="Area 4" <?php echo ($assigned_area == 'Area 4') ? 'selected' : ''; ?>>Area 4</option>
-                            </select> 
                         </div>
                         <br><br>
 

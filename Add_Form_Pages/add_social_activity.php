@@ -7,10 +7,11 @@
     // Variables to keep user input data if failed submit
     $activity_name = "";
     $activity_duration = "";
-    $activity_time_period = "";
-    $activity_domains = "";
-    $registration_supervisor = "";
-    $assigned_area = "";
+    $number_of_participants = "";
+    $activity_date = "";
+    $activity_time_periods = [];
+    $activity_domains = [];
+    $organizer_name = "";
     $additional_notes = "";
 
     // Check if user has submitted info
@@ -24,27 +25,20 @@
             // Re-enter user input data in prompts
             $activity_name = $_POST['activity_name'];
             $activity_duration = $_POST['activity_duration'];
-            if(isset($_POST['activity_time_period'])){ // Due to uncertain entry
-                $activity_time_period = $_POST['activity_time_period'];
+            $number_of_participants = $_POST['number_of_participants'];
+            $activity_date = $_POST['activity_date'];
+            if(isset($_POST['activity_time_periods'])){ // Due to uncertain entry
+                $activity_time_periods = $_POST['activity_time_periods'];
             }
             if(isset($_POST['activity_domains'])){ // Due to uncertain entry
                 $activity_domains = $_POST['activity_domains'];
             }
-            $registration_supervisor = $_POST['registration_supervisor'];
-            $assigned_area = $_POST['assigned_area'];
+            $organizer_name = $_POST['organizer_name'];
             $additional_notes = $_POST['additional_notes'];
-        } else{
-            // Reset the user input variables.
-            $activity_name = "";
-            $activity_duration = "";
-            $activity_time_period = "";
-            $activity_domains = "";
-            $registration_supervisor = "";
-            $assigned_area = "";
-            $additional_notes = "";
 
+        } else{
             // Changing the page.
-            header("Location: ../Add_Form_Pages/add_social_activity.php");
+            header("Location: ../Listing_Pages/all_social_activities.php");
             die; // Ending the script
         }    
     }
@@ -91,6 +85,13 @@
                         </div>
                         <br><br>
 
+                        <!-- Activity number of participants text input -->
+                        <div class="input_container">
+                            <input name="number_of_participants" type="text" id="text_input" placeholder="Number of participants" value="<?php echo $number_of_participants ?>">
+                            <span id="error_message"><?php echo isset($activity) ? $activity->number_of_participants_error_mes : ''; ?></span>
+                        </div>
+                        <br><br>
+
                         <!-- Activity duration text input -->
                         <div class="input_container">
                             <input name="activity_duration" type="text" id="text_input" placeholder="Activity duration" value="<?php echo $activity_duration ?>">
@@ -98,15 +99,44 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity time period bubble check -->
+                        <!-- Date input -->
                         <div class="input_container">
-                            Activity time period:
-                            <input type="radio" name="activity_time_period" value="morning" <?php echo ($activity_time_period == 'morning') ? 'checked' : ''; ?>> Morning
-                            <input type="radio" name="activity_time_period" value="afternoon" <?php echo ($activity_time_period == 'afternoon') ? 'checked' : ''; ?>> Afternoon
-                            <input type="radio" name="activity_time_period" value="evening" <?php echo ($activity_time_period == 'evening') ? 'checked' : ''; ?>> Evening
-                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_period_error_mes : ''; ?></span>
+                            Activity Date: <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
+                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_date_error_mes : ''; ?></span>
                         </div>
-                        <br><br>
+                        <br>
+
+                        <!-- Activity time period table -->
+                        <div class="input_container">
+                            <h4 style="text-align: center;">Activity Time Period</h4> 
+                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_periods_error_mes : ''; ?></span>
+                        </div>
+                        <div style="text-align: center;">
+                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
+                                <tr>
+                                    <th>Time Period</th>
+                                    <th>Check</th>
+                                </tr>
+                                <?php
+                                $time_periods = [
+                                    "Morning", 
+                                    "Afternoon", 
+                                    "Evening"
+                                ];
+                                foreach ($time_periods as $time_period) {
+                                    echo "<tr>";
+                                    echo "<td>$time_period</td>";
+                                    if (in_array($time_period, $activity_time_periods)){
+                                        echo "<td><input type='checkbox' name='activity_time_periods[]' value='$time_period' checked></td>";
+                                    } else {
+                                        echo "<td><input type='checkbox' name='activity_time_periods[]' value='$time_period'></td>";
+                                    } 
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </table>
+                        </div>
+                        <br>
 
                         <!-- Activity domains table -->
                         <div class="input_container">
@@ -131,7 +161,11 @@
                                 foreach ($domain_types as $domain) {
                                     echo "<tr>";
                                     echo "<td>$domain</td>";
-                                    echo "<td><input type='checkbox' name='activity_domains[]'></td>";
+                                    if (in_array($domain, $activity_domains)){
+                                        echo "<td><input type='checkbox' name='activity_domains[]' value='$domain' checked></td>";
+                                    } else {
+                                        echo "<td><input type='checkbox' name='activity_domains[]' value='$domain'></td>";
+                                    }  
                                     echo "</tr>";
                                 }
                                 ?>
@@ -139,25 +173,11 @@
                         </div>
                         <br>
 
-                        <!-- Registration Supervisor text input -->
+                        <!-- Organizer Name text input -->
                         <div class="input_container">
-                            <input name="registration_supervisor" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $registration_supervisor ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->registration_supervisor_error_mes : ''; ?></span>
+                            <input name="organizer_name" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $organizer_name ?>">
+                            <span id="error_message"><?php echo isset($activity) ? $activity->organizer_name_error_mes : ''; ?></span>
                         </div>
-                        <br><br>
-
-                        <!-- Assigned area dropdown -->
-                        <div class="input_container">
-                            Assigned Area: 
-                            <span id="error_message"><?php echo isset($activity) ? $activity->assigned_area_error_mes : ''; ?></span>
-                            <select name="assigned_area" value="<?php echo $assigned_area ?>">
-                                <option value="">Select an area</option>
-                                <option value="Area 1">Area 1</option>
-                                <option value="Area 2">Area 2</option>
-                                <option value="Area 3">Area 3</option>
-                                <option value="Area 4">Area 4</option>
-                            </select> 
-                        </div>   
                         <br><br>
 
                         <!-- Additional notes text input -->
