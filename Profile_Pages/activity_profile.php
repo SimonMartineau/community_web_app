@@ -83,7 +83,7 @@
         
         .information_section strong {
             display: inline-block;
-            width: 150px;
+            width: 100%;
             color: #555;
         }
 
@@ -195,7 +195,13 @@
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
                         <p><strong>Name:</strong> <?php echo htmlspecialchars($activity_data_row['activity_name']); ?></p>
-                        <p><strong>Count:</strong> 
+                        <p><strong>Number of Places:</strong> 
+                            <?php 
+                                $count = $activity_data_row['number_of_places'];
+                                echo htmlspecialchars($count) . ' ' . (($count == 1) ? 'Place' : 'Places'); 
+                            ?>
+                        </p>
+                        <p><strong>Number of Participants:</strong> 
                             <?php 
                                 $count = $activity_data_row['number_of_participants'];
                                 echo htmlspecialchars($count) . ' ' . (($count == 1) ? 'Participant' : 'Participants'); 
@@ -208,6 +214,12 @@
                             ?>
                         </p>
                         <p><strong>Date:</strong> <?php echo htmlspecialchars(formatDate($activity_data_row['activity_date'])); ?></p>
+                        <p><strong>Location:</strong> 
+                            <?php 
+                                $location = $activity_data_row['activity_location'];
+                                echo htmlspecialchars((($location == "") ? 'Not Added' : $location)); 
+                            ?>
+                        </p>
                     </div>
 
                     <!-- Time Periods -->

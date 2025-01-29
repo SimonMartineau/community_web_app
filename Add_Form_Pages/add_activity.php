@@ -7,8 +7,9 @@
     // Variables to keep user input data if failed submit
     $activity_name = "";
     $activity_duration = "";
-    $number_of_participants = "";
-    $activity_date = "";
+    $activity_location = "";
+    $number_of_places = "";
+    $activity_dates = "";
     $activity_time_periods = [];
     $activity_domains = [];
     $organizer_name = "";
@@ -25,8 +26,9 @@
             // Re-enter user input data in prompts
             $activity_name = $_POST['activity_name'];
             $activity_duration = $_POST['activity_duration'];
-            $number_of_participants = $_POST['number_of_participants'];
-            $activity_date = $_POST['activity_date'];
+            $activity_location = $_POST['activity_location'];
+            $number_of_places = $_POST['number_of_places'];
+            $activity_dates = $_POST['activity_dates'];
             if(isset($_POST['activity_time_periods'])){ // Due to uncertain entry
                 $activity_time_periods = $_POST['activity_time_periods'];
             }
@@ -85,10 +87,10 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity number of participants text input -->
+                        <!-- Activity number of places text input -->
                         <div class="input_container">
-                            <input name="number_of_participants" type="text" id="text_input" placeholder="Number of participants" value="<?php echo $number_of_participants ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->number_of_participants_error_mes : ''; ?></span>
+                            <input name="number_of_places" type="text" id="text_input" placeholder="Number of places" value="<?php echo $number_of_places ?>">
+                            <span id="error_message"><?php echo isset($activity) ? $activity->number_of_places_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
@@ -99,12 +101,30 @@
                         </div>
                         <br><br>
 
-                        <!-- Date input -->
+                        <!-- Activity location text input -->
                         <div class="input_container">
-                            Activity Date: <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_date_error_mes : ''; ?></span>
+                            <input name="activity_location" type="text" id="text_input" placeholder="Activity location (optional)" value="<?php echo $activity_location ?>">
                         </div>
-                        <br>
+                        <br><br>
+                        
+                        <!-- Dates input -->
+                        <div class="input_container">
+                            <!-- Include Flatpickr CSS & JS -->
+                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+                            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+                            <!-- Multi-date picker input -->
+                            Activity Dates: <input type="text" id="activity_dates" name="activity_dates" placeholder="Select multiple dates" value="<?php echo $activity_dates ?>">
+                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_dates_error_mes : ''; ?></span>
+
+                            <script>
+                            flatpickr("#activity_dates", {
+                                mode: "multiple", // Enables multiple date selection
+                                dateFormat: "Y-m-d", // Format of the selected dates
+                            });
+                            </script>
+                        </div>
+
 
                         <!-- Activity time period table -->
                         <div class="input_container">

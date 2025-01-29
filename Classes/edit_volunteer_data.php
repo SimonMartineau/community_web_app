@@ -202,7 +202,7 @@ class Edit_Volunteer{
         // SQL query into Volunteer_Interests
         foreach($volunteer_interests as $interest){
             $volunteers_interests_query = "insert into Volunteer_Interests (volunteer_id, interest)
-            values ('$volunteer_id', '$interest')";
+                    values ('$volunteer_id', '$interest')";
             $DB->save($volunteers_interests_query);
         }
 

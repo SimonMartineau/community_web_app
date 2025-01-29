@@ -2,7 +2,8 @@
     <div id="widget" class="activity_widget">
         <h3 class="widget_name"><?php echo $activity_data_row['activity_name'] ?></h3>
         <p class="widget_info">
-            <strong>Number of Participants:</strong> <?php echo $activity_data_row['number_of_participants']?><br>
+            <strong>Number of places:</strong> <?php echo $activity_data_row['number_of_places']?><br>
+            <strong>Number of participants:</strong> <?php echo $activity_data_row['number_of_participants']?><br>
             <strong>Duration:</strong> <?php echo $activity_data_row['activity_duration'] . " Hours"?><br>
             <strong>Date:</strong> <?php echo formatDate($activity_data_row['activity_date'])?><br>
         </p>
