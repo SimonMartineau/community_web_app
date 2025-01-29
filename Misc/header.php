@@ -86,7 +86,7 @@
         <!-- Navigation Menu -->
         <div id="menu_container">
             <a href="../Listing_Pages/all_volunteers.php"><div id="menu_buttons">Volunteers</div></a>
-            <a href="../Listing_Pages/all_social_activities.php"><div id="menu_buttons">Social Activities</div></a>
+            <a href="../Listing_Pages/all_activities.php"><div id="menu_buttons">Activities</div></a>
             <a href="../Profile_Pages/data.php"><div id="menu_buttons">Data</div></a>
             <a href="../Profile_Pages/about.php"><div id="menu_buttons">About</div></a>
             <a href="../Profile_Pages/contact.php"><div id="menu_buttons">Contact</div></a>

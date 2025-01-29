@@ -235,4 +235,16 @@ function update_purchase_data(){
         $DB->update($purchases_query);
     }
 }
+
+
+
+function formatDate(?string $date_str): string {
+    if (empty($date_str)) {
+        return 'No specific date provided';
+    }
+    
+    $date = DateTime::createFromFormat('Y-m-d', $date_str);
+    return $date ? $date->format('l, jS \o\f F Y') : 'Invalid date format';
+}
+
 ?>

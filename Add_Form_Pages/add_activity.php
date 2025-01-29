@@ -2,7 +2,7 @@
 
     // Include classes
     include("../Classes/connect.php");
-    include("../Classes/add_social_activity.php");
+    include("../Classes/add_activity.php");
 
     // Variables to keep user input data if failed submit
     $activity_name = "";
@@ -17,7 +17,7 @@
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        $activity = new Add_Social_Activity();
+        $activity = new Add_Activity();
         $result = $activity->evaluate($_POST);
 
         // If there are errors 
@@ -38,7 +38,7 @@
 
         } else{
             // Changing the page.
-            header("Location: ../Listing_Pages/all_social_activities.php");
+            header("Location: ../Listing_Pages/all_activities.php");
             die; // Ending the script
         }    
     }
@@ -50,7 +50,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Social Activity | Give and Receive</title>
+        <title>Add Activity | Give and Receive</title>
         <link rel="stylesheet" href="../style.css">
     </head>
 
@@ -69,14 +69,14 @@
 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Add Social Activity Form</span>
+                    <span style="font-size: 24px; font-weight: bold;">Add Activity Form</span>
                 </div>
 
                 <!-- Form area -->
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Add_Form_Pages/add_social_activity.php">
+                    <form method="post" action="../Add_Form_Pages/add_activity.php">
 
                         <!-- Activity name text input -->
                         <div class="input_container">

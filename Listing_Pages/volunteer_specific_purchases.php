@@ -148,7 +148,7 @@
                     <!-- Volunteer widget display -->
                     <div id="medium_rectangle">
 
-                        <!-- Section title of recent social activities section -->
+                        <!-- Section title of recent activities section -->
                         <div id="section_title">
                             <span>Purchases</span>
                         </div>

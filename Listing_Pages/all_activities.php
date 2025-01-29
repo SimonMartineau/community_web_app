@@ -1,9 +1,38 @@
+<?php
+
+    // Include classes
+    include("../Classes/connect.php");
+    include("../Classes/functions.php");
+
+    // Updating all backend processes
+    update_backend_data();
+
+    // Default entry values on page startup.
+    $order_filter = "date_of_inscription_desc";
+    $trash_filter = "only_active_volunteers";
+    $time_filter = "all_volunteers";
+    $gender_filter = "any_volunteer";
+    $interests_filter = [];
+    $available_days_filter = [];
+
+    // Default page volunteer data
+    $all_activities_data = fetch_data("
+        SELECT * 
+        FROM Activities 
+        WHERE `trashed` = '0' 
+        ORDER BY id DESC"
+    );
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Social Activities | Give and Receive</title>
+        <title>Activities | Give and Receive</title>
         <link rel="stylesheet" href="../style.css">
     </head>
 
@@ -18,11 +47,11 @@
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
-            <!-- Add social activity button -->
+            <!-- Add activity button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_social_activity.php" style="text-decoration: none;">
+                <a href="../Add_Form_Pages/add_activity.php" style="text-decoration: none;">
                     <button id="submenu_button">
-                        Add Social Activity
+                        Add Activity
                     </button>
                 </a>
             </div>
@@ -116,49 +145,22 @@
                     <!-- Activity widget display -->
                     <div id="medium_rectangle">
 
-                        <!-- Section title of recent social activities section -->
+                        <!-- Section title of recent activities section -->
                         <div id="section_title">
-                            <span>Social Activities</span>
+                            <span>Activities</span>
                         </div>
 
-                        <!-- Social activity 1 -->
-                        <div id="activity_widget">
-                            <h3 class="activity_name">Community Cleanup</h3>
-                            <p class="activity_info">
-                                <strong>Duration:</strong> 3 hours<br>
-                                <strong>Area:</strong> Central Park, Springfield<br>
-                                <strong>Participants:</strong> 25 people<br>
-                            </p>
-                            <p class="activity_info">
-                                <strong>Domain:</strong>
-                                <ul class="activity_widget">
-                                    <li>Organization of community events</li>
-                                    <li>Cleaning and maintenance of public spaces</li>
-                                    <li>Participation in urban gardening projects</li>
-                                </ul>
-                            </p>
-                        </div>
-
-                        <!-- Social activity 2 -->
-                        <div id="activity_widget">
-                            <h3 class="activity_name">Community Cleanup</h3>
-                            <p>
-                                <strong>Duration:</strong> 3 hours<br>
-                                <strong>Area:</strong> Central Park, Springfield<br>
-                                <strong>Participants:</strong> 25 people<br>
-                            </p>
-                            <p class="activity_info">
-                                <strong>Domain:</strong>
-                                <ul>
-                                    <li>Organization of community events</li>
-                                    <li>Cleaning and maintenance of public spaces</li>
-                                    <li>Participation in urban gardening projects</li>
-                                </ul>
-                            </p>
-                        </div>
-
-          
                         
+                        <!-- Display activity widgets --> 
+                        <?php
+                            if($all_activities_data){
+                                foreach($all_activities_data as $activity_data_row){
+                                    $activity_id = $activity_data_row['id'];
+                                    include("../Widget_Pages/activity_widget.php");
+                                }
+                            }
+                        ?>
+
 
                     </div>
 

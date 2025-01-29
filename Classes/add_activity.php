@@ -1,6 +1,6 @@
 <?php
 
-class Add_Social_Activity{
+class Add_Activity{
     public $activity_name_error_mes = "";
     public $number_of_participants_error_mes = "";
     public $activity_duration_error_mes = "";
@@ -90,10 +90,10 @@ class Add_Social_Activity{
             }
         }
 
-        // If no error, create add social activity. Otherwise, echo error
+        // If no error, create add activity. Otherwise, echo error
         if(!$error){
             // No error
-            $this->add_social_activity($data);
+            $this->add_activity($data);
             return true;
         } else{
             // There is an error
@@ -102,7 +102,7 @@ class Add_Social_Activity{
     }
 
 
-    public function add_social_activity($data){
+    public function add_activity($data){
         // Creating all the varaibles for the SQL input
         $activity_name = $data['activity_name']; // ucfirst makes first letter capital.
         $number_of_participants = $data['number_of_participants'];
@@ -128,15 +128,6 @@ class Add_Social_Activity{
         // Set activity_id to value of primary key in Activity table
         $activity_id = $DB->last_insert_id;
 
-
-        // SQL query into Activity_Dates
-        $activity_dates_query = "insert into Activity_Dates (activity_id, activity_date)
-                values ('$activity_id', '$activity_date')";
-        
-        // Send data to db
-        $DB->save($activity_dates_query);  
-
-
         // SQL query into Activity_Time_Periods
         foreach($activity_time_periods as $time_period){
             $activity_time_periods_query = "insert into Activity_Time_Periods (activity_id, time_period)
@@ -145,7 +136,6 @@ class Add_Social_Activity{
             // Send data to db
             $DB->save($activity_time_periods_query);  
         }
-
 
         // SQL query into Activity_Domains
         foreach($activity_domains as $domain){
