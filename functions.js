@@ -50,3 +50,17 @@ function showWidgets_purchase_page(type) {
     }
 }
 
+
+
+function showWidgets_activity_page(type) {
+    // Hide all widget containers initially
+    document.getElementById('volunteer_widget').style.display = 'none';
+    document.getElementById('volunteer_widget2').style.display = 'none';
+
+    // Show the selected widget container
+    if (type === 'current_participants') {
+        document.getElementById('volunteer_widget').style.display = 'block';
+    } else if (type === 'matching_participants') {
+        document.getElementById('volunteer_widget2').style.display = 'block';
+    }
+}

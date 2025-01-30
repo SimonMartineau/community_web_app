@@ -4,7 +4,7 @@
         <p class="widget_info">
             <strong>Item Names:</strong> <?php echo $purchase_data_row['item_names']?><br>
             <strong>Total Cost:</strong> <?php echo $purchase_data_row['total_cost'] . " Points"?><br>
-            <strong>Purchase Date:</strong> <?php echo $purchase_data_row['purchase_date']?><br>
+            <strong>Purchase Date:</strong> <?php echo formatDate($purchase_data_row['purchase_date'])?><br>
             <?php if ($purchase_data_row['check_id'] == -1): ?>
                 <strong style="color: rgb(226, 65, 65)">Volunteer doesn't have a check at this purchase date.</strong><br>
             <?php endif; ?>

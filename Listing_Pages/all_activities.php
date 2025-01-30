@@ -9,7 +9,7 @@
 
     // Default entry values on page startup.
     $order_filter = "date_of_inscription_desc";
-    $trash_filter = "only_active_volunteers";
+    $status_filter = "only_active_volunteers";
     $occupancy_filter = "all_activities";
     $gender_filter = "any_volunteer";
     $domains_filter = [];
@@ -18,9 +18,11 @@
 
     // Default page volunteer data
     $all_activities_data = fetch_data("
-        SELECT * 
-        FROM Activities 
+        SELECT DISTINCT a.* FROM Activities a
+        JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
+        JOIN Activity_Domains ad ON a.id = ad.activity_id
         WHERE `trashed` = '0' 
+        AND a.activity_date >= CURDATE() 
         ORDER BY id DESC"
     );
 
@@ -28,33 +30,28 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve filter form data
         $order_filter = $_POST['order_filter'] ?? '';
-        $trash_filter = $_POST['trash_filter'] ?? '';
+        $status_filter = $_POST['status_filter'] ?? '';
         $occupancy_filter = $_POST['occupancy_filter'] ?? '';
         $domains_filter = $_POST['domains_filter'] ?? [];
         $time_periods_filter = $_POST['time_periods_filter'] ?? [];
         $available_days_filter = $_POST['available_days_filter'] ?? [];
 
         // Default sql query
-        $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a";
-
-        // Add JOIN only if time periods filter is not empty
-        if (!empty($time_periods_filter)) {
-            $sql_filter_query .= " JOIN Activity_Time_Periods atp ON a.id = atp.activity_id";
-        }
-
-        // Add JOIN only if domain filter is not empty
-        if (!empty($domains_filter)) {
-            $sql_filter_query .= " JOIN Activity_Domains ad ON a.id = ad.activity_id";
-        }
+        $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a 
+                                    JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
+                                    JOIN Activity_Domains ad ON a.id = ad.activity_id";
 
         // Initialize Where clause
         $sql_filter_query .= " WHERE 1=1";
 
         // Volunteer status filter
-        if (!empty($trash_filter)){
-            switch ($trash_filter){
+        if (!empty($status_filter)){
+            switch ($status_filter){
                 case 'only_active':
-                    $sql_filter_query .= " AND a.trashed = '0'";
+                    $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date >= CURDATE()";
+                    break;
+                case 'only_past':
+                    $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date < CURDATE()";
                     break;
                 case 'only_in_trash':
                     $sql_filter_query .= " AND a.trashed = '1'";
@@ -96,7 +93,7 @@
         if (!empty($available_days_filter)) {
             $sql_filter_query .= " AND (";
             foreach ($available_days_filter as $weekday) {
-                $sql_filter_query .= " DAYOFWEEK(a.activity_date) = '$weekday' OR";
+                $sql_filter_query .= " DAYNAME(a.activity_date) = '$weekday' OR";
             }
             $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
         }
@@ -208,11 +205,12 @@
                             
                             <!-- Activity status filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="trash_filter" style="font-weight: bold;">Activity Status:</label><br>
-                                <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="only_active" <?php echo ($trash_filter == 'only_active') ? 'selected' : ''; ?>>Only Active</option>
-                                    <option value="only_in_trash" <?php echo ($trash_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
-                                    <option value="all_volunteers" <?php echo ($trash_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
+                                <label for="status_filter" style="font-weight: bold;">Activity Status:</label><br>
+                                <select name="status_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="only_active" <?php echo ($status_filter == 'only_active') ? 'selected' : ''; ?>>Only Active</option>
+                                    <option value="only_past" <?php echo ($status_filter == 'only_past') ? 'selected' : ''; ?>>Only Past</option>
+                                    <option value="only_in_trash" <?php echo ($status_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
+                                    <option value="all_volunteers" <?php echo ($status_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
                                 </select>
                             </div>
 
@@ -222,8 +220,8 @@
                                 <select name="occupancy_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                                     <option value="all_activities" <?php echo ($occupancy_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
                                     <option value="not_full" <?php echo ($occupancy_filter == 'not_full') ? 'selected' : ''; ?>>Not full</option>
-                                    <option value="full" <?php echo ($occupancy_filter == 'full') ? 'selected' : ''; ?>>Full Activities</option>
-                                    <option value="empty" <?php echo ($occupancy_filter == 'empty') ? 'selected' : ''; ?>>Empty Activities</option>
+                                    <option value="full" <?php echo ($occupancy_filter == 'full') ? 'selected' : ''; ?>>Full</option>
+                                    <option value="empty" <?php echo ($occupancy_filter == 'empty') ? 'selected' : ''; ?>>Empty</option>
 
                                 </select>
                             </div>
@@ -255,13 +253,13 @@
                             <div style="margin-bottom: 15px;">
                                 <label style="font-weight: bold;">Available Days:</label><br>
                                 <div>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="2" <?php echo (isset($_POST['available_days_filter']) && in_array('2', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Monday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="3" <?php echo (isset($_POST['available_days_filter']) && in_array('3', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Tuesday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="4" <?php echo (isset($_POST['available_days_filter']) && in_array('4', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Wednesday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="5" <?php echo (isset($_POST['available_days_filter']) && in_array('5', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Thursday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="6" <?php echo (isset($_POST['available_days_filter']) && in_array('6', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Friday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="7" <?php echo (isset($_POST['available_days_filter']) && in_array('7', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="1" <?php echo (isset($_POST['available_days_filter']) && in_array('1', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="Monday" <?php echo (isset($_POST['available_days_filter']) && in_array('Monday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Monday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="Tuesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Tuesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Tuesday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="Wednesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Wednesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Wednesday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="Thursday" <?php echo (isset($_POST['available_days_filter']) && in_array('Thursday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Thursday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="Friday" <?php echo (isset($_POST['available_days_filter']) && in_array('Friday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Friday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="Saturday" <?php echo (isset($_POST['available_days_filter']) && in_array('Saturday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="Sunday" <?php echo (isset($_POST['available_days_filter']) && in_array('Sunday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
                                 </div>
                             </div>
 
@@ -300,6 +298,8 @@
                             if($all_activities_data){
                                 foreach($all_activities_data as $activity_data_row){
                                     $activity_id = $activity_data_row['id'];
+                                    $activity_time_periods_data = fetch_data("select * from Activity_Time_Periods where activity_id = '$activity_id'");
+                                    $activity_domains_data = fetch_data("select * from Activity_Domains where activity_id = '$activity_id'");
                                     include("../Widget_Pages/activity_widget.php");
                                 }
                             }

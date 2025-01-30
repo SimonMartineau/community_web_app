@@ -23,7 +23,7 @@
         );
 
         // Collecting activity domains data
-        $activity_domain_data = fetch_data(
+        $activity_domains_data = fetch_data(
             "SELECT * FROM Activity_Domains
                     WHERE activity_id = '$activity_id'"
         );
@@ -239,10 +239,10 @@
                     <!-- Domains -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Domains</h2>
-                        <?php if (!empty($activity_domain_data)): ?>
+                        <?php if (!empty($activity_domains_data)): ?>
                             <ul style="list-style-type: disc; padding-left: 20px;">
-                                <?php foreach ($activity_domain_data as $activity_domain_data_row): ?>
-                                    <li><?php echo htmlspecialchars($activity_domain_data_row['domain'] ?: 'No specific interest provided'); ?></li>
+                                <?php foreach ($activity_domains_data as $activity_domains_data_row): ?>
+                                    <li><?php echo htmlspecialchars($activity_domains_data_row['domain'] ?: 'No specific interest provided'); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php else: ?>
@@ -257,8 +257,7 @@
                         <p><strong>Registration Date:</strong> <?php echo htmlspecialchars(formatDate($activity_data_row['registration_date'])); ?></p>
                         <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($activity_data_row['trashed'] ? "Yes" : "No"); ?></p>
                     </div>
-
-                    
+ 
                 </div>
 
 
@@ -268,15 +267,65 @@
                     <!-- Widget display -->
                     <div id="medium_rectangle">
 
-                    <!-- Toggle buttons -->
-                    <div id="widget_toggle_buttons">
-                        <button onclick="showWidgets_volunteer_page('current_activities')">Show Participants</button>
-                        <button onclick="showWidgets_volunteer_page('matching_activities')">Show Matching Volunteers</button>
+                        <!-- Toggle buttons
+                         <div id="widget_toggle_buttons">
+                            <button onclick="showWidgets_activity_page('current_participants')">Show Participants</button>
+                            <button onclick="showWidgets_activity_page('matching_participants')">Show Matching Volunteers</button>
+                        </div> -->
+                        
+
+                        <?php
+                            // Getting the activity date
+                            $activity_date = $activity_data_row['activity_date'];
+
+                            // Getting the activity time periods in a string
+                            $time_periods = [];
+                            foreach ($activity_time_periods_data as $activity_time_periods_data_row){
+                                $time_periods[] = $activity_time_periods_data_row['time_period'];
+                            }
+                            $activity_time_periods_sql = "'" . implode("', '", $time_periods) . "'";
+
+                            // Getting the activity domains in a string
+                            $domains = [];
+                            foreach ($activity_domains_data as $activity_domains_data_row){
+                                $domains[] = $activity_domains_data_row['domain'];
+                            }
+                            $activity_domains_sql = "'" . implode("', '", $domains) . "'";
+                            
+                            
+
+                            // Collect marching volunteers data
+                            $all_matching_participants_data = fetch_data("
+                                SELECT DISTINCT v.* 
+                                FROM Volunteers v
+                                JOIN Volunteer_Availability va ON v.id = va.volunteer_id
+                                JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
+                                WHERE v.trashed = 0
+                                AND DAYNAME('$activity_date') = va.weekday
+                                AND va.time_period IN ($activity_time_periods_sql)
+                                AND vi.interest IN ($activity_domains_sql)
+                                AND v.hours_completed < v.hours_required
+                                ORDER BY v.id DESC
+                            ");
+
+
+                        ?>
+
+                        <!-- Display volunteer widgets --> 
+                        <div id="volunteer_widget" class="widget-container">
+                            <?php
+                                if($all_matching_participants_data){
+                                    foreach($all_matching_participants_data as $volunteer_data_row){
+                                        $volunteer_id = $volunteer_data_row['id'];
+                                        include("../Widget_Pages/volunteer_widget.php");
+                                    }
+                                }
+                            ?>
+                        </div>
+
+                        
+        
                     </div>
-                   
-
-
-                </div>
 
 
                 </div>

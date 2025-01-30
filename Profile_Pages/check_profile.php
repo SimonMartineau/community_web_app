@@ -170,8 +170,8 @@
                             <?php echo $message; ?>
                         </p>
 
-                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: $check_data['issuance_date']); ?></p>
-                        <p><strong>Validity Date:</strong> <?php echo htmlspecialchars($check_data['validity_date']); ?></p>
+                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: formatDate($check_data['issuance_date'])); ?></p>
+                        <p><strong>Validity Date:</strong> <?php echo htmlspecialchars(formatDate($check_data['validity_date'])); ?></p>
                         <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($check_data['points_deposit']) . " Points"; ?></p>
                         <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($check_data['points_spent']) . " Points"; ?></p>
                         <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($check_data['hours_required']) . " Hours"; ?></p>

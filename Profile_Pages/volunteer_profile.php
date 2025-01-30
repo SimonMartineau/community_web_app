@@ -217,7 +217,7 @@
                         <p><strong>First Name:</strong> <?php echo htmlspecialchars($volunteer_data['first_name']); ?></p>
                         <p><strong>Last Name:</strong> <?php echo htmlspecialchars($volunteer_data['last_name']); ?></p>
                         <p><strong>Gender:</strong> <?php echo htmlspecialchars($volunteer_data['gender']); ?></p>
-                        <p><strong>Date of Birth:</strong> <?php echo htmlspecialchars($volunteer_data['date_of_birth']); ?></p>
+                        <p><strong>Date of Birth:</strong> <?php echo htmlspecialchars(formatDate($volunteer_data['date_of_birth'])); ?></p>
                         <p><strong>Address:</strong> <?php echo htmlspecialchars($volunteer_data['address']); ?></p>
                         <p><strong>Zip Code:</strong> <?php echo htmlspecialchars($volunteer_data['zip_code']); ?></p>
                         <p><strong>Phone:</strong> <?php echo htmlspecialchars($volunteer_data['telephone_number']); ?></p>
@@ -307,7 +307,7 @@
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
                         <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($volunteer_data['additional_notes']) ?: 'None'; ?></p>
-                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars($volunteer_data['registration_date']); ?></p>
+                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars(formatDate($volunteer_data['registration_date'])); ?></p>
                         <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($volunteer_data['trashed'] ? "Yes" : "No"); ?></p>
                     </div>
                     
