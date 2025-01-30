@@ -10,9 +10,10 @@
     // Default entry values on page startup.
     $order_filter = "date_of_inscription_desc";
     $trash_filter = "only_active_volunteers";
-    $time_filter = "all_volunteers";
+    $occupancy_filter = "all_activities";
     $gender_filter = "any_volunteer";
-    $interests_filter = [];
+    $domains_filter = [];
+    $time_periods_filter = [];
     $available_days_filter = [];
 
     // Default page volunteer data
@@ -23,6 +24,125 @@
         ORDER BY id DESC"
     );
 
+    // Getting filter form data
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Retrieve filter form data
+        $order_filter = $_POST['order_filter'] ?? '';
+        $trash_filter = $_POST['trash_filter'] ?? '';
+        $occupancy_filter = $_POST['occupancy_filter'] ?? '';
+        $domains_filter = $_POST['domains_filter'] ?? [];
+        $time_periods_filter = $_POST['time_periods_filter'] ?? [];
+        $available_days_filter = $_POST['available_days_filter'] ?? [];
+
+        // Default sql query
+        $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a";
+
+        // Add JOIN only if time periods filter is not empty
+        if (!empty($time_periods_filter)) {
+            $sql_filter_query .= " JOIN Activity_Time_Periods atp ON a.id = atp.activity_id";
+        }
+
+        // Add JOIN only if domain filter is not empty
+        if (!empty($domains_filter)) {
+            $sql_filter_query .= " JOIN Activity_Domains ad ON a.id = ad.activity_id";
+        }
+
+        // Initialize Where clause
+        $sql_filter_query .= " WHERE 1=1";
+
+        // Volunteer status filter
+        if (!empty($trash_filter)){
+            switch ($trash_filter){
+                case 'only_active':
+                    $sql_filter_query .= " AND a.trashed = '0'";
+                    break;
+                case 'only_in_trash':
+                    $sql_filter_query .= " AND a.trashed = '1'";
+                    break;
+                case 'all_activities':
+                    // No additional condition needed (show all volunteers)
+                    break;
+            }
+        }
+
+        // Volunteer occupancy filter
+        if (!empty($occupancy_filter)){
+            switch ($occupancy_filter){
+                case 'not_full':
+                    $sql_filter_query .= " AND a.number_of_places - a.number_of_participants > 0";
+                    break;
+                case 'full':
+                    $sql_filter_query .= " AND a.number_of_places - a.number_of_participants <= 0";
+                    break;
+                case 'empty':
+                    $sql_filter_query .= " AND a.number_of_participants = 0";
+                    break;
+                case 'all_activities':
+                    // No additional condition needed (show all volunteers)
+                    break;
+            }
+        }
+
+        // Add time periods filter
+        if (!empty($time_periods_filter)) {
+            $sql_filter_query .= " AND (";
+            foreach ($time_periods_filter as $time_period) {
+                $sql_filter_query .= " atp.time_period = '$time_period' OR";
+            }
+            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        }
+
+        // Add available days filter
+        if (!empty($available_days_filter)) {
+            $sql_filter_query .= " AND (";
+            foreach ($available_days_filter as $weekday) {
+                $sql_filter_query .= " DAYOFWEEK(a.activity_date) = '$weekday' OR";
+            }
+            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        }
+
+        // Add domain filter
+        if (!empty($domains_filter)) {
+            $sql_filter_query .= " AND (";
+            foreach ($domains_filter as $domain) {
+                $sql_filter_query .= " ad.domain = '$domain' OR";
+            }
+            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        }
+
+        // Order of appearance filter
+        if (!empty($order_filter)){
+            switch ($order_filter){
+                case 'registration_date_desc':
+                    $sql_filter_query .= " ORDER BY a.registration_date DESC";
+                    break;
+                case 'registration_date_asc':
+                    $sql_filter_query .= " ORDER BY a.registration_date ASC";
+                    break;
+                case 'activity_name_asc':
+                    $sql_filter_query .= " ORDER BY a.activity_name ASC";
+                    break;
+                case 'activity_name_desc':
+                    $sql_filter_query .= " ORDER BY a.activity_name DESC";
+                    break;
+                case 'activity_duration_desc':
+                    $sql_filter_query .= " ORDER BY a.activity_duration DESC";
+                    break;
+                case 'activity_duration_asc':
+                    $sql_filter_query .= " ORDER BY a.activity_duration ASC";
+                    break;
+                case 'activity_date_desc':
+                    $sql_filter_query .= " ORDER BY a.activity_date DESC";
+                    break;
+                case 'activity_date_asc':
+                    $sql_filter_query .= " ORDER BY a.activity_date ASC";
+                    break;
+            }
+        }
+
+        // Final query
+        $all_activities_data = fetch_data($sql_filter_query);
+    }
 ?>
 
 
@@ -73,44 +193,61 @@
                         <form action="" method="post">
                             <!-- Sort by options -->
                             <div style="margin-bottom: 15px;">
-                                <label for="sort" style="font-weight: bold;">Sort Volunteers By:</label><br>
-                                <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="alphabetically">Alphabetically</option>
-                                    <option value="date_of_inscription">Date of Inscription</option>
-                                    <option value="birthday">Birthday</option>
+                                <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
+                                <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>>Registration Date (Newest to Oldest)</option>
+                                    <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Newest)</option>
+                                    <option value="activity_name_asc" <?php echo ($order_filter == 'activity_name_asc') ? 'selected' : ''; ?>>Activity Name (A-Z)</option>
+                                    <option value="activity_name_desc" <?php echo ($order_filter == 'activity_name_desc') ? 'selected' : ''; ?>>Activity Name (Z-A)</option>
+                                    <option value="activity_duration_desc" <?php echo ($order_filter == 'activity_duration_desc') ? 'selected' : ''; ?>>Longest to Shortest</option>
+                                    <option value="activity_duration_asc" <?php echo ($order_filter == 'activity_duration_asc') ? 'selected' : ''; ?>>Shortest to Longest</option>
+                                    <option value="activity_date_asc" <?php echo ($order_filter == 'activity_date_asc') ? 'selected' : ''; ?>>Earliest to Latest</option>
+                                    <option value="activity_date_desc" <?php echo ($order_filter == 'activity_date_desc') ? 'selected' : ''; ?>>Latest to Earliest</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Activity status filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="trash_filter" style="font-weight: bold;">Activity Status:</label><br>
+                                <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="only_active" <?php echo ($trash_filter == 'only_active') ? 'selected' : ''; ?>>Only Active</option>
+                                    <option value="only_in_trash" <?php echo ($trash_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
+                                    <option value="all_volunteers" <?php echo ($trash_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
                                 </select>
                             </div>
 
-                            <!-- Time filter -->
+                            <!-- Activity occupancy filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="sort" style="font-weight: bold;">Has Completed Volunteer Hours:</label><br>
-                                <select name="sort" id="sort" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="any">Any</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                <label for="occupancy_filter" style="font-weight: bold;">Activity Occupancy:</label><br>
+                                <select name="occupancy_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="all_activities" <?php echo ($occupancy_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
+                                    <option value="not_full" <?php echo ($occupancy_filter == 'not_full') ? 'selected' : ''; ?>>Not full</option>
+                                    <option value="full" <?php echo ($occupancy_filter == 'full') ? 'selected' : ''; ?>>Full Activities</option>
+                                    <option value="empty" <?php echo ($occupancy_filter == 'empty') ? 'selected' : ''; ?>>Empty Activities</option>
+
                                 </select>
                             </div>
 
-                            <!-- Gender filter -->
+                            <!-- Domain filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="gender" style="font-weight: bold;">Gender:</label><br>
-                                <select name="gender" id="gender" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="">Any</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-
-                            <!-- Interests filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label style="font-weight: bold;">Interests:</label><br>
+                                <label style="font-weight: bold;">Domains:</label><br>
                                 <div>
-                                    <label><input type="checkbox" name="available_days[]" value="monday"> Organization of community events</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="tuesday"> Library support</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="wednesday"> Help in the community store</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="thursday"> Support in the community grocery store</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="friday"> Cleaning and maintenance of public spaces</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="saturday"> Participation in urban gardening projects</label><br>
+                                    <label><input type="checkbox" name="domains_filter[]" value="Organization of community events" <?php echo (isset($_POST['domains_filter']) && in_array('Organization of community events', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Organization of community events</label><br>
+                                    <label><input type="checkbox" name="domains_filter[]" value="Library support" <?php echo (isset($_POST['domains_filter']) && in_array('Library support', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Library support</label><br>
+                                    <label><input type="checkbox" name="domains_filter[]" value="Help in the community store" <?php echo (isset($_POST['domains_filter']) && in_array('Help in the community store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Help in the community store</label><br>
+                                    <label><input type="checkbox" name="domains_filter[]" value="Support in the community grocery store" <?php echo (isset($_POST['domains_filter']) && in_array('Support in the community grocery store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Support in the community grocery store</label><br>
+                                    <label><input type="checkbox" name="domains_filter[]" value="Cleaning and maintenance of public spaces" <?php echo (isset($_POST['domains_filter']) && in_array('Cleaning and maintenance of public spaces', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Cleaning and maintenance of public spaces</label><br>
+                                    <label><input type="checkbox" name="domains_filter[]" value="Participation in urban gardening projects" <?php echo (isset($_POST['domains_filter']) && in_array('Participation in urban gardening projects', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Participation in urban gardening projects</label><br>
+                                </div>
+                            </div>
+
+                            <!-- Time periods filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label style="font-weight: bold;">Acivity Period:</label><br>
+                                <div>
+                                    <label><input type="checkbox" name="time_periods_filter[]" value="Morning" <?php echo (isset($_POST['time_periods_filter']) && in_array('Morning', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Morning</label><br>
+                                    <label><input type="checkbox" name="time_periods_filter[]" value="Afternoon" <?php echo (isset($_POST['time_periods_filter']) && in_array('Afternoon', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Afternoon</label><br>
+                                    <label><input type="checkbox" name="time_periods_filter[]" value="Evening" <?php echo (isset($_POST['time_periods_filter']) && in_array('Evening', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Evening</label><br>
                                 </div>
                             </div>
 
@@ -118,13 +255,13 @@
                             <div style="margin-bottom: 15px;">
                                 <label style="font-weight: bold;">Available Days:</label><br>
                                 <div>
-                                    <label><input type="checkbox" name="available_days[]" value="monday"> Monday</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="tuesday"> Tuesday</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="wednesday"> Wednesday</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="thursday"> Thursday</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="friday"> Friday</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="saturday"> Saturday</label><br>
-                                    <label><input type="checkbox" name="available_days[]" value="sunday"> Sunday</label>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="2" <?php echo (isset($_POST['available_days_filter']) && in_array('2', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Monday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="3" <?php echo (isset($_POST['available_days_filter']) && in_array('3', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Tuesday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="4" <?php echo (isset($_POST['available_days_filter']) && in_array('4', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Wednesday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="5" <?php echo (isset($_POST['available_days_filter']) && in_array('5', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Thursday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="6" <?php echo (isset($_POST['available_days_filter']) && in_array('6', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Friday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="7" <?php echo (isset($_POST['available_days_filter']) && in_array('7', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
+                                    <label><input type="checkbox" name="available_days_filter[]" value="1" <?php echo (isset($_POST['available_days_filter']) && in_array('1', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
                                 </div>
                             </div>
 
@@ -150,7 +287,14 @@
                             <span>Activities</span>
                         </div>
 
-                        
+                        <!-- Counting the number of elements post filter -->
+                        <?php 
+                        if (empty($all_activities_data)) {
+                            echo "No activities found.";
+                        } else {
+                            echo count($all_activities_data) . " activities found.";
+                        } ?>
+
                         <!-- Display activity widgets --> 
                         <?php
                             if($all_activities_data){
