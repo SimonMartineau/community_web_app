@@ -69,92 +69,23 @@
             <div>
                 <br>
             </div>
-            <img src="../Images/mountain.jpg" style="width:100%; border-radius: 8px;">
         
             <!-- Below cover area -->
             <div style="display: flex;">
 
-                <!-- Recent volunteers area -->
-                <div style="min-height: 400px; flex:1;">
+                <!-- Contact content area -->
+                <div id="major_rectangle">
 
-                    <div id="medium_rectangle">
-
-                        <!-- Section title of recent volunteer section -->
-                        <div id="section_title">
-                            <span>Recently Added Volunteers</span>
-                        </div>
-
-                        <!-- Display volunteer widgets --> 
-                        <?php
-                            if($all_volunteer_data){
-                                foreach($all_volunteer_data as $volunteer_data_row){
-                                    $volunteer_id = $volunteer_data_row['id'];
-                                    include("../Widget_Pages/volunteer_widget.php");
-                                }
-                            }
-                        ?>
-
-                        <!-- Section title of recent checks section -->
-                        <div id="section_title">
-                            <span>Recently Added Checks</span>
-                        </div>
-
-                        <!-- Display checks widgets --> 
-                        <?php
-                            if($all_checks_data){
-                                foreach($all_checks_data as $check_data_row){
-                                    $check_id = $check_data_row['id'];
-                                    $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
-                                    $date = new DateTime($check_data_row['issuance_date']);
-                                    $month = $date->format('F'); // Full month name (e.g., "January")
-                                    include("../Widget_Pages/check_widget.php");
-                                }
-                            }
-                        ?>
-
-                    </div>
-                </div>
-
-                <!-- Recent activities area -->
-                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
-
-                    <!-- Activities -->
-                    <div id="medium_rectangle">
-                        <!-- Section title of recent activities section -->
-                        <div id="section_title">
-                            <span>Recently Added Activities</span>
-                        </div>      
-                        
-                        <!-- Display activity widgets --> 
-                        <?php
-                            if($all_activities_data){
-                                foreach($all_activities_data as $activity_data_row){
-                                    $activity_id = $activity_data_row['id'];
-                                    include("../Widget_Pages/activity_widget.php");
-                                }
-                            }
-                        ?>
-
-                        <!-- Section title of recent purchases section -->
-                        <div id="section_title">
-                            <span>Recent Purchases</span>
-                        </div>
-
-                        <!-- Display purchase widgets --> 
-                        <?php
-                            if($all_purchases_data){
-                                foreach($all_purchases_data as $purchase_data_row){
-                                    $purchase_id = $purchase_data_row['id'];
-                                    $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
-                                    include("../Widget_Pages/purchase_widget.php");
-                                }
-                            }
-                        ?>
-                        
-
+                    <!-- Section title of contact section -->
+                    <div id="section_title" style="margin-bottom: 20px;">
+                        <span style="font-size: 24px; font-weight: bold;">Volunteer-Activity Management Application</span>
                     </div>
 
+                    <img src="../Images/photo.jpg" style="width:100%; border-radius: 8px;">
+
+
                 </div>
+
             </div>
             
         </div>

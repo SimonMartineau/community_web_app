@@ -189,24 +189,6 @@
                     </button>
                 </a>
             </div>
-
-            <!-- See all Checks button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Listing_Pages/all_checks.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        See All Checks
-                    </button>
-                </a>
-            </div>
-
-            <!-- See all Purchases button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Listing_Pages/all_purchases.php" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        See All Purchases
-                    </button>
-                </a>
-            </div>
      
             <!-- Below cover area -->
             <div style="display: flex;">
