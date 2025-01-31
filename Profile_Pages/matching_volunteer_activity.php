@@ -7,48 +7,41 @@
     // Updating all backend processes
     update_backend_data();
 
+    // Getting volunteer data
     if (isset($_GET['volunteer_id'])) {
         $volunteer_id = $_GET['volunteer_id'];
 
         $volunteer_data = fetch_volunteer_data($volunteer_id);
         $interest_data = fetch_volunteer_interest_data($volunteer_id);
         $availability_data = fetch_volunteer_availability_data($volunteer_id);
+    }
 
-        // Collect volunteer data
-        $checks_data = fetch_data("
-            SELECT * 
-            FROM Checks 
-            WHERE volunteer_id='$volunteer_id' 
-            ORDER BY id desc 
-            LIMIT 6"
+    // Getting activity data
+    if (isset($_GET['activity_id'])) {
+        $activity_id = $_GET['activity_id'];
+
+        // Collecting activity data (only 1 row needed)
+        $activity_data_row = fetch_data(
+            "SELECT * FROM Activities
+                    WHERE id = '$activity_id'"
+        )[0];
+
+        // Collecting activity time periods data
+        $activity_time_periods_data = fetch_data(
+            "SELECT * FROM Activity_Time_Periods
+                    WHERE activity_id = '$activity_id'"
         );
 
-        $purchases_data = fetch_data("
-            SELECT * 
-            FROM Purchases 
-            WHERE volunteer_id='$volunteer_id' 
-            ORDER BY id desc 
-            LIMIT 7"
+        // Collecting activity domains data
+        $activity_domains_data = fetch_data(
+            "SELECT * FROM Activity_Domains
+                    WHERE activity_id = '$activity_id'"
         );
     }
 
+
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-        // Ensure the delete volunteer button has been pressed
-        if (isset($_POST['delete_volunteer']) && $_POST['delete_volunteer'] === '1') {
-
-            // Initialise Database object
-            $DB = new Database();
-
-            // SQL query into Purchases
-            $trash_volunteer_query = "UPDATE `Volunteers` SET `trashed`='1' WHERE `id`='$volunteer_id'";
-            $DB->update($trash_volunteer_query);
-
-            // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
-            die; // Ending the script
-        }
 
         // Ensure the restore volunteer button has been pressed
         if (isset($_POST['restore_volunteer']) && $_POST['restore_volunteer'] === '1') {
@@ -66,8 +59,8 @@
         }
     }
 
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,76 +81,26 @@
         <?php include("../Misc/header.php"); ?>
 
         <!-- Cover area -->
-        <div style="width: 1500px; min-height: 400px; margin:auto;">
+        <div style="width: 1500px; margin:auto;">
             <br>
 
             <!-- Submenu Button Area -->
 
-            <!-- Edit volunteer button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        Edit Volunteer Info
-                    </button>
-                </a>
-            </div>
-
-            <!-- Add check button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_check.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        Add Check
-                    </button>
-                </a>
-            </div>
-
-            <!-- Add purchase button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+            <!-- Match volunteer activity button -->
+            <div style="text-align: right; padding: 10px 20px; display: inline-block;">
                 <a href="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Add Purchase
+                        Assign Volunteer to Activity
                     </button>
                 </a>
             </div>
-
-            <!-- Check if volunteer is deleted or not -->
-            <?php 
-                // If the volunteer is not trashed, propose delete option
-                if($volunteer_data['trashed'] == 0){
-                    // Show delete button (default case)
-                ?>
-                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" onsubmit="return confirm('Are you sure you want to delete this profile? It will be placed in the trash.')">
-                            <button id="submenu_button">
-                                <!-- Hidden input to confirm source -->
-                                <input type="hidden" name="delete_volunteer" value="1">
-                                Delete Volunteer
-                            </button>
-                        </form>
-                    </div>
-                <?php
-                } else {
-                    // Propose restore option for trashed volunteer
-                ?>
-                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
-                            <button id="submenu_button">
-                                <!-- Hidden input to confirm source -->
-                                <input type="hidden" name="restore_volunteer" value="1">
-                                Restore Volunteer
-                            </button>
-                        </form>
-                    </div>
-                <?php
-                }
-            ?>
 
                     
             <!-- Below cover area -->
             <div style="display: flex; align-items: flex-start;">
 
                 <!-- Left area; Volunteer information area -->
-                <div id="medium_rectangle" style="flex:0.7;">
+                <div id="medium_rectangle" style="flex:0.5;  padding-right: 20px;">
 
                     <!-- Section title of contact section -->
                     <div id="section_title">
@@ -267,66 +210,87 @@
                 </div>
 
 
+
                 <!-- Right area -->
-                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
+                <div style="flex:0.5; padding-left: 20px;">
 
-                    <!-- Widget display -->
-                    <div id="medium_rectangle">
+                    <!-- Left area; Activity information area -->
+                <div id="medium_rectangle">
 
-                    <!-- Toggle buttons -->
-                    <div id="widget_toggle_buttons">
-                        <button onclick="showWidgets_volunteer_page('checks')">Show Recent Checks</button>
-                        <button onclick="showWidgets_volunteer_page('purchases')">Show Recent Purchases</button>
-                        <button onclick="showWidgets_volunteer_page('current_activities')">Show Recent Activities</button>
-                        <button onclick="showWidgets_volunteer_page('matching_activities')">Show Matching Activities</button>
+                    <!-- Section title of contact section -->
+                    <div id="section_title">
+                        <span>Activity Info</span>
                     </div>
 
-
-                    <!-- Display checks widgets -->
-                    <div id="checks_widgets" class="widget-container">
-                        <?php
-                        if ($checks_data) {
-                            foreach ($checks_data as $check_data_row) {
-                                $check_id = $check_data_row['id'];
-                                $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
-                                $date = new DateTime($check_data_row['issuance_date']);
-                                $month = $date->format('F'); // Full month name (e.g., "January")
-                                include("../Widget_Pages/check_widget.php");
-                            }
-                        }
-                        ?>
-                    </div>                    
-
-                    <!-- All volunteer checks button (Initially shown) -->
-                    <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <a href="../Listing_Pages/volunteer_specific_checks.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="volunteer_specific_checks_button" id="submenu_button">
-                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Checks
-                            </button>
-                        </a>
-                    </div>
-                    
-                    <!-- Display purchase widgets -->
-                    <div id="purchases_widgets" class="widget-container" style="display: none;">
-                        <?php
-                        if ($purchases_data) {
-                            foreach ($purchases_data as $purchase_data_row) {
-                                $purchase_id = $purchase_data_row['id'];
-                                $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
-                                include("../Widget_Pages/purchase_widget.php");
-                            }
-                        }
-                        ?>
+                    <!-- Personal Information -->
+                    <div class="information_section" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
+                        <p><strong>Name:</strong> <?php echo htmlspecialchars($activity_data_row['activity_name']); ?></p>
+                        <p><strong>Number of Places:</strong> 
+                            <?php 
+                                $count = $activity_data_row['number_of_places'];
+                                echo htmlspecialchars($count) . ' ' . (($count == 1) ? 'Place' : 'Places'); 
+                            ?>
+                        </p>
+                        <p><strong>Number of Participants:</strong> 
+                            <?php 
+                                $count = $activity_data_row['number_of_participants'];
+                                echo htmlspecialchars($count) . ' ' . (($count == 1) ? 'Participant' : 'Participants'); 
+                            ?>
+                        </p>
+                        <p><strong>Duration:</strong> 
+                            <?php 
+                                $duration = $activity_data_row['activity_duration'];
+                                echo htmlspecialchars($duration) . ' ' . (($duration == 1) ? 'Hour' : 'Hours'); 
+                            ?>
+                        </p>
+                        <p><strong>Date:</strong> <?php echo htmlspecialchars(formatDate($activity_data_row['activity_date'])); ?></p>
+                        <p><strong>Location:</strong> 
+                            <?php 
+                                $location = $activity_data_row['activity_location'];
+                                echo htmlspecialchars((($location == "") ? 'Not Added' : $location)); 
+                            ?>
+                        </p>
                     </div>
 
-                    <!-- All volunteer purchases button (Initially hidden) -->
-                    <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px; display: none;">
-                        <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="volunteer_specific_purchases_button" id="submenu_button">
-                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
-                            </button>
-                        </a>
+                    <!-- Time Periods -->
+                    <div class="information_section" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 20px; color: #555;">Time Periods</h2>
+                        <?php if (!empty($activity_time_periods_data)): ?>
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <?php foreach ($activity_time_periods_data as $activity_time_periods_data_row): ?>
+                                    <li><?php echo htmlspecialchars($activity_time_periods_data_row['time_period'] ?: 'No specific time period provided'); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <p>No time period provided.</p>
+                        <?php endif; ?>
                     </div>
+
+                    <!-- Domains -->
+                    <div class="information_section" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 20px; color: #555;">Domains</h2>
+                        <?php if (!empty($activity_domains_data)): ?>
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <?php foreach ($activity_domains_data as $activity_domains_data_row): ?>
+                                    <li><?php echo htmlspecialchars($activity_domains_data_row['domain'] ?: 'No specific interest provided'); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <p>No domain provided.</p>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="information_section" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
+                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($activity_data_row['additional_notes']) ?: 'None'; ?></p>
+                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars(formatDate($activity_data_row['registration_date'])); ?></p>
+                        <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($activity_data_row['trashed'] ? "Yes" : "No"); ?></p>
+                    </div>
+
+                    </div>
+
 
 
                 </div>

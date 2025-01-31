@@ -53,54 +53,7 @@
         <link rel="stylesheet" href="../style.css">
     </head>
 
-    <style>        
-        .information_section {
-            margin-bottom: 20px;
-        }
-        
-        .information_section strong {
-            display: inline-block;
-            width: 150px;
-            color: #555;            
-        }
-
-        #widget_toggle_buttons {
-            display: flex; /* Enable flexbox */
-            justify-content: center; /* Center buttons horizontally */
-            align-items: center; /* Center buttons vertically (if needed) */
-        }
-
-        /* Styling for toggle buttons */
-        #widget_toggle_buttons button {
-            text-align: center; /* Center the text */
-            font-family: sans-serif; /* Use the same font as the title */
-            font-size: 1em; /* Adjust font size for a balanced look */
-            font-weight: bold; /* Make the text bold */
-            color: #405d9b; /* Match the theme color */
-            padding: 10px 20px; /* Add padding for clickable space */
-            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
-            border: none; /* Remove default borders */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            cursor: pointer; /* Indicate that it's clickable */
-            margin: 20px 5px 20px 5px ; /* Add spacing between buttons */
-            transition: all 0.3s ease; /* Smooth hover effect */
-        }
-
-        /* Hover effect for buttons */
-        #widget_toggle_buttons button:hover {
-            background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
-            transform: translateY(-2px); /* Subtle lift effect */
-        }
-
-        /* Active button style */
-        #widget_toggle_buttons button:active {
-            transform: translateY(0); /* Reset the lift effect */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly smaller shadow */
-        }
-
-    </style>
+    <style></style>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
