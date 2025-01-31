@@ -39,22 +39,56 @@
         );
     }
 
+    // Checking if volunteer is assigned to activity
+    $volunteer_activity_match_data = fetch_data(
+        "SELECT * FROM Volunteer_Activity_Junction
+                WHERE volunteer_id = '$volunteer_id'
+                AND activity_id = '$activity_id'"
+    );
+
+    // Storing volunteer activity junction status in a variable
+    if (!empty($volunteer_activity_match_data)) {
+        // Junction exists
+        $volunteer_activity_assigned = true;
+    } else{
+        // Junction does not exist
+        $volunteer_activity_assigned = false;
+    }
+
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        // Ensure the restore volunteer button has been pressed
-        if (isset($_POST['restore_volunteer']) && $_POST['restore_volunteer'] === '1') {
+        // Ensure the delete activity button has been pressed
+        if (isset($_POST['assign_volunteer_activity']) && $_POST['assign_volunteer_activity'] === '1') {
 
             // Initialise Database object
             $DB = new Database();
 
             // SQL query into Purchases
-            $restore_volunteer_query = "UPDATE `Volunteers` SET `trashed`='0' WHERE `id`='$volunteer_id'";
-            $DB->update($restore_volunteer_query);
+            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, activity_id) 
+                                                    values ('$volunteer_id', '$activity_id')";
+            $DB->update($assign_volunteer_to_activity_query);
 
             // Changing the page.
-            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
+            header("Location: ../Profile_Pages/matching_volunteer_activity.php?volunteer_id=" . $volunteer_id . "&activity_id=" . $activity_id);
+            die; // Ending the script
+        }
+
+        // Ensure the restore activity button has been pressed
+        if (isset($_POST['unassign_volunteer_activity']) && $_POST['unassign_volunteer_activity'] === '1') {
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $unassign_volunteer_from_activity_query = "delete from Volunteer_Activity_Junction 
+                                                        where volunteer_id = '$volunteer_id'
+                                                        AND activity_id = '$activity_id'";
+            $DB->update($unassign_volunteer_from_activity_query);
+
+            // Changing the page.
+            header("Location: ../Profile_Pages/matching_volunteer_activity.php?volunteer_id=" . $volunteer_id . "&activity_id=" . $activity_id);
             die; // Ending the script
         }
     }
@@ -86,11 +120,52 @@
 
             <!-- Submenu Button Area -->
 
-            <!-- Match volunteer activity button -->
-            <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                <a href="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
+            <!-- Check if volunteer is assigned to activity -->
+            <?php 
+                // If the volunteer is assigned to the activity
+                if($volunteer_activity_assigned == true){
+                    // Show the unassign button
+                ?>
+                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                        <form method="POST" action="../Profile_Pages/matching_volunteer_activity.php?volunteer_id=<?php echo $volunteer_id; ?>&activity_id=<?php echo $activity_id; ?>">
+                            <button id="submenu_button">
+                                <!-- Hidden input to confirm source -->
+                                <input type="hidden" name="unassign_volunteer_activity" value="1">
+                                Unassign Volunteer from Activity
+                            </button>
+                        </form>
+                    </div>
+                <?php
+                } else{
+                // Show the assign button
+                ?>
+                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                        <form method="POST" action="../Profile_Pages/matching_volunteer_activity.php?volunteer_id=<?php echo $volunteer_id; ?>&activity_id=<?php echo $activity_id; ?>">
+                            <button id="submenu_button">
+                                <!-- Hidden input to confirm source -->
+                                <input type="hidden" name="assign_volunteer_activity" value="1">
+                                Assign Volunteer to Activity
+                            </button>
+                        </form>
+                    </div>
+                <?php
+                }
+            ?>
+
+            <!-- Go to volunteer profile button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Assign Volunteer to Activity
+                        Go To Volunteer Profile
+                    </button>
+                </a>
+            </div>
+
+            <!-- Go to activity profile button -->
+            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+                <a href="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" style="text-decoration: none; display: inline-block;">
+                    <button id="submenu_button">
+                        Go To Activity Profile
                     </button>
                 </a>
             </div>

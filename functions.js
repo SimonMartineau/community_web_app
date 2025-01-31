@@ -54,10 +54,13 @@ function showWidgets_purchase_page(type) {
 
 function showWidgets_activity_page(type) {
     // Hide all widget containers initially
-    document.getElementById('matching_volunteer_widget').style.display = 'none';
+    document.getElementById('show_current_volunteers_widgets').style.display = 'none';
+    document.getElementById('show_matching_volunteers_widgets').style.display = 'none';
 
     // Show the selected widget container
-    if (type === 'matching_participants') {
-        document.getElementById('matching_volunteer_widget').style.display = 'block';
+    if (type === 'current_participants') {
+        document.getElementById('show_current_volunteers_widgets').style.display = 'block';
+    } else if (type === 'matching_participants') {
+        document.getElementById('show_matching_volunteers_widgets').style.display = 'block';
     }
 }

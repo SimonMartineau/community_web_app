@@ -116,8 +116,8 @@
                         </form>
                     </div>
                 <?php
-                } else {
-                    // Propose restore option for trashed activity
+                } else{
+                // Propose restore option for trashed activity
                 ?>
                     <div style="text-align: right; padding: 10px 20px; display: inline-block;">
                         <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
@@ -245,6 +245,13 @@
                             }
                             $activity_domains_sql = "'" . implode("', '", $domains) . "'";
                             
+                            $all_current_participants_data = fetch_data("
+                                SELECT DISTINCT v.* 
+                                FROM Volunteers v
+                                JOIN Volunteer_Activity_Junction vaj ON v.id = vaj.volunteer_id
+                                WHERE vaj.activity_id = '$activity_id'
+                                ORDER BY v.id DESC
+                            ");
                             
 
                             // Collect marching volunteers data
@@ -258,14 +265,47 @@
                                 AND va.time_period IN ($activity_time_periods_sql)
                                 AND vi.interest IN ($activity_domains_sql)
                                 AND v.hours_completed < v.hours_required
+                                AND NOT EXISTS (
+                                    SELECT 1 FROM Volunteer_Activity_Junction vaj 
+                                    WHERE vaj.volunteer_id = v.id 
+                                    AND vaj.activity_id = '$activity_id'
+                                )
                                 ORDER BY v.id DESC
                             ");
-
                         ?>
 
-                        <!-- Display volunteer widgets --> 
-                        <div id="matching_volunteer_widget" class="widget-container" style="display: none;">
+                        <!-- Display participants widgets --> 
+                        <div id="show_current_volunteers_widgets" class="widget-container">
                             <?php
+                                // Counting the number of elements post filter
+                                if (empty($all_current_participants_data)) {
+                                    echo "This activity doesn't have any participants yet.";
+                                } else {
+                                    echo "This activity has " . count($all_current_participants_data) . ((count($all_current_participants_data) == 1) ?" participant." : " participants.");
+                                }
+                           
+
+                                // Display the widgets
+                                if($all_current_participants_data){
+                                    foreach($all_current_participants_data as $volunteer_data_row){
+                                        $volunteer_id = $volunteer_data_row['id'];
+                                        include("../Widget_Pages/matching_volunteer_widget.php");
+                                    }
+                                }
+                            ?>
+                        </div>
+
+                        <!-- Display matching volunteers widgets --> 
+                        <div id="show_matching_volunteers_widgets" class="widget-container" style="display: none;">
+                            <?php
+                                // Counting the number of elements post filter
+                                if (empty($all_matching_participants_data)) {
+                                    echo "No volunteers found.";
+                                } else {
+                                    echo "This activity has " . count($all_matching_participants_data) . ((count($all_matching_participants_data) == 1) ? " volunteer" : " volunteers") . " that match.";
+                                } 
+
+                                // Display the widgets
                                 if($all_matching_participants_data){
                                     foreach($all_matching_participants_data as $volunteer_data_row){
                                         $volunteer_id = $volunteer_data_row['id'];
