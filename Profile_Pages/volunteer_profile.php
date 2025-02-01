@@ -20,13 +20,22 @@
             FROM Checks 
             WHERE volunteer_id='$volunteer_id' 
             ORDER BY id desc 
-            LIMIT 6"
+            LIMIT 7"
         );
 
         $purchases_data = fetch_data("
             SELECT * 
             FROM Purchases 
             WHERE volunteer_id='$volunteer_id' 
+            ORDER BY id desc 
+            LIMIT 7"
+        );
+
+        $activities_data = fetch_data("
+            SELECT a.* 
+            FROM Activities a
+            JOIN Volunteer_Activity_Junction vaj ON vaj.activity_id = a.id
+            WHERE vaj.volunteer_id='$volunteer_id' 
             ORDER BY id desc 
             LIMIT 7"
         );
@@ -277,7 +286,7 @@
                     <div id="widget_toggle_buttons">
                         <button onclick="showWidgets_volunteer_page('checks')">Show Recent Checks</button>
                         <button onclick="showWidgets_volunteer_page('purchases')">Show Recent Purchases</button>
-                        <button onclick="showWidgets_volunteer_page('current_activities')">Show Recent Activities</button>
+                        <button onclick="showWidgets_volunteer_page('activities')">Show Recent Activities</button>
                         <button onclick="showWidgets_volunteer_page('matching_activities')">Show Matching Activities</button>
                     </div>
 
@@ -324,6 +333,26 @@
                         <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                             <button name="volunteer_specific_purchases_button" id="submenu_button">
                                 See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
+                            </button>
+                        </a>
+                    </div>
+
+                    <!-- Display activities widgets -->
+                    <div id="activities_widgets" class="widget-container" style="display: none;">
+                        <?php
+                        if ($activities_data) {
+                            foreach ($activities_data as $activity_data_row) {
+                                include("../Widget_Pages/activity_widget.php");
+                            }
+                        }
+                        ?>
+                    </div>
+
+                    <!-- All volunteer activities button (Initially hidden) -->
+                    <div id="volunteer_specific_activities_button" style="text-align: right; padding: 10px 20px; display: none;">
+                        <a href="../Listing_Pages/volunteer_specific_activities.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
+                            <button name="volunteer_specific_activities_button" id="submenu_button">
+                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Activities
                             </button>
                         </a>
                     </div>

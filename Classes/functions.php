@@ -91,19 +91,16 @@ function fetch_purchase_data($purchase_id){
 
 
 
-
-
+// This function updates the backend data of the website and database.
 function update_backend_data(){
-    // This function updates the backend data of the website and database.
     update_volunteer_data();
     update_check_data();
     update_purchase_data();
+    update_activities_data();
 }
 
-
-
+// This function updates the points, hours_required and hours_completed for Volunteers table.
 function update_volunteer_data(){
-    // This function updates the points, hours_required and hours_completed for Volunteers table.
 
     // Fetching all volunteer data
     $all_volunteer_data = fetch_data("select * from Volunteers");
@@ -148,10 +145,8 @@ function update_volunteer_data(){
     }
 }
 
-
-
+// This function updates the hours_required and hours_completed for Checks table.
 function update_check_data(){
-    // This function updates the hours_required and hours_completed for Checks table.
 
     // Fetching all volunteer data
     $all_checks_data = fetch_data("select * from Checks");
@@ -200,10 +195,9 @@ function update_check_data(){
     }
 }
 
-
-
+// This function updates the hours_required and hours_completed for Checks table.
+// This function updates the backend data of purchases.
 function update_purchase_data(){
-    // This function updates the hours_required and hours_completed for Checks table.
 
     // Fetching all volunteer data
     $all_purchases_data = fetch_data("select * from Purchases");
@@ -234,6 +228,30 @@ function update_purchase_data(){
 
         $DB->update($purchases_query);
     }
+}
+
+// This function updates the backend data of activities.
+function update_activities_data(){    
+
+    // Initialise Database object
+    $DB = new Database();
+
+    // This SQL query associated every assigned activity to a volunteer's check if the purchase date matches. 
+    // If not, default value (-1) is given to check_id in Volunteer_Activity_Junction
+    $update_volunteer_activity_junction_data = "UPDATE Volunteer_Activity_Junction vaj
+                        JOIN Activities a ON vaj.activity_id = a.id
+                        SET vaj.check_id = COALESCE((
+                            SELECT c.id
+                            FROM Checks c
+                            WHERE c.volunteer_id = vaj.volunteer_id
+                            AND a.activity_date BETWEEN c.issuance_date AND c.validity_date
+                            LIMIT 1
+                        ), -1);
+    ";
+
+    // Update the database
+    $DB->update($update_volunteer_activity_junction_data);
+
 }
 
 

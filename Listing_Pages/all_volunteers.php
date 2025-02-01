@@ -305,7 +305,7 @@
                         <!-- Counting the number of elements post filter -->
                         <?php 
                         if (empty($all_volunteer_data)) {
-                            echo "No purchases found.";
+                            echo "No volunteers found.";
                         } else {
                             echo count($all_volunteer_data) . " volunteers found.";
                         } ?>

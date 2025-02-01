@@ -18,8 +18,15 @@
             SELECT * 
             FROM Purchases 
             WHERE check_id='$check_id' 
-            ORDER BY id desc 
-            LIMIT 6"
+            ORDER BY id desc "
+        );
+
+        $activities_data = fetch_data("
+            SELECT a.* 
+            FROM Activities a
+            JOIN Volunteer_Activity_Junction vaj ON vaj.activity_id = a.id
+            WHERE vaj.check_id='$check_id' 
+            ORDER BY id desc "
         );
     }
 
@@ -172,6 +179,18 @@
                                     $purchase_id = $purchase_data_row['id'];
                                     $volunteer_data = fetch_volunteer_data($volunteer_id);
                                     include("../Widget_Pages/purchase_widget.php");
+                                }
+                            }
+                            ?>
+                        </div>
+
+                        <!-- Display activities widgets -->
+                        <div id="activities_widgets" class="widget-container" style="display: none;">
+                            <?php
+                            if ($activities_data) {
+                                foreach ($activities_data as $activity_data_row) {
+                                    
+                                    include("../Widget_Pages/activity_widget.php");
                                 }
                             }
                             ?>

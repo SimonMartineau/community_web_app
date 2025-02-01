@@ -66,8 +66,8 @@
             $DB = new Database();
 
             // SQL query into Purchases
-            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, activity_id) 
-                                                    values ('$volunteer_id', '$activity_id')";
+            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, check_id, activity_id) 
+                                                    values ('$volunteer_id', -1, '$activity_id')";
             $DB->update($assign_volunteer_to_activity_query);
 
             // Changing the page.
