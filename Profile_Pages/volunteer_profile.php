@@ -532,9 +532,9 @@
                         <?php
                             // Counting the number of elements post filter
                             if (empty($all_matching_activities_data)) {
-                                echo "No volunteers found.";
+                                echo "No activities found.";
                             } else {
-                                echo "This activity has " . count($all_matching_activities_data) . ((count($all_matching_activities_data) == 1) ? " volunteer that matches." : " volunteers that match");
+                                echo "This volunteer has " . count($all_matching_activities_data) . ((count($all_matching_activities_data) == 1) ? " activity that matches." : " activities that match");
                             } 
 
                             // Display the widgets

@@ -7,23 +7,29 @@
     // Updating all backend processes
     update_backend_data();
 
+    if (isset($_GET['volunteer_id'])) {
+        $volunteer_id = $_GET['volunteer_id'];
+    }
+
     // Default entry values on page startup.
     $order_filter = "date_of_inscription_desc";
-    $status_filter = "only_active";
+    $status_filter = "all_activities";
     $occupancy_filter = "all_activities";
     $domains_filter = [];
     $time_periods_filter = [];
     $available_days_filter = [];
 
-    // Default page volunteer data
+    // Collect volunteer's activities
     $all_activities_data = fetch_data("
         SELECT DISTINCT a.* FROM Activities a
         JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
         JOIN Activity_Domains ad ON a.id = ad.activity_id
+        Join Volunteer_Activity_Junction vaj ON a.id = vaj.activity_id
         WHERE `trashed` = '0' 
-        AND a.activity_date >= CURDATE() 
+        AND vaj.volunteer_id = '$volunteer_id'
         ORDER BY id DESC"
     );
+
 
     // Getting filter form data
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,10 +44,13 @@
         // Default sql query
         $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a 
                                     JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
-                                    JOIN Activity_Domains ad ON a.id = ad.activity_id";
+                                    JOIN Activity_Domains ad ON a.id = ad.activity_id
+                                    Join Volunteer_Activity_Junction vaj ON a.id = vaj.activity_id
+        ";
+
 
         // Initialize Where clause
-        $sql_filter_query .= " WHERE 1=1";
+        $sql_filter_query .= " WHERE 1=1 AND vaj.volunteer_id = '$volunteer_id' ";
 
         // Volunteer status filter
         if (!empty($status_filter)){
@@ -142,7 +151,6 @@
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -162,22 +170,14 @@
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
-
-            <!-- Add activity button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_activity.php" style="text-decoration: none;">
-                    <button id="submenu_button">
-                        Add Activity
-                    </button>
-                </a>
-            </div>
-        
+     
             <!-- Below cover area -->
             <div style="display: flex;">
 
-                <!-- Filter area -->
-                <div style="min-height: 400px; flex:0.6;">
+                <!-- Left area -->
+                <div style="flex:0.6;">
 
+                    <!-- Filter form area -->
                     <div id="medium_rectangle">
 
                         <!-- Section title of filter area -->
@@ -273,10 +273,10 @@
                     </div>
                 </div>
 
-                <!-- Volunteer area -->
-                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
+                <!-- Right area -->
+                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
 
-                    <!-- Activity widget display -->
+                    <!-- Volunteer widget display -->
                     <div id="medium_rectangle">
 
                         <!-- Section title of recent activities section -->
@@ -303,7 +303,7 @@
                                 }
                             }
                         ?>
-
+        
 
                     </div>
 
