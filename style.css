@@ -152,6 +152,8 @@
 .widget_name {
     font-size: 1.5em;
     margin-bottom: 10px;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 /* Base widget information text */
