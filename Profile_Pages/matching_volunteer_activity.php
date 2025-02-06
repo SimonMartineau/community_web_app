@@ -152,24 +152,6 @@
                 }
             ?>
 
-            <!-- Go to volunteer profile button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        Go To Volunteer Profile
-                    </button>
-                </a>
-            </div>
-
-            <!-- Go to activity profile button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" style="text-decoration: none; display: inline-block;">
-                    <button id="submenu_button">
-                        Go To Activity Profile
-                    </button>
-                </a>
-            </div>
-
                     
             <!-- Below cover area -->
             <div style="display: flex; align-items: flex-start;">

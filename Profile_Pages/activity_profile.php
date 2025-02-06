@@ -7,6 +7,12 @@
     // Updating all backend processes
     update_backend_data();
 
+    // Initializing marching volunteers filter variables
+    $interest_filter = 'checked';
+    $weekday_filter = 'checked';
+    $time_period_filter = 'checked';
+
+    
     if (isset($_GET['activity_id'])) {
         $activity_id = $_GET['activity_id'];
 
@@ -27,11 +33,88 @@
             "SELECT * FROM Activity_Domains
                     WHERE activity_id = '$activity_id'"
         );
-
     }
+
+    // Getting the activity date
+    $activity_date = $activity_data_row['activity_date'];
+
+    // Getting the activity time periods in a string
+    $time_periods = [];
+    foreach ($activity_time_periods_data as $activity_time_periods_data_row){
+        $time_periods[] = $activity_time_periods_data_row['time_period'];
+    }
+    $activity_time_periods_sql = "'" . implode("', '", $time_periods) . "'";
+
+    // Getting the activity domains in a string
+    $domains = [];
+    foreach ($activity_domains_data as $activity_domains_data_row){
+        $domains[] = $activity_domains_data_row['domain'];
+    }
+    $activity_domains_sql = "'" . implode("', '", $domains) . "'";
+    
+    $all_current_participants_data = fetch_data("
+        SELECT DISTINCT v.* 
+        FROM Volunteers v
+        JOIN Volunteer_Activity_Junction vaj ON v.id = vaj.volunteer_id
+        WHERE vaj.activity_id = '$activity_id'
+        ORDER BY v.id DESC
+    ");
+
+    // Default matching volunteers data
+    $all_matching_participants_data = fetch_data("
+            SELECT DISTINCT v.* 
+            FROM Volunteers v
+            JOIN Volunteer_Availability va ON v.id = va.volunteer_id
+            JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
+            WHERE v.trashed = 0
+            AND vi.interest IN ($activity_domains_sql)
+            AND DAYNAME('$activity_date') = va.weekday
+            AND va.time_period IN ($activity_time_periods_sql)
+            AND v.hours_completed < v.hours_required
+            AND NOT EXISTS (
+                SELECT 1 FROM Volunteer_Activity_Junction vaj 
+                WHERE vaj.volunteer_id = v.id 
+                AND vaj.activity_id = '$activity_id'
+            )
+            ORDER BY v.id DESC
+    ");
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        // Retrieve filter form data
+        $interest_filter = $_POST['interest_filter'] ?? '';
+        $weekday_filter = $_POST['weekday_filter'] ?? '';
+        $time_period_filter = $_POST['time_period_filter'] ?? '';
+
+        // Default sql query
+        $sql_filter_query = "
+            SELECT DISTINCT v.* 
+            FROM Volunteers v
+            JOIN Volunteer_Availability va ON v.id = va.volunteer_id
+            JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
+            WHERE v.trashed = 0
+        ";
+
+        // Interest filter
+        $sql_filter_query .= ($interest_filter ? " AND vi.interest IN ($activity_domains_sql) " : '');
+
+        // Weekday filter
+        $sql_filter_query .= ($weekday_filter ? " AND DAYNAME('$activity_date') = va.weekday " : '');
+
+        // Time period filter
+        $sql_filter_query .= ($time_period_filter ? " AND va.time_period IN ($activity_time_periods_sql) " : '');
+
+        // Completing sql query
+        $sql_filter_query .= " AND v.hours_completed < v.hours_required
+            AND NOT EXISTS (
+                SELECT 1 FROM Volunteer_Activity_Junction vaj 
+                WHERE vaj.volunteer_id = v.id 
+                AND vaj.activity_id = '$activity_id'
+            )
+            ORDER BY v.id DESC";
+
+        $all_matching_participants_data = fetch_data($sql_filter_query);
+
 
         // Ensure the delete activity button has been pressed
         if (isset($_POST['delete_activity']) && $_POST['delete_activity'] === '1') {
@@ -225,54 +308,6 @@
                             <button onclick="showWidgets_activity_page('current_participants')">Show Participants</button>
                             <button onclick="showWidgets_activity_page('matching_participants')">Show Matching Volunteers</button>
                         </div> 
-                        
-
-                        <?php
-                            // Getting the activity date
-                            $activity_date = $activity_data_row['activity_date'];
-
-                            // Getting the activity time periods in a string
-                            $time_periods = [];
-                            foreach ($activity_time_periods_data as $activity_time_periods_data_row){
-                                $time_periods[] = $activity_time_periods_data_row['time_period'];
-                            }
-                            $activity_time_periods_sql = "'" . implode("', '", $time_periods) . "'";
-
-                            // Getting the activity domains in a string
-                            $domains = [];
-                            foreach ($activity_domains_data as $activity_domains_data_row){
-                                $domains[] = $activity_domains_data_row['domain'];
-                            }
-                            $activity_domains_sql = "'" . implode("', '", $domains) . "'";
-                            
-                            $all_current_participants_data = fetch_data("
-                                SELECT DISTINCT v.* 
-                                FROM Volunteers v
-                                JOIN Volunteer_Activity_Junction vaj ON v.id = vaj.volunteer_id
-                                WHERE vaj.activity_id = '$activity_id'
-                                ORDER BY v.id DESC
-                            ");
-                            
-
-                            // Collect marching volunteers data
-                            $all_matching_participants_data = fetch_data("
-                                SELECT DISTINCT v.* 
-                                FROM Volunteers v
-                                JOIN Volunteer_Availability va ON v.id = va.volunteer_id
-                                JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
-                                WHERE v.trashed = 0
-                                AND DAYNAME('$activity_date') = va.weekday
-                                AND va.time_period IN ($activity_time_periods_sql)
-                                AND vi.interest IN ($activity_domains_sql)
-                                AND v.hours_completed < v.hours_required
-                                AND NOT EXISTS (
-                                    SELECT 1 FROM Volunteer_Activity_Junction vaj 
-                                    WHERE vaj.volunteer_id = v.id 
-                                    AND vaj.activity_id = '$activity_id'
-                                )
-                                ORDER BY v.id DESC
-                            ");
-                        ?>
 
                         <!-- Display participants widgets --> 
                         <div id="show_current_volunteers_widgets" class="widget-container">
@@ -297,12 +332,55 @@
 
                         <!-- Display matching volunteers widgets --> 
                         <div id="show_matching_volunteers_widgets" class="widget-container" style="display: none;">
+
+                            <form id="filterForm" action="" method="post">
+                                <label class="switch">
+                                    <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Interest Filter</span>
+                                <br>
+
+                                <label class="switch">
+                                    <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Weekday Filter</span>
+                                <br>
+
+                                <label class="switch">
+                                    <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Time Period Filter</span>
+                                <br>
+
+                                <!-- Submit button -->
+                                <div style="text-align: center;">
+                                    <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Show Matching Volunteers if POST -->
+                            <?php
+                            // After your form processing logic, add this PHP code
+                            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                echo '<script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    showWidgets_activity_page("matching_participants");
+                                });
+                                </script>';
+                            }
+                            ?>
+                            
                             <?php
                                 // Counting the number of elements post filter
                                 if (empty($all_matching_participants_data)) {
                                     echo "No volunteers found.";
                                 } else {
-                                    echo "This activity has " . count($all_matching_participants_data) . ((count($all_matching_participants_data) == 1) ? " volunteer" : " volunteers") . " that match.";
+                                    echo "This activity has " . count($all_matching_participants_data) . ((count($all_matching_participants_data) == 1) ? " volunteer that matches." : " volunteers that match");
                                 } 
 
                                 // Display the widgets

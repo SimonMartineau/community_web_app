@@ -7,9 +7,15 @@
     // Updating all backend processes
     update_backend_data();
 
-    if (isset($_GET['volunteer_id'])) {
-        $volunteer_id = $_GET['volunteer_id'];
+    // Initializing marching activities filter variables
+    $interest_filter = 'checked';
+    $weekday_filter = 'checked';
+    $time_period_filter = 'checked';
 
+
+    if (isset($_GET['volunteer_id'])) {
+
+        $volunteer_id = $_GET['volunteer_id'];
         $volunteer_data = fetch_volunteer_data($volunteer_id);
         $interest_data = fetch_volunteer_interest_data($volunteer_id);
         $availability_data = fetch_volunteer_availability_data($volunteer_id);
@@ -39,10 +45,130 @@
             ORDER BY id desc 
             LIMIT 7"
         );
+
+        // Collecting activity domains data
+        $volunteer_interests_data = fetch_data(
+            "SELECT * FROM Volunteer_Interests
+                    WHERE volunteer_id = '$volunteer_id'"
+        );
+
+        // Collecting activity availability data
+        $volunteer_availability_data = fetch_data(
+            "SELECT * FROM Volunteer_Availability
+                    WHERE volunteer_id = '$volunteer_id'"
+        );
     }
+
+
+    // Getting the activity domains in a string
+    $interests = [];
+    foreach ($volunteer_interests_data as $volunteer_interests_data_row){
+        $interests[] = $volunteer_interests_data_row['interest'];
+    }
+    $volunteer_interests_sql = "'" . implode("', '", $interests) . "'";
+
+    $weekday_time_period_availability = [];
+    $weekday_availability = [];
+    $time_period_availability = [];
+    foreach ($volunteer_availability_data as $volunteer_availability_data_row){
+        $weekday = $volunteer_availability_data_row['weekday'];
+        $time_period = $volunteer_availability_data_row['time_period'];
+        $weekday_time_period = "{$weekday}-{$time_period}";
+
+        // Add combined weekday-time_period.
+        $weekday_time_period_availability[] = $weekday_time_period;
+
+        // Add weekday if not already in the list
+        if (!in_array($weekday, $weekday_availability)) {
+            $weekday_availability[] = $weekday;
+        }
+
+        // Add time_period if not already in the list
+        if (!in_array($time_period, $time_period_availability)) {
+            $time_period_availability[] = $time_period;
+        }
+    }
+
+    // For the weekday_time_period_availability array:
+    $weekday_time_period_sql = "'" . implode("', '", $weekday_time_period_availability) . "'";
+
+    // For the weekday_availability array:
+    $weekday_availability_sql = "'" . implode("', '", $weekday_availability) . "'";
+
+    // For the time_period_availability array:
+    $time_period_availability_sql = "'" . implode("', '", $time_period_availability) . "'";
+
+    // Default matching volunteers data
+    $all_matching_activities_data = fetch_data("
+        SELECT DISTINCT a.* 
+        FROM Activities a
+        JOIN Activity_Domains ad ON a.id = ad.activity_id
+        JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
+        WHERE a.trashed = 0
+        AND ad.domain IN ($volunteer_interests_sql)
+        AND a.number_of_participants < a.number_of_places
+        AND a.activity_date >= CURDATE() 
+        AND NOT EXISTS (
+            SELECT 1 FROM Volunteer_Activity_Junction vaj 
+            WHERE vaj.activity_id = a.id 
+            AND vaj.volunteer_id = '$volunteer_id'
+        )
+        ORDER BY a.id DESC
+    ");
+
+
+
+
+
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        // Retrieve filter form data
+        $interest_filter = $_POST['interest_filter'] ?? '';
+        $weekday_filter = $_POST['weekday_filter'] ?? '';
+        $time_period_filter = $_POST['time_period_filter'] ?? '';
+
+        // Default matching volunteers data
+        $sql_filter_query = "
+            SELECT DISTINCT a.* 
+            FROM Activities a
+            JOIN Activity_Domains ad ON a.id = ad.activity_id
+            JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
+            WHERE a.trashed = 0
+        ";
+
+        // Interest filter
+        $sql_filter_query .= ($interest_filter ? " AND ad.domain IN ($volunteer_interests_sql) " : '');
+
+        // Weekday + time_period filter
+        if ($weekday_filter && $time_period_filter){
+            $sql_filter_query .= " AND CONCAT(DAYNAME(a.activity_date), '-', atp.time_period) IN ($weekday_time_period_sql) ";
+        } elseif($weekday_filter){
+            // Weekday filter
+            $sql_filter_query .= " AND DAYNAME(a.activity_date) IN ($weekday_availability_sql) ";
+        } elseif($time_period_filter){
+            // Time period filter
+            $sql_filter_query .= " AND atp.time_period IN ($time_period_availability_sql) ";
+        }
+
+
+
+
+        $sql_filter_query .= "
+            AND a.activity_date >= CURDATE() 
+            AND NOT EXISTS (
+                SELECT 1 FROM Volunteer_Activity_Junction vaj 
+                WHERE vaj.activity_id = a.id 
+                AND vaj.volunteer_id = '$volunteer_id'
+            )
+            ORDER BY a.id DESC
+        ";
+
+        $all_matching_activities_data = fetch_data($sql_filter_query);
+
+
+
+
 
         // Ensure the delete volunteer button has been pressed
         if (isset($_POST['delete_volunteer']) && $_POST['delete_volunteer'] === '1') {
@@ -342,7 +468,8 @@
                         <?php
                         if ($activities_data) {
                             foreach ($activities_data as $activity_data_row) {
-                                include("../Widget_Pages/activity_widget.php");
+                                $activity_id = $activity_data_row['id'];
+                                include("../Widget_Pages/matching_activity_widget.php");
                             }
                         }
                         ?>
@@ -357,6 +484,68 @@
                         </a>
                     </div>
 
+                    <!-- Display matching volunteers widgets --> 
+                    <div id="show_matching_activities_widgets" class="widget-container" style="display: none;">
+
+                        <form id="filterForm" action="" method="post">
+                            <label class="switch">
+                                <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
+                                <span class="slider round"></span>
+                            </label>
+                            <span>Interest Filter</span>
+                            <br>
+
+                            <label class="switch">
+                                <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
+                                <span class="slider round"></span>
+                            </label>
+                            <span>Weekday Filter</span>
+                            <br>
+
+                            <label class="switch">
+                                <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
+                                <span class="slider round"></span>
+                            </label>
+                            <span>Time Period Filter</span>
+                            <br>
+
+                            <!-- Submit button -->
+                            <div style="text-align: center;">
+                                <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                    Apply Filter
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Show Matching Volunteers if POST -->
+                        <?php
+                            // After your form processing logic, add this PHP code
+                            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                echo '<script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    showWidgets_volunteer_page("matching_activities");
+                                });
+                                </script>';
+                            }
+                        ?>
+                            
+                        <?php
+                            // Counting the number of elements post filter
+                            if (empty($all_matching_activities_data)) {
+                                echo "No volunteers found.";
+                            } else {
+                                echo "This activity has " . count($all_matching_activities_data) . ((count($all_matching_activities_data) == 1) ? " volunteer that matches." : " volunteers that match");
+                            } 
+
+                            // Display the widgets
+                            if($all_matching_activities_data){
+                                foreach($all_matching_activities_data as $activity_data_row){
+                                    $activity_id = $activity_data_row['id'];
+                                    include("../Widget_Pages/matching_activity_widget.php");
+                                }
+                            }
+                        ?>
+                    </div>
 
                 </div>
 
