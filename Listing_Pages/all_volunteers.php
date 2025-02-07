@@ -185,7 +185,7 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Add_Form_Pages/add_volunteer.php" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Add Volunteer
+                        New Volunteer
                     </button>
                 </a>
             </div>
@@ -306,6 +306,8 @@
                         <?php 
                         if (empty($all_volunteer_data)) {
                             echo "No volunteers found.";
+                        } elseif (count($all_volunteer_data) == 1){
+                            echo count($all_volunteer_data) . " volunteer found.";
                         } else {
                             echo count($all_volunteer_data) . " volunteers found.";
                         } ?>

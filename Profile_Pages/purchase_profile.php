@@ -100,7 +100,7 @@
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
                         <p><strong>Item Names:</strong> <?php echo htmlspecialchars($purchase_data_row['item_names']); ?></p>
                         <p><strong>Total Cost:</strong> <?php echo htmlspecialchars($purchase_data_row['total_cost']) . " Points"; ?></p>
-                        <p><strong>purchase Date:</strong> <?php echo htmlspecialchars(formatDate($purchase_data_row['purchase_date'])); ?></p>
+                        <p><strong>Purchase Date:</strong> <?php echo htmlspecialchars(formatDate($purchase_data_row['purchase_date'])); ?></p>
                         <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($purchase_data_row['organizer_name']); ?></p>
 
                     </div>

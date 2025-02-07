@@ -288,6 +288,8 @@
                         <?php 
                         if (empty($all_activities_data)) {
                             echo "No activities found.";
+                        } elseif (count($all_activities_data) == 1){
+                            echo count($all_activities_data) . " activity found.";
                         } else {
                             echo count($all_activities_data) . " activities found.";
                         } ?>
