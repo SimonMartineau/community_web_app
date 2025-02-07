@@ -14,8 +14,8 @@
         $volunteer_id = $purchase_data_row['volunteer_id'];
         $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the purchase.
 
-        $check_id = $purchase_data_row['check_id'];
-        $check_data_row = fetch_check_data($check_id);
+        $contract_id = $purchase_data_row['contract_id'];
+        $contract_data_row = fetch_contract_data($contract_id);
     }
 
     // Check if user has submitted info
@@ -108,8 +108,8 @@
                     <!-- Additional Details -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <?php if ($purchase_data_row['check_id'] == -1): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't have a check at this purchase date.</strong><br>
+                        <?php if ($purchase_data_row['contract_id'] == -1): ?>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't have a contract at this purchase date.</strong><br>
                         <?php endif; ?>
                         <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($purchase_data_row['additional_notes']) ?: 'None'; ?></p>
                     </div>
@@ -125,7 +125,7 @@
                         <!-- Toggle buttons -->
                         <div id="widget_toggle_buttons">
                             <button onclick="showWidgets_purchase_page('volunteer')">Show Volunteer</button>
-                            <button onclick="showWidgets_purchase_page('check')">Show Check</button>
+                            <button onclick="showWidgets_purchase_page('contract')">Show Contract</button>
                         </div>
 
 
@@ -138,14 +138,14 @@
                             ?>
                         </div>
 
-                        <!-- Display check widget -->
-                        <div id="check_widget" class="widget-container" style="display: none;">
+                        <!-- Display contract widget -->
+                        <div id="contract_widget" class="widget-container" style="display: none;">
                             <?php
-                            if ($check_data_row) {
+                            if ($contract_data_row) {
                                 $volunteer_data = fetch_volunteer_data($volunteer_id);
-                                $date = new DateTime($check_data_row['issuance_date']);
+                                $date = new DateTime($contract_data_row['issuance_date']);
                                 $month = $date->format('F'); // Full month name (e.g., "January")
-                                include("../Widget_Pages/check_widget.php");
+                                include("../Widget_Pages/contract_widget.php");
                             }
                             ?>
                         </div>

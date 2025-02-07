@@ -11,7 +11,7 @@ class Add_Purchase{
     // Analyses data sent by user
     public function evaluate($volunteer_id, $data){
 
-        $error = false; // Initialize error check variable
+        $error = false; // Initialize error contract variable
 
         // Check item names
         if (isset($_POST['item_names'])){
@@ -72,25 +72,25 @@ class Add_Purchase{
         $organizer_name = $data['organizer_name'];
         $additional_notes = $data['additional_notes'];
 
-        // Assigning the purchase to a check
-        $check_data_row = fetch_data("SELECT * 
-                                       FROM Checks c
+        // Assigning the purchase to a contract
+        $contract_data_row = fetch_data("SELECT * 
+                                       FROM Contracts c
                                        WHERE c.volunteer_id = '$volunteer_id' 
                                        AND '$purchase_date' between c.issuance_date AND c.validity_date");
 
         // Check if the query returned any rows
-        if (empty($check_data_row)) {
-            $check_id = -1; // No results found, set check_id to -1
+        if (empty($contract_data_row)) {
+            $contract_id = -1; // No results found, set contract_id to -1
         } else {
-            $check_id = $check_data_row[0]['id']; // Use the first row's ID
+            $contract_id = $contract_data_row[0]['id']; // Use the first row's ID
         }
 
         // Initialise Database object
         $DB = new Database();
 
         // SQL query into Purchases
-        $purchase_query = "insert into Purchases (volunteer_id, check_id, item_names, total_cost, purchase_date, organizer_name, additional_notes)
-                  values ('$volunteer_id', '$check_id', '$item_names', '$total_cost', '$purchase_date', '$organizer_name', '$additional_notes')";
+        $purchase_query = "insert into Purchases (volunteer_id, contract_id, item_names, total_cost, purchase_date, organizer_name, additional_notes)
+                  values ('$volunteer_id', '$contract_id', '$item_names', '$total_cost', '$purchase_date', '$organizer_name', '$additional_notes')";
         $DB->save($purchase_query);
     }
 

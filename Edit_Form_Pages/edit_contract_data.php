@@ -2,28 +2,28 @@
 
     // Include classes
     include("../Classes/connect.php");
-    include("../Classes/edit_check_data.php");
+    include("../Classes/edit_contract_data.php");
     include("../Classes/functions.php");
 
-    if (isset($_GET['check_id'])) {
-        $check_id = $_GET['check_id'];
+    if (isset($_GET['contract_id'])) {
+        $contract_id = $_GET['contract_id'];
 
-        $check_data = fetch_check_data($check_id);
+        $contract_data = fetch_contract_data($contract_id);
     }
 
     // Default entry values on page startup.
-    $issuance_date = $check_data['issuance_date'];
-    $validity_date = $check_data['validity_date'];
-    $points_deposit = $check_data['points_deposit'];
-    $hours_required = $check_data['hours_required'];
-    $organizer_name = $check_data['organizer_name'];
-    $additional_notes = $check_data['additional_notes'];
+    $issuance_date = $contract_data['issuance_date'];
+    $validity_date = $contract_data['validity_date'];
+    $points_deposit = $contract_data['points_deposit'];
+    $hours_required = $contract_data['hours_required'];
+    $organizer_name = $contract_data['organizer_name'];
+    $additional_notes = $contract_data['additional_notes'];
     
     // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        $check = new Edit_Check();
-        $submit_success = $check->evaluate($check_id, $_POST);
+        $contract = new Edit_Contract();
+        $submit_success = $contract->evaluate($contract_id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -37,7 +37,7 @@
             
         } else{ // If there are no errors in the submission.
             // Changing the page.
-            header("Location: ../Profile_Pages/check_profile.php?check_id=" . $check_id);
+            header("Location: ../Profile_Pages/contract_profile.php?contract_id=" . $contract_id);
             die; // Ending the script
         }    
     }
@@ -49,7 +49,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Check Data | Give and Receive</title>
+        <title>Edit Contract Data | Give and Receive</title>
         <link rel="stylesheet" href="../style.css">
     </head>
 
@@ -68,7 +68,7 @@
                 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Edit Check Data</span>
+                    <span style="font-size: 24px; font-weight: bold;">Edit Contract Data</span>
                 </div>
 
                 <!-- Error message -->
@@ -82,33 +82,33 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Edit_Form_Pages/edit_check_data.php?check_id=<?php echo $check_id; ?>">
+                    <form method="post" action="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>">
 
                         <!-- Issuance date input -->
                         <div class="input_container">
                             Issuance date: <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->issuance_date_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->issuance_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Validity date input -->
                         <div class="input_container">
                             Validity date: <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->validity_date_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->validity_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Points text input -->
                         <div class="input_container">
                             Points deposit: <input name="points_deposit" type="text" id="text_input" placeholder="Number of points" value="<?php echo $points_deposit ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->points_deposit_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->points_deposit_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Time requirement input -->
                         <div class="input_container">
                             Hours required: <input name="hours_required" type="text" id="text_input" placeholder="Number of hours to do" value="<?php echo $hours_required ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->hours_required_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->hours_required_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
@@ -116,7 +116,7 @@
                         <div class="input_container">
                             Organizer name:
                             <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->organizer_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->organizer_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

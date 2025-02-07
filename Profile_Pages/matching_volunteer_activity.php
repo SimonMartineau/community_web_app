@@ -66,7 +66,7 @@
             $DB = new Database();
 
             // SQL query into Purchases
-            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, check_id, activity_id) 
+            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
                                                     values ('$volunteer_id', -1, '$activity_id')";
             $DB->update($assign_volunteer_to_activity_query);
 
@@ -120,7 +120,7 @@
 
             <!-- Submenu Button Area -->
 
-            <!-- Check if volunteer is assigned to activity -->
+            <!-- Contract if volunteer is assigned to activity -->
             <?php 
                 // If the volunteer is assigned to the activity
                 if($volunteer_activity_assigned == true){
@@ -181,7 +181,7 @@
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
                         <?php if ($volunteer_data['hours_required'] == 0): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't currently have a check.</strong><br>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't currently have a contract.</strong><br>
                         <?php endif; ?>
                         <?php if ($volunteer_data['points'] < 0): ?>
                             <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points.</strong><br>

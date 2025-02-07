@@ -134,7 +134,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Gender bubble check -->
+                        <!-- Gender bubble contract -->
                         <div class="input_container">
                             Gender:
                             <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> Male
@@ -192,7 +192,7 @@
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
                                 <tr>
                                     <th>Activity</th>
-                                    <th>Check</th>
+                                    <th>Contract</th>
                                 </tr>
                                 <?php
                                 $activities = [

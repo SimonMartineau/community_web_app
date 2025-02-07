@@ -136,7 +136,7 @@
                         <form action="" method="post">
                             <!-- Sort by options -->
                             <div style="margin-bottom: 15px;">
-                            <label for="order_filter" style="font-weight: bold;">Sort Checks By:</label><br>
+                            <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                                     <option value="purchase_date_desc" <?php echo ($order_filter == 'purchase_date_desc') ? 'selected' : ''; ?>>Purchase Date (Newest to Oldest)</option>
                                     <option value="purchase_date_asc" <?php echo ($order_filter == 'purchase_date_asc') ? 'selected' : ''; ?>>Purchase Date (Oldest to Newest)</option>

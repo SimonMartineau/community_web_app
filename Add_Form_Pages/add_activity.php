@@ -135,7 +135,7 @@
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
                                 <tr>
                                     <th>Time Period</th>
-                                    <th>Check</th>
+                                    <th>Contract</th>
                                 </tr>
                                 <?php
                                 $time_periods = [
@@ -167,7 +167,7 @@
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
                                 <tr>
                                     <th>Activity</th>
-                                    <th>Check</th>
+                                    <th>Contract</th>
                                 </tr>
                                 <?php
                                 $domain_types = [

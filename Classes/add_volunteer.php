@@ -18,7 +18,7 @@ class Add_Volunteer{
     // Analyses data sent by user
     public function evaluate($data){
 
-        $error = false; // Initialize error check variable
+        $error = false; // Initialize error contract variable
 
         // Check first name
         if (isset($_POST['first_name'])){

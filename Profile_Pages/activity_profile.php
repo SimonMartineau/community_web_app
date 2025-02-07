@@ -183,7 +183,7 @@
                 </a>
             </div>
 
-            <!-- Check if activity is deleted or not -->
+            <!-- Contract if activity is deleted or not -->
             <?php 
                 // If the activity is not trashed, propose delete option
                 if($activity_data_row['trashed'] == 0){

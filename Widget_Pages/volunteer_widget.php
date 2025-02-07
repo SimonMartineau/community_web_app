@@ -24,7 +24,7 @@
         <div class="status_container">
             <p class="widget_info">
                 <?php if ($volunteer_data_row['hours_required'] == 0): ?>
-                    <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Warning: Volunteer doesn't currently have a check.</span>
+                    <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Warning: Volunteer doesn't currently have a contract.</span>
                 <?php endif; ?>
                 <?php if ($volunteer_data_row['points'] < 0): ?>
                     <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Warning: Volunteer has spent too many points.</span>

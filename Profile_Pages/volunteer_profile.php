@@ -21,9 +21,9 @@
         $availability_data = fetch_volunteer_availability_data($volunteer_id);
 
         // Collect volunteer data
-        $checks_data = fetch_data("
+        $contracts_data = fetch_data("
             SELECT * 
-            FROM Checks 
+            FROM Contracts 
             WHERE volunteer_id='$volunteer_id' 
             ORDER BY id desc 
             LIMIT 7"
@@ -237,11 +237,11 @@
                 </a>
             </div>
 
-            <!-- Add check button -->
+            <!-- Add contract button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_check.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Add_Form_Pages/add_contract.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Add Check
+                        Add Contract
                     </button>
                 </a>
             </div>
@@ -255,7 +255,7 @@
                 </a>
             </div>
 
-            <!-- Check if volunteer is deleted or not -->
+            <!-- Contract if volunteer is deleted or not -->
             <?php 
                 // If the volunteer is not trashed, propose delete option
                 if($volunteer_data['trashed'] == 0){
@@ -316,7 +316,7 @@
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
                         <?php if ($volunteer_data['hours_required'] == 0): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't currently have a check.</strong><br>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't currently have a contract.</strong><br>
                         <?php endif; ?>
                         <?php if ($volunteer_data['points'] < 0): ?>
                             <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points.</strong><br>
@@ -410,33 +410,33 @@
 
                     <!-- Toggle buttons -->
                     <div id="widget_toggle_buttons">
-                        <button onclick="showWidgets_volunteer_page('checks')">Show Recent Checks</button>
+                        <button onclick="showWidgets_volunteer_page('contracts')">Show Recent Contracts</button>
                         <button onclick="showWidgets_volunteer_page('purchases')">Show Recent Purchases</button>
                         <button onclick="showWidgets_volunteer_page('activities')">Show Recent Activities</button>
                         <button onclick="showWidgets_volunteer_page('matching_activities')">Show Matching Activities</button>
                     </div>
 
 
-                    <!-- Display checks widgets -->
-                    <div id="checks_widgets" class="widget-container">
+                    <!-- Display contracts widgets -->
+                    <div id="contracts_widgets" class="widget-container">
                         <?php
-                        if ($checks_data) {
-                            foreach ($checks_data as $check_data_row) {
-                                $check_id = $check_data_row['id'];
-                                $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
-                                $date = new DateTime($check_data_row['issuance_date']);
+                        if ($contracts_data) {
+                            foreach ($contracts_data as $contract_data_row) {
+                                $contract_id = $contract_data_row['id'];
+                                $volunteer_data = fetch_volunteer_data($contract_data_row['volunteer_id']);
+                                $date = new DateTime($contract_data_row['issuance_date']);
                                 $month = $date->format('F'); // Full month name (e.g., "January")
-                                include("../Widget_Pages/check_widget.php");
+                                include("../Widget_Pages/contract_widget.php");
                             }
                         }
                         ?>
                     </div>                    
 
-                    <!-- All volunteer checks button (Initially shown) -->
-                    <div id="volunteer_specific_checks_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <a href="../Listing_Pages/volunteer_specific_checks.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="volunteer_specific_checks_button" id="submenu_button">
-                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Checks
+                    <!-- All volunteer contracts button (Initially shown) -->
+                    <div id="volunteer_specific_contracts_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
+                        <a href="../Listing_Pages/volunteer_specific_contracts.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
+                            <button name="volunteer_specific_contracts_button" id="submenu_button">
+                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Contracts
                             </button>
                         </a>
                     </div>

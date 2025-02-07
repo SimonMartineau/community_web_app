@@ -7,7 +7,7 @@
             <strong>Phone:</strong> <?php echo $volunteer_data_row['telephone_number']?><br>
             <strong>Points:</strong> <?php echo $volunteer_data_row['points'] . " Points"; ?><br>
             <?php if ($volunteer_data_row['hours_required'] == 0): ?>
-                <strong style="color: rgb(226, 65, 65)">Volunteer doesn't currently have a check.</strong><br>
+                <strong style="color: rgb(226, 65, 65)">Volunteer doesn't currently have a contract.</strong><br>
             <?php else: ?>
                 <strong>Hours Required:</strong> <?php echo $volunteer_data_row['hours_required'] . " Hours"; ?><br>
                 <strong>Hours Completed:</strong> <?php echo $volunteer_data_row['hours_completed'] . " Hours"; ?><br>

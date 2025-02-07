@@ -14,7 +14,7 @@ class Edit_Activity{
     // Analyses data sent by user
     public function evaluate($activity_id, $data){
 
-        $error = false; // Initialise error check variable
+        $error = false; // Initialise error contract variable
 
         // Check activity name
         if (isset($_POST['activity_name'])){

@@ -1,6 +1,6 @@
 <?php
 
-class Edit_Check{
+class Add_Contract{
     public $issuance_date_error_mes = "";
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
@@ -10,9 +10,9 @@ class Edit_Check{
 
 
     // Analyses data sent by user
-    public function evaluate($check_id, $data){
+    public function evaluate($volunteer_id, $data){
 
-        $error = false; // Initialize error check variable
+        $error = false; // Initialize error contract variable
 
         // Check issuance date
         if (isset($_POST['issuance_date'])){
@@ -68,7 +68,7 @@ class Edit_Check{
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
-            $this->edit_check($check_id, $data);
+            $this->add_contract($volunteer_id, $data);
             return true;
         } else{
             // There is an error
@@ -77,33 +77,28 @@ class Edit_Check{
     }
 
 
-    public function edit_check($check_id, $data){
+    public function add_contract($volunteer_id, $data){
         // Creating all the varaibles for the SQL input
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
         $points_deposit = $data['points_deposit'];
+        $points_spent = 0;
         $hours_required = $data['hours_required'];
+        $hours_completed = 0;
         $organizer_name = $data['organizer_name'];
+        $contract_active = 1;
         $additional_notes = $data['additional_notes'];
-
-        // points_spent does not get updated here.
 
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Volunteers
-        $check_query = "UPDATE Checks 
-                  SET issuance_date = '$issuance_date', 
-                      validity_date = '$validity_date', 
-                      points_deposit = '$points_deposit', 
-                      hours_required = '$hours_required', 
-                      organizer_name = '$organizer_name', 
-                      additional_notes = '$additional_notes'
-                  WHERE id = '$check_id';";
-        $DB->update($check_query);
-
+        // SQL query into Contracts
+        $contract_query = "insert into Contracts (volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, organizer_name, contract_active, additional_notes)
+                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$points_spent' ,'$hours_required', '$hours_completed', '$organizer_name', '$contract_active', '$additional_notes')";
+        $DB->save($contract_query);
     }
 
+    
 }
 
 ?>

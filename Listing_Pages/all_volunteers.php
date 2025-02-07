@@ -76,8 +76,8 @@
                     // Volunteers who have a time contract and have not yet completed the hours.
                     $sql_filter_query .= " AND v.hours_required > 0 AND v.hours_required > hours_completed";
                     break;
-                case 'no_check':
-                    // Volunteers who do not currently have a check
+                case 'no_contract':
+                    // Volunteers who do not currently have a contract
                     $sql_filter_query .= " AND v.hours_required = 0";
                     break;
                 case 'all_volunteers':
@@ -236,9 +236,9 @@
                                 <label for="time_filter" style="font-weight: bold;">Contract Status:</label><br>
                                 <select name="time_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                                     <option value="all_volunteers" <?php echo ($time_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
-                                    <option value="time_completed" <?php echo ($time_filter == 'time_completed') ? 'selected' : ''; ?>>Check Time Requirement Completed</option>
-                                    <option value="time_not_completed" <?php echo ($time_filter == 'time_not_completed') ? 'selected' : ''; ?>>Check Time Requirement Not Yet Completed</option>
-                                    <option value="no_check" <?php echo ($time_filter == 'no_check') ? 'selected' : ''; ?>>Volunteer Doesn't Currently Have A Check</option>
+                                    <option value="time_completed" <?php echo ($time_filter == 'time_completed') ? 'selected' : ''; ?>>Contract Time Requirement Completed</option>
+                                    <option value="time_not_completed" <?php echo ($time_filter == 'time_not_completed') ? 'selected' : ''; ?>>Contract Time Requirement Not Yet Completed</option>
+                                    <option value="no_contract" <?php echo ($time_filter == 'no_contract') ? 'selected' : ''; ?>>Volunteer Doesn't Currently Have A Contract</option>
                                 </select>
                             </div>
 

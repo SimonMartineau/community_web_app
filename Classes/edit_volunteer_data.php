@@ -20,7 +20,7 @@ class Edit_Volunteer{
     // Analyses data sent by user
     public function evaluate($volunteer_id, $data){
 
-        $error = false; // Initialise error check variable
+        $error = false; // Initialise error contract variable
 
         // Check first name
         if (isset($_POST['first_name'])){

@@ -2,7 +2,7 @@
 
     // Include classes
     include("../Classes/connect.php");
-    include("../Classes/add_check.php");
+    include("../Classes/add_contract.php");
 
     if (isset($_GET['volunteer_id'])) {
         $volunteer_id = $_GET['volunteer_id'];
@@ -19,8 +19,8 @@
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        $check = new Add_Check();
-        $submit_success = $check->evaluate($volunteer_id, $_POST);
+        $contract = new Add_Contract();
+        $submit_success = $contract->evaluate($volunteer_id, $_POST);
 
         // If there are errors 
         if(!$submit_success){
@@ -46,7 +46,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Check | Give and Receive</title>
+        <title>Add Contract | Give and Receive</title>
         <link rel="stylesheet" href="../style.css">
     </head>
 
@@ -65,7 +65,7 @@
 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Check Form</span>
+                    <span style="font-size: 24px; font-weight: bold;">Contract Form</span>
                 </div>
 
                 <!-- Error message -->
@@ -79,40 +79,40 @@
                 <div id="form_section">
 
                     <!-- Form text input -->
-                    <form method="post" action="../Add_Form_Pages/add_check.php?volunteer_id=<?php echo $volunteer_id; ?>">
+                    <form method="post" action="../Add_Form_Pages/add_contract.php?volunteer_id=<?php echo $volunteer_id; ?>">
 
                         <!-- Issuance date input -->
                         <div class="input_container">
                             Issuance date: <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->issuance_date_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->issuance_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Validity date input -->
                         <div class="input_container">
                             Validity date: <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->validity_date_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->validity_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Points text input -->
                         <div class="input_container">
                             <input name="points_deposit" type="text" id="text_input" placeholder="Number of points" value="<?php echo $points_deposit ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->points_deposit_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->points_deposit_error_mes : ''; ?></span>
                         </div>
                         <br><br>
                         
                         <!-- Time requirement input -->
                         <div class="input_container">
                             <input name="hours_required" type="text" id="text_input" placeholder="Number of hours to do" value="<?php echo $hours_required ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->hours_required_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->hours_required_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Organizer Name text input -->
                         <div class="input_container">
                             <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($check) ? $check->organizer_name_error_mes : ''; ?></span>
+                            <span id="error_message"><?php echo isset($contract) ? $contract->organizer_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

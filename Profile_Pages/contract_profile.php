@@ -7,17 +7,17 @@
     // Updating all backend processes
     update_backend_data();
 
-    if (isset($_GET['check_id'])) {
-        $check_id = $_GET['check_id'];
+    if (isset($_GET['contract_id'])) {
+        $contract_id = $_GET['contract_id'];
 
-        $check_data = fetch_check_data($check_id);
-        $volunteer_id = $check_data['volunteer_id'];
-        $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the check.
+        $contract_data = fetch_contract_data($contract_id);
+        $volunteer_id = $contract_data['volunteer_id'];
+        $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the contract.
 
         $purchases_data = fetch_data("
             SELECT * 
             FROM Purchases 
-            WHERE check_id='$check_id' 
+            WHERE contract_id='$contract_id' 
             ORDER BY id desc "
         );
 
@@ -25,7 +25,7 @@
             SELECT a.* 
             FROM Activities a
             JOIN Volunteer_Activity_Junction vaj ON vaj.activity_id = a.id
-            WHERE vaj.check_id='$check_id' 
+            WHERE vaj.contract_id='$contract_id' 
             ORDER BY id desc "
         );
     }
@@ -33,15 +33,15 @@
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        // Ensure the delete check button has been pressed
-        if (isset($_POST['delete_check']) && $_POST['delete_check'] === '1') {
+        // Ensure the delete contract button has been pressed
+        if (isset($_POST['delete_contract']) && $_POST['delete_contract'] === '1') {
 
             // Initialise Database object
             $DB = new Database();
 
-            // SQL query into Checks
-            $delete_check_query = "delete from Checks where id='$check_id'";
-            $DB->update($delete_check_query);
+            // SQL query into Contracts
+            $delete_contract_query = "delete from Contracts where id='$contract_id'";
+            $DB->update($delete_contract_query);
 
             // Changing the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
@@ -56,7 +56,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Check Profile | Give and Receive</title>
+        <title>Contract Profile | Give and Receive</title>
         <link rel="stylesheet" href="../style.css">
     </head>
 
@@ -75,22 +75,22 @@
 
             <!-- Submenu Button Area -->
 
-            <!-- Edit check button -->
+            <!-- Edit contract button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_check_data.php?check_id=<?php echo $check_id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Edit Check Info
+                        Edit Contract Info
                     </button>
                 </a>
             </div>
 
-            <!-- Delete check button -->
+            <!-- Delete contract button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <form method="POST" action="../Profile_Pages/check_profile.php?check_id=<?php echo $check_id; ?>" onsubmit="return confirm('Are you sure you want to delete this check?')">
+                <form method="POST" action="../Profile_Pages/contract_profile.php?contract_id=<?php echo $contract_id; ?>" onsubmit="return confirm('Are you sure you want to delete this contract?')">
                     <!-- Hidden input to confirm source -->
-                    <input type="hidden" name="delete_check" value="1">
+                    <input type="hidden" name="delete_contract" value="1">
                     <button id="submenu_button">
-                        Delete Check
+                        Delete Contract
                     </button>
                 </form>
             </div>
@@ -98,31 +98,31 @@
             <!-- Below cover area -->
             <div style="display: flex; align-items: flex-start;">
 
-                <!-- Left area; Check information area -->
+                <!-- Left area; Contract information area -->
                 <div id="medium_rectangle" style="flex:0.7;">
 
                     <!-- Section title of contact section -->
                     <div id="section_title">
-                        <span>Check Info</span>
+                        <span>Contract Info</span>
                     </div>
 
-                    <!-- Check Information -->
+                    <!-- Contract Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
 
                         <?php
-                            // Determine the message and color based on $check_active
-                            if ($check_data['check_active'] == 1) {
-                                $message = "Current Volunteer's Check";
+                            // Determine the message and color based on $contract_active
+                            if ($contract_data['contract_active'] == 1) {
+                                $message = "Current Volunteer's Contract";
                                 $messageColor = "green";
                             } else {
-                                $message = "Past Volunteer's Check";
+                                $message = "Past Volunteer's Contract";
                                 $messageColor = "orange";
                             }
                         ?>
 
-                        <?php if ($check_data['points_deposit'] - $check_data['points_spent'] < 0): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points for this check.</strong><br>
+                        <?php if ($contract_data['points_deposit'] - $contract_data['points_spent'] < 0): ?>
+                            <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points for this contract.</strong><br>
                         <?php endif; ?>
 
                         <!-- Display the message with dynamic color -->
@@ -130,20 +130,20 @@
                             <?php echo $message; ?>
                         </p>
 
-                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: formatDate($check_data['issuance_date'])); ?></p>
-                        <p><strong>Validity Date:</strong> <?php echo htmlspecialchars(formatDate($check_data['validity_date'])); ?></p>
-                        <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($check_data['points_deposit']) . " Points"; ?></p>
-                        <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($check_data['points_spent']) . " Points"; ?></p>
-                        <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($check_data['hours_required']) . " Hours"; ?></p>
-                        <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($check_data['hours_completed']) . " Hours"; ?></p>
-                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($check_data['organizer_name']); ?></p>
+                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: formatDate($contract_data['issuance_date'])); ?></p>
+                        <p><strong>Validity Date:</strong> <?php echo htmlspecialchars(formatDate($contract_data['validity_date'])); ?></p>
+                        <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($contract_data['points_deposit']) . " Points"; ?></p>
+                        <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($contract_data['points_spent']) . " Points"; ?></p>
+                        <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($contract_data['hours_required']) . " Hours"; ?></p>
+                        <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($contract_data['hours_completed']) . " Hours"; ?></p>
+                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($contract_data['organizer_name']); ?></p>
 
                     </div>
 
                     <!-- Additional Details -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($check_data['additional_notes']) ?: 'None'; ?></p>
+                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($contract_data['additional_notes']) ?: 'None'; ?></p>
                     </div>
                     
                 </div>
@@ -156,9 +156,9 @@
 
                         <!-- Toggle buttons -->
                         <div id="widget_toggle_buttons">
-                            <button onclick="showWidgets_check_page('volunteer')">Show Volunteer</button>
-                            <button onclick="showWidgets_check_page('purchases')">Show Purchases</button>
-                            <button onclick="showWidgets_check_page('activities')">Show Activities</button>
+                            <button onclick="showWidgets_contract_page('volunteer')">Show Volunteer</button>
+                            <button onclick="showWidgets_contract_page('purchases')">Show Purchases</button>
+                            <button onclick="showWidgets_contract_page('activities')">Show Activities</button>
                         </div>
 
 

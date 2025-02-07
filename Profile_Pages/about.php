@@ -34,7 +34,7 @@
                         Visit the <a href="../Listing_Pages/all_volunteers.php" style="color: #405d9b; text-decoration: none;">Volunteers</a> page to view a list of volunteers in your community. You can filter volunteers by their interests, availability, or other criteria.
                     </li>
                     <li><strong>Activities Page:</strong> 
-                        Explore the <a href="../Listing_Pages/all_activities.php" style="color: #405d9b; text-decoration: none;">Activities</a> page to find events and initiatives in your area. You can check event details, including duration, location, and participant count.
+                        Explore the <a href="../Listing_Pages/all_activities.php" style="color: #405d9b; text-decoration: none;">Activities</a> page to find events and initiatives in your area. You can contract event details, including duration, location, and participant count.
                     </li>
                     <li><strong>Add a Volunteer:</strong> 
                         If you’re organizing a community initiative and need volunteers, you can use the <a href="../Add_Form_Pages/add_volunteer.php" style="color: #405d9b; text-decoration: none;">Add Volunteer</a> button to register new volunteers.

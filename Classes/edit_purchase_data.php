@@ -11,7 +11,7 @@ class Edit_Purchase{
     // Analyses data sent by user
     public function evaluate($purchase_id, $data){
 
-        $error = false; // Initialize error check variable
+        $error = false; // Initialize error contract variable
 
         // Check item names
         if (isset($_POST['item_names'])){

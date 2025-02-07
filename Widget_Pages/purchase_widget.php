@@ -28,8 +28,8 @@
 
         <div class="status_container">
             <p class="widget_info">                
-                <?php if ($purchase_data_row['check_id'] == -1): ?>
-                    <span class="info_line warning"><span class="material-symbols-outlined">warning</span>Purchase date outside check duration.</span>
+                <?php if ($purchase_data_row['contract_id'] == -1): ?>
+                    <span class="info_line warning"><span class="material-symbols-outlined">warning</span>Purchase date outside contract duration.</span>
                 <?php endif; ?>
             </p>
         </div>

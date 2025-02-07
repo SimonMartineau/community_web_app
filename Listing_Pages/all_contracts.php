@@ -10,14 +10,14 @@
     // Default entry values on page startup
     $order_filter = "date_of_inscription_desc";
     $trash_filter = "only_active_volunteers";
-    $active_check_filter = "all_checks";
+    $active_contract_filter = "all_contracts";
     $earliest_date_filter = "";
     $latest_date_filter = "";
 
-    // Default page checks data
-    $all_checks_data = fetch_data("
+    // Default page contracts data
+    $all_contracts_data = fetch_data("
         SELECT c.* 
-        FROM Checks c
+        FROM Contracts c
         INNER JOIN Volunteers m ON c.volunteer_id = m.id
         WHERE m.trashed = 0
         ORDER BY c.issuance_date DESC"
@@ -30,12 +30,12 @@
         // Retrieve filter form data
         $order_filter = $_POST['order_filter'] ?? '';
         $trash_filter = $_POST['trash_filter'] ?? '';
-        $active_check_filter = $_POST['active_check_filter'] ?? '';
+        $active_contract_filter = $_POST['active_contract_filter'] ?? '';
         $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
         $latest_date_filter = $_POST['latest_date_filter'] ?? '';
 
         // Default sql query
-        $sql_filter_query = "SELECT DISTINCT c.* FROM Checks c JOIN Volunteers v ON v.id = c.volunteer_id WHERE 1=1 ";
+        $sql_filter_query = "SELECT DISTINCT c.* FROM Contracts c JOIN Volunteers v ON v.id = c.volunteer_id WHERE 1=1 ";
 
         // Volunteer status filter
         if (!empty($trash_filter)){
@@ -52,16 +52,16 @@
             }
         }
 
-        // Active check filter
-        if (!empty($active_check_filter)){
-            switch ($active_check_filter){
-                case 'active_checks_only':
-                    $sql_filter_query .= " AND check_active = 1";
+        // Active contract filter
+        if (!empty($active_contract_filter)){
+            switch ($active_contract_filter){
+                case 'active_contracts_only':
+                    $sql_filter_query .= " AND contract_active = 1";
                     break;
-                case 'past_checks_only':
-                    $sql_filter_query .= " AND check_active = 0";
+                case 'past_contracts_only':
+                    $sql_filter_query .= " AND contract_active = 0";
                     break;
-                case 'all_checks':
+                case 'all_contracts':
                     // No filter added
                     break;
             }
@@ -114,7 +114,7 @@
         }
 
         // Final query
-        $all_checks_data = fetch_data($sql_filter_query);
+        $all_contracts_data = fetch_data($sql_filter_query);
 
     }
 ?>
@@ -125,7 +125,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Checks | Give and Receive</title>
+        <title>Contracts | Give and Receive</title>
         <link rel="stylesheet" href="../style.css">
     </head>
 
@@ -158,7 +158,7 @@
                         <form action="" method="post">
                             <!-- Sort by options -->
                             <div style="margin-bottom: 15px;">
-                                <label for="order_filter" style="font-weight: bold;">Sort Checks By:</label><br>
+                                <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                                     <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Newest to Oldest)</option>
                                     <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Newest)</option>
@@ -183,13 +183,13 @@
                                 </select>
                             </div>
 
-                            <!-- Active check filter -->
+                            <!-- Active contract filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="active_check_filter" style="font-weight: bold;">Check Status:</label><br>
-                                <select name="active_check_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="active_checks_only" <?php echo ($active_check_filter == 'active_checks_only') ? 'selected' : ''; ?>>Active Checks</option>
-                                    <option value="past_checks_only" <?php echo ($active_check_filter == 'past_checks_only') ? 'selected' : ''; ?>>Past Checks</option>
-                                    <option value="all_checks" <?php echo ($active_check_filter == 'all_checks') ? 'selected' : ''; ?>>All Checks</option>
+                                <label for="active_contract_filter" style="font-weight: bold;">Contract Status:</label><br>
+                                <select name="active_contract_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="active_contracts_only" <?php echo ($active_contract_filter == 'active_contracts_only') ? 'selected' : ''; ?>>Active Contracts</option>
+                                    <option value="past_contracts_only" <?php echo ($active_contract_filter == 'past_contracts_only') ? 'selected' : ''; ?>>Past Contracts</option>
+                                    <option value="all_contracts" <?php echo ($active_contract_filter == 'all_contracts') ? 'selected' : ''; ?>>All Contracts</option>
                                 </select>
                             </div>
 
@@ -224,26 +224,26 @@
 
                         <!-- Section title of recent activities section -->
                         <div id="section_title">
-                            <span>Checks</span>
+                            <span>Contracts</span>
                         </div>
 
                         <!-- Counting the number of elements post filter -->
                         <?php 
-                        if (empty($all_checks_data)) {
+                        if (empty($all_contracts_data)) {
                             echo "No purchases found.";
                         } else {
-                            echo count($all_checks_data) . " checks found.";
+                            echo count($all_contracts_data) . " contracts found.";
                         } ?>
 
-                        <!-- Display checks widgets --> 
+                        <!-- Display contracts widgets --> 
                         <?php
-                            if($all_checks_data){
-                                foreach($all_checks_data as $check_data_row){
-                                    $check_id = $check_data_row['id'];
-                                    $volunteer_data = fetch_volunteer_data($check_data_row['volunteer_id']);
-                                    $date = new DateTime($check_data_row['issuance_date']);
+                            if($all_contracts_data){
+                                foreach($all_contracts_data as $contract_data_row){
+                                    $contract_id = $contract_data_row['id'];
+                                    $volunteer_data = fetch_volunteer_data($contract_data_row['volunteer_id']);
+                                    $date = new DateTime($contract_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")
-                                    include("../Widget_Pages/check_widget.php");
+                                    include("../Widget_Pages/contract_widget.php");
                                 }
                             }
                         ?>

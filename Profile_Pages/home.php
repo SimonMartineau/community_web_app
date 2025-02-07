@@ -25,10 +25,10 @@
         LIMIT 3"
     );
 
-    // Collect checks data
-    $all_checks_data = fetch_data("
+    // Collect contracts data
+    $all_contracts_data = fetch_data("
         SELECT c.* 
-        FROM Checks c
+        FROM Contracts c
         INNER JOIN Volunteers m ON c.volunteer_id = m.id
         WHERE m.trashed = 0
         ORDER BY c.id DESC 
