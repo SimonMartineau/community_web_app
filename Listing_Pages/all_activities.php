@@ -167,7 +167,8 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Add_Form_Pages/add_activity.php" style="text-decoration: none;">
                     <button id="submenu_button">
-                        Add Activity
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">add</span>
+                        <span>New Activity</span>
                     </button>
                 </a>
             </div>

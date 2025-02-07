@@ -12,6 +12,7 @@ class Add_Volunteer{
     public $volunteer_availability_error_mes = "";
     public $volunteer_interests_error_mes = "";
     public $organizer_name_error_mes = "";
+    public $volunteer_id = "";
 
 
 
@@ -179,6 +180,7 @@ class Add_Volunteer{
 
         // Set volunteer_id to value of primary key in Volunteers table
         $volunteer_id = $DB->last_insert_id;
+        $this->volunteer_id = $volunteer_id;
 
         // SQL query into Volunteer_Availability
         foreach($volunteer_availability as $availability){

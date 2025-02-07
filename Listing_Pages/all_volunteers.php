@@ -182,14 +182,15 @@
             <!-- Submenu Button Area -->
 
             <!-- Add volunteer button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
+            <div style="text-align: right; padding: 10px 20px; display: inline-block;">
                 <a href="../Add_Form_Pages/add_volunteer.php" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        New Volunteer
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">person_add</span>
+                        <span>New Volunteer</span>
                     </button>
                 </a>
             </div>
-     
+
             <!-- Below cover area -->
             <div style="display: flex;">
 

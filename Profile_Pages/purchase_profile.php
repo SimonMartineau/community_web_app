@@ -68,7 +68,8 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?php echo $purchase_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Edit Purchase Info
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
+                        <span>Edit Purchase Info</span>
                     </button>
                 </a>
             </div>
@@ -76,10 +77,11 @@
             <!-- Delete purchase button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <form method="POST" action="../Profile_Pages/purchase_profile.php?purchase_id=<?php echo $purchase_id; ?>" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
-                    <!-- Hidden input to confirm source -->
-                    <input type="hidden" name="delete_purchase" value="1">
                     <button id="submenu_button">
-                        Delete Purchase
+                        <!-- Hidden input to confirm source -->
+                        <input type="hidden" name="delete_purchase" value="1">
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">delete_forever</span>
+                        <span>Delete Purchase</span>
                     </button>
                 </form>
             </div>

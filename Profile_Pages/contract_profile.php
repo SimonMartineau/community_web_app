@@ -79,7 +79,8 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Edit Contract Info
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
+                        <span>Edit Contract Info</span>
                     </button>
                 </a>
             </div>
@@ -87,10 +88,11 @@
             <!-- Delete contract button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <form method="POST" action="../Profile_Pages/contract_profile.php?contract_id=<?php echo $contract_id; ?>" onsubmit="return confirm('Are you sure you want to delete this contract?')">
-                    <!-- Hidden input to confirm source -->
-                    <input type="hidden" name="delete_contract" value="1">
                     <button id="submenu_button">
-                        Delete Contract
+                        <!-- Hidden input to confirm source -->
+                        <input type="hidden" name="delete_contract" value="1">
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">delete_forever</span>
+                        <span>Delete Contract</span>
                     </button>
                 </form>
             </div>

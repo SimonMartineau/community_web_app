@@ -232,8 +232,10 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Edit Volunteer Info
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
+                        <span>Edit Volunteer Info</span>
                     </button>
+                    
                 </a>
             </div>
 
@@ -241,7 +243,8 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Add_Form_Pages/add_contract.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Add Contract
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">contract</span>
+                        <span>New Contract</span>
                     </button>
                 </a>
             </div>
@@ -250,7 +253,8 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Add Purchase
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">add_shopping_cart</span>
+                        <span>New Purchase</span>
                     </button>
                 </a>
             </div>
@@ -266,7 +270,8 @@
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="delete_volunteer" value="1">
-                                Delete Volunteer
+                                <span class="material-symbols-outlined" style="margin-right: 8px;">delete</span>
+                                <span>Trash Profile</span>
                             </button>
                         </form>
                     </div>
@@ -279,8 +284,10 @@
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="restore_volunteer" value="1">
-                                Restore Volunteer
+                                <span class="material-symbols-outlined" style="margin-right: 8px;">restore_from_trash</span>
+                                <span>Restore Profile</span>
                             </button>
+                            
                         </form>
                     </div>
                 <?php

@@ -178,7 +178,8 @@
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
-                        Edit Activity Info
+                        <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
+                        <span>Edit Activity Info</span>
                     </button>
                 </a>
             </div>
@@ -194,7 +195,8 @@
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="delete_activity" value="1">
-                                Delete Activity
+                                <span class="material-symbols-outlined" style="margin-right: 8px;">delete</span>
+                                <span>Trash Activity</span>
                             </button>
                         </form>
                     </div>
@@ -207,7 +209,8 @@
                             <button id="submenu_button">
                                 <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="restore_activity" value="1">
-                                Restore Activity
+                                <span class="material-symbols-outlined" style="margin-right: 8px;">restore_from_trash</span>
+                                <span>Restore Activity</span>
                             </button>
                         </form>
                     </div>

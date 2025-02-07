@@ -48,7 +48,7 @@
 
         } else{
             // Changing the page.
-            header("Location: ../Listing_Pages/all_volunteers.php");
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer->volunteer_id);
             die; // Ending the script
         }    
     }
