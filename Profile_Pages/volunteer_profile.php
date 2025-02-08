@@ -105,9 +105,9 @@
         JOIN Activity_Domains ad ON a.id = ad.activity_id
         JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
         WHERE a.trashed = 0
-        AND ad.domain IN ($volunteer_interests_sql)
         AND a.number_of_participants < a.number_of_places
-        AND a.activity_date >= CURDATE() 
+        AND ad.domain IN ($volunteer_interests_sql)
+        AND a.activity_date >= CURDATE()
         AND NOT EXISTS (
             SELECT 1 FROM Volunteer_Activity_Junction vaj 
             WHERE vaj.activity_id = a.id 
@@ -116,11 +116,7 @@
         ORDER BY a.id DESC
     ");
 
-
-
-
-
-
+    
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Retrieve filter form data
@@ -135,6 +131,7 @@
             JOIN Activity_Domains ad ON a.id = ad.activity_id
             JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
             WHERE a.trashed = 0
+            AND a.number_of_participants < a.number_of_places
         ";
 
         // Interest filter
@@ -414,144 +411,143 @@
                     <!-- Widget display -->
                     <div id="medium_rectangle">
 
-                    <!-- Toggle buttons -->
-                    <div id="widget_toggle_buttons">
-                        <button class="active" onclick="ToggleWidgets('contracts', this)">Show Recent Contracts</button>
-                        <button onclick="ToggleWidgets('purchases', this)">Show Recent Purchases</button>
-                        <button onclick="ToggleWidgets('activities', this)">Show Recent Activities</button>
-                        <button onclick="ToggleWidgets('matching_activities', this)">Show Matching Activities</button>
-                    </div>
-
-                    <!-- Display contracts widgets -->
-                    <div id="contracts_widgets" class="widget-container">
-                        <?php
-                        if ($contracts_data) {
-                            foreach ($contracts_data as $contract_data_row) {
-                                $contract_id = $contract_data_row['id'];
-                                $volunteer_data = fetch_volunteer_data($contract_data_row['volunteer_id']);
-                                $date = new DateTime($contract_data_row['issuance_date']);
-                                $month = $date->format('F'); // Full month name (e.g., "January")
-                                include("../Widget_Pages/contract_widget.php");
-                            }
-                        }
-                        ?>
-                        <!-- All volunteer contracts button -->
-                        <div id="volunteer_specific_contracts_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
-                            <a href="../Listing_Pages/volunteer_specific_contracts.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
-                                <button name="volunteer_specific_contracts_button" id="submenu_button">
-                                    See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Contracts
-                                </button>
-                            </a>
+                        <!-- Toggle buttons -->
+                        <div id="widget_toggle_buttons">
+                            <button class="active" onclick="ToggleWidgets('contracts', this)">Show Recent Contracts</button>
+                            <button onclick="ToggleWidgets('purchases', this)">Show Recent Purchases</button>
+                            <button onclick="ToggleWidgets('activities', this)">Show Recent Activities</button>
+                            <button onclick="ToggleWidgets('matching_activities', this)">Show Matching Activities</button>
                         </div>
-                    </div>                    
 
-                    
-                    <!-- Display purchase widgets -->
-                    <div id="purchases_widgets" class="widget-container" style="display: none;">
-                        <?php
-                        if ($purchases_data) {
-                            foreach ($purchases_data as $purchase_data_row) {
-                                $purchase_id = $purchase_data_row['id'];
-                                $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
-                                include("../Widget_Pages/purchase_widget.php");
+                        <!-- Display contracts widgets -->
+                        <div id="contracts_widgets" class="widget-container">
+                            <?php
+                            if ($contracts_data) {
+                                foreach ($contracts_data as $contract_data_row) {
+                                    $contract_id = $contract_data_row['id'];
+                                    $volunteer_data = fetch_volunteer_data($contract_data_row['volunteer_id']);
+                                    $date = new DateTime($contract_data_row['issuance_date']);
+                                    $month = $date->format('F'); // Full month name (e.g., "January")
+                                    include("../Widget_Pages/contract_widget.php");
+                                }
                             }
-                        }
-                        ?>
-                        <!-- All volunteer purchases button -->
-                        <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;">
-                            <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
-                                <button name="volunteer_specific_purchases_button" id="submenu_button">
-                                    See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Display activities widgets -->
-                    <div id="activities_widgets" class="widget-container" style="display: none;">
-                        <?php
-                        if ($activities_data) {
-                            foreach ($activities_data as $activity_data_row) {
-                                $activity_id = $activity_data_row['id'];
-                                include("../Widget_Pages/matching_activity_widget.php");
-                            }
-                        }
-                        ?>
-                        <!-- All volunteer activities button (Initially hidden) -->
-                        <div id="volunteer_specific_activities_button" style="text-align: right; padding: 10px 20px;">
-                            <a href="../Listing_Pages/volunteer_specific_activities.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
-                                <button name="volunteer_specific_activities_button" id="submenu_button">
-                                    See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Activities
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Display matching volunteers widgets --> 
-                    <div id="matching_activities_widgets" class="widget-container" style="display: none;">
-
-                        <form id="filterForm" action="" method="post">
-                            <label class="switch">
-                                <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
-                                <span class="slider round"></span>
-                            </label>
-                            <span>Interest Filter</span>
-                            <br>
-
-                            <label class="switch">
-                                <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
-                                <span class="slider round"></span>
-                            </label>
-                            <span>Weekday Filter</span>
-                            <br>
-
-                            <label class="switch">
-                                <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
-                                <span class="slider round"></span>
-                            </label>
-                            <span>Time Period Filter</span>
-                            <br>
-
-                            <!-- Submit button -->
-                            <div style="text-align: center;">
-                                <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                                    Apply Filter
-                                </button>
+                            ?>
+                            <!-- All volunteer contracts button -->
+                            <div id="volunteer_specific_contracts_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
+                                <a href="../Listing_Pages/volunteer_specific_contracts.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                    <button name="volunteer_specific_contracts_button" id="submenu_button">
+                                        See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Contracts
+                                    </button>
+                                </a>
                             </div>
-                        </form>
+                        </div>                    
 
-                        <!-- Show Matching Volunteers if POST -->
-                        <?php
-                            // After your form processing logic, add this PHP code
-                            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                                echo '<script>
-                                document.addEventListener("DOMContentLoaded", function() {
-                                    showWidgets_volunteer_page("matching_activities");
-                                });
-                                </script>';
+                        
+                        <!-- Display purchase widgets -->
+                        <div id="purchases_widgets" class="widget-container" style="display: none;">
+                            <?php
+                            if ($purchases_data) {
+                                foreach ($purchases_data as $purchase_data_row) {
+                                    $purchase_id = $purchase_data_row['id'];
+                                    $volunteer_data = fetch_volunteer_data($purchase_data_row['volunteer_id']);
+                                    include("../Widget_Pages/purchase_widget.php");
+                                }
                             }
-                        ?>
-                            
-                        <?php
-                            // Counting the number of elements post filter
-                            if (empty($all_matching_activities_data)) {
-                                echo "No activities found.";
-                            } else {
-                                echo "This volunteer has " . count($all_matching_activities_data) . ((count($all_matching_activities_data) == 1) ? " activity that matches." : " activities that match");
-                            } 
+                            ?>
+                            <!-- All volunteer purchases button -->
+                            <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;">
+                                <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                    <button name="volunteer_specific_purchases_button" id="submenu_button">
+                                        See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
 
-                            // Display the widgets
-                            if($all_matching_activities_data){
-                                foreach($all_matching_activities_data as $activity_data_row){
+                        <!-- Display activities widgets -->
+                        <div id="activities_widgets" class="widget-container" style="display: none;">
+                            <?php
+                            if ($activities_data) {
+                                foreach ($activities_data as $activity_data_row) {
                                     $activity_id = $activity_data_row['id'];
                                     include("../Widget_Pages/matching_activity_widget.php");
                                 }
                             }
-                        ?>
+                            ?>
+                            <!-- All volunteer activities button (Initially hidden) -->
+                            <div id="volunteer_specific_activities_button" style="text-align: right; padding: 10px 20px;">
+                                <a href="../Listing_Pages/volunteer_specific_activities.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                    <button name="volunteer_specific_activities_button" id="submenu_button">
+                                        See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Activities
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Display matching volunteers widgets --> 
+                        <div id="matching_activities_widgets" class="widget-container" style="display: none;">
+
+                            <form id="filterForm" action="" method="post">
+                                <label class="switch">
+                                    <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Interest Filter</span>
+                                <br>
+
+                                <label class="switch">
+                                    <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Weekday Filter</span>
+                                <br>
+
+                                <label class="switch">
+                                    <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Time Period Filter</span>
+                                <br>
+
+                                <!-- Submit button -->
+                                <div style="text-align: center;">
+                                    <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Show Matching Volunteers if POST -->
+                            <?php
+                                // After your form processing logic, add this PHP code
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                    echo '<script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        ToggleWidgets("matching_activities");
+                                    });
+                                    </script>';
+                                }
+                            ?>
+                                
+                            <?php
+                                // Counting the number of elements post filter
+                                if (empty($all_matching_activities_data)) {
+                                    echo "No activities found.";
+                                } else {
+                                    echo "This volunteer has " . count($all_matching_activities_data) . ((count($all_matching_activities_data) == 1) ? " activity that matches." : " activities that match");
+                                } 
+
+                                // Display the widgets
+                                if($all_matching_activities_data){
+                                    foreach($all_matching_activities_data as $activity_data_row){
+                                        $activity_id = $activity_data_row['id'];
+                                        include("../Widget_Pages/matching_activity_widget.php");
+                                    }
+                                }
+                            ?>
+                        </div>
+
                     </div>
-
-                </div>
-
 
                 </div>
 

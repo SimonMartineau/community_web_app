@@ -79,6 +79,7 @@
             ORDER BY v.id DESC
     ");
 
+    
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Retrieve filter form data
@@ -368,14 +369,14 @@
 
                             <!-- Show Matching Volunteers if POST -->
                             <?php
-                            // After your form processing logic, add this PHP code
-                            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                                echo '<script>
-                                document.addEventListener("DOMContentLoaded", function() {
-                                    showWidgets_activity_page("matching_participants");
-                                });
-                                </script>';
-                            }
+                                // After your form processing logic, add this PHP code
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                    echo '<script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        ToggleWidgets("matching_volunteers");
+                                    });
+                                    </script>';
+                                }
                             ?>
                             
                             <?php
@@ -396,10 +397,7 @@
                             ?>
                         </div>
 
-                        
-        
                     </div>
-
 
                 </div>
 
