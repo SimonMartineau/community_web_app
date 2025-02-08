@@ -79,7 +79,7 @@
             ORDER BY v.id DESC
     ");
 
-    
+
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Retrieve filter form data
@@ -309,8 +309,8 @@
 
                         <!-- Toggle buttons -->
                          <div id="widget_toggle_buttons">
-                            <button class="active" onclick="ToggleWidgets('current_participants', this)">Show Participants</button>
-                            <button onclick="ToggleWidgets('matching_volunteers', this)">Show Matching Volunteers</button>
+                            <button id="show_participants_button" class="active" onclick="ToggleWidgets('current_participants', this)">Show Participants</button>
+                            <button id="matching_volunteers_button" onclick="ToggleWidgets('matching_volunteers', this)">Show Matching Volunteers</button>
                         </div> 
 
                         <!-- Display participants widgets --> 
@@ -373,7 +373,8 @@
                                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     echo '<script>
                                     document.addEventListener("DOMContentLoaded", function() {
-                                        ToggleWidgets("matching_volunteers");
+                                        var matchingButton = document.getElementById("matching_volunteers_button");                                        
+                                        ToggleWidgets("matching_volunteers", matchingButton);
                                     });
                                     </script>';
                                 }

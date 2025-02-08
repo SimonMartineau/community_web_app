@@ -413,10 +413,10 @@
 
                         <!-- Toggle buttons -->
                         <div id="widget_toggle_buttons">
-                            <button class="active" onclick="ToggleWidgets('contracts', this)">Show Recent Contracts</button>
-                            <button onclick="ToggleWidgets('purchases', this)">Show Recent Purchases</button>
-                            <button onclick="ToggleWidgets('activities', this)">Show Recent Activities</button>
-                            <button onclick="ToggleWidgets('matching_activities', this)">Show Matching Activities</button>
+                            <button id="recent_contracts_button" class="active" onclick="ToggleWidgets('contracts', this)">Show Recent Contracts</button>
+                            <button id="recent_purchases_button" onclick="ToggleWidgets('purchases', this)">Show Recent Purchases</button>
+                            <button id="recent_activities_button" onclick="ToggleWidgets('activities', this)">Show Recent Activities</button>
+                            <button id="matching_activities_button" onclick="ToggleWidgets('matching_activities', this)">Show Matching Activities</button>
                         </div>
 
                         <!-- Display contracts widgets -->
@@ -523,7 +523,8 @@
                                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     echo '<script>
                                     document.addEventListener("DOMContentLoaded", function() {
-                                        ToggleWidgets("matching_activities");
+                                        var matchingButton = document.getElementById("matching_activities_button");
+                                        ToggleWidgets("matching_activities", matchingButton);
                                     });
                                     </script>';
                                 }
