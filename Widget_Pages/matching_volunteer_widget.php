@@ -1,20 +1,49 @@
 <a href="../Profile_Pages/matching_volunteer_activity.php?volunteer_id=<?php echo $volunteer_id; ?>&activity_id=<?php echo $activity_id; ?>" style="text-decoration: none;">
-    <div id="widget" class="matching_volunteer_widget">
-        <h3 class="widget_name"><?php echo $volunteer_data_row['first_name'] . " " . $volunteer_data_row['last_name'] ?></h3>
-        <p class="widget_info">
-            <strong>Email:</strong> <?php echo $volunteer_data_row['email']?><br>
-            <strong>Address:</strong> <?php echo $volunteer_data_row['address']?><br>
-            <strong>Phone:</strong> <?php echo $volunteer_data_row['telephone_number']?><br>
-            <strong>Points:</strong> <?php echo $volunteer_data_row['points'] . " Points"; ?><br>
-            <?php if ($volunteer_data_row['hours_required'] == 0): ?>
-                <strong style="color: rgb(226, 65, 65)">Volunteer doesn't currently have a contract.</strong><br>
-            <?php else: ?>
-                <strong>Hours Required:</strong> <?php echo $volunteer_data_row['hours_required'] . " Hours"; ?><br>
-                <strong>Hours Completed:</strong> <?php echo $volunteer_data_row['hours_completed'] . " Hours"; ?><br>
-            <?php endif; ?>
-            <?php if ($volunteer_data_row['points'] < 0): ?>
-                <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points.</strong><br>
-            <?php endif; ?>
-        </p>
+    <div id="widget" class="volunteer_widget">
+
+        <div class="icon_container" style="font-size: 1.5em; color: #405d9b; font-weight: 600;">
+            <span class="material-symbols-outlined">person</span>
+        </div>
+
+        <div class="name_container">
+            <span class="widget_name"><?php echo $volunteer_data_row['first_name'] . " " . $volunteer_data_row['last_name'] ?></span>
+        </div>
+        <div class="info_container">
+            <p class="widget_info">
+                <span class="info_line">
+                    <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
+                    <span class="info_value"><?php echo $volunteer_data_row['points'] ?> Points Left</span>
+                </span>
+                <span class="info_line">
+                    <span class="info_label"><span class="material-symbols-outlined">schedule</span></span>
+                    <span class="info_value"><?php echo $volunteer_data_row['hours_completed'] ?>/<?php echo $volunteer_data_row['hours_required'] ?> Hours Completed</span>
+                </span>
+            </p>
+        </div>
+
+        <div class="status_container">
+            <p class="widget_info">
+                <?php if ($volunteer_data_row['hours_required'] == 0): ?>
+                    <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Warning: Volunteer doesn't currently have a contract.</span>
+                <?php endif; ?>
+                <?php if ($volunteer_data_row['points'] < 0): ?>
+                    <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Warning: Volunteer has spent too many points.</span>
+                <?php endif; ?>
+            </p>
+        </div>
+        
     </div>
 </a>
+
+
+<style>
+.material-symbols-outlined {
+    display: inline-flex; /* Important for icon alignment */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em; /* Match icon size to text */
+    vertical-align: middle;
+}
+
+
+</style>

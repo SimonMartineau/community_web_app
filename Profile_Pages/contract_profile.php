@@ -101,7 +101,7 @@
             <div style="display: flex; align-items: flex-start;">
 
                 <!-- Left area; Contract information area -->
-                <div id="medium_rectangle" style="flex:0.7;">
+                <div id="medium_rectangle" style="flex:0.57;">
 
                     <!-- Section title of contact section -->
                     <div id="section_title">

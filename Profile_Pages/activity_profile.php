@@ -224,7 +224,7 @@
             <div style="display: flex; align-items: flex-start;">
 
                 <!-- Left area; Activity information area -->
-                <div id="medium_rectangle" style="flex:0.7;">
+                <div id="medium_rectangle" style="flex:0.57;">
 
                     <!-- Section title of contact section -->
                     <div id="section_title">
@@ -335,7 +335,7 @@
                         </div>
 
                         <!-- Display matching volunteers widgets --> 
-                        <div id="matching_volunteers_widgets" class="widget-container">
+                        <div id="matching_volunteers_widgets" class="widget-container" style="display: none;">
 
                             <form id="filterForm" action="" method="post">
                                 <label class="switch">

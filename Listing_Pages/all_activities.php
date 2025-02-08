@@ -173,101 +173,105 @@
             <!-- Below cover area -->
             <div style="display: flex;">
 
-                <!-- Filter area -->
-                <div style="min-height: 400px; flex:0.6;">
+                <!-- Left area -->
+                <div style="flex:0.6;">
 
-                    <div id="medium_rectangle">
+                    <!-- Filter area -->
+                    <div style="min-height: 400px;">
 
-                        <!-- Section title of filter area -->
-                        <div id="section_title">
-                            <span>Filter</span>
+                        <div id="medium_rectangle">
+
+                            <!-- Section title of filter area -->
+                            <div id="section_title">
+                                <span>Filter</span>
+                            </div>
+
+                            <!-- Filter form -->
+                            <form action="" method="post">
+                                <!-- Sort by options -->
+                                <div style="margin-bottom: 15px;">
+                                    <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
+                                    <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                        <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>>Registration Date (Latest to Oldest)</option>
+                                        <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Latest)</option>
+                                        <option value="activity_date_asc" <?php echo ($order_filter == 'activity_date_asc') ? 'selected' : ''; ?>>Date (Oldest to Latest)</option>
+                                        <option value="activity_date_desc" <?php echo ($order_filter == 'activity_date_desc') ? 'selected' : ''; ?>>Date (Latest to Oldest)</option>
+                                        <option value="activity_duration_desc" <?php echo ($order_filter == 'activity_duration_desc') ? 'selected' : ''; ?>>Duration (Longest to Shortest)</option>
+                                        <option value="activity_duration_asc" <?php echo ($order_filter == 'activity_duration_asc') ? 'selected' : ''; ?>>Duration (Shortest to Longest)</option>                                    
+                                        <option value="activity_name_asc" <?php echo ($order_filter == 'activity_name_asc') ? 'selected' : ''; ?>>Activity Name (A-Z)</option>
+
+                                    </select>
+                                </div>
+                                
+                                <!-- Activity status filter -->
+                                <div style="margin-bottom: 15px;">
+                                    <label for="status_filter" style="font-weight: bold;">Activity Status:</label><br>
+                                    <select name="status_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                        <option value="only_active" <?php echo ($status_filter == 'only_active') ? 'selected' : ''; ?>>Only Active</option>
+                                        <option value="only_past" <?php echo ($status_filter == 'only_past') ? 'selected' : ''; ?>>Only Past</option>
+                                        <option value="only_in_trash" <?php echo ($status_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
+                                        <option value="all_activities" <?php echo ($status_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
+                                    </select>
+                                </div>
+
+                                <!-- Activity occupancy filter -->
+                                <div style="margin-bottom: 15px;">
+                                    <label for="occupancy_filter" style="font-weight: bold;">Activity Occupancy:</label><br>
+                                    <select name="occupancy_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                        <option value="all_activities" <?php echo ($occupancy_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
+                                        <option value="not_full" <?php echo ($occupancy_filter == 'not_full') ? 'selected' : ''; ?>>Not full</option>
+                                        <option value="full" <?php echo ($occupancy_filter == 'full') ? 'selected' : ''; ?>>Full</option>
+                                        <option value="empty" <?php echo ($occupancy_filter == 'empty') ? 'selected' : ''; ?>>Empty</option>
+
+                                    </select>
+                                </div>
+
+                                <!-- Domain filter -->
+                                <div style="margin-bottom: 15px;">
+                                    <label style="font-weight: bold;">Domains:</label><br>
+                                    <div>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Organization of community events" <?php echo (isset($_POST['domains_filter']) && in_array('Organization of community events', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Organization of community events</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Library support" <?php echo (isset($_POST['domains_filter']) && in_array('Library support', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Library support</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Help in the community store" <?php echo (isset($_POST['domains_filter']) && in_array('Help in the community store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Help in the community store</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Support in the community grocery store" <?php echo (isset($_POST['domains_filter']) && in_array('Support in the community grocery store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Support in the community grocery store</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Cleaning and maintenance of public spaces" <?php echo (isset($_POST['domains_filter']) && in_array('Cleaning and maintenance of public spaces', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Cleaning and maintenance of public spaces</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Participation in urban gardening projects" <?php echo (isset($_POST['domains_filter']) && in_array('Participation in urban gardening projects', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Participation in urban gardening projects</label><br>
+                                    </div>
+                                </div>
+
+                                <!-- Time periods filter -->
+                                <div style="margin-bottom: 15px;">
+                                    <label style="font-weight: bold;">Acivity Period:</label><br>
+                                    <div>
+                                        <label><input type="checkbox" name="time_periods_filter[]" value="Morning" <?php echo (isset($_POST['time_periods_filter']) && in_array('Morning', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Morning</label><br>
+                                        <label><input type="checkbox" name="time_periods_filter[]" value="Afternoon" <?php echo (isset($_POST['time_periods_filter']) && in_array('Afternoon', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Afternoon</label><br>
+                                        <label><input type="checkbox" name="time_periods_filter[]" value="Evening" <?php echo (isset($_POST['time_periods_filter']) && in_array('Evening', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Evening</label><br>
+                                    </div>
+                                </div>
+
+                                <!-- Day availability filter -->
+                                <div style="margin-bottom: 15px;">
+                                    <label style="font-weight: bold;">Available Days:</label><br>
+                                    <div>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Monday" <?php echo (isset($_POST['available_days_filter']) && in_array('Monday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Monday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Tuesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Tuesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Tuesday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Wednesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Wednesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Wednesday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Thursday" <?php echo (isset($_POST['available_days_filter']) && in_array('Thursday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Thursday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Friday" <?php echo (isset($_POST['available_days_filter']) && in_array('Friday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Friday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Saturday" <?php echo (isset($_POST['available_days_filter']) && in_array('Saturday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Sunday" <?php echo (isset($_POST['available_days_filter']) && in_array('Sunday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
+                                    </div>
+                                </div>
+
+                                <!-- Submit button -->
+                                <div style="text-align: center;">
+                                    <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </form>
+
                         </div>
-
-                        <!-- Filter form -->
-                        <form action="" method="post">
-                            <!-- Sort by options -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
-                                <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>>Registration Date (Latest to Oldest)</option>
-                                    <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Latest)</option>
-                                    <option value="activity_date_asc" <?php echo ($order_filter == 'activity_date_asc') ? 'selected' : ''; ?>>Date (Oldest to Latest)</option>
-                                    <option value="activity_date_desc" <?php echo ($order_filter == 'activity_date_desc') ? 'selected' : ''; ?>>Date (Latest to Oldest)</option>
-                                    <option value="activity_duration_desc" <?php echo ($order_filter == 'activity_duration_desc') ? 'selected' : ''; ?>>Duration (Longest to Shortest)</option>
-                                    <option value="activity_duration_asc" <?php echo ($order_filter == 'activity_duration_asc') ? 'selected' : ''; ?>>Duration (Shortest to Longest)</option>                                    
-                                    <option value="activity_name_asc" <?php echo ($order_filter == 'activity_name_asc') ? 'selected' : ''; ?>>Activity Name (A-Z)</option>
-
-                                </select>
-                            </div>
-                            
-                            <!-- Activity status filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="status_filter" style="font-weight: bold;">Activity Status:</label><br>
-                                <select name="status_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="only_active" <?php echo ($status_filter == 'only_active') ? 'selected' : ''; ?>>Only Active</option>
-                                    <option value="only_past" <?php echo ($status_filter == 'only_past') ? 'selected' : ''; ?>>Only Past</option>
-                                    <option value="only_in_trash" <?php echo ($status_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
-                                    <option value="all_activities" <?php echo ($status_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
-                                </select>
-                            </div>
-
-                            <!-- Activity occupancy filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="occupancy_filter" style="font-weight: bold;">Activity Occupancy:</label><br>
-                                <select name="occupancy_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="all_activities" <?php echo ($occupancy_filter == 'all_activities') ? 'selected' : ''; ?>>All Activities</option>
-                                    <option value="not_full" <?php echo ($occupancy_filter == 'not_full') ? 'selected' : ''; ?>>Not full</option>
-                                    <option value="full" <?php echo ($occupancy_filter == 'full') ? 'selected' : ''; ?>>Full</option>
-                                    <option value="empty" <?php echo ($occupancy_filter == 'empty') ? 'selected' : ''; ?>>Empty</option>
-
-                                </select>
-                            </div>
-
-                            <!-- Domain filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label style="font-weight: bold;">Domains:</label><br>
-                                <div>
-                                    <label><input type="checkbox" name="domains_filter[]" value="Organization of community events" <?php echo (isset($_POST['domains_filter']) && in_array('Organization of community events', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Organization of community events</label><br>
-                                    <label><input type="checkbox" name="domains_filter[]" value="Library support" <?php echo (isset($_POST['domains_filter']) && in_array('Library support', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Library support</label><br>
-                                    <label><input type="checkbox" name="domains_filter[]" value="Help in the community store" <?php echo (isset($_POST['domains_filter']) && in_array('Help in the community store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Help in the community store</label><br>
-                                    <label><input type="checkbox" name="domains_filter[]" value="Support in the community grocery store" <?php echo (isset($_POST['domains_filter']) && in_array('Support in the community grocery store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Support in the community grocery store</label><br>
-                                    <label><input type="checkbox" name="domains_filter[]" value="Cleaning and maintenance of public spaces" <?php echo (isset($_POST['domains_filter']) && in_array('Cleaning and maintenance of public spaces', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Cleaning and maintenance of public spaces</label><br>
-                                    <label><input type="checkbox" name="domains_filter[]" value="Participation in urban gardening projects" <?php echo (isset($_POST['domains_filter']) && in_array('Participation in urban gardening projects', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Participation in urban gardening projects</label><br>
-                                </div>
-                            </div>
-
-                            <!-- Time periods filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label style="font-weight: bold;">Acivity Period:</label><br>
-                                <div>
-                                    <label><input type="checkbox" name="time_periods_filter[]" value="Morning" <?php echo (isset($_POST['time_periods_filter']) && in_array('Morning', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Morning</label><br>
-                                    <label><input type="checkbox" name="time_periods_filter[]" value="Afternoon" <?php echo (isset($_POST['time_periods_filter']) && in_array('Afternoon', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Afternoon</label><br>
-                                    <label><input type="checkbox" name="time_periods_filter[]" value="Evening" <?php echo (isset($_POST['time_periods_filter']) && in_array('Evening', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Evening</label><br>
-                                </div>
-                            </div>
-
-                            <!-- Day availability filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label style="font-weight: bold;">Available Days:</label><br>
-                                <div>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="Monday" <?php echo (isset($_POST['available_days_filter']) && in_array('Monday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Monday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="Tuesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Tuesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Tuesday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="Wednesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Wednesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Wednesday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="Thursday" <?php echo (isset($_POST['available_days_filter']) && in_array('Thursday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Thursday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="Friday" <?php echo (isset($_POST['available_days_filter']) && in_array('Friday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Friday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="Saturday" <?php echo (isset($_POST['available_days_filter']) && in_array('Saturday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
-                                    <label><input type="checkbox" name="available_days_filter[]" value="Sunday" <?php echo (isset($_POST['available_days_filter']) && in_array('Sunday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
-                                </div>
-                            </div>
-
-                            <!-- Submit button -->
-                            <div style="text-align: center;">
-                                <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                                    Apply Filter
-                                </button>
-                            </div>
-                        </form>
-
                     </div>
                 </div>
 
