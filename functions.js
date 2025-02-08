@@ -1,72 +1,22 @@
-function showWidgets_volunteer_page(type){
-    // Hide all widget containers and the buttons initially
-    document.getElementById('contracts_widgets').style.display = 'none';
-    document.getElementById('purchases_widgets').style.display = 'none';
-    document.getElementById('activities_widgets').style.display = 'none';
-    document.getElementById('volunteer_specific_contracts_button').style.display = 'none';
-    document.getElementById('volunteer_specific_purchases_button').style.display = 'none';
-    document.getElementById('volunteer_specific_activities_button').style.display = 'none';
-    document.getElementById('show_matching_activities_widgets').style.display = 'none';
-
-
-    // Show the selected widget container and the appropriate button
-    if (type === 'contracts') {
-        document.getElementById('contracts_widgets').style.display = 'block';
-        document.getElementById('volunteer_specific_contracts_button').style.display = 'inline-block'; // Show the button when "Show Contracts" is clicked
-    } else if (type === 'purchases') {
-        document.getElementById('purchases_widgets').style.display = 'block';
-        document.getElementById('volunteer_specific_purchases_button').style.display = 'inline-block'; // Show the button when "Show Purchases" is clicked
-    } else if (type === 'activities') {
-        document.getElementById('activities_widgets').style.display = 'block';
-        document.getElementById('volunteer_specific_activities_button').style.display = 'inline-block'; // Show the button when "Show Activities" is clicked
-    } else if (type === 'matching_activities') {
-        document.getElementById('show_matching_activities_widgets').style.display = 'block';
+function ToggleWidgets(section, clickedButton) {
+    // Hide all widget containers
+    var containers = document.getElementsByClassName('widget-container');
+    for (var i = 0; i < containers.length; i++) {
+        containers[i].style.display = 'none';
     }
-}
-
-
-
-function showWidgets_contract_page(type) {
-    // Hide all widget containers initially
-    document.getElementById('volunteer_widget').style.display = 'none';
-    document.getElementById('purchases_widgets').style.display = 'none';
-    document.getElementById('activities_widgets').style.display = 'none';
-
-    // Show the selected widget container
-    if (type === 'volunteer') {
-        document.getElementById('volunteer_widget').style.display = 'block';
-    } else if (type === 'purchases') {
-        document.getElementById('purchases_widgets').style.display = 'block';
-    } else if (type === 'activities') {
-        document.getElementById('activities_widgets').style.display = 'block';
-    } 
-}
-
-
-function showWidgets_purchase_page(type) {
-    // Hide all widget containers initially
-    document.getElementById('volunteer_widget').style.display = 'none';
-    document.getElementById('contract_widget').style.display = 'none';
-
-    // Show the selected widget container
-    if (type === 'volunteer') {
-        document.getElementById('volunteer_widget').style.display = 'block';
-    } else if (type === 'contract') {
-        document.getElementById('contract_widget').style.display = 'block';
+    
+    // Show the selected container
+    var containerToShow = document.getElementById(section + '_widgets');
+    if (containerToShow) {
+        containerToShow.style.display = 'block';
     }
-}
-
-
-
-function showWidgets_activity_page(type) {
-    // Hide all widget containers initially
-    document.getElementById('show_current_volunteers_widgets').style.display = 'none';
-    document.getElementById('show_matching_volunteers_widgets').style.display = 'none';
-
-    // Show the selected widget container
-    if (type === 'current_participants') {
-        document.getElementById('show_current_volunteers_widgets').style.display = 'block';
-    } else if (type === 'matching_participants') {
-        document.getElementById('show_matching_volunteers_widgets').style.display = 'block';
+    
+    // Remove 'active' class from all buttons
+    var buttons = document.querySelectorAll('#widget_toggle_buttons button');
+    for (var j = 0; j < buttons.length; j++) {
+        buttons[j].classList.remove('active');
     }
+    
+    // Add 'active' class to the clicked button
+    clickedButton.classList.add('active');
 }

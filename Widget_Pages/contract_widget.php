@@ -12,7 +12,7 @@
             <p class="widget_info">
                 <span class="info_line">
                     <span class="info_label"><span class="material-symbols-outlined">calendar_month</span></span>
-                    <span class="info_value"><?php echo formatDate($contract_data_row['issuance_date'])?> To <br> <?php echo formatDate($contract_data_row['validity_date'])?></span>
+                    <span class="info_value"><?php echo formatDate($contract_data_row['issuance_date'])?> - <br> <?php echo formatDate($contract_data_row['validity_date'])?></span>
                 </span>
                 <span class="info_line">
                     <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>

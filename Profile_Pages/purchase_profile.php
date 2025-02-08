@@ -126,13 +126,13 @@
 
                         <!-- Toggle buttons -->
                         <div id="widget_toggle_buttons">
-                            <button onclick="showWidgets_purchase_page('volunteer')">Show Volunteer</button>
-                            <button onclick="showWidgets_purchase_page('contract')">Show Contract</button>
+                            <button class="active" onclick="ToggleWidgets('volunteer', this)">Show Volunteer</button>
+                            <button onclick="ToggleWidgets('contract', this)">Show Contract</button>
                         </div>
 
 
                         <!-- Display volunteer widget -->
-                        <div id="volunteer_widget" class="widget-container">
+                        <div id="volunteer_widgets" class="widget-container">
                             <?php
                             if ($volunteer_data_row) {
                                 include("../Widget_Pages/volunteer_widget.php");
@@ -141,7 +141,7 @@
                         </div>
 
                         <!-- Display contract widget -->
-                        <div id="contract_widget" class="widget-container" style="display: none;">
+                        <div id="contract_widgets" class="widget-container" style="display: none;">
                             <?php
                             if ($contract_data_row) {
                                 $volunteer_data = fetch_volunteer_data($volunteer_id);

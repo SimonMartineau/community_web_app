@@ -405,7 +405,6 @@
                         <p><strong>Registration Date:</strong> <?php echo htmlspecialchars(formatDate($volunteer_data['registration_date'])); ?></p>
                         <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($volunteer_data['trashed'] ? "Yes" : "No"); ?></p>
                     </div>
-                    
                 </div>
 
 
@@ -417,12 +416,11 @@
 
                     <!-- Toggle buttons -->
                     <div id="widget_toggle_buttons">
-                        <button onclick="showWidgets_volunteer_page('contracts')">Show Recent Contracts</button>
-                        <button onclick="showWidgets_volunteer_page('purchases')">Show Recent Purchases</button>
-                        <button onclick="showWidgets_volunteer_page('activities')">Show Recent Activities</button>
-                        <button onclick="showWidgets_volunteer_page('matching_activities')">Show Matching Activities</button>
+                        <button class="active" onclick="ToggleWidgets('contracts', this)">Show Recent Contracts</button>
+                        <button onclick="ToggleWidgets('purchases', this)">Show Recent Purchases</button>
+                        <button onclick="ToggleWidgets('activities', this)">Show Recent Activities</button>
+                        <button onclick="ToggleWidgets('matching_activities', this)">Show Matching Activities</button>
                     </div>
-
 
                     <!-- Display contracts widgets -->
                     <div id="contracts_widgets" class="widget-container">
@@ -437,16 +435,16 @@
                             }
                         }
                         ?>
+                        <!-- All volunteer contracts button -->
+                        <div id="volunteer_specific_contracts_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
+                            <a href="../Listing_Pages/volunteer_specific_contracts.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                <button name="volunteer_specific_contracts_button" id="submenu_button">
+                                    See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Contracts
+                                </button>
+                            </a>
+                        </div>
                     </div>                    
 
-                    <!-- All volunteer contracts button (Initially shown) -->
-                    <div id="volunteer_specific_contracts_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <a href="../Listing_Pages/volunteer_specific_contracts.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="volunteer_specific_contracts_button" id="submenu_button">
-                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Contracts
-                            </button>
-                        </a>
-                    </div>
                     
                     <!-- Display purchase widgets -->
                     <div id="purchases_widgets" class="widget-container" style="display: none;">
@@ -459,15 +457,14 @@
                             }
                         }
                         ?>
-                    </div>
-
-                    <!-- All volunteer purchases button (Initially hidden) -->
-                    <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px; display: none;">
-                        <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="volunteer_specific_purchases_button" id="submenu_button">
-                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
-                            </button>
-                        </a>
+                        <!-- All volunteer purchases button -->
+                        <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;">
+                            <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                <button name="volunteer_specific_purchases_button" id="submenu_button">
+                                    See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Purchases
+                                </button>
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Display activities widgets -->
@@ -480,19 +477,18 @@
                             }
                         }
                         ?>
-                    </div>
-
-                    <!-- All volunteer activities button (Initially hidden) -->
-                    <div id="volunteer_specific_activities_button" style="text-align: right; padding: 10px 20px; display: none;">
-                        <a href="../Listing_Pages/volunteer_specific_activities.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
-                            <button name="volunteer_specific_activities_button" id="submenu_button">
-                                See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Activities
-                            </button>
-                        </a>
+                        <!-- All volunteer activities button (Initially hidden) -->
+                        <div id="volunteer_specific_activities_button" style="text-align: right; padding: 10px 20px;">
+                            <a href="../Listing_Pages/volunteer_specific_activities.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                <button name="volunteer_specific_activities_button" id="submenu_button">
+                                    See All <?php echo $volunteer_data['first_name'] . " " . $volunteer_data['last_name'] . "'s" ?> Activities
+                                </button>
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Display matching volunteers widgets --> 
-                    <div id="show_matching_activities_widgets" class="widget-container" style="display: none;">
+                    <div id="matching_activities_widgets" class="widget-container" style="display: none;">
 
                         <form id="filterForm" action="" method="post">
                             <label class="switch">

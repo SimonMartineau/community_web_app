@@ -308,12 +308,12 @@
 
                         <!-- Toggle buttons -->
                          <div id="widget_toggle_buttons">
-                            <button onclick="showWidgets_activity_page('current_participants')">Show Participants</button>
-                            <button onclick="showWidgets_activity_page('matching_participants')">Show Matching Volunteers</button>
+                            <button class="active" onclick="ToggleWidgets('current_participants', this)">Show Participants</button>
+                            <button onclick="ToggleWidgets('matching_volunteers', this)">Show Matching Volunteers</button>
                         </div> 
 
                         <!-- Display participants widgets --> 
-                        <div id="show_current_volunteers_widgets" class="widget-container">
+                        <div id="current_participants_widgets" class="widget-container">
                             <?php
                                 // Counting the number of elements post filter
                                 if (empty($all_current_participants_data)) {
@@ -334,7 +334,7 @@
                         </div>
 
                         <!-- Display matching volunteers widgets --> 
-                        <div id="show_matching_volunteers_widgets" class="widget-container" style="display: none;">
+                        <div id="matching_volunteers_widgets" class="widget-container">
 
                             <form id="filterForm" action="" method="post">
                                 <label class="switch">

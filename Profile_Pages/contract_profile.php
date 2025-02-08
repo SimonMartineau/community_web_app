@@ -158,14 +158,14 @@
 
                         <!-- Toggle buttons -->
                         <div id="widget_toggle_buttons">
-                            <button onclick="showWidgets_contract_page('volunteer')">Show Volunteer</button>
-                            <button onclick="showWidgets_contract_page('purchases')">Show Purchases</button>
-                            <button onclick="showWidgets_contract_page('activities')">Show Activities</button>
+                            <button class="active" onclick="ToggleWidgets('volunteer', this)">Show Volunteer</button>
+                            <button onclick="ToggleWidgets('purchases', this)">Show Purchases</button>
+                            <button onclick="ToggleWidgets('activities', this)">Show Activities</button>
                         </div>
 
 
                         <!-- Display volunteer widget -->
-                        <div id="volunteer_widget" class="widget-container">
+                        <div id="volunteer_widgets" class="widget-container">
                             <?php
                             if ($volunteer_data_row) {
                                 include("../Widget_Pages/volunteer_widget.php");

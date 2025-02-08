@@ -294,7 +294,7 @@
     font-weight: bold; /* Make the text bold */
     color: #405d9b; /* Match the theme color */
     padding: 10px 20px; /* Add padding for clickable space */
-    background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+    background: rgb(248, 245, 245);
     border: none; /* Remove default borders */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
@@ -310,10 +310,11 @@
     transform: translateY(-2px); /* Subtle lift effect */
 }
 
-/* Active button style */
-#widget_toggle_buttons button:active {
-    transform: translateY(0); /* Reset the lift effect */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly smaller shadow */
+/* Style for the active button */
+#widget_toggle_buttons button.active {
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb);  /* Example color */
+    color: #405d9b;
+    border: none;
 }
 
 /* Switch Toggle Button */
