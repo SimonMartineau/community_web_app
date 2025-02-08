@@ -135,12 +135,10 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Newest to Oldest)</option>
-                                    <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Newest)</option>
-                                    <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Newest to Oldest)</option>
-                                    <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Newest)</option>
-                                    <option value="addition_order_desc" <?php echo ($order_filter == 'addition_order_desc') ? 'selected' : ''; ?>>Newest to Oldest Addition</option>
-                                    <option value="addition_order_asc" <?php echo ($order_filter == 'addition_order_asc') ? 'selected' : ''; ?>>Oldest to Newest Addition</option>
+                                    <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Latest to Oldest)</option>
+                                    <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Latest)</option>
+                                    <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Latest to Oldest)</option>
+                                    <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Latest)</option>
                                 </select>
                             </div>
 

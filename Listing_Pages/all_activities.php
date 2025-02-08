@@ -115,12 +115,6 @@
                 case 'registration_date_asc':
                     $sql_filter_query .= " ORDER BY a.registration_date ASC";
                     break;
-                case 'activity_name_asc':
-                    $sql_filter_query .= " ORDER BY a.activity_name ASC";
-                    break;
-                case 'activity_name_desc':
-                    $sql_filter_query .= " ORDER BY a.activity_name DESC";
-                    break;
                 case 'activity_duration_desc':
                     $sql_filter_query .= " ORDER BY a.activity_duration DESC";
                     break;
@@ -132,6 +126,9 @@
                     break;
                 case 'activity_date_asc':
                     $sql_filter_query .= " ORDER BY a.activity_date ASC";
+                    break;
+                case 'activity_name_asc':
+                    $sql_filter_query .= " ORDER BY a.activity_name ASC";
                     break;
             }
         }
@@ -192,14 +189,14 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>>Registration Date (Newest to Oldest)</option>
-                                    <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Newest)</option>
+                                    <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>>Registration Date (Latest to Oldest)</option>
+                                    <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Latest)</option>
+                                    <option value="activity_date_asc" <?php echo ($order_filter == 'activity_date_asc') ? 'selected' : ''; ?>>Date (Oldest to Latest)</option>
+                                    <option value="activity_date_desc" <?php echo ($order_filter == 'activity_date_desc') ? 'selected' : ''; ?>>Date (Latest to Oldest)</option>
+                                    <option value="activity_duration_desc" <?php echo ($order_filter == 'activity_duration_desc') ? 'selected' : ''; ?>>Duration (Longest to Shortest)</option>
+                                    <option value="activity_duration_asc" <?php echo ($order_filter == 'activity_duration_asc') ? 'selected' : ''; ?>>Duration (Shortest to Longest)</option>                                    
                                     <option value="activity_name_asc" <?php echo ($order_filter == 'activity_name_asc') ? 'selected' : ''; ?>>Activity Name (A-Z)</option>
-                                    <option value="activity_name_desc" <?php echo ($order_filter == 'activity_name_desc') ? 'selected' : ''; ?>>Activity Name (Z-A)</option>
-                                    <option value="activity_duration_desc" <?php echo ($order_filter == 'activity_duration_desc') ? 'selected' : ''; ?>>Longest to Shortest</option>
-                                    <option value="activity_duration_asc" <?php echo ($order_filter == 'activity_duration_asc') ? 'selected' : ''; ?>>Shortest to Longest</option>
-                                    <option value="activity_date_asc" <?php echo ($order_filter == 'activity_date_asc') ? 'selected' : ''; ?>>Earliest to Latest</option>
-                                    <option value="activity_date_desc" <?php echo ($order_filter == 'activity_date_desc') ? 'selected' : ''; ?>>Latest to Earliest</option>
+
                                 </select>
                             </div>
                             

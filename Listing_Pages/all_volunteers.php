@@ -11,7 +11,6 @@
     $order_filter = "date_of_inscription_desc";
     $trash_filter = "only_active_volunteers";
     $time_filter = "all_volunteers";
-    $gender_filter = "any_volunteer";
     $interests_filter = [];
     $available_days_filter = [];
 
@@ -30,7 +29,6 @@
         $order_filter = $_POST['order_filter'] ?? '';
         $trash_filter = $_POST['trash_filter'] ?? '';
         $time_filter = $_POST['time_filter'] ?? '';
-        $gender_filter = $_POST['gender_filter'] ?? '';
         $interests_filter = $_POST['interests_filter'] ?? [];
         $available_days_filter = $_POST['available_days_filter'] ?? [];
 
@@ -86,24 +84,6 @@
             }
         }
 
-        // Gender filter
-        if (!empty($gender_filter)){
-            switch ($gender_filter){
-                case 'only_male':
-                    $sql_filter_query .= " AND v.gender = 'Male'";
-                    break;
-                case 'only_female':
-                    $sql_filter_query .= " AND v.gender = 'Female'";
-                    break;
-                case 'only_other':
-                    $sql_filter_query .= " AND v.gender = 'Other'";
-                    break;
-                case 'all_volunteers':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
-        }
-
         // Add interests filter
         if (!empty($interests_filter)) {
             $sql_filter_query .= " AND (";
@@ -131,23 +111,23 @@
                 case 'registration_date_asc':
                     $sql_filter_query .= " ORDER BY v.registration_date ASC";
                     break;
+                case 'points_asc':
+                    $sql_filter_query .= " ORDER BY v.points ASC";
+                    break;
+                case 'points_desc':
+                    $sql_filter_query .= " ORDER BY v.points DESC";
+                    break;
+                case 'hours_completed_asc':
+                    $sql_filter_query .= " ORDER BY v.hours_completed ASC";
+                    break;
+                case 'hours_completed_desc':
+                    $sql_filter_query .= " ORDER BY v.hours_completed DESC";
+                    break;
                 case 'first_name_asc':
                     $sql_filter_query .= " ORDER BY v.first_name ASC";
                     break;
-                case 'first_name_desc':
-                    $sql_filter_query .= " ORDER BY v.first_name DESC";
-                    break;
                 case 'last_name_asc':
                     $sql_filter_query .= " ORDER BY v.last_name ASC";
-                    break;
-                case 'last_name_desc':
-                    $sql_filter_query .= " ORDER BY v.last_name DESC";
-                    break;
-                case 'age_asc':
-                    $sql_filter_query .= " ORDER BY v.date_of_birth ASC";
-                    break;
-                case 'age_desc':
-                    $sql_filter_query .= " ORDER BY v.date_of_birth DESC";
                     break;
             }
         }
@@ -211,14 +191,14 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>>Registration Date (Newest to Oldest)</option>
-                                    <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Newest)</option>
+                                    <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>>Registration Date (Latest to Oldest)</option>
+                                    <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Latest)</option>
+                                    <option value="points_asc" <?php echo ($order_filter == 'points_asc') ? 'selected' : ''; ?>>Points (Lowest to Highest)</option>
+                                    <option value="points_desc" <?php echo ($order_filter == 'points_desc') ? 'selected' : ''; ?>>Points (Highest to Lowest)</option>
+                                    <option value="hours_completed_asc" <?php echo ($order_filter == 'hours_completed_asc') ? 'selected' : ''; ?>>Hours Completed (Lowest to Highest)</option>
+                                    <option value="hours_completed_desc" <?php echo ($order_filter == 'hours_completed_desc') ? 'selected' : ''; ?>>Hours Completed (Highest to Lowest)</option>
                                     <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
-                                    <option value="first_name_desc" <?php echo ($order_filter == 'first_name_desc') ? 'selected' : ''; ?>>First Name (Z-A)</option>
                                     <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
-                                    <option value="last_name_desc" <?php echo ($order_filter == 'last_name_desc') ? 'selected' : ''; ?>>Last Name (Z-A)</option>
-                                    <option value="age_asc" <?php echo ($order_filter == 'age_asc') ? 'selected' : ''; ?>>Age (Youngest to Oldest)</option>
-                                    <option value="age_desc" <?php echo ($order_filter == 'age_desc') ? 'selected' : ''; ?>>Age (Oldest to Youngest)</option>
                                 </select>
                             </div>
 
@@ -236,21 +216,10 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="time_filter" style="font-weight: bold;">Contract Status:</label><br>
                                 <select name="time_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="all_volunteers" <?php echo ($time_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
-                                    <option value="time_completed" <?php echo ($time_filter == 'time_completed') ? 'selected' : ''; ?>>Contract Time Requirement Completed</option>
-                                    <option value="time_not_completed" <?php echo ($time_filter == 'time_not_completed') ? 'selected' : ''; ?>>Contract Time Requirement Not Yet Completed</option>
-                                    <option value="no_contract" <?php echo ($time_filter == 'no_contract') ? 'selected' : ''; ?>>Volunteer Doesn't Currently Have A Contract</option>
-                                </select>
-                            </div>
-
-                            <!-- Gender filter -->
-                            <div style="margin-bottom: 15px;">
-                                <label for="gender_filter" style="font-weight: bold;">Gender:</label><br>
-                                <select name="gender_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="all_volunteers" <?php echo ($gender_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
-                                    <option value="only_male" <?php echo ($gender_filter == 'only_male') ? 'selected' : ''; ?>>Male</option>
-                                    <option value="only_female" <?php echo ($gender_filter == 'only_female') ? 'selected' : ''; ?>>Female</option>
-                                    <option value="only_other" <?php echo ($gender_filter == 'only_other') ? 'selected' : ''; ?>>Other</option>
+                                    <option value="all_volunteers" <?php echo ($time_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Contracts</option>
+                                    <option value="time_completed" <?php echo ($time_filter == 'time_completed') ? 'selected' : ''; ?>>Contract Completed</option>
+                                    <option value="time_not_completed" <?php echo ($time_filter == 'time_not_completed') ? 'selected' : ''; ?>>Contract In Progress</option>
+                                    <option value="no_contract" <?php echo ($time_filter == 'no_contract') ? 'selected' : ''; ?>>Volunteer Doesn't Have A Contract</option>
                                 </select>
                             </div>
 

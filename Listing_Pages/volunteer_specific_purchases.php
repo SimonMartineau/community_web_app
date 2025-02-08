@@ -112,8 +112,8 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                <option value="purchase_date_desc" <?php echo ($order_filter == 'purchase_date_desc') ? 'selected' : ''; ?>>Purchase Date (Newest to Oldest)</option>
-                                    <option value="purchase_date_asc" <?php echo ($order_filter == 'purchase_date_asc') ? 'selected' : ''; ?>>Purchase Date (Oldest to Newest)</option>
+                                <option value="purchase_date_desc" <?php echo ($order_filter == 'purchase_date_desc') ? 'selected' : ''; ?>>Purchase Date (Latest to Oldest)</option>
+                                    <option value="purchase_date_asc" <?php echo ($order_filter == 'purchase_date_asc') ? 'selected' : ''; ?>>Purchase Date (Oldest to Latest)</option>
                                     <option value="purchase_cost_asc" <?php echo ($order_filter == 'purchase_cost_asc') ? 'selected' : ''; ?>>Purchase Cost (Lowest to Highest)</option>
                                     <option value="purchase_cost_desc" <?php echo ($order_filter == 'purchase_cost_desc') ? 'selected' : ''; ?>>Purchase Cost (Highest to Lowest)</option>
                                 </select>

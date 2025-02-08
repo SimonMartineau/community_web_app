@@ -78,14 +78,8 @@
                 case 'first_name_asc':
                     $sql_filter_query .= " ORDER BY v.first_name ASC";
                     break;
-                case 'first_name_desc':
-                    $sql_filter_query .= " ORDER BY v.first_name DESC";
-                    break;
                 case 'last_name_asc':
                     $sql_filter_query .= " ORDER BY v.last_name ASC";
-                    break;
-                case 'last_name_desc':
-                    $sql_filter_query .= " ORDER BY v.last_name DESC";
                     break;
             }
         }
@@ -138,14 +132,12 @@
                             <div style="margin-bottom: 15px;">
                             <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="purchase_date_desc" <?php echo ($order_filter == 'purchase_date_desc') ? 'selected' : ''; ?>>Purchase Date (Newest to Oldest)</option>
-                                    <option value="purchase_date_asc" <?php echo ($order_filter == 'purchase_date_asc') ? 'selected' : ''; ?>>Purchase Date (Oldest to Newest)</option>
+                                    <option value="purchase_date_desc" <?php echo ($order_filter == 'purchase_date_desc') ? 'selected' : ''; ?>>Purchase Date (Latest to Oldest)</option>
+                                    <option value="purchase_date_asc" <?php echo ($order_filter == 'purchase_date_asc') ? 'selected' : ''; ?>>Purchase Date (Oldest to Latest)</option>
                                     <option value="purchase_cost_asc" <?php echo ($order_filter == 'purchase_cost_asc') ? 'selected' : ''; ?>>Purchase Cost (Lowest to Highest)</option>
                                     <option value="purchase_cost_desc" <?php echo ($order_filter == 'purchase_cost_desc') ? 'selected' : ''; ?>>Purchase Cost (Highest to Lowest)</option>
                                     <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
-                                    <option value="first_name_desc" <?php echo ($order_filter == 'first_name_desc') ? 'selected' : ''; ?>>First Name (Z-A)</option>
                                     <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
-                                    <option value="last_name_desc" <?php echo ($order_filter == 'last_name_desc') ? 'selected' : ''; ?>>Last Name (Z-A)</option>
                                 </select>
                             </div>
 
