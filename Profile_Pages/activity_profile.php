@@ -328,6 +328,8 @@
                                 if($all_current_participants_data){
                                     foreach($all_current_participants_data as $volunteer_data_row){
                                         $volunteer_id = $volunteer_data_row['id'];
+                                        $interest_data = fetch_volunteer_interest_data($volunteer_id);
+                                        $availability_data = fetch_volunteer_availability_data($volunteer_id);
                                         include("../Widget_Pages/matching_volunteer_widget.php");
                                     }
                                 }
@@ -391,7 +393,9 @@
                                 // Display the widgets
                                 if($all_matching_participants_data){
                                     foreach($all_matching_participants_data as $volunteer_data_row){
-                                        $volunteer_id = $volunteer_data_row['id'];
+                                        $volunteer_id = $volunteer_data_row['id']; 
+                                        $interest_data = fetch_volunteer_interest_data($volunteer_id);
+                                        $availability_data = fetch_volunteer_availability_data($volunteer_id);
                                         include("../Widget_Pages/matching_volunteer_widget.php");
                                     }
                                 }
