@@ -1,3 +1,23 @@
+<?php
+
+    // Checking if volunteer is assigned to activity
+    $volunteer_activity_match_data = fetch_data(
+        "SELECT * FROM Volunteer_Activity_Junction
+                WHERE volunteer_id = '$volunteer_id'
+                AND activity_id = '$activity_id'"
+    );
+
+    // Storing volunteer activity junction status in a variable
+    if (!empty($volunteer_activity_match_data)) {
+        // Junction exists
+        $volunteer_activity_assigned = true;
+    } else{
+        // Junction does not exist
+        $volunteer_activity_assigned = false;
+    }
+
+?>
+
 <a href="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
     <div id="widget">
         <div class="widget_row">
@@ -33,17 +53,48 @@
                 </p>
             </div>
             <!-- Button placed inside the widget. -->
-            <button type="button" class="toggle-details-btn" onclick="toggleDetails(event, '<?php echo $volunteer_id; ?>')">
-                More Details
-            </button>
+            <!-- Contract if volunteer is assigned to activity -->
+            <?php 
+                // If the volunteer is assigned to the activity
+                if($volunteer_activity_assigned == true){
+                    // Show the unassign button
+                ?>
+                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                        <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('Are you sure you want to unassign <?php echo $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] . ' from ' . $activity_data_row['activity_name']?>?')">
+                            <button class="widget_button">
+                                <!-- Hidden input to confirm source -->
+                                <input type="hidden" name="unassign_volunteer_activity" value="1">
+                                <!-- Hidden input to send volunteer_id -->
+                                <input type="hidden" name="volunteer_id" value="<?php echo $volunteer_id; ?>">
+                                Unassign Volunteer from Activity
+                            </button>
+                        </form>
+                    </div>
+                <?php
+                } else{
+                // Show the assign button
+                ?>
+                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                        <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('Are you sure you want to assign <?php echo $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] . ' to ' . $activity_data_row['activity_name']?>?')">
+                            <button class="widget_button">
+                                <!-- Hidden input to confirm source -->
+                                <input type="hidden" name="assign_volunteer_activity" value="1">
+                                <!-- Hidden input to send volunteer_id -->
+                                <input type="hidden" name="volunteer_id" value="<?php echo $volunteer_id; ?>">
+                                Assign Volunteer to Activity
+                            </button>
+                        </form>
+                    </div>
+                <?php
+                }
+            ?>
             <!-- Button placed inside the widget. We call stopPropagation() in the onclick to avoid triggering the link. -->
-            <button type="button" class="toggle-details-btn" onclick="toggleDetails(event, '<?php echo $volunteer_id; ?>')">
+            <button class="widget_button" type="button" onclick="toggleDetails(event, '<?php echo $volunteer_id; ?>')">
                 More Details
             </button>
         </div>
 
-        <div id="extra_details_row-<?php echo $volunteer_id; ?>" class="widget_row" style="display: none; align-items: flex-start;
-">
+        <div id="extra_details_row-<?php echo $volunteer_id; ?>" class="widget_row" style="display: none; align-items: flex-start;">
             <div class="widget_section">
                 <h2 style="font-size: 20px; color: #555;">Volunteer Info</h2>
                 <p class="widget_info">
@@ -164,8 +215,28 @@
     display: flex;
     align-items: center;
     transition: transform 0.2s ease;
-    width:1000px;
+    width: 1000px;
     flex-direction: column;
+}
+
+.widget_button {
+    background: rgb(248, 245, 245);
+    color: #405d9b;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-width: 1px;
+    min-width: 80px;
+
+}
+
+/* Hover effect for buttons */
+.widget_button:hover {
+    background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
 }
 
 /* Hover effect for the widget */
@@ -251,23 +322,22 @@
 
 
 </style>
-
-
-
 <script>
   function toggleDetails(event, volunteerId) {
-    // Prevent the click from propagating to the parent link
     event.stopPropagation();
     event.preventDefault();
 
-    // Get the extra details div by its ID
-    var detailsDiv = document.getElementById('extra_details_row-' + volunteerId);
+    // Get references to elements
+    const button = event.target; // Get the clicked button
+    const detailsDiv = document.getElementById('extra_details_row-' + volunteerId);
 
-    // Toggle display: if hidden, show it; if visible, hide it.
-    if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
-      detailsDiv.style.display = "flex";
-    } else {
-      detailsDiv.style.display = "none";
-    }
+    // Toggle visibility
+    const isVisible = detailsDiv.style.display === "flex";
+    detailsDiv.style.display = isVisible ? "none" : "flex";
+
+    // Update button text based on new state
+    button.textContent = isVisible ? 'More Details' : 'Less Details';
   }
 </script>
+
+

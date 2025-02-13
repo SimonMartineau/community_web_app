@@ -1,4 +1,5 @@
 <?php
+    session_start();
 
     // Include classes
     include("../Classes/connect.php");
@@ -7,10 +8,17 @@
     // Updating all backend processes
     update_backend_data();
 
-    // Initializing marching volunteers filter variables
-    $interest_filter = 'checked';
-    $weekday_filter = 'checked';
-    $time_period_filter = 'checked';
+    // Check if the filter form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
+        $_SESSION['interest_filter'] = $_POST['interest_filter'] ?? '';
+        $_SESSION['weekday_filter'] = $_POST['weekday_filter'] ?? '';  
+        $_SESSION['time_period_filter'] = $_POST['time_period_filter'] ?? '';  
+    }
+
+    // Retain previous filter values or set default
+    $interest_filter = $_SESSION['interest_filter'] ?? 'checked';
+    $weekday_filter = $_SESSION['weekday_filter'] ?? 'checked';
+    $time_period_filter = $_SESSION['time_period_filter'] ?? 'checked';
 
     
     if (isset($_GET['activity_id'])) {
@@ -60,62 +68,40 @@
         ORDER BY v.id DESC
     ");
 
-    // Default matching volunteers data
-    $all_matching_participants_data = fetch_data("
-            SELECT DISTINCT v.* 
-            FROM Volunteers v
-            JOIN Volunteer_Availability va ON v.id = va.volunteer_id
-            JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
-            WHERE v.trashed = 0
-            AND vi.interest IN ($activity_domains_sql)
-            AND DAYNAME('$activity_date') = va.weekday
-            AND va.time_period IN ($activity_time_periods_sql)
-            AND v.hours_completed < v.hours_required
-            AND NOT EXISTS (
-                SELECT 1 FROM Volunteer_Activity_Junction vaj 
-                WHERE vaj.volunteer_id = v.id 
-                AND vaj.activity_id = '$activity_id'
-            )
-            ORDER BY v.id DESC
-    ");
+
+    // Default sql query
+    $sql_filter_query = "
+        SELECT DISTINCT v.* 
+        FROM Volunteers v
+        JOIN Volunteer_Availability va ON v.id = va.volunteer_id
+        JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
+        WHERE v.trashed = 0
+    ";
+
+    // Interest filter
+    $sql_filter_query .= ($interest_filter ? " AND vi.interest IN ($activity_domains_sql) " : '');
+
+    // Weekday filter
+    $sql_filter_query .= ($weekday_filter ? " AND DAYNAME('$activity_date') = va.weekday " : '');
+
+    // Time period filter
+    $sql_filter_query .= ($time_period_filter ? " AND va.time_period IN ($activity_time_periods_sql) " : '');
+
+    // Completing sql query
+    $sql_filter_query .= " AND v.hours_completed < v.hours_required
+        AND NOT EXISTS (
+            SELECT 1 FROM Volunteer_Activity_Junction vaj 
+            WHERE vaj.volunteer_id = v.id 
+            AND vaj.activity_id = '$activity_id'
+        )
+        ORDER BY v.id DESC";
+
+    $all_matching_participants_data = fetch_data($sql_filter_query);
+
 
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        // Retrieve filter form data
-        $interest_filter = $_POST['interest_filter'] ?? '';
-        $weekday_filter = $_POST['weekday_filter'] ?? '';
-        $time_period_filter = $_POST['time_period_filter'] ?? '';
-
-        // Default sql query
-        $sql_filter_query = "
-            SELECT DISTINCT v.* 
-            FROM Volunteers v
-            JOIN Volunteer_Availability va ON v.id = va.volunteer_id
-            JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
-            WHERE v.trashed = 0
-        ";
-
-        // Interest filter
-        $sql_filter_query .= ($interest_filter ? " AND vi.interest IN ($activity_domains_sql) " : '');
-
-        // Weekday filter
-        $sql_filter_query .= ($weekday_filter ? " AND DAYNAME('$activity_date') = va.weekday " : '');
-
-        // Time period filter
-        $sql_filter_query .= ($time_period_filter ? " AND va.time_period IN ($activity_time_periods_sql) " : '');
-
-        // Completing sql query
-        $sql_filter_query .= " AND v.hours_completed < v.hours_required
-            AND NOT EXISTS (
-                SELECT 1 FROM Volunteer_Activity_Junction vaj 
-                WHERE vaj.volunteer_id = v.id 
-                AND vaj.activity_id = '$activity_id'
-            )
-            ORDER BY v.id DESC";
-
-        $all_matching_participants_data = fetch_data($sql_filter_query);
-
 
         // Ensure the delete activity button has been pressed
         if (isset($_POST['delete_activity']) && $_POST['delete_activity'] === '1') {
@@ -146,10 +132,47 @@
             header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
             die; // Ending the script
         }
+
+
+        // Ensure the delete activity button has been pressed
+        if (isset($_POST['assign_volunteer_activity']) && $_POST['assign_volunteer_activity'] === '1') {
+
+            $volunteer_id = $_POST['volunteer_id'];
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
+                                                    values ('$volunteer_id', -1, '$activity_id')";
+            $DB->update($assign_volunteer_to_activity_query);
+
+            // Changing the page.
+            header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
+            die; // Ending the script
+        }
+
+        // Ensure the restore activity button has been pressed
+        if (isset($_POST['unassign_volunteer_activity']) && $_POST['unassign_volunteer_activity'] === '1') {
+
+            $volunteer_id = $_POST['volunteer_id'];
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $unassign_volunteer_from_activity_query = "delete from Volunteer_Activity_Junction 
+                                                        where volunteer_id = '$volunteer_id'
+                                                        AND activity_id = '$activity_id'";
+            $DB->update($unassign_volunteer_from_activity_query);
+
+            // Changing the page.
+            header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
+            die; // Ending the script
+        }
     }
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -363,7 +386,7 @@
 
                                 <!-- Submit button -->
                                 <div style="text-align: center;">
-                                    <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                    <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                         Apply Filter
                                     </button>
                                 </div>
@@ -372,7 +395,7 @@
                             <!-- Show Matching Volunteers if POST -->
                             <?php
                                 // After your form processing logic, add this PHP code
-                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply_filter'])) {
                                     echo '<script>
                                     document.addEventListener("DOMContentLoaded", function() {
                                         var matchingButton = document.getElementById("matching_volunteers_button");                                        
