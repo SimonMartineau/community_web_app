@@ -43,7 +43,7 @@
     foreach($activity_domain_data as $activity_domain_data_row){
         $activity_domains[] = $activity_domain_data_row['domain'];
     }
-    $organizer_name = $activity_data_row['organizer_name'];
+    $entry_clerk = $activity_data_row['entry_clerk'];
     $additional_notes = $activity_data_row['additional_notes'];
     $registration_date = $activity_data_row['registration_date'];
 
@@ -67,7 +67,7 @@
             if(isset($_POST['activity_domains'])){ // Due to uncertain entry
                 $activity_domains = $_POST['activity_domains'];
             }
-            $organizer_name = $_POST['organizer_name'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
             $registration_date = $_POST['registration_date'];
 
@@ -225,11 +225,11 @@
                         </div>
                         <br>
 
-                        <!-- Organizer Name text input -->
+                        <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            Organizer name:
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->organizer_name_error_mes : ''; ?></span>
+                            Entry clerk:
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

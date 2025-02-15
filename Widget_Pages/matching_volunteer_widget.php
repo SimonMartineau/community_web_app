@@ -116,7 +116,7 @@
                     </span>
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
-                        <span class="info_value">Volunteer Manager: <?php echo $volunteer_data_row['organizer_name'] ?></span>
+                        <span class="info_value">Volunteer Manager: <?php echo $volunteer_data_row['volunteer_manager'] ?></span>
                     </span>
                 </p>
             </div>

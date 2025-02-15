@@ -16,7 +16,7 @@
     $validity_date = $contract_data['validity_date'];
     $points_deposit = $contract_data['points_deposit'];
     $hours_required = $contract_data['hours_required'];
-    $organizer_name = $contract_data['organizer_name'];
+    $entry_clerk = $contract_data['entry_clerk'];
     $additional_notes = $contract_data['additional_notes'];
     
     // Check if user has submitted info, we update entries.
@@ -32,7 +32,7 @@
             $validity_date = $_POST['validity_date'];
             $points_deposit = $_POST['points_deposit'];
             $hours_required = $_POST['hours_required'];
-            $organizer_name = $_POST['organizer_name'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
             
         } else{ // If there are no errors in the submission.
@@ -112,11 +112,11 @@
                         </div>
                         <br><br>
 
-                        <!-- Organizer Name text input -->
+                        <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            Organizer name:
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($contract) ? $contract->organizer_name_error_mes : ''; ?></span>
+                            Entry clerk:
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($contract) ? $contract->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

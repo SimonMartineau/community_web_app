@@ -138,7 +138,7 @@
                         <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($contract_data['points_spent']) . " Points"; ?></p>
                         <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($contract_data['hours_required']) . " Hours"; ?></p>
                         <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($contract_data['hours_completed']) . " Hours"; ?></p>
-                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($contract_data['organizer_name']); ?></p>
+                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($contract_data['entry_clerk']); ?></p>
 
                     </div>
 

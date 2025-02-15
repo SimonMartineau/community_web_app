@@ -11,7 +11,8 @@ class Edit_Volunteer{
     public $email_error_mes = "";
     public $volunteer_availability_error_mes = "";
     public $volunteer_interests_error_mes = "";
-    public $organizer_name_error_mes = "";
+    public $volunteer_manager_error_mes = "";
+    public $entry_clerk_error_mes = "";
     public $registration_date_error_mes = "";
 
 
@@ -130,11 +131,20 @@ class Edit_Volunteer{
                 $error = true; // There is an error
         }
 
-        // Check organizer name
-        if (isset($_POST['organizer_name'])){
-            $value = $_POST['organizer_name'];
+        // Check volunteer manager name
+        if (isset($_POST['volunteer_manager'])){
+            $value = $_POST['volunteer_manager'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer Name is empty.<br>";
+                $this->volunteer_manager_error_mes = "*Volunteer manager is empty.<br>";
+                $error = true; // There is an error
+            }
+        }
+
+        // Check entry clerk name
+        if (isset($_POST['entry_clerk'])){
+            $value = $_POST['entry_clerk'];
+            if (empty($value)){
+                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -172,7 +182,8 @@ class Edit_Volunteer{
         $email = $data['email'];
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
-        $organizer_name = $data['organizer_name'];
+        $volunteer_manager = $data['volunteer_manager'];
+        $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
         $registration_date = $data['registration_date'];
 
@@ -189,7 +200,8 @@ class Edit_Volunteer{
                       zip_code = '$zip_code', 
                       telephone_number = '$telephone_number', 
                       email = '$email', 
-                      organizer_name = '$organizer_name', 
+                      volunteer_manager = '$volunteer_manager',
+                      entry_clerk = '$entry_clerk', 
                       additional_notes = '$additional_notes', 
                       registration_date = '$registration_date'
                   WHERE id = '$volunteer_id';";

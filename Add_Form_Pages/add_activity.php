@@ -12,7 +12,7 @@
     $activity_dates = "";
     $activity_time_periods = [];
     $activity_domains = [];
-    $organizer_name = "";
+    $entry_clerk = "";
     $additional_notes = "";
 
     // Check if user has submitted info
@@ -35,7 +35,7 @@
             if(isset($_POST['activity_domains'])){ // Due to uncertain entry
                 $activity_domains = $_POST['activity_domains'];
             }
-            $organizer_name = $_POST['organizer_name'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
 
         } else{
@@ -193,10 +193,10 @@
                         </div>
                         <br>
 
-                        <!-- Organizer Name text input -->
+                        <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->organizer_name_error_mes : ''; ?></span>
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

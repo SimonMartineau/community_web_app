@@ -13,7 +13,7 @@
     $validity_date = date("Y-m-d", strtotime("+30 days")); // Add 30 days to the current date
     $points_deposit = "30";
     $hours_required = "6";
-    $organizer_name = "";
+    $entry_clerk = "";
     $additional_notes = "";
 
     // Check if user has submitted info
@@ -29,7 +29,7 @@
             $validity_date = $_POST['validity_date'];
             $points_deposit = $_POST['points_deposit'];
             $hours_required = $_POST['hours_required'];
-            $organizer_name = $_POST['organizer_name'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
 
         } else{
@@ -109,10 +109,10 @@
                         </div>
                         <br><br>
 
-                        <!-- Organizer Name text input -->
+                        <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($contract) ? $contract->organizer_name_error_mes : ''; ?></span>
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($contract) ? $contract->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

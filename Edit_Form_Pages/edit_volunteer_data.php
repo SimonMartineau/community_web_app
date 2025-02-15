@@ -34,7 +34,8 @@
         $available_moment = "{$weekday}-{$time_period}";
         $volunteer_availability[] = $available_moment;
     }
-    $organizer_name = $volunteer_data['organizer_name'];
+    $volunteer_manager = $volunteer_data['volunteer_manager'];
+    $entry_clerk = $volunteer_data['entry_clerk'];
     $additional_notes = $volunteer_data['additional_notes'];
     $registration_date = $volunteer_data['registration_date'];
 
@@ -64,7 +65,8 @@
             if(isset($_POST['volunteer_interests'])){ // Due to uncertain entry
                 $volunteer_interests = $_POST['volunteer_interests'];
             }
-            $organizer_name = $_POST['organizer_name'];
+            $volunteer_manager = $_POST['volunteer_manager'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
             $registration_date = $_POST['registration_date'];
 
@@ -254,11 +256,19 @@
                         </div>
                         <br>
 
-                        <!-- Organizer Name text input -->
+                        <!-- Volunteer manager text input -->
                         <div class="input_container">
-                            Organizer name:
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
+                            Volunteer manager:
+                            <input name="volunteer_manager" type="text" id="text_input" placeholder="Volunteer Manager" value="<?php echo $volunteer_manager ?>">
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
+                        </div>
+                        <br><br>
+
+                        <!-- Entry Clerk text input -->
+                        <div class="input_container">
+                            Entry clerk:
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

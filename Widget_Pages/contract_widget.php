@@ -16,7 +16,7 @@
                 </span>
                 <span class="info_line">
                     <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
-                    <span class="info_value"><?php echo $contract_data_row['points_spent'] ?>/<?php echo $contract_data_row['points_deposit'] ?> Points Left</span>
+                    <span class="info_value"><?php echo $contract_data_row['points_deposit'] - $contract_data_row['points_spent'] ?>/<?php echo $contract_data_row['points_deposit'] ?> Points Left</span>
                 </span>
                 <span class="info_line">
                     <span class="info_label"><span class="material-symbols-outlined">schedule</span></span>

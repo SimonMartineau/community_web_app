@@ -326,7 +326,9 @@
                         <p><strong>Points:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_required'] . " Hours"); ?></span></p>
                         <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_completed'] . " Hours"); ?></span></p>
-                        <p><strong>Organizer Name:</strong> <?php echo htmlspecialchars($volunteer_data['organizer_name']); ?></p>
+                        <p><strong>Points Left:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>
+                        <p><strong>Volunteer Manager:</strong> <?php echo htmlspecialchars($volunteer_data['volunteer_manager']); ?></p>
+                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($volunteer_data['entry_clerk']); ?></p>
                     </div>
 
                     <!-- Interests -->

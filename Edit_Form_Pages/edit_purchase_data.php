@@ -15,7 +15,7 @@
     $item_names = $purchase_data['item_names'];
     $total_cost = $purchase_data['total_cost'];
     $purchase_date = $purchase_data['purchase_date'];
-    $organizer_name = $purchase_data['organizer_name'];
+    $entry_clerk = $purchase_data['entry_clerk'];
     $additional_notes = $purchase_data['additional_notes'];
     
     // Check if user has submitted info, we update entries.
@@ -30,7 +30,7 @@
             $item_names = $_POST['item_names'];
             $total_cost = $_POST['total_cost'];
             $purchase_date = $_POST['purchase_date'];
-            $organizer_name = $_POST['organizer_name'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
             
         } else{ // If there are no errors in the submission.
@@ -103,10 +103,11 @@
                         </div>
                         <br><br>
 
-                        <!-- Organizer Name text input -->
+                        <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            Organizer name: <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($purchase) ? $purchase->organizer_name_error_mes : ''; ?></span>
+                            Entry clerk: 
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($purchase) ? $purchase->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

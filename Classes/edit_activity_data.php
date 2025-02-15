@@ -7,7 +7,7 @@ class Edit_Activity{
     public $activity_date_error_mes = "";
     public $activity_time_periods_error_mes = "";
     public $activity_domains_error_mes = "";
-    public $organizer_name_error_mes = "";
+    public $entry_clerk_error_mes = "";
     public $registration_date_error_mes = "";
 
 
@@ -82,11 +82,11 @@ class Edit_Activity{
                 $error = true; // There is an error
         }
 
-        // Check organizer name
-        if (isset($_POST['organizer_name'])){
-            $value = $_POST['organizer_name'];
+        // Check entry clerk name
+        if (isset($_POST['entry_clerk'])){
+            $value = $_POST['entry_clerk'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer name is empty.<br>";
+                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -121,7 +121,7 @@ class Edit_Activity{
         $activity_date = $data['activity_date'];
         $activity_time_periods = $data['activity_time_periods'];
         $activity_domains = $data['activity_domains'];
-        $organizer_name = $data['organizer_name'];
+        $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
         $registration_date = date("Y-m-d");
 
@@ -135,7 +135,7 @@ class Edit_Activity{
                       activity_duration = '$activity_duration', 
                       activity_location = '$activity_location', 
                       activity_date = '$activity_date', 
-                      organizer_name = '$organizer_name',
+                      entry_clerk = '$entry_clerk',
                       additional_notes = '$additional_notes',
                       registration_date = '$registration_date'
                   WHERE id = '$activity_id';";

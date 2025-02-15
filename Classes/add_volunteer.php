@@ -11,7 +11,8 @@ class Add_Volunteer{
     public $email_error_mes = "";
     public $volunteer_availability_error_mes = "";
     public $volunteer_interests_error_mes = "";
-    public $organizer_name_error_mes = "";
+    public $volunteer_manager_error_mes = "";
+    public $entry_clerk_error_mes = "";
     public $volunteer_id = "";
 
 
@@ -129,11 +130,20 @@ class Add_Volunteer{
                 $error = true; // There is an error
         }
 
-        // Check organizer name
-        if (isset($_POST['organizer_name'])){
-            $value = $_POST['organizer_name'];
+        // Check volunteer manager
+        if (isset($_POST['volunteer_manager'])){
+            $value = $_POST['volunteer_manager'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer name is empty.<br>";
+                $this->volunteer_manager_error_mes = "*Volunteer manager is empty.<br>";
+                $error = true; // There is an error
+            }
+        }
+
+        // Check entry clerk name
+        if (isset($_POST['entry_clerk'])){
+            $value = $_POST['entry_clerk'];
+            if (empty($value)){
+                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -165,7 +175,8 @@ class Add_Volunteer{
         $hours_completed = 0;
         $volunteer_availability = $data['volunteer_availability'];
         $volunteer_interests = $data['volunteer_interests'];
-        $organizer_name = $data['organizer_name'];
+        $volunteer_manager = $data['volunteer_manager'];
+        $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
         $registration_date = date("Y-m-d");
         $trashed = 0;  // By default the volunteer isn't trashed
@@ -174,8 +185,8 @@ class Add_Volunteer{
         $DB = new Database();
 
         // SQL query into Volunteer
-        $volunteers_query = "insert into Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_required, hours_completed, organizer_name, additional_notes, registration_date, trashed)
-                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_required', '$hours_completed', '$organizer_name', '$additional_notes', '$registration_date', '$trashed')";
+        $volunteers_query = "insert into Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_required, hours_completed, volunteer_manager, entry_clerk, additional_notes, registration_date, trashed)
+                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_required', '$hours_completed', '$volunteer_manager', '$entry_clerk', '$additional_notes', '$registration_date', '$trashed')";
         $DB->save($volunteers_query);
 
         // Set volunteer_id to value of primary key in Volunteers table

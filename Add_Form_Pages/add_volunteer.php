@@ -15,7 +15,8 @@
     $email = "";
     $volunteer_interests = [];
     $volunteer_availability = [];
-    $organizer_name = "";
+    $volunteer_manager = "";
+    $entry_clerk = "";
     $additional_notes = "";
 
     // Check if user has submitted info
@@ -43,7 +44,8 @@
             if(isset($_POST['volunteer_availability'])){ // Due to uncertain entry
                 $volunteer_availability = $_POST['volunteer_availability'];
             }
-            $organizer_name = $_POST['organizer_name'];
+            $volunteer_manager = $_POST['volunteer_manager'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
 
         } else{
@@ -225,10 +227,17 @@
                         </div>
                         <br>
 
-                        <!-- Organizer Name text input -->
+                        <!-- Volunteer Manager text input -->
                         <div class="input_container">
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->organizer_name_error_mes : ''; ?></span>
+                            <input name="volunteer_manager" type="text" id="text_input" placeholder="Volunteer Manager" value="<?php echo $volunteer_manager ?>">
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
+                        </div>
+                        <br><br>
+
+                        <!-- Entry Clerk text input -->
+                        <div class="input_container">
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

@@ -4,7 +4,7 @@ class Add_Purchase{
     public $item_names_error_mes = "";
     public $total_cost_error_mes = "";
     public $purchase_date_error_mes = "";
-    public $organizer_name_error_mes = "";
+    public $entry_clerk_error_mes = "";
 
 
 
@@ -31,6 +31,12 @@ class Add_Purchase{
             } elseif (!is_numeric($value)){
                 $this->total_cost_error_mes = "*Please enter a valid number.<br>";
                 $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->total_cost_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->total_cost_error_mes = "*Please enter a number less than 1000.<br>";
+                $error = true; // There is an error
             }
         }
 
@@ -43,11 +49,11 @@ class Add_Purchase{
             }
         }
 
-        // Check organizer name
-        if (isset($_POST['organizer_name'])){
-            $value = $_POST['organizer_name'];
+        // Check entry clerk name
+        if (isset($_POST['entry_clerk'])){
+            $value = $_POST['entry_clerk'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer name is empty.<br>";
+                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -69,7 +75,7 @@ class Add_Purchase{
         $item_names = $data['item_names'];
         $total_cost = $data['total_cost'];
         $purchase_date = $data['purchase_date'];
-        $organizer_name = $data['organizer_name'];
+        $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
 
         // Assigning the purchase to a contract
@@ -89,8 +95,8 @@ class Add_Purchase{
         $DB = new Database();
 
         // SQL query into Purchases
-        $purchase_query = "insert into Purchases (volunteer_id, contract_id, item_names, total_cost, purchase_date, organizer_name, additional_notes)
-                  values ('$volunteer_id', '$contract_id', '$item_names', '$total_cost', '$purchase_date', '$organizer_name', '$additional_notes')";
+        $purchase_query = "insert into Purchases (volunteer_id, contract_id, item_names, total_cost, purchase_date, entry_clerk, additional_notes)
+                  values ('$volunteer_id', '$contract_id', '$item_names', '$total_cost', '$purchase_date', '$entry_clerk', '$additional_notes')";
         $DB->save($purchase_query);
     }
 

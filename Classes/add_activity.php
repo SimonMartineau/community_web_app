@@ -7,7 +7,7 @@ class Add_Activity{
     public $activity_dates_error_mes = "";
     public $activity_time_periods_error_mes = "";
     public $activity_domains_error_mes = "";
-    public $organizer_name_error_mes = "";
+    public $entry_clerk_error_mes = "";
 
 
     // Analyses data sent by user
@@ -81,11 +81,11 @@ class Add_Activity{
                 $error = true; // There is an error
         }
 
-        // Check organizer name
-        if (isset($_POST['organizer_name'])){
-            $value = $_POST['organizer_name'];
+        // Check entry clerk name
+        if (isset($_POST['entry_clerk'])){
+            $value = $_POST['entry_clerk'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer name is empty.<br>";
+                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -112,7 +112,7 @@ class Add_Activity{
         $activity_dates = $data['activity_dates'];
         $activity_time_periods = $data['activity_time_periods'];
         $activity_domains = $data['activity_domains'];
-        $organizer_name = $data['organizer_name'];
+        $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
         $registration_date = date("Y-m-d");
         $trashed = 0;
@@ -123,8 +123,8 @@ class Add_Activity{
         $activity_dates_array = array_map('trim', explode(',', $activity_dates));
         // SQL query into Activities
         foreach($activity_dates_array as $activity_date){
-            $activity_query = "insert into Activities (activity_name, number_of_places, number_of_participants, activity_duration, activity_location, activity_date, organizer_name, additional_notes, registration_date, trashed)
-                    values ('$activity_name', '$number_of_places', '$number_of_participants', '$activity_duration', '$activity_location', '$activity_date', '$organizer_name', '$additional_notes', '$registration_date', '$trashed')";
+            $activity_query = "insert into Activities (activity_name, number_of_places, number_of_participants, activity_duration, activity_location, activity_date, entry_clerk, additional_notes, registration_date, trashed)
+                    values ('$activity_name', '$number_of_places', '$number_of_participants', '$activity_duration', '$activity_location', '$activity_date', '$entry_clerk', '$additional_notes', '$registration_date', '$trashed')";
                 
             // Send data to db
             $DB->save($activity_query);

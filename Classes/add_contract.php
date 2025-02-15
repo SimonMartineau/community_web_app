@@ -5,7 +5,7 @@ class Add_Contract{
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
     public $hours_required_error_mes = "";
-    public $organizer_name_error_mes = "";
+    public $entry_clerk_error_mes = "";
 
 
 
@@ -41,6 +41,12 @@ class Add_Contract{
             } elseif (!is_numeric($value)){
                 $this->points_deposit_error_mes = "*Please enter a valid number.<br>";
                 $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->points_deposit_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->points_deposit_error_mes = "*Please enter a number less than 1000.<br>";
+                $error = true; // There is an error
             }
         }
 
@@ -53,14 +59,20 @@ class Add_Contract{
             } elseif (!is_numeric($value)){
                 $this->hours_required_error_mes = "*Please enter a valid number.<br>";
                 $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->hours_required_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->hours_required_error_mes = "*Please enter a number less than 1000.<br>";
+                $error = true; // There is an error
             }
         }
 
-        // Check organizer name
-        if (isset($_POST['organizer_name'])){
-            $value = $_POST['organizer_name'];
+        // Check entry clerk name
+        if (isset($_POST['entry_clerk'])){
+            $value = $_POST['entry_clerk'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer name is empty.<br>";
+                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -85,7 +97,7 @@ class Add_Contract{
         $points_spent = 0;
         $hours_required = $data['hours_required'];
         $hours_completed = 0;
-        $organizer_name = $data['organizer_name'];
+        $entry_clerk = $data['entry_clerk'];
         $contract_active = 1;
         $additional_notes = $data['additional_notes'];
 
@@ -93,8 +105,8 @@ class Add_Contract{
         $DB = new Database();
 
         // SQL query into Contracts
-        $contract_query = "insert into Contracts (volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, organizer_name, contract_active, additional_notes)
-                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$points_spent' ,'$hours_required', '$hours_completed', '$organizer_name', '$contract_active', '$additional_notes')";
+        $contract_query = "insert into Contracts (volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, entry_clerk, contract_active, additional_notes)
+                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$points_spent' ,'$hours_required', '$hours_completed', '$entry_clerk', '$contract_active', '$additional_notes')";
         $DB->save($contract_query);
     }
 

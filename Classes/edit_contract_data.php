@@ -5,7 +5,7 @@ class Edit_Contract{
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
     public $hours_required_error_mes = "";
-    public $organizer_name_error_mes = "";
+    public $entry_clerk_error_mes = "";
 
 
 
@@ -41,6 +41,12 @@ class Edit_Contract{
             } elseif (!is_numeric($value)){
                 $this->points_deposit_error_mes = "*Please enter a valid number.<br>";
                 $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->points_deposit_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->points_deposit_error_mes = "*Please enter a number less than 1000.<br>";
+                $error = true; // There is an error
             }
         }
 
@@ -53,14 +59,20 @@ class Edit_Contract{
             } elseif (!is_numeric($value)){
                 $this->hours_required_error_mes = "*Please enter a valid number.<br>";
                 $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->hours_required_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->hours_required_error_mes = "*Please enter a number less than 1000.<br>";
+                $error = true; // There is an error
             }
         }
 
-        // Check organizer name
-        if (isset($_POST['organizer_name'])){
-            $value = $_POST['organizer_name'];
+        // Check entry clerk name
+        if (isset($_POST['entry_clerk'])){
+            $value = $_POST['entry_clerk'];
             if (empty($value)){
-                $this->organizer_name_error_mes = "*Organizer name is empty.<br>";
+                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -83,7 +95,7 @@ class Edit_Contract{
         $validity_date = $data['validity_date'];
         $points_deposit = $data['points_deposit'];
         $hours_required = $data['hours_required'];
-        $organizer_name = $data['organizer_name'];
+        $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
 
         // points_spent does not get updated here.
@@ -97,7 +109,7 @@ class Edit_Contract{
                       validity_date = '$validity_date', 
                       points_deposit = '$points_deposit', 
                       hours_required = '$hours_required', 
-                      organizer_name = '$organizer_name', 
+                      entry_clerk = '$entry_clerk', 
                       additional_notes = '$additional_notes'
                   WHERE id = '$contract_id';";
         $DB->update($contract_query);

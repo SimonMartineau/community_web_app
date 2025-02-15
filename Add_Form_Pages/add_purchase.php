@@ -14,7 +14,7 @@
     $item_names = "";
     $total_cost = "";
     $purchase_date = date("Y-m-d");
-    $organizer_name = "";
+    $entry_clerk = "";
     $additional_notes = "";
 
     // Check if user has submitted info
@@ -29,7 +29,7 @@
             $item_names = $_POST['item_names'];
             $total_cost = $_POST['total_cost'];
             $purchase_date = $_POST['purchase_date'];
-            $organizer_name = $_POST['organizer_name'];
+            $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
 
         } else{
@@ -102,10 +102,10 @@
                         </div>
                         <br><br>
                         
-                        <!-- Organizer Name text input -->
+                        <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            <input name="organizer_name" type="text" id="text_input" placeholder="Organizer Name" value="<?php echo $organizer_name ?>">
-                            <span id="error_message"><?php echo isset($purchase) ? $purchase->organizer_name_error_mes : ''; ?></span>
+                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($purchase) ? $purchase->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
