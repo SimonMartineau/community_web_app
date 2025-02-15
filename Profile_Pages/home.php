@@ -34,6 +34,7 @@
         FROM Contracts"
     )[0]['total_points'];
 
+    // Collect volunteer interests data
     $volunteer_interest_count_data = fetch_data("
         SELECT interest, COUNT(*) AS total_count
         FROM Volunteer_Interests
@@ -41,13 +42,13 @@
         WHERE Volunteers.trashed = 0
         GROUP BY interest;
     ");
-
+    // Process the data
     $volunteer_interests_count = [];
-
     foreach($volunteer_interest_count_data as $row){
         $volunteer_interests_count[$row['interest']] = $row['total_count'];
     }
 
+    // Collect activity interests data
     $activity_interest_count_data = fetch_data("
         SELECT domain, COUNT(*) AS total_count
         FROM Activity_Domains
@@ -56,13 +57,13 @@
         GROUP BY domain
         ORDER BY total_count DESC;
     ");
-
+    // Process the data
     $activity_interests_count = [];
-
     foreach($activity_interest_count_data as $row){
         $activity_interests_count[$row['domain']] = $row['total_count'];
     }
 
+    // Collect volunteer availability data
     $volunteer_weekdays_count_data = fetch_data("
         SELECT weekday, COUNT(*) AS total_count
         FROM Volunteer_Availability
@@ -70,28 +71,24 @@
         WHERE Volunteers.trashed = 0
         GROUP BY weekday
     ");
-
+    // Process the data
     $volunteer_availability_count = [];
-
     foreach($volunteer_weekdays_count_data as $row){
         $volunteer_availability_count[$row['weekday']] = $row['total_count'];
     }
 
+    // Collect activity availability data
     $activity_weekdays_count_data = fetch_data("
         SELECT DAYNAME(activity_date) AS weekday, COUNT(*) AS total_count
         FROM Activities
         WHERE trashed = 0
         GROUP BY weekday
     ");
-
+    // Process the data
     $activity_availability_count = [];
-
     foreach($activity_weekdays_count_data as $row){
         $activity_availability_count[$row['weekday']] = $row['total_count'];
     }
-
-    
-
 ?>
 
 
@@ -104,11 +101,8 @@
         <link rel="stylesheet" href="../style.css">
     </head>
 
-    <style></style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
-
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -117,9 +111,6 @@
 
         <!-- Cover area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
-            <div>
-                <br>
-            </div>
         
             <!-- Below cover area -->
             <div style="display: flex;">
@@ -127,42 +118,80 @@
                 <!-- Contact content area -->
                 <div id="major_rectangle">
 
-                    <!-- Section title of contact section -->
+                    <!-- Page title -->
                     <div id="section_title" style="margin-bottom: 20px;">
                         <span style="font-size: 24px; font-weight: bold;">Volunteer-Activity Management Application</span>
                     </div>
 
-                    <div style="display: flex; border-bottom: 1px solid #000; padding-bottom: 20px;">
-                        <div>
-                        <h3 style="margin-top: 20px; color: #405d9b;">Database Information</h3>
-                        <ul style="line-height: 1.8; font-size: 16px; margin-left: 20px; color: #333;">
-                            <li><strong>Number of Volunteers:</strong> <?php echo $number_of_volunteers;?> </li>
-                            <li><strong>Number of Activities Completed:</strong> <?php echo $number_of_activities_completed;?> </li> 
-                            <li><strong>Number of Hours Completed:</strong> <?php echo $number_of_hours_completed;?> </li>
-                            <li><strong>Number of Points Spent:</strong> <?php echo $number_of_points_spent;?> </li>
-                        </ul>
+                    <!-- Page content -->
+                    <div style="display: flex;">
+
+                        <!-- Left side (general data) -->
+                        <div class="home_page_info">
+                            <h3>Database Information</h3>
+                            <ul>
+                                <li>
+                                <span class="label">Number of Active Volunteers:</span>
+                                <span class="value"><?php echo $number_of_volunteers . " Volunteers"; ?></span>
+                                </li>
+                                <li>
+                                <span class="label">Number of Activities Completed:</span>
+                                <span class="value"><?php echo $number_of_activities_completed . " Activities"; ?></span>
+                                </li>
+                                <li>
+                                <span class="label">Number of Hours Completed:</span>
+                                <span class="value"><?php echo $number_of_hours_completed . " Hours"; ?></span>
+                                </li>
+                                <li>
+                                <span class="label">Number of Points Spent:</span>
+                                <span class="value"><?php echo $number_of_points_spent . " Points"; ?></span>
+                                </li>
+                            </ul>
                         </div>
 
+                        <!-- Right side (pie charts)-->
                         <div>
-                            <div style="display: flex; border-bottom: 1px solid #000; padding-bottom: 20px;">
-                                <div id="chartLegend"></div>
-                                <canvas id="volunteer_interests_Plot" style="width:100%;max-width:500px"></canvas>
-                                <canvas id="activity_interests_Plot" style="width:100%;max-width:500px"></canvas>
+                            <!-- 1st row: Volunteer Interests and Activity Interests -->
+                            <div style="display: flex; border-bottom: 1px solid #ddd;">
+                                <div id="volunteer_interests_Plot" style="width:100%; max-width:650px; max-height: 365px;"></div>
+                                <div id="activity_interests_Plot" style="width:100%; max-width:450px"></div>
                             </div>
-                            <div style="display: flex;">
-                                <canvas id="volunteer_availability_Plot" style="width:100%;max-width:500px"></canvas>
-                                <canvas id="activity_availability_Plot" style="width:100%;max-width:500px"></canvas>
+
+                            <!-- 2nd row: Volunteer Availability and Activity Availability -->
+                            <div style="display: flex">
+                                <div id="volunteer_availability_Plot" style="width:100%; max-width:650px; max-height: 365px;"></div>
+                                <div id="activity_availability_Plot" style="width:100%; max-width:450px"></div>
                             </div>
                         </div>
+
                     </div>
-                    
 
+                    <!-- JavaScript code for Plotly.js -->
                     <script>
-                        const barColors = ["#b91d47","#00aba9","#2b5797","#e8c3b9","#1e7145","#f0a500","#f472d0"];
-                        const barColors2 = ["#c45850","#4bc0c0","#36a2eb","#f7786b","#f0a500","#f472d0", "#b91d47"];
+                        // Database arrays
                         const xArray_interests = ["Organization of community events", "Library support", "Help in the community store", "Support in the community grocery store", "Cleaning and maintenance of public spaces", "Participation in urban gardening projects"];
                         const xArray_weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
+                        const colorsForInterests = [
+                            "#ff7f0e", // orange
+                            "#2ca02c", // green
+                            "#d62728", // red
+                            "#9467bd", // violet
+                            "#1f77b4", // blue
+                            "#60C9D7"  //  light blue
+                        ];
+
+                            const colorsForAvailability = [
+                            "#5B8FF9", // blue
+                            "#5AD8A6", // green
+                            "#F6BD16", // yellow-orange
+                            "#E8684A", // red
+                            "#6F5EF9", // purple
+                            "#FF86B4"  // pink
+                        ];
+
+
+                        // Processing the data for the pie charts
                         const volunteer_interests = <?php echo json_encode($volunteer_interests_count); ?>;
                         const volunteer_interests_count = xArray_interests.map(label => volunteer_interests[label] || 0);
 
@@ -177,41 +206,81 @@
 
 
                         // Plot 1: Volunteer Interests Distribution
-                        new Chart("volunteer_interests_Plot", {
-                            type: "doughnut",
-                            data: {labels: xArray_interests, datasets: [{backgroundColor: barColors, data: volunteer_interests_count}]},
-                            options: {legend: {display: false}, title: {display: true, text: "Volunteer Interests Distribution"}}
+                        Plotly.newPlot("volunteer_interests_Plot", [{labels:xArray_interests, values:volunteer_interests_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForInterests}}], {
+                            title: {text: "Volunteer Interests Distribution", x: 0.825, xanchor: "right"}, 
+                            legend: {orientation: "v",x: -1, y: 0.5, itemclick: false, itemdoubleclick: false},
+                            margin: {b: 10}
                         });
 
                         // Plot 2: Activity Interests Distribution
-                        new Chart("activity_interests_Plot", {
-                            type: "doughnut",
-                            data: {labels: xArray_interests, datasets: [{backgroundColor: barColors, data: activity_interests_count}]},
-                            options: {legend: {display: false},title: {display: true,text: "Activity Interests Distribution"}}
+                        Plotly.newPlot("activity_interests_Plot", [{labels:xArray_interests, values:activity_interests_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForInterests}, showlegend: false}], {
+                            title:"Activity Interests Distribution",
+                            margin: {b: 10}
                         });
 
                         // Plot 3: Volunteer Availability Distribution
-                        new Chart("volunteer_availability_Plot", {
-                            type: "doughnut",
-                            data: {labels: xArray_weekdays,datasets: [{backgroundColor: barColors2, data: volunteer_weekdays_count}]},
-                            options: {legend: {display: false},title: {display: true, text: "Volunteer Availability Distribution"}}
+                        Plotly.newPlot("volunteer_availability_Plot", [{labels:xArray_weekdays, values:volunteer_weekdays_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForAvailability}}], {
+                            title: {text: "Volunteer Availability Distribution", x: 0.835, xanchor: "right"}, 
+                            legend: {orientation: "v",x: -1, y: 0.5,itemclick: false, itemdoubleclick: false },
+                            margin: {b: 10}
                         });
 
                         // Plot 4: Activity Availability Distribution
-                        new Chart("activity_availability_Plot", {
-                            type: "doughnut",
-                            data: {labels: xArray_weekdays, datasets: [{backgroundColor: barColors2, data: activity_weekdays_count}]},
-                            options: {legend: {display: false},title: {display: true,text: "Activity Availability Distribution"}}
+                        Plotly.newPlot("activity_availability_Plot", [{labels:xArray_weekdays, values:activity_weekdays_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForAvailability}, showlegend: false}], { 
+                            title:"Activity Availability Distribution",
+                            margin: {b: 10}
                         });
 
                     </script>
 
                 </div>
-
             </div>
-            
         </div>
-        
     </body>
 </html>
 
+<!-- CSS -->
+<style>
+    .home_page_info {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0px auto;
+    }
+
+    .home_page_info h3 {
+    color: #405d9b;
+    text-align: center;
+    margin-bottom: 20px;
+    }
+
+    .home_page_info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+
+    .home_page_info li {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    }
+
+    .home_page_info li:last-child {
+    border-bottom: none;
+    }
+
+    .home_page_info .label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    }
+
+    .home_page_info .value {
+    font-size: 18px;
+    color: #555;
+    margin-top: 5px;
+    }
+</style>
