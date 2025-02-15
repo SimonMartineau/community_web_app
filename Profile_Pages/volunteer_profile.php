@@ -323,7 +323,7 @@
                         <?php if ($volunteer_data['points'] < 0): ?>
                             <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points.</strong><br>
                         <?php endif; ?>
-                        <p><strong>Points:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>
+                        <p><strong>Points Left:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_required'] . " Hours"); ?></span></p>
                         <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data['hours_completed'] . " Hours"); ?></span></p>
                         <p><strong>Points Left:</strong> <span><?php echo htmlspecialchars($volunteer_data['points'] . " Points"); ?></span></p>

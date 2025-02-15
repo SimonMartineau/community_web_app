@@ -123,7 +123,7 @@
                         <!-- Activity name text input -->
                         <div class="input_container">
                             Activity name:
-                            <input name="activity_name" type="text" id="text_input" placeholder="Activity name" value="<?php echo $activity_name ?>">
+                            <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -131,7 +131,7 @@
                         <!-- Activity number of places text input -->
                         <div class="input_container">
                             Number of places:
-                            <input name="number_of_places" type="text" id="text_input" placeholder="Number of places" value="<?php echo $number_of_places ?>">
+                            <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->number_of_places_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -139,7 +139,7 @@
                         <!-- Activity duration text input -->
                         <div class="input_container">
                             Activity duration:
-                            <input name="activity_duration" type="text" id="text_input" placeholder="Activity duration" value="<?php echo $activity_duration ?>">
+                            <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_duration_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -147,13 +147,14 @@
                         <!-- Activity location text input -->
                         <div class="input_container">
                             Activity location:
-                            <input name="activity_location" type="text" id="text_input" placeholder="Activity location (optional)" value="<?php echo $activity_location ?>">
+                            <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
                         </div>
                         <br><br>
 
                         <!-- Date input -->
                         <div class="input_container">
-                            Activity Date: <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
+                            Activity Date: 
+                            <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -228,7 +229,7 @@
                         <!-- Entry Clerk text input -->
                         <div class="input_container">
                             Entry clerk:
-                            <input name="entry_clerk" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $entry_clerk ?>">
+                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -244,7 +245,7 @@
                         <!-- Registration date text input -->
                         <div class="input_container">
                             Registration date:
-                            <input name="registration_date" type="date" id="text_input" placeholder="Email" value="<?php echo $registration_date ?>">
+                            <input name="registration_date" type="date" id="text_input" value="<?php echo $registration_date ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->registration_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>

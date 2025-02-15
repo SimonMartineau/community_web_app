@@ -84,21 +84,24 @@
 
                         <!-- Item names text input -->
                         <div class="input_container">
-                            Item names: <input name="item_names" type="text" id="text_input" placeholder="Item Names" value="<?php echo $item_names ?>">
+                            Item names: 
+                            <input name="item_names" type="text" id="text_input" value="<?php echo $item_names ?>">
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->item_names_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Total cost text input -->
                         <div class="input_container">
-                            Total cost: <input name="total_cost" type="text" id="text_input" placeholder="Total Points Cost" value="<?php echo $total_cost ?>">
+                            Total cost: 
+                            <input name="total_cost" type="text" id="text_input" value="<?php echo $total_cost ?>">
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->total_cost_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Purchase date input -->
                         <div class="input_container">
-                            Purchase date: <input type="date" name="purchase_date" value="<?php echo $purchase_date ?>">
+                            Purchase date: 
+                            <input type="date" name="purchase_date" value="<?php echo $purchase_date ?>">
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->purchase_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -106,7 +109,7 @@
                         <!-- Entry Clerk text input -->
                         <div class="input_container">
                             Entry clerk: 
-                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
                             <span id="error_message"><?php echo isset($purchase) ? $purchase->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>

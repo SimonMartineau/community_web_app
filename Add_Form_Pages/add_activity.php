@@ -19,10 +19,10 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $activity = new Add_Activity();
-        $result = $activity->evaluate($_POST);
+        $submit_success = $activity->evaluate($_POST);
 
         // If there are errors 
-        if(!$result){
+        if(!$submit_success){
             // Re-enter user input data in prompts
             $activity_name = $_POST['activity_name'];
             $activity_duration = $_POST['activity_duration'];
@@ -74,6 +74,13 @@
                     <span style="font-size: 24px; font-weight: bold;">Add Activity Form</span>
                 </div>
 
+                <!-- Error message -->
+                <div style="text-align: center;">
+                    <span id="main_error" style="color: red; font-weight: bold;">
+                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                    </span>
+                </div>
+
                 <!-- Form area -->
                 <div id="form_section">
 
@@ -82,28 +89,32 @@
 
                         <!-- Activity name text input -->
                         <div class="input_container">
-                            <input name="activity_name" type="text" id="text_input" placeholder="Activity name" value="<?php echo $activity_name ?>">
+                            Activity name:
+                            <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Activity number of places text input -->
                         <div class="input_container">
-                            <input name="number_of_places" type="text" id="text_input" placeholder="Number of places" value="<?php echo $number_of_places ?>">
+                            Number of places:
+                            <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->number_of_places_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Activity duration text input -->
                         <div class="input_container">
-                            <input name="activity_duration" type="text" id="text_input" placeholder="Activity duration" value="<?php echo $activity_duration ?>">
+                            Activity duration:
+                            <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_duration_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Activity location text input -->
                         <div class="input_container">
-                            <input name="activity_location" type="text" id="text_input" placeholder="Activity location (optional)" value="<?php echo $activity_location ?>">
+                            Activity location:
+                            <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
                         </div>
                         <br><br>
                         
@@ -114,7 +125,7 @@
                             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
                             <!-- Multi-date picker input -->
-                            Activity Dates: <input type="text" id="activity_dates" name="activity_dates" placeholder="Select multiple dates" value="<?php echo $activity_dates ?>">
+                            Activity Dates: <input type="text" id="activity_dates" name="activity_dates" value="<?php echo $activity_dates ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_dates_error_mes : ''; ?></span>
 
                             <script>
@@ -195,7 +206,8 @@
 
                         <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            <input name="entry_clerk" type="text" id="text_input" placeholder="Registration Supervisor" value="<?php echo $entry_clerk ?>">
+                            Entry Clerk:
+                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -204,7 +216,7 @@
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
-                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" value="<?php echo $additional_notes ?>"></textarea>
+                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)" value="<?php echo $additional_notes ?>"></textarea>
                         </div>
                         <br><br>
 

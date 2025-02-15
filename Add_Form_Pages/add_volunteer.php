@@ -99,14 +99,16 @@
 
                         <!-- First name text input -->
                         <div class="input_container">
-                            <input name="first_name" type="text" id="text_input" placeholder="First name" value="<?php echo $first_name ?>">
+                            First name:
+                            <input name="first_name" type="text" id="text_input" value="<?php echo $first_name ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Last name text input -->
                         <div class="input_container">
-                            <input name="last_name" type="text" id="text_input" placeholder="Last name" value="<?php echo $last_name ?>">
+                            Last name:
+                            <input name="last_name" type="text" id="text_input" value="<?php echo $last_name ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -130,28 +132,32 @@
 
                         <!-- Address text input -->
                         <div class="input_container">
-                            <input name="address" type="text" id="text_input" placeholder="Address" value="<?php echo $address ?>">
+                            Address:
+                            <input name="address" type="text" id="text_input" value="<?php echo $address ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- ZIP code text input -->
                         <div class="input_container">
-                            <input name="zip_code" type="text" id="text_input" placeholder="ZIP code" value="<?php echo $zip_code ?>">
+                            ZIP code:
+                            <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Telephone number text input -->
                         <div class="input_container">
-                            <input name="telephone_number" type="text" id="text_input" placeholder="Telephone number" value="<?php echo $telephone_number ?>">
+                            Telephone number:
+                            <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                         </div>
                         <br><br>
                         
                         <!-- Email text input -->
                         <div class="input_container">
-                            <input name="email" type="text" id="text_input" placeholder="Email" value="<?php echo $email ?>">
+                            Email:
+                            <input name="email" type="text" id="text_input" value="<?php echo $email ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
                         </div>
                         <br><br>
@@ -229,14 +235,16 @@
 
                         <!-- Volunteer Manager text input -->
                         <div class="input_container">
-                            <input name="volunteer_manager" type="text" id="text_input" placeholder="Volunteer Manager" value="<?php echo $volunteer_manager ?>">
+                            Volunteer Manager:
+                            <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            Entry Clerk:
+                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>

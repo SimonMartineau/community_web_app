@@ -83,35 +83,40 @@
 
                         <!-- Issuance date input -->
                         <div class="input_container">
-                            Issuance date: <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
+                            Issuance date: 
+                            <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
                             <span id="error_message"><?php echo isset($contract) ? $contract->issuance_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Validity date input -->
                         <div class="input_container">
-                            Validity date: <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
+                            Validity date: 
+                            <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
                             <span id="error_message"><?php echo isset($contract) ? $contract->validity_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Points text input -->
                         <div class="input_container">
-                            <input name="points_deposit" type="text" id="text_input" placeholder="Number of points" value="<?php echo $points_deposit ?>">
+                            Points Deposit:
+                            <input name="points_deposit" type="text" id="text_input" value="<?php echo $points_deposit ?>">
                             <span id="error_message"><?php echo isset($contract) ? $contract->points_deposit_error_mes : ''; ?></span>
                         </div>
                         <br><br>
                         
                         <!-- Time requirement input -->
                         <div class="input_container">
-                            <input name="hours_required" type="text" id="text_input" placeholder="Number of hours to do" value="<?php echo $hours_required ?>">
+                            Hours Required:
+                            <input name="hours_required" type="text" id="text_input" value="<?php echo $hours_required ?>">
                             <span id="error_message"><?php echo isset($contract) ? $contract->hours_required_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
                         <!-- Entry Clerk text input -->
                         <div class="input_container">
-                            <input name="entry_clerk" type="text" id="text_input" placeholder="Entry Clerk" value="<?php echo $entry_clerk ?>">
+                            Entry Clerk:
+                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
                             <span id="error_message"><?php echo isset($contract) ? $contract->entry_clerk_error_mes : ''; ?></span>
                         </div>
                         <br><br>
