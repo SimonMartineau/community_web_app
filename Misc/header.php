@@ -1,3 +1,25 @@
+<div id="blue_bar">
+    <div>
+        <!-- Logo -->
+        <a href="../Profile_Pages/home.php" class="logo">Give and Receive</a>
+
+        <!-- Navigation Menu -->
+        <div id="menu_container">
+            <a href="../Listing_Pages/all_volunteers.php" class="menu_button">Volunteers</a>
+            <a href="../Listing_Pages/all_activities.php" class="menu_button">Activities</a>
+            <a href="../Listing_Pages/all_contracts.php" class="menu_button">Contracts</a>
+            <a href="../Listing_Pages/all_purchases.php" class="menu_button">Purchases</a>
+            <a href="../Profile_Pages/about.php" class="menu_button">About</a>
+            <a href="../Profile_Pages/contact.php" class="menu_button">Contact</a>
+        </div>
+
+        <!-- Logout -->
+        
+    </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
 <style>
     #blue_bar {
         height: 60px;
@@ -117,25 +139,3 @@
         }
     }
 </style>
-
-<div id="blue_bar">
-    <div>
-        <!-- Logo -->
-        <a href="../Profile_Pages/home.php" class="logo">Give and Receive</a>
-
-        <!-- Navigation Menu -->
-        <div id="menu_container">
-            <a href="../Listing_Pages/all_volunteers.php" class="menu_button">Volunteers</a>
-            <a href="../Listing_Pages/all_activities.php" class="menu_button">Activities</a>
-            <a href="../Listing_Pages/all_contracts.php" class="menu_button">Contracts</a>
-            <a href="../Listing_Pages/all_purchases.php" class="menu_button">Purchases</a>
-            <a href="../Profile_Pages/about.php" class="menu_button">About</a>
-            <a href="../Profile_Pages/contact.php" class="menu_button">Contact</a>
-        </div>
-
-        <!-- Logout -->
-        <a href="logout.php" class="logout">Logout</a>
-    </div>
-</div>
-
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />

@@ -30,7 +30,7 @@
             // Re-enter user input data in prompts
             $first_name = $_POST['first_name'];
             $last_name = $_POST['last_name'];
-            if(isset($_POST['gender'])){ // Due to uncertain entry
+            if(isset($_POST['gender'])){ // Due to bubble entry
                 $gender = $_POST['gender'];
             }
             $date_of_birth = $_POST['date_of_birth'];
@@ -38,11 +38,15 @@
             $zip_code = $_POST['zip_code'];
             $telephone_number = $_POST['telephone_number'];
             $email = $_POST['email'];
-            if(isset($_POST['volunteer_interests'])){ // Due to uncertain entry
+            if(isset($_POST['volunteer_interests'])){ // Due to table entry
                 $volunteer_interests = $_POST['volunteer_interests'];
+            } else{
+                $volunteer_interests = [];
             }
-            if(isset($_POST['volunteer_availability'])){ // Due to uncertain entry
+            if(isset($_POST['volunteer_availability'])){ // Due to table entry
                 $volunteer_availability = $_POST['volunteer_availability'];
+            } else{
+                $volunteer_availability = [];
             }
             $volunteer_manager = $_POST['volunteer_manager'];
             $entry_clerk = $_POST['entry_clerk'];

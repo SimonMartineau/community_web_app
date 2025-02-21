@@ -287,6 +287,8 @@
                             if($all_volunteer_data){
                                 foreach($all_volunteer_data as $volunteer_data_row){
                                     $volunteer_id = $volunteer_data_row['id'];
+                                    $interest_data = fetch_volunteer_interest_data($volunteer_id);
+                                    $availability_data = fetch_volunteer_availability_data($volunteer_id);
                                     include("../Widget_Pages/volunteer_widget.php");
                                 }
                             }

@@ -135,6 +135,9 @@
                         <div id="volunteer_widgets" class="widget-container">
                             <?php
                             if ($volunteer_data_row) {
+                                $volunteer_id = $volunteer_data_row['id'];
+                                $interest_data = fetch_volunteer_interest_data($volunteer_id);
+                                $availability_data = fetch_volunteer_availability_data($volunteer_id);
                                 include("../Widget_Pages/volunteer_widget.php");
                             }
                             ?>

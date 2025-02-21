@@ -29,11 +29,15 @@
             $activity_location = $_POST['activity_location'];
             $number_of_places = $_POST['number_of_places'];
             $activity_dates = $_POST['activity_dates'];
-            if(isset($_POST['activity_time_periods'])){ // Due to uncertain entry
+            if(isset($_POST['activity_time_periods'])){ // Due to table entry
                 $activity_time_periods = $_POST['activity_time_periods'];
+            } else{
+                $activity_time_periods = [];
             }
-            if(isset($_POST['activity_domains'])){ // Due to uncertain entry
+            if(isset($_POST['activity_domains'])){ // Due to table entry
                 $activity_domains = $_POST['activity_domains'];
+            } else{
+                $activity_domains = [];
             }
             $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
