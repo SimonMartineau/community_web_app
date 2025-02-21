@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="../style.css">
+<script src="../functions.js"></script>
+
 <?php
 
     // Check if widget is in activity profile or not
@@ -73,19 +76,19 @@
                     // If the volunteer is assigned to the activity
                     if($volunteer_activity_assigned == true){
                         // Show the unassign button
-                ?>
-                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('Are you sure you want to unassign <?php echo $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] . ' from ' . $activity_data_row['activity_name']?>?')">
-                            <button class="widget_button">
-                                <!-- Hidden input to confirm source -->
-                                <input type="hidden" name="unassign_volunteer_activity" value="1">
-                                <!-- Hidden input to send volunteer_id -->
-                                <input type="hidden" name="volunteer_id" value="<?php echo $volunteer_id; ?>">
-                                Unassign Volunteer from Activity
-                            </button>
-                        </form>
-                    </div>
-                <?php
+            ?>
+                <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                    <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('Are you sure you want to unassign <?php echo $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] . ' from ' . $activity_data_row['activity_name']?>?')">
+                        <button class="widget_button">
+                            <!-- Hidden input to confirm source -->
+                            <input type="hidden" name="unassign_volunteer_activity" value="1">
+                            <!-- Hidden input to send volunteer_id -->
+                            <input type="hidden" name="volunteer_id" value="<?php echo $volunteer_id; ?>">
+                            Unassign Volunteer from Activity
+                        </button>
+                    </form>
+                </div>
+            <?php
                 } elseif ($volunteer_activity_assigned == false){
                 // Show the assign button
                 ?>
@@ -116,23 +119,23 @@
                 <h2 style="font-size: 20px; color: #555;">Volunteer Info</h2>
                 <p class="widget_info">
                     <span class="info_line">
-                        <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
+                        <span class="info_label"><span class="material-symbols-outlined">home</span></span>
                         <span class="info_value">Address: <?php echo $volunteer_data_row['address'] ?></span>
                     </span>
                     <span class="info_line">
-                        <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
+                        <span class="info_label"><span class="material-symbols-outlined">globe_location_pin</span></span>
                         <span class="info_value">Zip-code: <?php echo $volunteer_data_row['zip_code'] ?></span>
                     </span>
                     <span class="info_line">
-                        <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
+                        <span class="info_label"><span class="material-symbols-outlined">call</span></span>
                         <span class="info_value">Phone: <?php echo $volunteer_data_row['telephone_number'] ?></span>
                     </span>
                     <span class="info_line">
-                        <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
+                        <span class="info_label"><span class="material-symbols-outlined">mail</span></span>
                         <span class="info_value">Email: <?php echo $volunteer_data_row['email'] ?></span>
                     </span>
                     <span class="info_line">
-                        <span class="info_label"><span class="material-symbols-outlined">loyalty</span></span>
+                        <span class="info_label"><span class="material-symbols-outlined">support_agent</span></span>
                         <span class="info_value">Volunteer Manager: <?php echo $volunteer_data_row['volunteer_manager'] ?></span>
                     </span>
                 </p>
@@ -206,155 +209,13 @@
     </div>
 </a>
 
-
+<!-- Icons must be imported here for correct icon size -->
 <style>
-.material-symbols-outlined {
-    display: inline-flex; /* Important for icon alignment */
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em; /* Match icon size to text */
-    vertical-align: middle;
-}
-
-.widget_section {
-  flex: 1; /* All sections take equal width */
-  padding: 10px;  
-}
-#widget {
-    margin: 10px auto;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: sans-serif;
-    color: #333; /* Default text color */
-    background: #fff;
-    display: flex;
-    align-items: center;
-    transition: transform 0.2s ease;
-    width: 1000px;
-    flex-direction: column;
-}
-
-.widget_button {
-    background: rgb(248, 245, 245);
-    color: #405d9b;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    border-width: 1px;
-    min-width: 80px;
-
-}
-
-/* Hover effect for buttons */
-.widget_button:hover {
-    background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
-    transform: translateY(-2px); /* Subtle lift effect */
-}
-
-/* Hover effect for the widget */
-#widget:hover {
-    background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Gradient background on hover */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
-    transform: translateY(-2px); /* Slight lift effect */
-}
-
-.widget_row {
-    display: flex;
-    align-items: center;
-    transition: transform 0.2s ease;
-    width:1000px;
-}
-
-.icon_container {
-    padding-right: 25px;
-    margin-right: 25px;
-    border-right: 2px solid #eee;
-    width: 30px;  
-    font-size: 1.5em; 
-    color: #405d9b; 
-    font-weight: 600; 
-}
-
-.name_container {
-    padding-right: 25px;
-    margin-right: 25px;
-    border-right: 2px solid #eee;
-    width: 250px;   
-}
-
-.widget_name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #405d9b;
-    letter-spacing: 0.5px;
-    width: 100%; /* Allow it to take full width */
-    word-wrap: break-word; /* Ensures long words wrap */
-    overflow-wrap: break-word; /* Alternative for better browser support */
-    white-space: normal; /* Allow wrapping */
-}
-
-.info_container {
-    width: 320px;
-}
-
-.status_container {
-    width: 260px;
-    padding-left: 40px;
-}
-
-.widget_info {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.info_line {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
-}
-
-.info_label {
-    font-weight: 500;
-    color: #7f8c8d;
-    min-width: 20px;
-}
-
-.info_value {
-    color: #2c3e50;
-    font-weight: 500;
-}
-
-.warning {
-    color: #e24141;
-    font-weight: 500;
-}
-
-
+    .material-symbols-outlined {
+        display: inline-flex; /* Important for icon alignment */
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em; /* Match icon size to text */
+        vertical-align: middle;
+    }
 </style>
-<script>
-  function toggleDetails(event, volunteerId) {
-    event.stopPropagation();
-    event.preventDefault();
-
-    // Get references to elements
-    const button = event.target; // Get the clicked button
-    const detailsDiv = document.getElementById('extra_details_row-' + volunteerId);
-
-    // Toggle visibility
-    const isVisible = detailsDiv.style.display === "flex";
-    detailsDiv.style.display = isVisible ? "none" : "flex";
-
-    // Update button text based on new state
-    button.textContent = isVisible ? 'More Details' : 'Less Details';
-  }
-</script>
-
-

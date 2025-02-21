@@ -129,9 +129,133 @@
     border-radius: 5px;
 }
 
-/* Widget styles */
+/* Profile information display styles */
 /*#################################################################################################################################################################*/
-/* Base widget styles */
+.information_section {
+    margin-bottom: 20px;
+}
+
+.information_section strong {
+    display: inline-block;
+    width: 100%;
+    color: #555;
+}
+
+#widget_toggle_buttons {
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center buttons horizontally */
+    align-items: center; /* Center buttons vertically (if needed) */
+}
+
+/* Styling for toggle buttons */
+#widget_toggle_buttons button {
+    text-align: center; /* Center the text */
+    font-family: sans-serif; /* Use the same font as the title */
+    font-size: 1em; /* Adjust font size for a balanced look */
+    font-weight: bold; /* Make the text bold */
+    color: #405d9b; /* Match the theme color */
+    padding: 10px 20px; /* Add padding for clickable space */
+    background: rgb(248, 245, 245);
+    border: none; /* Remove default borders */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    cursor: pointer; /* Indicate that it's clickable */
+    margin: 20px 5px 20px 5px ; /* Add spacing between buttons */
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for buttons */
+#widget_toggle_buttons button:hover {
+    background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+/* Style for the active button */
+#widget_toggle_buttons button.active {
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb);  /* Example color */
+    color: #405d9b;
+    border: none;
+}
+
+/* Switch Toggle Buttons */
+/*#################################################################################################################################################################*/
+.switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+}
+
+.switch input { 
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(26px);
+-ms-transform: translateX(26px);
+transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 34px;
+}
+
+.slider.round:before {
+border-radius: 50%;
+}
+
+  
+/* Widget Design*/
+/*#################################################################################################################################################################*/
+.material-symbols-outlined {
+    display: inline-flex; /* Important for icon alignment */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em; /* Match icon size to text */
+    vertical-align: middle;
+}
+
+.widget_section {
+  flex: 1; /* All sections take equal width */
+  padding: 10px;  
+}
+
 #widget {
     margin: 10px auto;
     padding: 15px;
@@ -140,38 +264,56 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: sans-serif;
     color: #333; /* Default text color */
-    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    background: #fff;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+    width: 1000px;
+    flex-direction: column;
+}
+
+.widget_button {
+    background: rgb(248, 245, 245);
+    color: #405d9b;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-width: 1px;
+    min-width: 80px;
+
+}
+
+/* Hover effect for buttons */
+.widget_button:hover {
+    background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
 }
 
 /* Hover effect for the widget */
-.volunteer_widget:hover {
+#widget:hover {
     background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Gradient background on hover */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
     transform: translateY(-2px); /* Slight lift effect */
 }
 
-.volunteer_widget {
+.widget_row {
     display: flex;
     align-items: center;
-    padding: 20px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
     width:1000px;
-}
-
-.volunteer_widget:hover {
-    background: linear-gradient(to right, #f0f8ff, #dbe9f9); /* Gradient background on hover */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
-    transform: translateY(-2px); /* Slight lift effect */
 }
 
 .icon_container {
     padding-right: 25px;
     margin-right: 25px;
     border-right: 2px solid #eee;
-    width: 30px;   
+    width: 30px;  
+    font-size: 1.5em; 
+    color: #405d9b; 
+    font-weight: 600; 
 }
 
 .name_container {
@@ -230,152 +372,3 @@
     color: #e24141;
     font-weight: 500;
 }
-
-.material-symbols-outlined {
-    display: inline-flex; /* Important for icon alignment */
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em; /* Match icon size to text */
-    vertical-align: middle;
-}
-
-/* Matching Volunteer-specific styles */
-/*#################################################################################################################################################################*/
-.matching_volunteer_widget {
-    background-color: rgb(253, 246, 148); /* Light green */
-    color: #333; /* Dark text */
-}
-
-.matching_volunteer_widget .widget_name {
-    color: #9b4072; /* Volunteer name color */
-}
-
-.matching_volunteer_widget .widget_info strong {
-    color: #9b4072; /* Volunteer strong text color */
-}
-
-/* Matching Activity-specific styles */
-/*#################################################################################################################################################################*/
-.matching_activity_widget {
-    background-color: rgb(253, 246, 148); /* Light green */
-    color: #333; /* Dark text */
-}
-
-.matching_activity_widget .widget_name {
-    color: #9b4072; /* Volunteer name color */
-}
-
-.matching_activity_widget .widget_info strong {
-    color: #9b4072; /* Volunteer strong text color */
-}
-
-/* Profile information display styles */
-/*#################################################################################################################################################################*/
-.information_section {
-    margin-bottom: 20px;
-}
-
-.information_section strong {
-    display: inline-block;
-    width: 100%;
-    color: #555;
-}
-
-#widget_toggle_buttons {
-    display: flex; /* Enable flexbox */
-    justify-content: center; /* Center buttons horizontally */
-    align-items: center; /* Center buttons vertically (if needed) */
-}
-
-/* Styling for toggle buttons */
-#widget_toggle_buttons button {
-    text-align: center; /* Center the text */
-    font-family: sans-serif; /* Use the same font as the title */
-    font-size: 1em; /* Adjust font size for a balanced look */
-    font-weight: bold; /* Make the text bold */
-    color: #405d9b; /* Match the theme color */
-    padding: 10px 20px; /* Add padding for clickable space */
-    background: rgb(248, 245, 245);
-    border: none; /* Remove default borders */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    cursor: pointer; /* Indicate that it's clickable */
-    margin: 20px 5px 20px 5px ; /* Add spacing between buttons */
-    transition: all 0.3s ease; /* Smooth hover effect */
-}
-
-/* Hover effect for buttons */
-#widget_toggle_buttons button:hover {
-    background: linear-gradient(to right, #dbe9f9, #f0f8ff); /* Reverse the gradient */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
-    transform: translateY(-2px); /* Subtle lift effect */
-}
-
-/* Style for the active button */
-#widget_toggle_buttons button.active {
-    background: linear-gradient(to right, #a1c4fd, #c2e9fb);  /* Example color */
-    color: #405d9b;
-    border: none;
-}
-
-/* Switch Toggle Button */
-/*#################################################################################################################################################################*/
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-  
-  .switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }

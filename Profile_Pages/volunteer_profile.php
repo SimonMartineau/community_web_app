@@ -196,7 +196,47 @@
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }
+
+
+        // Ensure the delete activity button has been pressed
+        if (isset($_POST['assign_volunteer_activity']) && $_POST['assign_volunteer_activity'] === '1') {
+
+            $activity_id = $_POST['activity_id'];
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
+                                                    values ('$volunteer_id', -1, '$activity_id')";
+            $DB->update($assign_volunteer_to_activity_query);
+
+            // Changing the page.
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
+            die; // Ending the script
+        }
+
+        // Ensure the restore activity button has been pressed
+        if (isset($_POST['unassign_volunteer_activity']) && $_POST['unassign_volunteer_activity'] === '1') {
+
+            $activity_id = $_POST['activity_id'];
+
+            // Initialise Database object
+            $DB = new Database();
+
+            // SQL query into Purchases
+            $unassign_volunteer_from_activity_query = "delete from Volunteer_Activity_Junction 
+                                                        where volunteer_id = '$volunteer_id'
+                                                        AND activity_id = '$activity_id'";
+            $DB->update($unassign_volunteer_from_activity_query);
+
+            // Changing the page.
+            header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
+            die; // Ending the script
+        }
     }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -470,7 +510,9 @@
                             if ($activities_data) {
                                 foreach ($activities_data as $activity_data_row) {
                                     $activity_id = $activity_data_row['id'];
-                                    include("../Widget_Pages/matching_activity_widget.php");
+                                    $activity_time_periods_data = fetch_data("select * from Activity_Time_Periods where activity_id = '$activity_id'");
+                                    $activity_domains_data = fetch_data("select * from Activity_Domains where activity_id = '$activity_id'");
+                                    include("../Widget_Pages/activity_widget.php");
                                 }
                             }
                             ?>
@@ -542,7 +584,9 @@
                                 if($all_matching_activities_data){
                                     foreach($all_matching_activities_data as $activity_data_row){
                                         $activity_id = $activity_data_row['id'];
-                                        include("../Widget_Pages/matching_activity_widget.php");
+                                        $activity_time_periods_data = fetch_data("select * from Activity_Time_Periods where activity_id = '$activity_id'");
+                                        $activity_domains_data = fetch_data("select * from Activity_Domains where activity_id = '$activity_id'");
+                                        include("../Widget_Pages/activity_widget.php");
                                     }
                                 }
                             ?>

@@ -194,7 +194,9 @@
                             <?php
                             if ($activities_data) {
                                 foreach ($activities_data as $activity_data_row) {
-                                    
+                                    $activity_id = $activity_data_row['id'];
+                                    $activity_time_periods_data = fetch_data("select * from Activity_Time_Periods where activity_id = '$activity_id'");
+                                    $activity_domains_data = fetch_data("select * from Activity_Domains where activity_id = '$activity_id'");
                                     include("../Widget_Pages/activity_widget.php");
                                 }
                             }

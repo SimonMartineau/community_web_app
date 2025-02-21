@@ -20,3 +20,21 @@ function ToggleWidgets(section, clickedButton) {
     // Add 'active' class to the clicked button
     clickedButton.classList.add('active');
 }
+
+
+
+function toggleDetails(event, Id) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    // Get references to elements
+    const button = event.target; // Get the clicked button
+    const detailsDiv = document.getElementById('extra_details_row-' + Id);
+
+    // Toggle visibility
+    const isVisible = detailsDiv.style.display === "flex";
+    detailsDiv.style.display = isVisible ? "none" : "flex";
+
+    // Update button text based on new state
+    button.textContent = isVisible ? 'More Details' : 'Less Details';
+  }
