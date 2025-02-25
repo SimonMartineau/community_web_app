@@ -1,6 +1,9 @@
 <?php
 
+// Class to edit contract data
 class Edit_Contract{
+
+    // Error messages for each form field
     public $issuance_date_error_mes = "";
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
@@ -8,11 +11,11 @@ class Edit_Contract{
     public $entry_clerk_error_mes = "";
 
 
-
     // Analyses data sent by user
     public function evaluate($contract_id, $data){
 
-        $error = false; // Initialize error contract variable
+        // Initialize error contract variable
+        $error = false;
 
         // Check issuance date
         if (isset($_POST['issuance_date'])){
@@ -89,7 +92,9 @@ class Edit_Contract{
     }
 
 
+    // Function to edit contract in database
     public function edit_contract($contract_id, $data){
+    
         // Creating all the varaibles for the SQL input
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
@@ -113,7 +118,6 @@ class Edit_Contract{
                       additional_notes = '$additional_notes'
                   WHERE id = '$contract_id';";
         $DB->update($contract_query);
-
     }
 
 }

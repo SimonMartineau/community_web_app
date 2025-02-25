@@ -1,6 +1,9 @@
 <?php
 
+// Class to add activity to database
 class Add_Activity{
+
+    // Error messages for each form field
     public $activity_name_error_mes = "";
     public $number_of_places_error_mes = "";
     public $activity_duration_error_mes = "";
@@ -13,7 +16,8 @@ class Add_Activity{
     // Analyses data sent by user
     public function evaluate($data){
 
-        $error = false; // Initialise error contract variable
+        // Initialise error contract variable
+        $error = false; 
 
         // Check activity name
         if (isset($_POST['activity_name'])){
@@ -33,6 +37,12 @@ class Add_Activity{
             } elseif (!preg_match("/^[0-9]*$/",$value)){
                 $this->number_of_places_error_mes = "*Please enter a number.<br>";
                 $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->number_of_places_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->number_of_places_error_mes = "*Please enter a number less than 1000.<br>";
+                $error = true; // There is an error
             }
         }
 
@@ -44,6 +54,12 @@ class Add_Activity{
                 $error = true; // There is an error
             } elseif (!preg_match("/^[0-9]*$/",$value)){
                 $this->activity_duration_error_mes = "*Please enter a number.<br>";
+                $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->activity_duration_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->activity_duration_error_mes = "*Please enter a number less than 1000.<br>";
                 $error = true; // There is an error
             }
         }
@@ -102,10 +118,12 @@ class Add_Activity{
     }
 
 
+    // Function to add activity to database
     public function add_activity($data){
+
         // Creating all the varaibles for the SQL input
         $activity_name = $data['activity_name']; // ucfirst makes first letter capital.
-        $number_of_participants = 0;
+        $number_of_participants = 0; // Number of participants is 0 when activity is created
         $number_of_places = $data['number_of_places'];
         $activity_duration = $data['activity_duration'];
         $activity_location = $data['activity_location'];
@@ -115,14 +133,17 @@ class Add_Activity{
         $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
         $registration_date = date("Y-m-d");
-        $trashed = 0;
+        $trashed = 0; // Activity is not trashed when created
 
         // Initialise Database object
         $DB = new Database();
 
+        // Convert activity_dates to array
         $activity_dates_array = array_map('trim', explode(',', $activity_dates));
+
         // SQL query into Activities
         foreach($activity_dates_array as $activity_date){
+            // SQL query
             $activity_query = "insert into Activities (activity_name, number_of_places, number_of_participants, activity_duration, activity_location, activity_date, entry_clerk, additional_notes, registration_date, trashed)
                     values ('$activity_name', '$number_of_places', '$number_of_participants', '$activity_duration', '$activity_location', '$activity_date', '$entry_clerk', '$additional_notes', '$registration_date', '$trashed')";
                 
@@ -132,9 +153,9 @@ class Add_Activity{
             // Set activity_id to value of primary key in Activity table
             $activity_id = $DB->last_insert_id;
 
-
             // SQL query into Activity_Time_Periods
             foreach($activity_time_periods as $time_period){
+                // SQL query
                 $activity_time_periods_query = "insert into Activity_Time_Periods (activity_id, time_period)
                 values ('$activity_id', '$time_period')";
 
@@ -144,6 +165,7 @@ class Add_Activity{
 
             // SQL query into Activity_Domains
             foreach($activity_domains as $domain){
+                // SQL query
                 $activity_domains_query = "insert into Activity_Domains (activity_id, domain)
                     values ('$activity_id', '$domain')";
                 
@@ -153,7 +175,6 @@ class Add_Activity{
         }
         
     }
-
     
 }
 

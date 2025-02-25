@@ -13,13 +13,14 @@
             <a href="../Profile_Pages/contact.php" class="menu_button">Contact</a>
         </div>
 
-        <!-- Logout -->
+        <!-- Logout Button -->
         
     </div>
 </div>
 
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
+
+<!-- CSS Styling -->
 <style>
     #blue_bar {
         height: 60px;

@@ -198,7 +198,7 @@
         }
 
 
-        // Ensure the delete activity button has been pressed
+        // Ensure the assign activity button has been pressed
         if (isset($_POST['assign_volunteer_activity']) && $_POST['assign_volunteer_activity'] === '1') {
 
             $activity_id = $_POST['activity_id'];
@@ -211,12 +211,15 @@
                                                     values ('$volunteer_id', -1, '$activity_id')";
             $DB->update($assign_volunteer_to_activity_query);
 
+            // Updating all backend processes
+            update_backend_data();
+
             // Changing the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }
 
-        // Ensure the restore activity button has been pressed
+        // Ensure the unassign activity button has been pressed
         if (isset($_POST['unassign_volunteer_activity']) && $_POST['unassign_volunteer_activity'] === '1') {
 
             $activity_id = $_POST['activity_id'];
@@ -230,14 +233,17 @@
                                                         AND activity_id = '$activity_id'";
             $DB->update($unassign_volunteer_from_activity_query);
 
+            // Updating all backend processes
+            update_backend_data();
+
             // Changing the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }
     }
-
-    
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -534,21 +540,21 @@
                                     <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Interest Filter</span>
+                                <span>Matching Interests</span>
                                 <br>
 
                                 <label class="switch">
                                     <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Weekday Filter</span>
+                                <span>Matching Weekdays</span>
                                 <br>
 
                                 <label class="switch">
                                     <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Time Period Filter</span>
+                                <span>Matching Time Periods</span>
                                 <br>
 
                                 <!-- Submit button -->

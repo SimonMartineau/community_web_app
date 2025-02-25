@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -18,12 +19,14 @@
     $volunteer_manager = "";
     $entry_clerk = "";
     $additional_notes = "";
+    
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        // Create a Add_Volunteer object for form evaluation
         $volunteer = new Add_Volunteer();
-        $submit_success = $volunteer->evaluate($_POST);
+        $submit_success = $volunteer->evaluate($_POST); // Evaluate the form
 
         // If there are errors 
         if(!$submit_success){
@@ -53,7 +56,7 @@
             $additional_notes = $_POST['additional_notes'];
 
         } else{
-            // Changing the page.
+            // There are no errors with the form submit, we can change the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer->volunteer_id);
             die; // Ending the script
         }    
@@ -61,16 +64,17 @@
 ?> 
 
 
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add Volunteer | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -178,6 +182,8 @@
                                     <th>Contract</th>
                                 </tr>
                                 <?php
+
+                                // List of activities
                                 $activities = [
                                     "Organization of community events", 
                                     "Library support", 
@@ -186,6 +192,8 @@
                                     "Cleaning and maintenance of public spaces", 
                                     "Participation in urban gardening projects"
                                 ];
+
+                                // Display activities and checkboxes
                                 foreach ($activities as $activity) {
                                     echo "<tr>";
                                     echo "<td>$activity</td>";
@@ -216,8 +224,11 @@
                                 </tr>
                                 <?php
                                 
+                                // List of days and time periods
                                 $week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
                                 $time_periods = ["Morning", "Afternoon", "Evening"];
+                                
+                                // Display days and checkboxes
                                 foreach ($week as $weekday) {
                                     echo "<tr>";
                                     echo "<td>$weekday</td>";
@@ -228,7 +239,6 @@
                                         } else {
                                             echo "<td><input type='checkbox' name='volunteer_availability[]' value=$available_moment></td>";
                                         }
-    
                                     }
                                     echo "</tr>";
                                 }

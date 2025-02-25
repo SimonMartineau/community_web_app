@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -5,7 +6,7 @@
     include("../Classes/add_purchase.php");
     include("../Classes/functions.php");
 
-
+    // Get volunteer_id from the URL
     if (isset($_GET['volunteer_id'])) {
         $volunteer_id = $_GET['volunteer_id'];
     }
@@ -13,15 +14,17 @@
     // Default entry values on page startup.
     $item_names = "";
     $total_cost = "";
-    $purchase_date = date("Y-m-d");
+    $purchase_date = date("Y-m-d"); // Default value is the current date
     $entry_clerk = "";
     $additional_notes = "";
+    
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        // Create a Add_Purchase object for form evaluation
         $purchase = new Add_Purchase();
-        $submit_success = $purchase->evaluate($volunteer_id, $_POST);
+        $submit_success = $purchase->evaluate($volunteer_id, $_POST); // Evaluate the form
 
         // If there are errors 
         if(!$submit_success){
@@ -33,7 +36,7 @@
             $additional_notes = $_POST['additional_notes'];
 
         } else{
-            // Changing the page.
+            // There are no errors with the form submit, we can change the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }    
@@ -41,16 +44,17 @@
 ?> 
 
 
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add Purchase | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -126,13 +130,12 @@
                             <input type="submit" id="submit_button" value="Submit">
                         </div>
                         <br><br>
+
                     </form>
                 </div>
 
-                
             </div>
         </div>
             
-        
     </body>
 </html>

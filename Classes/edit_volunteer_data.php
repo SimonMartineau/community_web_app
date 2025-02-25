@@ -1,6 +1,9 @@
 <?php
 
+// Class to edit volunteer data
 class Edit_Volunteer{
+
+    // Error messages for each form field
     public $first_name_error_mes = "";
     public $last_name_error_mes = "";
     public $gender_error_mes = "";
@@ -16,12 +19,11 @@ class Edit_Volunteer{
     public $registration_date_error_mes = "";
 
 
-
-
     // Analyses data sent by user
     public function evaluate($volunteer_id, $data){
 
-        $error = false; // Initialise error contract variable
+        // Initialise error contract variable
+        $error = false;
 
         // Check first name
         if (isset($_POST['first_name'])){
@@ -170,7 +172,9 @@ class Edit_Volunteer{
     }
 
 
+    // Function to edit volunteer in database
     public function edit_volunteer($volunteer_id, $data){
+
         // Creating all the varaibles for the SQL input
         $first_name = ucfirst($data['first_name']);
         $last_name = ucfirst($data['last_name']);
@@ -232,7 +236,6 @@ class Edit_Volunteer{
 
     }
 
-    
 }
 
 ?>

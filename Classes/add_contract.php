@@ -1,6 +1,9 @@
 <?php
 
+// Class to add contract to database
 class Add_Contract{
+
+    // Error messages for each form field
     public $issuance_date_error_mes = "";
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
@@ -8,11 +11,11 @@ class Add_Contract{
     public $entry_clerk_error_mes = "";
 
 
-
     // Analyses data sent by user
     public function evaluate($volunteer_id, $data){
 
-        $error = false; // Initialize error contract variable
+        // Initialize error contract variable
+        $error = false;
 
         // Check issuance date
         if (isset($_POST['issuance_date'])){
@@ -89,7 +92,9 @@ class Add_Contract{
     }
 
 
+    // Function to add contract to database
     public function add_contract($volunteer_id, $data){
+
         // Creating all the varaibles for the SQL input
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
@@ -110,7 +115,6 @@ class Add_Contract{
         $DB->save($contract_query);
     }
 
-    
 }
 
 ?>

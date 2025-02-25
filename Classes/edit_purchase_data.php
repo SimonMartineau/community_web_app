@@ -1,17 +1,20 @@
 <?php
 
+// Class to edit purchase in database
 class Edit_Purchase{
+
+    // Error messages for each form field
     public $item_names_error_mes = "";
     public $total_cost_error_mes = "";
     public $purchase_date_error_mes = "";
     public $entry_clerk_error_mes = "";
 
 
-
     // Analyses data sent by user
     public function evaluate($purchase_id, $data){
 
-        $error = false; // Initialize error contract variable
+        // Initialize error contract variable
+        $error = false;
 
         // Check item names
         if (isset($_POST['item_names'])){
@@ -70,7 +73,9 @@ class Edit_Purchase{
     }
 
 
+    // Function to edit purchase in database
     public function edit_purchase($purchase_id, $data){
+
         // Creating all the varaibles for the SQL input
         $item_names = $data['item_names'];
         $total_cost = $data['total_cost'];
@@ -90,7 +95,6 @@ class Edit_Purchase{
                       additional_notes = '$additional_notes'
                   WHERE id = '$purchase_id';";
         $DB->update($purchase_query);
-
     }
 
 }

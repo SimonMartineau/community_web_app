@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -15,13 +16,15 @@
     $entry_clerk = "";
     $additional_notes = "";
 
+    
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        // Create a Add_Activity object for form evaluation
         $activity = new Add_Activity();
-        $submit_success = $activity->evaluate($_POST);
+        $submit_success = $activity->evaluate($_POST); // Evaluate the form
 
-        // If there are errors 
+        // If there are errors ...
         if(!$submit_success){
             // Re-enter user input data in prompts
             $activity_name = $_POST['activity_name'];
@@ -43,7 +46,7 @@
             $additional_notes = $_POST['additional_notes'];
 
         } else{
-            // Changing the page.
+            // There are no errors with the form submit, we can change the page.
             header("Location: ../Listing_Pages/all_activities.php");
             die; // Ending the script
         }    
@@ -51,16 +54,17 @@
 ?> 
 
 
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add Activity | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -132,6 +136,7 @@
                             Activity Dates: <input type="text" id="activity_dates" name="activity_dates" value="<?php echo $activity_dates ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_dates_error_mes : ''; ?></span>
 
+                            <!-- Flatpickr JS -->
                             <script>
                             flatpickr("#activity_dates", {
                                 mode: "multiple", // Enables multiple date selection
@@ -153,11 +158,15 @@
                                     <th>Contract</th>
                                 </tr>
                                 <?php
+
+                                // Time periods
                                 $time_periods = [
                                     "Morning", 
                                     "Afternoon", 
                                     "Evening"
                                 ];
+
+                                // Create table with checkboxes
                                 foreach ($time_periods as $time_period) {
                                     echo "<tr>";
                                     echo "<td>$time_period</td>";
@@ -185,6 +194,8 @@
                                     <th>Contract</th>
                                 </tr>
                                 <?php
+
+                                // Activity domains
                                 $domain_types = [
                                     "Organization of community events", 
                                     "Library support", 
@@ -193,6 +204,8 @@
                                     "Cleaning and maintenance of public spaces", 
                                     "Participation in urban gardening projects"
                                 ];
+
+                                // Create table with checkboxes
                                 foreach ($domain_types as $domain) {
                                     echo "<tr>";
                                     echo "<td>$domain</td>";
@@ -233,10 +246,8 @@
                     </form>
                 </div>
 
-                
             </div>
         </div>
             
-        
     </body>
 </html>

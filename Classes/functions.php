@@ -93,10 +93,10 @@ function fetch_purchase_data($purchase_id){
 
 // This function updates the backend data of the website and database.
 function update_backend_data(){
-    update_volunteer_data();
-    update_contract_data();
-    update_purchase_data();
     update_junction_data();
+    update_purchase_data();
+    update_contract_data();
+    update_volunteer_data();
     update_activities_data();
 }
 

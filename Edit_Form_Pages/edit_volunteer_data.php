@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -5,46 +6,49 @@
     include("../Classes/edit_volunteer_data.php");
     include("../Classes/functions.php");
 
+    // Create a Edit_Activity object for form validation
     if (isset($_GET['volunteer_id'])) {
         $volunteer_id = $_GET['volunteer_id'];
-
-        $volunteer_data = fetch_volunteer_data($volunteer_id);
-        $interests_data = fetch_volunteer_interest_data($volunteer_id);
-        $availability_data = fetch_volunteer_availability_data($volunteer_id);
     }
+
+    // Fetch SQL data
+    $volunteer_data_row = fetch_volunteer_data($volunteer_id);
+    $interests_data_rows = fetch_volunteer_interest_data($volunteer_id);
+    $availability_data_rows = fetch_volunteer_availability_data($volunteer_id);
 
     // Default entry values on page startup.
-    $first_name = $volunteer_data['first_name'];
-    $last_name = $volunteer_data['last_name'];
-    $gender = $volunteer_data['gender'];
-    $date_of_birth = $volunteer_data['date_of_birth'];
-    $address = $volunteer_data['address'];
-    $zip_code = $volunteer_data['zip_code'];
-    $telephone_number = $volunteer_data['telephone_number'];
-    $email = $volunteer_data['email'];
+    $first_name = $volunteer_data_row['first_name'];
+    $last_name = $volunteer_data_row['last_name'];
+    $gender = $volunteer_data_row['gender'];
+    $date_of_birth = $volunteer_data_row['date_of_birth'];
+    $address = $volunteer_data_row['address'];
+    $zip_code = $volunteer_data_row['zip_code'];
+    $telephone_number = $volunteer_data_row['telephone_number'];
+    $email = $volunteer_data_row['email'];
     // For interest data, we extract the interest column and insert the data in $volunteer_interests[].
-    foreach($interests_data as $interests_data_row){
+    foreach($interests_data_rows as $interests_data_row){
         $volunteer_interests[] = $interests_data_row['interest'];
     }
-    $volunteer_availability = $availability_data;
+    $volunteer_availability = [];
     // For availability data, we extract the weekday and timeperiod columns and insert the data in $volunteer_availability[].
-    foreach($availability_data as $availability_data_row){
+    foreach($availability_data_rows as $availability_data_row){
         $weekday = $availability_data_row['weekday'];
         $time_period = $availability_data_row['time_period'];
         $available_moment = "{$weekday}-{$time_period}";
         $volunteer_availability[] = $available_moment;
     }
-    $volunteer_manager = $volunteer_data['volunteer_manager'];
-    $entry_clerk = $volunteer_data['entry_clerk'];
-    $additional_notes = $volunteer_data['additional_notes'];
-    $registration_date = $volunteer_data['registration_date'];
+    $volunteer_manager = $volunteer_data_row['volunteer_manager'];
+    $entry_clerk = $volunteer_data_row['entry_clerk'];
+    $additional_notes = $volunteer_data_row['additional_notes'];
+    $registration_date = $volunteer_data_row['registration_date'];
 
     
     // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        // Create a Edit_Volunteer object for form evaluation
         $volunteer = new Edit_Volunteer();
-        $submit_success = $volunteer->evaluate($volunteer_id, $_POST);
+        $submit_success = $volunteer->evaluate($volunteer_id, $_POST); // Evaluate the form
 
         // If there are errors 
         if(!$submit_success){
@@ -75,8 +79,8 @@
             $registration_date = $_POST['registration_date'];
 
 
-        } else{ // If there are no errors in the submission.
-            // Changing the page.
+        } else{ 
+            // There are no errors with the form submit, we can change the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);
             die; // Ending the script
         }    
@@ -84,16 +88,17 @@
 ?> 
 
 
+
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit Volunteer Data | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -201,6 +206,8 @@
                                     <th>Contract</th>
                                 </tr>
                                 <?php
+
+                                // List of activities
                                 $activities = [
                                     "Organization of community events", 
                                     "Library support", 
@@ -209,6 +216,8 @@
                                     "Cleaning and maintenance of public spaces", 
                                     "Participation in urban gardening projects"
                                 ];
+
+                                // Create table with checkboxes
                                 foreach ($activities as $activity) {
                                     echo "<tr>";
                                     echo "<td>$activity</td>";
@@ -239,8 +248,11 @@
                                 </tr>
                                 <?php
                                 
+                                // List of days and time periods
                                 $week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
                                 $time_periods = ["Morning", "Afternoon", "Evening"];
+
+                                // Create table with checkboxes
                                 foreach ($week as $weekday) {
                                     echo "<tr>";
                                     echo "<td>$weekday</td>";

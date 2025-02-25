@@ -1,6 +1,9 @@
 <?php
 
+// Class to add volunteer to database
 class Add_Volunteer{
+
+    // Error messages for each form field
     public $first_name_error_mes = "";
     public $last_name_error_mes = "";
     public $gender_error_mes = "";
@@ -16,11 +19,11 @@ class Add_Volunteer{
     public $volunteer_id = "";
 
 
-
     // Analyses data sent by user
     public function evaluate($data){
 
-        $error = false; // Initialize error contract variable
+        // Initialize error contract variable
+        $error = false;
 
         // Check first name
         if (isset($_POST['first_name'])){
@@ -160,7 +163,9 @@ class Add_Volunteer{
     }
 
 
+    // Function to add volunteer to database
     public function add_volunteer($data){
+
         // Creating all the varaibles for the SQL input
         $first_name = ucfirst($data['first_name']); // ucfirst makes first letter capital.
         $last_name = ucfirst($data['last_name']);
@@ -208,7 +213,6 @@ class Add_Volunteer{
             $DB->save($volunteers_interests_query);
         }
     }
-
     
 }
 

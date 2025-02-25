@@ -1,6 +1,9 @@
 <?php
 
+// Class to edit activity in database
 class Edit_Activity{
+
+    // Error messages for each form field
     public $activity_name_error_mes = "";
     public $number_of_places_error_mes = "";
     public $activity_duration_error_mes = "";
@@ -14,7 +17,8 @@ class Edit_Activity{
     // Analyses data sent by user
     public function evaluate($activity_id, $data){
 
-        $error = false; // Initialise error contract variable
+        // Initialise error contract variable
+        $error = false;
 
         // Check activity name
         if (isset($_POST['activity_name'])){
@@ -34,6 +38,12 @@ class Edit_Activity{
             } elseif (!preg_match("/^[0-9]*$/",$value)){
                 $this->number_of_places_error_mes = "*Please enter a number.<br>";
                 $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->number_of_places_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->number_of_places_error_mes = "*Please enter a number less than 1000.<br>";
+                $error = true; // There is an error
             }
         }
 
@@ -45,6 +55,12 @@ class Edit_Activity{
                 $error = true; // There is an error
             } elseif (!preg_match("/^[0-9]*$/",$value)){
                 $this->activity_duration_error_mes = "*Please enter a number.<br>";
+                $error = true; // There is an error
+            } elseif ($value < 0){
+                $this->activity_duration_error_mes = "*Please enter a positive number.<br>";
+                $error = true; // There is an error
+            } elseif ($value > 1000){
+                $this->activity_duration_error_mes = "*Please enter a number less than 1000.<br>";
                 $error = true; // There is an error
             }
         }
@@ -112,7 +128,9 @@ class Edit_Activity{
     }
 
 
+    // Function to edit activity in database
     public function edit_activity($activity_id, $data){
+        
         // Creating all the varaibles for the SQL input
         $activity_name = $data['activity_name']; // ucfirst makes first letter capital.
         $number_of_places = $data['number_of_places'];

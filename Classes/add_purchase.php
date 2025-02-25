@@ -1,17 +1,20 @@
 <?php
 
+// Class to add purchase to database
 class Add_Purchase{
+
+    // Error messages for each form field
     public $item_names_error_mes = "";
     public $total_cost_error_mes = "";
     public $purchase_date_error_mes = "";
     public $entry_clerk_error_mes = "";
 
 
-
     // Analyses data sent by user
     public function evaluate($volunteer_id, $data){
 
-        $error = false; // Initialize error contract variable
+        // Initialize error contract variable
+        $error = false;
 
         // Check item names
         if (isset($_POST['item_names'])){
@@ -69,8 +72,9 @@ class Add_Purchase{
         }
     }
 
-
+    // Function to add purchase to database
     public function add_purchase($volunteer_id, $data){
+
         // Creating all the varaibles for the SQL input
         $item_names = $data['item_names'];
         $total_cost = $data['total_cost'];
@@ -100,7 +104,6 @@ class Add_Purchase{
         $DB->save($purchase_query);
     }
 
-    
 }
 
 ?>

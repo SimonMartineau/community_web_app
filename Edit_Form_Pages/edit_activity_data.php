@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -5,29 +6,29 @@
     include("../Classes/edit_activity_data.php");
     include("../Classes/functions.php");
 
-
+    // Get activity_id from the URL
     if (isset($_GET['activity_id'])) {
         $activity_id = $_GET['activity_id'];
-
-        // Collecting activity data (only 1 row needed)
-        $activity_data_row = fetch_data(
-            "SELECT * FROM Activities
-                    WHERE id = '$activity_id'"
-        )[0];
-
-        // Collecting activity time periods data
-        $activity_time_periods_data = fetch_data(
-            query: "SELECT * FROM Activity_Time_Periods
-                    WHERE activity_id = '$activity_id'"
-        );
-
-        // Collecting activity domains data
-        $activity_domain_data = fetch_data(
-            "SELECT * FROM Activity_Domains
-                    WHERE activity_id = '$activity_id'"
-        );
-
     }
+
+    // Fetch SQL data
+    // Collecting activity data (only 1 row needed)
+    $activity_data_row = fetch_data(
+        "SELECT * FROM Activities
+                WHERE id = '$activity_id'"
+    )[0];
+
+    // Collecting activity time periods data
+    $activity_time_periods_data_rows = fetch_data(
+        query: "SELECT * FROM Activity_Time_Periods
+                WHERE activity_id = '$activity_id'"
+    );
+
+    // Collecting activity domains data
+    $activity_domain_data_rows = fetch_data(
+        "SELECT * FROM Activity_Domains
+                WHERE activity_id = '$activity_id'"
+    );
 
     // Variables to keep user input data if failed submit
     $activity_name = $activity_data_row['activity_name'];
@@ -35,23 +36,25 @@
     $activity_location = $activity_data_row['activity_location'];
     $number_of_places = $activity_data_row['number_of_places'];
     $activity_date = $activity_data_row['activity_date'];
-    // For activity_time_periods_data, we extract the time_period column and insert the data in $activity_time_periods[].
-    foreach($activity_time_periods_data as $activity_time_periods_data_row){
+    // For activity_time_periods_data_rows, we extract the time_period column and insert the data in $activity_time_periods[].
+    foreach($activity_time_periods_data_rows as $activity_time_periods_data_row){
         $activity_time_periods[] = $activity_time_periods_data_row['time_period'];
     }
     // For activity_domain_data, we extract the domain column and insert the data in $activity_domains[].
-    foreach($activity_domain_data as $activity_domain_data_row){
+    foreach($activity_domain_data_rows as $activity_domain_data_row){
         $activity_domains[] = $activity_domain_data_row['domain'];
     }
     $entry_clerk = $activity_data_row['entry_clerk'];
     $additional_notes = $activity_data_row['additional_notes'];
     $registration_date = $activity_data_row['registration_date'];
 
+    
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        // Create a Edit_Activity object for form evaluation
         $activity = new Edit_Activity();
-        $submit_success = $activity->evaluate($activity_id, $_POST);
+        $submit_success = $activity->evaluate($activity_id, $_POST); // Evaluate the form
 
         // If there are errors 
         if(!$submit_success){
@@ -76,7 +79,7 @@
             $registration_date = $_POST['registration_date'];
 
         } else{
-            // Changing the page.
+            // There are no errors with the form submit, we can change the page.
             header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
             die; // Ending the script
         }    
@@ -84,16 +87,17 @@
 ?> 
 
 
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit Activity | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
@@ -175,11 +179,15 @@
                                     <th>Contract</th>
                                 </tr>
                                 <?php
+
+                                // Time periods
                                 $time_periods = [
                                     "Morning", 
                                     "Afternoon", 
                                     "Evening"
                                 ];
+
+                                // Create table with checkboxes
                                 foreach ($time_periods as $time_period) {
                                     echo "<tr>";
                                     echo "<td>$time_period</td>";
@@ -207,6 +215,8 @@
                                     <th>Contract</th>
                                 </tr>
                                 <?php
+
+                                // Activity domains
                                 $domain_types = [
                                     "Organization of community events", 
                                     "Library support", 
@@ -215,6 +225,8 @@
                                     "Cleaning and maintenance of public spaces", 
                                     "Participation in urban gardening projects"
                                 ];
+
+                                // Create table with checkboxes
                                 foreach ($domain_types as $domain) {
                                     echo "<tr>";
                                     echo "<td>$domain</td>";
@@ -263,10 +275,8 @@
                     </form>
                 </div>
 
-                
             </div>
         </div>
-            
         
     </body>
 </html>

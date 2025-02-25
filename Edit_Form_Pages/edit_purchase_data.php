@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -5,24 +6,28 @@
     include("../Classes/edit_purchase_data.php");
     include("../Classes/functions.php");
 
+    // Get purchase_id from the URL
     if (isset($_GET['purchase_id'])) {
         $purchase_id = $_GET['purchase_id'];
-
-        $purchase_data = fetch_purchase_data($purchase_id);
     }
 
+    // Fetch SQL data
+    $purchase_data_row = fetch_purchase_data($purchase_id);
+
     // Default entry values on page startup.
-    $item_names = $purchase_data['item_names'];
-    $total_cost = $purchase_data['total_cost'];
-    $purchase_date = $purchase_data['purchase_date'];
-    $entry_clerk = $purchase_data['entry_clerk'];
-    $additional_notes = $purchase_data['additional_notes'];
+    $item_names = $purchase_data_row['item_names'];
+    $total_cost = $purchase_data_row['total_cost'];
+    $purchase_date = $purchase_data_row['purchase_date'];
+    $entry_clerk = $purchase_data_row['entry_clerk'];
+    $additional_notes = $purchase_data_row['additional_notes'];
+    
     
     // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        // Create a Edit_Purchase object for form evaluation
         $purchase = new Edit_Purchase();
-        $submit_success = $purchase->evaluate($purchase_id, $_POST);
+        $submit_success = $purchase->evaluate($purchase_id, $_POST); // Evaluate the form
 
         // If there are errors 
         if(!$submit_success){
@@ -33,8 +38,8 @@
             $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
             
-        } else{ // If there are no errors in the submission.
-            // Changing the page.
+        } else{
+            // There are no errors with the form submit, we can change the page.
             header("Location: ../Profile_Pages/purchase_profile.php?purchase_id=" . $purchase_id);
             die; // Ending the script
         }    
@@ -42,16 +47,17 @@
 ?> 
 
 
+
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit Purchase Data | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 

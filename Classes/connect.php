@@ -1,12 +1,13 @@
 <?php
 
+// Class to connect to database
 class Database{
 
     // Database info
-    private $host = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $db = "association_database_v3";
+    private $host = "localhost"; // host name
+    private $username = "root"; // username
+    private $password = ""; // password
+    private $db = "association_database_v3"; // database name
     public $last_insert_id;
 
 

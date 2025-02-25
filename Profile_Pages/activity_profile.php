@@ -367,21 +367,21 @@
                                     <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Interest Filter</span>
+                                <span>Matching Interests</span>
                                 <br>
 
                                 <label class="switch">
                                     <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Weekday Filter</span>
+                                <span>Matching Weekdays</span>
                                 <br>
 
                                 <label class="switch">
                                     <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Time Period Filter</span>
+                                <span>Matching Time Periods</span>
                                 <br>
 
                                 <!-- Submit button -->

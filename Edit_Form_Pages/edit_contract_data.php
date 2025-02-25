@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -5,25 +6,29 @@
     include("../Classes/edit_contract_data.php");
     include("../Classes/functions.php");
 
+    // Get contract_id from the URL
     if (isset($_GET['contract_id'])) {
         $contract_id = $_GET['contract_id'];
-
-        $contract_data = fetch_contract_data($contract_id);
     }
 
+    // Fetch SQL data
+    $contract_data_row = fetch_contract_data($contract_id);
+
     // Default entry values on page startup.
-    $issuance_date = $contract_data['issuance_date'];
-    $validity_date = $contract_data['validity_date'];
-    $points_deposit = $contract_data['points_deposit'];
-    $hours_required = $contract_data['hours_required'];
-    $entry_clerk = $contract_data['entry_clerk'];
-    $additional_notes = $contract_data['additional_notes'];
+    $issuance_date = $contract_data_row['issuance_date'];
+    $validity_date = $contract_data_row['validity_date'];
+    $points_deposit = $contract_data_row['points_deposit'];
+    $hours_required = $contract_data_row['hours_required'];
+    $entry_clerk = $contract_data_row['entry_clerk'];
+    $additional_notes = $contract_data_row['additional_notes'];
+    
     
     // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        // Create a Edit_Contract object for form evaluation
         $contract = new Edit_Contract();
-        $submit_success = $contract->evaluate($contract_id, $_POST);
+        $submit_success = $contract->evaluate($contract_id, $_POST); // Evaluate the form
 
         // If there are errors 
         if(!$submit_success){
@@ -35,8 +40,8 @@
             $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
             
-        } else{ // If there are no errors in the submission.
-            // Changing the page.
+        } else{
+            // There are no errors with the form submit, we can change the page.
             header("Location: ../Profile_Pages/contract_profile.php?contract_id=" . $contract_id);
             die; // Ending the script
         }    
@@ -44,16 +49,18 @@
 ?> 
 
 
+
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit Contract Data | Give and Receive</title>
+        <link rel="icon" href="../Images/favicon.ico" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
