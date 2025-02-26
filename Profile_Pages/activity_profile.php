@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
     session_start();
 
@@ -25,19 +26,19 @@
         $activity_id = $_GET['activity_id'];
 
         // Collecting activity data (only 1 row needed)
-        $activity_data_row = fetch_data(
+        $activity_data_row = fetch_data_rows(
             "SELECT * FROM Activities
                     WHERE id = '$activity_id'"
         )[0];
 
         // Collecting activity time periods data
-        $activity_time_periods_data = fetch_data(
+        $activity_time_periods_data_rows = fetch_data_rows(
             "SELECT * FROM Activity_Time_Periods
                     WHERE activity_id = '$activity_id'"
         );
 
         // Collecting activity domains data
-        $activity_domains_data = fetch_data(
+        $activity_domains_data_rows = fetch_data_rows(
             "SELECT * FROM Activity_Domains
                     WHERE activity_id = '$activity_id'"
         );
@@ -48,19 +49,19 @@
 
     // Getting the activity time periods in a string
     $time_periods = [];
-    foreach ($activity_time_periods_data as $activity_time_periods_data_row){
+    foreach ($activity_time_periods_data_rows as $activity_time_periods_data_row){
         $time_periods[] = $activity_time_periods_data_row['time_period'];
     }
     $activity_time_periods_sql = "'" . implode("', '", $time_periods) . "'";
 
     // Getting the activity domains in a string
     $domains = [];
-    foreach ($activity_domains_data as $activity_domains_data_row){
+    foreach ($activity_domains_data_rows as $activity_domains_data_row){
         $domains[] = $activity_domains_data_row['domain'];
     }
     $activity_domains_sql = "'" . implode("', '", $domains) . "'";
     
-    $all_current_participants_data = fetch_data("
+    $all_current_participants_data_rows = fetch_data_rows("
         SELECT DISTINCT v.* 
         FROM Volunteers v
         JOIN Volunteer_Activity_Junction vaj ON v.id = vaj.volunteer_id
@@ -96,7 +97,7 @@
         )
         ORDER BY v.id DESC";
 
-    $all_matching_participants_data = fetch_data($sql_filter_query);
+    $all_matching_participants_data_rows = fetch_data_rows($sql_filter_query);
 
 
 
@@ -174,31 +175,32 @@
 ?>
 
 
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Activity Profile | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
         <script src="../functions.js"></script>
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Cover area -->
+        <!-- Cover Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
             <!-- Submenu Button Area -->
 
-            <!-- Edit activity button -->
+            <!-- Edit Activity Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
@@ -208,7 +210,7 @@
                 </a>
             </div>
 
-            <!-- Contract if activity is deleted or not -->
+            <!-- Trash/Restore Activity -->
             <?php 
                 // If the activity is not trashed, propose delete option
                 if($activity_data_row['trashed'] == 0){
@@ -243,13 +245,13 @@
             ?>
 
                     
-            <!-- Below cover area -->
+            <!-- Below Cover Area -->
             <div style="display: flex; align-items: flex-start;">
 
-                <!-- Left area; Activity information area -->
+                <!-- Left Area; Activity Information Area -->
                 <div id="medium_rectangle" style="flex:0.57;">
 
-                    <!-- Section title of contact section -->
+                    <!-- Section Title of Contact Section -->
                     <div id="section_title">
                         <span>Activity Info</span>
                     </div>
@@ -288,9 +290,9 @@
                     <!-- Time Periods -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Time Periods</h2>
-                        <?php if (!empty($activity_time_periods_data)): ?>
+                        <?php if (!empty($activity_time_periods_data_rows)): ?>
                             <ul style="list-style-type: disc; padding-left: 20px;">
-                                <?php foreach ($activity_time_periods_data as $activity_time_periods_data_row): ?>
+                                <?php foreach ($activity_time_periods_data_rows as $activity_time_periods_data_row): ?>
                                     <li><?php echo htmlspecialchars($activity_time_periods_data_row['time_period'] ?: 'No specific time period provided'); ?></li>
                                 <?php endforeach; ?>
                             </ul>
@@ -302,9 +304,9 @@
                     <!-- Domains -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Domains</h2>
-                        <?php if (!empty($activity_domains_data)): ?>
+                        <?php if (!empty($activity_domains_data_rows)): ?>
                             <ul style="list-style-type: disc; padding-left: 20px;">
-                                <?php foreach ($activity_domains_data as $activity_domains_data_row): ?>
+                                <?php foreach ($activity_domains_data_rows as $activity_domains_data_row): ?>
                                     <li><?php echo htmlspecialchars($activity_domains_data_row['domain'] ?: 'No specific interest provided'); ?></li>
                                 <?php endforeach; ?>
                             </ul>
@@ -320,49 +322,51 @@
                         <p><strong>Registration Date:</strong> <?php echo htmlspecialchars(formatDate($activity_data_row['registration_date'])); ?></p>
                         <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($activity_data_row['trashed'] ? "Yes" : "No"); ?></p>
                     </div>
- 
                 </div>
 
 
-                <!-- Right area -->
+                <!-- Right Area -->
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
 
-                    <!-- Widget display -->
+                    <!-- Widget Display -->
                     <div id="medium_rectangle">
 
-                        <!-- Toggle buttons -->
+                        <!-- Toggle Buttons -->
                          <div id="widget_toggle_buttons">
                             <button id="show_participants_button" class="active" onclick="ToggleWidgets('current_participants', this)">Show Participants</button>
                             <button id="matching_volunteers_button" onclick="ToggleWidgets('matching_volunteers', this)">Show Matching Volunteers</button>
                         </div> 
 
-                        <!-- Display participants widgets --> 
+                        <!-- Display Participants Widgets --> 
                         <div id="current_participants_widgets" class="widget-container">
                             <?php
                                 // Counting the number of elements post filter
-                                if (empty($all_current_participants_data)) {
+                                if (empty($all_current_participants_data_rows)) {
                                     echo "This activity doesn't have any participants yet.";
                                 } else {
-                                    echo "This activity has " . count($all_current_participants_data) . ((count($all_current_participants_data) == 1) ?" participant." : " participants.");
+                                    echo "This activity has " . count($all_current_participants_data_rows) . ((count($all_current_participants_data_rows) == 1) ?" participant." : " participants.");
                                 }
                            
 
                                 // Display the widgets
-                                if($all_current_participants_data){
-                                    foreach($all_current_participants_data as $volunteer_data_row){
+                                if($all_current_participants_data_rows){
+                                    foreach($all_current_participants_data_rows as $volunteer_data_row){
                                         $volunteer_id = $volunteer_data_row['id'];
-                                        $interest_data = fetch_volunteer_interest_data($volunteer_id);
-                                        $availability_data = fetch_volunteer_availability_data($volunteer_id);
+                                        $interest_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
+                                        $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
                                         include("../Widget_Pages/volunteer_widget.php");
                                     }
                                 }
                             ?>
                         </div>
 
-                        <!-- Display matching volunteers widgets --> 
+                        <!-- Display Matching Volunteers Widgets --> 
                         <div id="matching_volunteers_widgets" class="widget-container" style="display: none;">
 
+                            <!-- Filter Form -->
                             <form id="filterForm" action="" method="post">
+
+                                <!-- Interests Filter -->
                                 <label class="switch">
                                     <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
                                     <span class="slider round"></span>
@@ -370,6 +374,7 @@
                                 <span>Matching Interests</span>
                                 <br>
 
+                                <!-- Weekday Filter -->
                                 <label class="switch">
                                     <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
@@ -377,6 +382,7 @@
                                 <span>Matching Weekdays</span>
                                 <br>
 
+                                <!-- Time Period Filter -->
                                 <label class="switch">
                                     <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
@@ -384,7 +390,7 @@
                                 <span>Matching Time Periods</span>
                                 <br>
 
-                                <!-- Submit button -->
+                                <!-- Submit Button -->
                                 <div style="text-align: center;">
                                     <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                         Apply Filter
@@ -392,7 +398,7 @@
                                 </div>
                             </form>
 
-                            <!-- Show Matching Volunteers if POST -->
+                            <!-- Show Matching Volunteers If POST -->
                             <?php
                                 // After your form processing logic, add this PHP code
                                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply_filter'])) {
@@ -407,18 +413,18 @@
                             
                             <?php
                                 // Counting the number of elements post filter
-                                if (empty($all_matching_participants_data)) {
+                                if (empty($all_matching_participants_data_rows)) {
                                     echo "No volunteers found.";
                                 } else {
-                                    echo "This activity has " . count($all_matching_participants_data) . ((count($all_matching_participants_data) == 1) ? " volunteer that matches." : " volunteers that match");
+                                    echo "This activity has " . count($all_matching_participants_data_rows) . ((count($all_matching_participants_data_rows) == 1) ? " volunteer that matches." : " volunteers that match");
                                 } 
 
                                 // Display the widgets
-                                if($all_matching_participants_data){
-                                    foreach($all_matching_participants_data as $volunteer_data_row){
-                                        $volunteer_id = $volunteer_data_row['id']; 
-                                        $interest_data = fetch_volunteer_interest_data($volunteer_id);
-                                        $availability_data = fetch_volunteer_availability_data($volunteer_id);
+                                if($all_matching_participants_data_rows){
+                                    foreach($all_matching_participants_data_rows as $volunteer_data_row){
+                                        $volunteer_id = $volunteer_data_row['id'];
+                                        $interest_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
+                                        $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
                                         include("../Widget_Pages/volunteer_widget.php");
                                     }
                                 }

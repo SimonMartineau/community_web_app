@@ -58,13 +58,13 @@
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Middle area -->
+        <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             
-            <!-- Major rectangle area -->
+            <!-- Major Rectangle Area -->
             <div id="major_rectangle">
 
                 <!-- Title -->
@@ -72,20 +72,20 @@
                     <span style="font-size: 24px; font-weight: bold;">Purchase Form</span>
                 </div>
 
-                <!-- Error message -->
+                <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
                         <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
                     </span>
                 </div>
 
-                <!-- Form area -->
+                <!-- Form Area -->
                 <div id="form_section">
 
-                    <!-- Form text input -->
+                    <!-- Form Text Input -->
                     <form method="post" action="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>">
 
-                        <!-- Item names text input -->
+                        <!-- Item Names Text Input -->
                         <div class="input_container">
                             Item names:
                             <input name="item_names" type="text" id="text_input" value="<?php echo $item_names ?>">
@@ -93,7 +93,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Total cost text input -->
+                        <!-- Total Cost Text Input -->
                         <div class="input_container">
                             Total cost:
                             <input name="total_cost" type="text" id="text_input" value="<?php echo $total_cost ?>">
@@ -101,7 +101,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Purchase date input -->
+                        <!-- Purchase Date Input -->
                         <div class="input_container">
                             Purchase date: 
                             <input type="date" name="purchase_date" value="<?php echo $purchase_date ?>">
@@ -109,7 +109,7 @@
                         </div>
                         <br><br>
                         
-                        <!-- Entry Clerk text input -->
+                        <!-- Entry Clerk Text Input -->
                         <div class="input_container">
                             Entry clerk:
                             <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -117,7 +117,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Additional notes text input -->
+                        <!-- Additional Notes Text Input -->
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
@@ -125,7 +125,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Submit button -->
+                        <!-- Submit Button -->
                         <div class="input_container">
                             <input type="submit" id="submit_button" value="Submit">
                         </div>

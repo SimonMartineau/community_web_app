@@ -1,6 +1,6 @@
 <?php
 
-function fetch_data($query){
+function fetch_data_rows($query){
 
     $DB = new Database();
     $DB->save($query);
@@ -14,7 +14,7 @@ function fetch_data($query){
     }
 }
 
-function fetch_volunteer_data($volunteer_id){
+function fetch_volunteer_data_row($volunteer_id){
     $query = "select * from Volunteers where id='$volunteer_id'";
 
     $DB = new Database();
@@ -29,7 +29,7 @@ function fetch_volunteer_data($volunteer_id){
     }
 }
 
-function fetch_volunteer_interest_data($volunteer_id){
+function fetch_volunteer_interest_data_rows($volunteer_id){
     $query = "select * from Volunteer_Interests where volunteer_id='$volunteer_id'";
 
     $DB = new Database();
@@ -44,7 +44,7 @@ function fetch_volunteer_interest_data($volunteer_id){
     }
 }
 
-function fetch_volunteer_availability_data($volunteer_id){
+function fetch_volunteer_availability_data_rows($volunteer_id){
     $query = "select * from Volunteer_Availability where volunteer_id='$volunteer_id'";
 
     $DB = new Database();
@@ -59,7 +59,7 @@ function fetch_volunteer_availability_data($volunteer_id){
     }
 }
 
-function fetch_contract_data($contract_id){
+function fetch_contract_data_row($contract_id){
     $query = "select * from Contracts where id='$contract_id'";
 
     $DB = new Database();
@@ -74,7 +74,7 @@ function fetch_contract_data($contract_id){
     }
 }
 
-function fetch_purchase_data($purchase_id){
+function fetch_purchase_data_row($purchase_id){
     $query = "select * from Purchases where id='$purchase_id'";
 
     $DB = new Database();

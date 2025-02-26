@@ -68,13 +68,13 @@
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Middle area -->
+        <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             
-            <!-- Major rectangle area -->
+            <!-- Major Rectangle Area -->
             <div id="major_rectangle">
 
                 <!-- Title -->
@@ -82,20 +82,20 @@
                     <span style="font-size: 24px; font-weight: bold;">Add Activity Form</span>
                 </div>
 
-                <!-- Error message -->
+                <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
                         <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
                     </span>
                 </div>
 
-                <!-- Form area -->
+                <!-- Form Area -->
                 <div id="form_section">
 
-                    <!-- Form text input -->
+                    <!-- Form Text Input -->
                     <form method="post" action="../Add_Form_Pages/add_activity.php">
 
-                        <!-- Activity name text input -->
+                        <!-- Activity Name Text Input -->
                         <div class="input_container">
                             Activity name:
                             <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
@@ -103,7 +103,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity number of places text input -->
+                        <!-- Activity Number of Places Text Input -->
                         <div class="input_container">
                             Number of places:
                             <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
@@ -111,7 +111,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity duration text input -->
+                        <!-- Activity Duration Text Input -->
                         <div class="input_container">
                             Activity duration:
                             <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
@@ -119,20 +119,20 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity location text input -->
+                        <!-- Activity Location Text Input -->
                         <div class="input_container">
                             Activity location:
                             <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
                         </div>
                         <br><br>
                         
-                        <!-- Dates input -->
+                        <!-- Dates Input -->
                         <div class="input_container">
                             <!-- Include Flatpickr CSS & JS -->
                             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
                             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-                            <!-- Multi-date picker input -->
+                            <!-- Multi-date picker Input -->
                             Activity Dates: <input type="text" id="activity_dates" name="activity_dates" value="<?php echo $activity_dates ?>">
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_dates_error_mes : ''; ?></span>
 
@@ -146,7 +146,7 @@
                         </div>
 
 
-                        <!-- Activity time period table -->
+                        <!-- Activity Time Period Table -->
                         <div class="input_container">
                             <h4 style="text-align: center;">Activity Time Period</h4> 
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_periods_error_mes : ''; ?></span>
@@ -182,7 +182,7 @@
                         </div>
                         <br>
 
-                        <!-- Activity domains table -->
+                        <!-- Activity Domains Table -->
                         <div class="input_container">
                             <h4 style="text-align: center;">Activity Domains</h4> 
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_domains_error_mes : ''; ?></span>
@@ -221,7 +221,7 @@
                         </div>
                         <br>
 
-                        <!-- Entry Clerk text input -->
+                        <!-- Entry Clerk Text Input -->
                         <div class="input_container">
                             Entry Clerk:
                             <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -229,7 +229,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Additional notes text input -->
+                        <!-- Additional Notes Text Input -->
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
@@ -237,7 +237,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Submit button -->
+                        <!-- Submit Button -->
                         <div class="input_container">
                             <input type="submit" id="submit_button" value="Submit">
                         </div>

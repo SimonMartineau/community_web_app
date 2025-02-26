@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -10,18 +11,18 @@
     if (isset($_GET['contract_id'])) {
         $contract_id = $_GET['contract_id'];
 
-        $contract_data = fetch_contract_data($contract_id);
-        $volunteer_id = $contract_data['volunteer_id'];
-        $volunteer_data_row = fetch_volunteer_data($volunteer_id); // We link the correct owner of the contract.
+        $contract_data_row = fetch_contract_data_row($contract_id);
+        $volunteer_id = $contract_data_row['volunteer_id'];
+        $volunteer_data_row = fetch_volunteer_data_row($volunteer_id); // We link the correct owner of the contract.
 
-        $purchases_data = fetch_data("
+        $purchases_data_rows = fetch_data_rows("
             SELECT * 
             FROM Purchases 
             WHERE contract_id='$contract_id' 
             ORDER BY id desc "
         );
 
-        $activities_data = fetch_data("
+        $activities_data_rows = fetch_data_rows("
             SELECT a.* 
             FROM Activities a
             JOIN Volunteer_Activity_Junction vaj ON vaj.activity_id = a.id
@@ -51,31 +52,33 @@
 
 ?>
 
+
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Contract Profile | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
-
-    <style></style>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
         <script src="../functions.js"></script>
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Cover area -->
+        <!-- Cover Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
             <!-- Submenu Button Area -->
 
-            <!-- Edit contract button -->
+            <!-- Edit Contract Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
@@ -85,7 +88,7 @@
                 </a>
             </div>
 
-            <!-- Delete contract button -->
+            <!-- Delete Contract Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <form method="POST" action="../Profile_Pages/contract_profile.php?contract_id=<?php echo $contract_id; ?>" onsubmit="return confirm('Are you sure you want to delete this contract?')">
                     <button id="submenu_button">
@@ -97,13 +100,13 @@
                 </form>
             </div>
 
-            <!-- Below cover area -->
+            <!-- Below Cover Area -->
             <div style="display: flex; align-items: flex-start;">
 
-                <!-- Left area; Contract information area -->
+                <!-- Left Area; Contract Information Area -->
                 <div id="medium_rectangle" style="flex:0.57;">
 
-                    <!-- Section title of contact section -->
+                    <!-- Section Title of Contact Section -->
                     <div id="section_title">
                         <span>Contract Info</span>
                     </div>
@@ -114,7 +117,7 @@
 
                         <?php
                             // Determine the message and color based on $contract_active
-                            if ($contract_data['contract_active'] == 1) {
+                            if ($contract_data_row['contract_active'] == 1) {
                                 $message = "Current Volunteer's Contract";
                                 $messageColor = "green";
                             } else {
@@ -123,7 +126,7 @@
                             }
                         ?>
 
-                        <?php if ($contract_data['points_deposit'] - $contract_data['points_spent'] < 0): ?>
+                        <?php if ($contract_data_row['points_deposit'] - $contract_data_row['points_spent'] < 0): ?>
                             <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points for this contract.</strong><br>
                         <?php endif; ?>
 
@@ -132,31 +135,31 @@
                             <?php echo $message; ?>
                         </p>
 
-                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: formatDate($contract_data['issuance_date'])); ?></p>
-                        <p><strong>Validity Date:</strong> <?php echo htmlspecialchars(formatDate($contract_data['validity_date'])); ?></p>
-                        <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($contract_data['points_deposit']) . " Points"; ?></p>
-                        <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($contract_data['points_spent']) . " Points"; ?></p>
-                        <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($contract_data['hours_required']) . " Hours"; ?></p>
-                        <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($contract_data['hours_completed']) . " Hours"; ?></p>
-                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($contract_data['entry_clerk']); ?></p>
+                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: formatDate($contract_data_row['issuance_date'])); ?></p>
+                        <p><strong>Validity Date:</strong> <?php echo htmlspecialchars(formatDate($contract_data_row['validity_date'])); ?></p>
+                        <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($contract_data_row['points_deposit']) . " Points"; ?></p>
+                        <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($contract_data_row['points_spent']) . " Points"; ?></p>
+                        <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($contract_data_row['hours_required']) . " Hours"; ?></p>
+                        <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($contract_data_row['hours_completed']) . " Hours"; ?></p>
+                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($contract_data_row['entry_clerk']); ?></p>
 
                     </div>
 
                     <!-- Additional Details -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($contract_data['additional_notes']) ?: 'None'; ?></p>
+                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($contract_data_row['additional_notes']) ?: 'None'; ?></p>
                     </div>
                     
                 </div>
 
-                <!-- Right area -->
+                <!-- Right Area -->
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
 
-                    <!-- Widget display -->
+                    <!-- Widget Display -->
                     <div id="medium_rectangle">
 
-                        <!-- Toggle buttons -->
+                        <!-- Toggle Buttons -->
                         <div id="widget_toggle_buttons">
                             <button class="active" onclick="ToggleWidgets('volunteer', this)">Show Volunteer</button>
                             <button onclick="ToggleWidgets('purchases', this)">Show Purchases</button>
@@ -164,39 +167,39 @@
                         </div>
 
 
-                        <!-- Display volunteer widget -->
+                        <!-- Display Volunteer Widget -->
                         <div id="volunteer_widgets" class="widget-container">
                             <?php
                             if ($volunteer_data_row) {
                                 $volunteer_id = $volunteer_data_row['id'];
-                                $interest_data = fetch_volunteer_interest_data($volunteer_id);
-                                $availability_data = fetch_volunteer_availability_data($volunteer_id);
+                                $interest_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
+                                $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
                                 include("../Widget_Pages/volunteer_widget.php");
                             }
                             ?>
                         </div>                    
                         
-                        <!-- Display purchase widgets -->
+                        <!-- Display Purchase Widgets -->
                         <div id="purchases_widgets" class="widget-container" style="display: none;">
                             <?php
-                            if ($purchases_data) {
-                                foreach ($purchases_data as $purchase_data_row) {
+                            if ($purchases_data_rows) {
+                                foreach ($purchases_data_rows as $purchase_data_row) {
                                     $purchase_id = $purchase_data_row['id'];
-                                    $volunteer_data = fetch_volunteer_data($volunteer_id);
+                                    $volunteer_data_row = fetch_volunteer_data_row($volunteer_id);
                                     include("../Widget_Pages/purchase_widget.php");
                                 }
                             }
                             ?>
                         </div>
 
-                        <!-- Display activities widgets -->
+                        <!-- Display Activities Widgets -->
                         <div id="activities_widgets" class="widget-container" style="display: none;">
                             <?php
-                            if ($activities_data) {
-                                foreach ($activities_data as $activity_data_row) {
+                            if ($activities_data_rows) {
+                                foreach ($activities_data_rows as $activity_data_row) {
                                     $activity_id = $activity_data_row['id'];
-                                    $activity_time_periods_data = fetch_data("select * from Activity_Time_Periods where activity_id = '$activity_id'");
-                                    $activity_domains_data = fetch_data("select * from Activity_Domains where activity_id = '$activity_id'");
+                                    $activity_time_periods_data_rows = fetch_data_rows("select * from Activity_Time_Periods where activity_id = '$activity_id'");
+                                    $activity_domains_data_rows = fetch_data_rows("select * from Activity_Domains where activity_id = '$activity_id'");
                                     include("../Widget_Pages/activity_widget.php");
                                 }
                             }

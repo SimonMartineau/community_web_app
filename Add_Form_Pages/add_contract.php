@@ -59,13 +59,13 @@
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Middle area -->
+        <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             
-            <!-- Major rectangle area -->
+            <!-- Major Rectangle Area -->
             <div id="major_rectangle">
 
                 <!-- Title -->
@@ -73,20 +73,20 @@
                     <span style="font-size: 24px; font-weight: bold;">Contract Form</span>
                 </div>
 
-                <!-- Error message -->
+                <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
                         <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
                     </span>
                 </div>
 
-                <!-- Form area -->
+                <!-- Form Area -->
                 <div id="form_section">
 
-                    <!-- Form text input -->
+                    <!-- Form Text Input -->
                     <form method="post" action="../Add_Form_Pages/add_contract.php?volunteer_id=<?php echo $volunteer_id; ?>">
 
-                        <!-- Issuance date input -->
+                        <!-- Issuance Date Input -->
                         <div class="input_container">
                             Issuance date: 
                             <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
@@ -94,7 +94,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Validity date input -->
+                        <!-- Validity Date Input -->
                         <div class="input_container">
                             Validity date: 
                             <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
@@ -102,7 +102,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Points text input -->
+                        <!-- Points Text Input -->
                         <div class="input_container">
                             Points Deposit:
                             <input name="points_deposit" type="text" id="text_input" value="<?php echo $points_deposit ?>">
@@ -110,7 +110,7 @@
                         </div>
                         <br><br>
                         
-                        <!-- Time requirement input -->
+                        <!-- Time Requirement Input -->
                         <div class="input_container">
                             Hours Required:
                             <input name="hours_required" type="text" id="text_input" value="<?php echo $hours_required ?>">
@@ -118,7 +118,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Entry Clerk text input -->
+                        <!-- Entry Clerk Text Input -->
                         <div class="input_container">
                             Entry Clerk:
                             <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -126,7 +126,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Additional notes text input -->
+                        <!-- Additional Notes Text Input -->
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
@@ -134,7 +134,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Submit button -->
+                        <!-- Submit Button -->
                         <div class="input_container">
                             <input type="submit" id="submit_button" value="Submit">
                         </div>

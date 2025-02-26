@@ -13,19 +13,19 @@
 
     // Fetch SQL data
     // Collecting activity data (only 1 row needed)
-    $activity_data_row = fetch_data(
+    $activity_data_row = fetch_data_rows(
         "SELECT * FROM Activities
                 WHERE id = '$activity_id'"
     )[0];
 
     // Collecting activity time periods data
-    $activity_time_periods_data_rows = fetch_data(
+    $activity_time_periods_data_rows = fetch_data_rows(
         query: "SELECT * FROM Activity_Time_Periods
                 WHERE activity_id = '$activity_id'"
     );
 
     // Collecting activity domains data
-    $activity_domain_data_rows = fetch_data(
+    $activity_domain_data_rows = fetch_data_rows(
         "SELECT * FROM Activity_Domains
                 WHERE activity_id = '$activity_id'"
     );
@@ -101,13 +101,13 @@
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Middle area -->
+        <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             
-            <!-- Major rectangle area -->
+            <!-- Major Rectangle Area -->
             <div id="major_rectangle">
 
                 <!-- Title -->
@@ -115,20 +115,20 @@
                     <span style="font-size: 24px; font-weight: bold;">Edit Activity Form</span>
                 </div>
 
-                <!-- Error message -->
+                <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
                         <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
                     </span>
                 </div>
 
-                <!-- Form area -->
+                <!-- Form Area -->
                 <div id="form_section">
 
-                    <!-- Form text input -->
+                    <!-- Form Text Input -->
                     <form method="post" action="../Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>">
 
-                        <!-- Activity name text input -->
+                        <!-- Activity Name Text Input -->
                         <div class="input_container">
                             Activity name:
                             <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
@@ -136,7 +136,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity number of places text input -->
+                        <!-- Activity Number of Places Text Input -->
                         <div class="input_container">
                             Number of places:
                             <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
@@ -144,7 +144,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity duration text input -->
+                        <!-- Activity Duration Text Input -->
                         <div class="input_container">
                             Activity duration:
                             <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
@@ -152,14 +152,14 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity location text input -->
+                        <!-- Activity Location Text Input -->
                         <div class="input_container">
                             Activity location:
                             <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
                         </div>
                         <br><br>
 
-                        <!-- Date input -->
+                        <!-- Date Input -->
                         <div class="input_container">
                             Activity Date: 
                             <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
@@ -167,7 +167,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Activity time period table -->
+                        <!-- Activity Time Period Table -->
                         <div class="input_container">
                             <h4 style="text-align: center;">Activity Time Period</h4> 
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_periods_error_mes : ''; ?></span>
@@ -203,7 +203,7 @@
                         </div>
                         <br>
 
-                        <!-- Activity domains table -->
+                        <!-- Activity Domains Table -->
                         <div class="input_container">
                             <h4 style="text-align: center;">Activity Domains</h4> 
                             <span id="error_message"><?php echo isset($activity) ? $activity->activity_domains_error_mes : ''; ?></span>
@@ -242,7 +242,7 @@
                         </div>
                         <br>
 
-                        <!-- Entry Clerk text input -->
+                        <!-- Entry Clerk Text Input -->
                         <div class="input_container">
                             Entry clerk:
                             <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -250,7 +250,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Additional notes text input -->
+                        <!-- Additional Notes Text Input -->
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
@@ -258,7 +258,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Registration date text input -->
+                        <!-- Registration Date Text Input -->
                         <div class="input_container">
                             Registration date:
                             <input name="registration_date" type="date" id="text_input" value="<?php echo $registration_date ?>">
@@ -266,7 +266,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Submit button -->
+                        <!-- Submit Button -->
                         <div class="input_container">
                             <input type="submit" id="submit_button" value="Submit">
                         </div>

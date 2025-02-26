@@ -12,9 +12,9 @@
     }
 
     // Fetch SQL data
-    $volunteer_data_row = fetch_volunteer_data($volunteer_id);
-    $interests_data_rows = fetch_volunteer_interest_data($volunteer_id);
-    $availability_data_rows = fetch_volunteer_availability_data($volunteer_id);
+    $volunteer_data_row = fetch_volunteer_data_row($volunteer_id);
+    $interests_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
+    $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
 
     // Default entry values on page startup.
     $first_name = $volunteer_data_row['first_name'];
@@ -102,13 +102,13 @@
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Middle area -->
+        <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             
-            <!-- Major rectangle area -->
+            <!-- Major Rectangle Area -->
             <div id="major_rectangle">
                 
                 <!-- Title -->
@@ -116,20 +116,20 @@
                     <span style="font-size: 24px; font-weight: bold;">Edit Volunteer Data</span>
                 </div>
 
-                <!-- Error message -->
+                <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
                         <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
                     </span>
                 </div>
 
-                <!-- Form area -->
+                <!-- Form Area -->
                 <div id="form_section">
 
-                    <!-- Form text input -->
+                    <!-- Form Text Input -->
                     <form method="post" action="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>">
 
-                        <!-- First name text input -->
+                        <!-- First Name Text Input -->
                         <div class="input_container">
                             First name:
                             <input name="first_name" type="text" id="text_input" value="<?php echo $first_name ?>">
@@ -137,7 +137,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Last name text input -->
+                        <!-- Last Name Text Input -->
                         <div class="input_container">
                             Last name:
                             <input name="last_name" type="text" id="text_input" value="<?php echo $last_name ?>">
@@ -145,7 +145,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Gender bubble contract -->
+                        <!-- Gender Bubble Contract -->
                         <div class="input_container">
                             Gender:
                             <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> Male
@@ -155,14 +155,14 @@
                         </div>
                         <br><br>
 
-                        <!-- Date of birth input -->
+                        <!-- Date of Birth Input -->
                         <div class="input_container">
                             Date of birth: <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 
-                        <!-- Address text input -->
+                        <!-- Address Text Input -->
                         <div class="input_container">
                             Address:
                             <input name="address" type="text" id="text_input" value="<?php echo $address ?>">
@@ -170,7 +170,7 @@
                         </div>
                         <br><br>
 
-                        <!-- ZIP code text input -->
+                        <!-- ZIP Code Text Input -->
                         <div class="input_container">
                             ZIP code:
                             <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code ?>">
@@ -178,7 +178,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Telephone number text input -->
+                        <!-- Telephone Number Text Input -->
                         <div class="input_container">
                             Telephone number:
                             <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number ?>">
@@ -186,7 +186,7 @@
                         </div>
                         <br><br>
                         
-                        <!-- Email text input -->
+                        <!-- Email Text Input -->
                         <div class="input_container">
                             Email:
                             <input name="email" type="text" id="text_input" value="<?php echo $email ?>">
@@ -233,7 +233,7 @@
                         </div>
                         <br>
 
-                        <!-- Volunteer availability text input -->
+                        <!-- Volunteer Availability Text Input -->
                         <div class="input_container">
                             <h4 style="text-align: center;">Weekly Availability</h4>
                             <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
@@ -272,7 +272,7 @@
                         </div>
                         <br>
 
-                        <!-- Volunteer manager text input -->
+                        <!-- Volunteer Manager Text Input -->
                         <div class="input_container">
                             Volunteer manager:
                             <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager ?>">
@@ -280,7 +280,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Entry Clerk text input -->
+                        <!-- Entry Clerk Text Input -->
                         <div class="input_container">
                             Entry clerk:
                             <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -288,7 +288,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Additional notes text input -->
+                        <!-- Additional Notes Text Input -->
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
@@ -296,7 +296,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Registration date text input -->
+                        <!-- Registration Date Text Input -->
                         <div class="input_container">
                             Registration date:
                             <input name="registration_date" type="date" id="text_input" value="<?php echo $registration_date ?>">
@@ -304,7 +304,7 @@
                         </div>
                         <br><br>
 
-                        <!-- Submit button -->
+                        <!-- Submit Button -->
                         <div class="input_container">
                             <input type="submit" id="submit_button" value="Submit">
                         </div>

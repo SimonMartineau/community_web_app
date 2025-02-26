@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -16,7 +17,7 @@
     $available_days_filter = [];
 
     // Default page volunteer data
-    $all_activities_data = fetch_data("
+    $all_activities_data_rows = fetch_data_rows("
         SELECT DISTINCT a.* FROM Activities a
         JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
         JOIN Activity_Domains ad ON a.id = ad.activity_id
@@ -134,33 +135,33 @@
         }
 
         // Final query
-        $all_activities_data = fetch_data($sql_filter_query);
+        $all_activities_data_rows = fetch_data_rows($sql_filter_query);
     }
 ?>
 
 
 
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Activities | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
 
-    <style></style>
-
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Cover area -->
+        <!-- Cover Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
-            <!-- Add activity button -->
+            <!-- Add Activity Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Add_Form_Pages/add_activity.php" style="text-decoration: none;">
                     <button id="submenu_button">
@@ -170,25 +171,25 @@
                 </a>
             </div>
         
-            <!-- Below cover area -->
+            <!-- Below Cover Area -->
             <div style="display: flex;">
 
-                <!-- Left area -->
+                <!-- Left Area -->
                 <div style="flex:0.6;">
 
-                    <!-- Filter area -->
+                    <!-- Filter Area -->
                     <div style="min-height: 400px;">
 
                         <div id="medium_rectangle">
 
-                            <!-- Section title of filter area -->
+                            <!-- Section Title of Filter Area -->
                             <div id="section_title">
                                 <span>Filter</span>
                             </div>
 
-                            <!-- Filter form -->
+                            <!-- Filter Form -->
                             <form action="" method="post">
-                                <!-- Sort by options -->
+                                <!-- Sort by Options -->
                                 <div style="margin-bottom: 15px;">
                                     <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
                                     <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
@@ -199,11 +200,10 @@
                                         <option value="activity_duration_desc" <?php echo ($order_filter == 'activity_duration_desc') ? 'selected' : ''; ?>>Duration (Longest to Shortest)</option>
                                         <option value="activity_duration_asc" <?php echo ($order_filter == 'activity_duration_asc') ? 'selected' : ''; ?>>Duration (Shortest to Longest)</option>                                    
                                         <option value="activity_name_asc" <?php echo ($order_filter == 'activity_name_asc') ? 'selected' : ''; ?>>Activity Name (A-Z)</option>
-
                                     </select>
                                 </div>
                                 
-                                <!-- Activity status filter -->
+                                <!-- Activity Status Filter -->
                                 <div style="margin-bottom: 15px;">
                                     <label for="status_filter" style="font-weight: bold;">Activity Status:</label><br>
                                     <select name="status_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
@@ -214,7 +214,7 @@
                                     </select>
                                 </div>
 
-                                <!-- Activity occupancy filter -->
+                                <!-- Activity Occupancy Filter -->
                                 <div style="margin-bottom: 15px;">
                                     <label for="occupancy_filter" style="font-weight: bold;">Activity Occupancy:</label><br>
                                     <select name="occupancy_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
@@ -226,7 +226,7 @@
                                     </select>
                                 </div>
 
-                                <!-- Domain filter -->
+                                <!-- Domain Filter -->
                                 <div style="margin-bottom: 15px;">
                                     <label style="font-weight: bold;">Domains:</label><br>
                                     <div>
@@ -239,7 +239,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Time periods filter -->
+                                <!-- Time Periods Filter -->
                                 <div style="margin-bottom: 15px;">
                                     <label style="font-weight: bold;">Acivity Period:</label><br>
                                     <div>
@@ -249,7 +249,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Day availability filter -->
+                                <!-- Day Availability Filter -->
                                 <div style="margin-bottom: 15px;">
                                     <label style="font-weight: bold;">Available Days:</label><br>
                                     <div>
@@ -263,7 +263,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Submit button -->
+                                <!-- Submit Button -->
                                 <div style="text-align: center;">
                                     <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                         Apply Filter
@@ -275,39 +275,38 @@
                     </div>
                 </div>
 
-                <!-- Volunteer area -->
+                <!-- Volunteer Area -->
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;"> <!-- Flex to divide between 2 div unequally-->
 
-                    <!-- Activity widget display -->
+                    <!-- Activity Widget Display -->
                     <div id="medium_rectangle">
 
-                        <!-- Section title of recent activities section -->
+                        <!-- Section Title of Recent Activities Section -->
                         <div id="section_title">
                             <span>Activities</span>
                         </div>
 
-                        <!-- Counting the number of elements post filter -->
+                        <!-- Counting Number of Elements Post Filter -->
                         <?php 
-                        if (empty($all_activities_data)) {
+                        if (empty($all_activities_data_rows)) {
                             echo "No activities found.";
-                        } elseif (count($all_activities_data) == 1){
-                            echo count($all_activities_data) . " activity found.";
+                        } elseif (count($all_activities_data_rows) == 1){
+                            echo count($all_activities_data_rows) . " activity found.";
                         } else {
-                            echo count($all_activities_data) . " activities found.";
+                            echo count($all_activities_data_rows) . " activities found.";
                         } ?>
 
-                        <!-- Display activity widgets --> 
+                        <!-- Display Activity Widgets --> 
                         <?php
-                            if($all_activities_data){
-                                foreach($all_activities_data as $activity_data_row){
+                            if($all_activities_data_rows){
+                                foreach($all_activities_data_rows as $activity_data_row){
                                     $activity_id = $activity_data_row['id'];
-                                    $activity_time_periods_data = fetch_data("select * from Activity_Time_Periods where activity_id = '$activity_id'");
-                                    $activity_domains_data = fetch_data("select * from Activity_Domains where activity_id = '$activity_id'");
+                                    $activity_time_periods_data_rows = fetch_data_rows("select * from Activity_Time_Periods where activity_id = '$activity_id'");
+                                    $activity_domains_data_rows = fetch_data_rows("select * from Activity_Domains where activity_id = '$activity_id'");
                                     include("../Widget_Pages/activity_widget.php");
                                 }
                             }
                         ?>
-
 
                     </div>
 
@@ -315,6 +314,5 @@
             </div>
             
         </div>
-        
     </body>
 </html>

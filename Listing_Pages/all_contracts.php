@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -15,7 +16,7 @@
     $latest_date_filter = "";
 
     // Default page contracts data
-    $all_contracts_data = fetch_data("
+    $all_contracts_data_rows = fetch_data_rows("
         SELECT c.* 
         FROM Contracts c
         INNER JOIN Volunteers m ON c.volunteer_id = m.id
@@ -102,49 +103,50 @@
         }
 
         // Final query
-        $all_contracts_data = fetch_data($sql_filter_query);
+        $all_contracts_data_rows = fetch_data_rows($sql_filter_query);
 
     }
 ?>
 
 
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Contracts | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
 
-    <style></style>
-
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Cover area -->
+        <!-- Cover Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
      
-            <!-- Below cover area -->
+            <!-- Below Cover Area -->
             <div style="display: flex;">
 
-                <!-- Left area -->
+                <!-- Left Area -->
                 <div style="flex:0.6;">
 
-                    <!-- Filter form area -->
+                    <!-- Filter Form Area -->
                     <div id="medium_rectangle">
 
-                        <!-- Section title of filter area -->
+                        <!-- Section Title of Filter Area -->
                         <div id="section_title">
                             <span>Filter</span>
                         </div>
 
-                        <!-- Filter form -->
+                        <!-- Filter Form -->
                         <form action="" method="post">
-                            <!-- Sort by options -->
+                            <!-- Sort By Options -->
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
@@ -157,7 +159,7 @@
                                 </select>
                             </div>
 
-                            <!-- Volunteer status filter -->
+                            <!-- Volunteer Status Filter -->
                             <div style="margin-bottom: 15px;">
                                 <label for="trash_filter" style="font-weight: bold;">Volunteer Status:</label><br>
                                 <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
@@ -167,7 +169,7 @@
                                 </select>
                             </div>
 
-                            <!-- Active contract filter -->
+                            <!-- Active Contract Filter -->
                             <div style="margin-bottom: 15px;">
                                 <label for="active_contract_filter" style="font-weight: bold;">Contract Status:</label><br>
                                 <select name="active_contract_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
@@ -177,19 +179,19 @@
                                 </select>
                             </div>
 
-                            <!-- Earliest date filter -->
+                            <!-- Earliest Date Filter -->
                             <div style="margin-bottom: 15px;">
                                 <label for="earliest_date_filter" style="font-weight: bold;">Earliest date:</label><br>
                                 <input name="earliest_date_filter" type="date" value="<?php echo $earliest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                             </div>
 
-                            <!-- Latest date filter -->
+                            <!-- Latest Date Filter -->
                             <div style="margin-bottom: 15px;">
                                 <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
                                 <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
                             </div>
 
-                            <!-- Submit button -->
+                            <!-- Submit Button -->
                             <div style="text-align: center;">
                                 <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                     Apply Filter
@@ -200,31 +202,31 @@
                     </div>
                 </div>
 
-                <!-- Right area -->
+                <!-- Right Area -->
                 <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
 
-                    <!-- Volunteer widget display -->
+                    <!-- Volunteer Widget Display -->
                     <div id="medium_rectangle">
 
-                        <!-- Section title of recent activities section -->
+                        <!-- Section Title of Recent Activities Section -->
                         <div id="section_title">
                             <span>Contracts</span>
                         </div>
 
-                        <!-- Counting the number of elements post filter -->
+                        <!-- Counting Number of Elements Post Filter -->
                         <?php 
-                        if (empty($all_contracts_data)) {
+                        if (empty($all_contracts_data_rows)) {
                             echo "No purchases found.";
                         } else {
-                            echo count($all_contracts_data) . " contracts found.";
+                            echo count($all_contracts_data_rows) . " contracts found.";
                         } ?>
 
-                        <!-- Display contracts widgets --> 
+                        <!-- Display Contracts Widgets --> 
                         <?php
-                            if($all_contracts_data){
-                                foreach($all_contracts_data as $contract_data_row){
+                            if($all_contracts_data_rows){
+                                foreach($all_contracts_data_rows as $contract_data_row){
                                     $contract_id = $contract_data_row['id'];
-                                    $volunteer_data = fetch_volunteer_data($contract_data_row['volunteer_id']);
+                                    $volunteer_data_row = fetch_volunteer_data_row($contract_data_row['volunteer_id']);
                                     $date = new DateTime($contract_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (e.g., "January")
                                     include("../Widget_Pages/contract_widget.php");
@@ -239,6 +241,5 @@
             </div>
             
         </div>
-        
     </body>
 </html>

@@ -83,7 +83,7 @@ class Add_Purchase{
         $additional_notes = $data['additional_notes'];
 
         // Assigning the purchase to a contract
-        $contract_data_row = fetch_data("SELECT * 
+        $contract_data_row = fetch_data_rows("SELECT * 
                                        FROM Contracts c
                                        WHERE c.volunteer_id = '$volunteer_id' 
                                        AND '$purchase_date' between c.issuance_date AND c.validity_date");

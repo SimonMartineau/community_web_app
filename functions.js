@@ -1,3 +1,4 @@
+// Function to toggle the visibility of the menu widgets in the profile pages.
 function ToggleWidgets(section, clickedButton) {
     // Hide all widget containers
     var containers = document.getElementsByClassName('widget-container');
@@ -22,7 +23,7 @@ function ToggleWidgets(section, clickedButton) {
 }
 
 
-
+// Function to toggle the visibility of the extra details in the widgets.
 function toggleDetails(event, Id) {
     event.stopPropagation();
     event.preventDefault();

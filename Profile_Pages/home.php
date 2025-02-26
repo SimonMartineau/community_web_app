@@ -1,3 +1,4 @@
+<!-- PHP Code -->
 <?php
 
     // Include classes
@@ -8,14 +9,14 @@
     update_backend_data();
 
     // Collect volunteer data
-    $number_of_volunteers = fetch_data("
+    $number_of_volunteers = fetch_data_rows("
         SELECT COUNT(*) AS total_volunteers
         FROM Volunteers 
         WHERE `trashed` = '0'"
     )[0]['total_volunteers'];
 
     // Collect activities data
-    $number_of_activities_completed = fetch_data("
+    $number_of_activities_completed = fetch_data_rows("
         SELECT COUNT(*) AS total_activities
         FROM Activities 
         WHERE activity_date < CURDATE()
@@ -23,19 +24,19 @@
     )[0]['total_activities'];
 
     // Collect contracts data
-    $number_of_hours_completed = fetch_data("
+    $number_of_hours_completed = fetch_data_rows("
         SELECT SUM(hours_completed) AS total_hours
         FROM Contracts"
     )[0]['total_hours'];
 
     // Collect purchases data
-    $number_of_points_spent = fetch_data("
+    $number_of_points_spent = fetch_data_rows("
         SELECT SUM(points_spent) AS total_points
         FROM Contracts"
     )[0]['total_points'];
 
     // Collect volunteer interests data
-    $volunteer_interest_count_data = fetch_data("
+    $volunteer_interest_count_data_rows = fetch_data_rows("
         SELECT interest, COUNT(*) AS total_count
         FROM Volunteer_Interests
         JOIN Volunteers ON Volunteer_Interests.volunteer_id = Volunteers.id
@@ -44,12 +45,12 @@
     ");
     // Process the data
     $volunteer_interests_count = [];
-    foreach($volunteer_interest_count_data as $row){
+    foreach($volunteer_interest_count_data_rows as $row){
         $volunteer_interests_count[$row['interest']] = $row['total_count'];
     }
 
     // Collect activity interests data
-    $activity_interest_count_data = fetch_data("
+    $activity_interest_count_data_rows = fetch_data_rows("
         SELECT domain, COUNT(*) AS total_count
         FROM Activity_Domains
         JOIN Activities ON Activity_Domains.activity_id = Activities.id
@@ -59,12 +60,12 @@
     ");
     // Process the data
     $activity_interests_count = [];
-    foreach($activity_interest_count_data as $row){
+    foreach($activity_interest_count_data_rows as $row){
         $activity_interests_count[$row['domain']] = $row['total_count'];
     }
 
     // Collect volunteer availability data
-    $volunteer_weekdays_count_data = fetch_data("
+    $volunteer_weekdays_count_data_rows = fetch_data_rows("
         SELECT weekday, COUNT(*) AS total_count
         FROM Volunteer_Availability
         JOIN Volunteers ON Volunteer_Availability.volunteer_id = Volunteers.id
@@ -73,12 +74,12 @@
     ");
     // Process the data
     $volunteer_availability_count = [];
-    foreach($volunteer_weekdays_count_data as $row){
+    foreach($volunteer_weekdays_count_data_rows as $row){
         $volunteer_availability_count[$row['weekday']] = $row['total_count'];
     }
 
     // Collect activity availability data
-    $activity_weekdays_count_data = fetch_data("
+    $activity_weekdays_count_data_rows = fetch_data_rows("
         SELECT DAYNAME(activity_date) AS weekday, COUNT(*) AS total_count
         FROM Activities
         WHERE trashed = 0
@@ -86,18 +87,21 @@
     ");
     // Process the data
     $activity_availability_count = [];
-    foreach($activity_weekdays_count_data as $row){
+    foreach($activity_weekdays_count_data_rows as $row){
         $activity_availability_count[$row['weekday']] = $row['total_count'];
     }
 ?>
 
 
+
+<!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home | Give and Receive</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../style.css">
     </head>
 
@@ -106,42 +110,49 @@
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <!-- Header bar -->
+        <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>
 
-        <!-- Cover area -->
+        <!-- Cover Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
         
-            <!-- Below cover area -->
+            <!-- Below Cover Area -->
             <div style="display: flex;">
 
-                <!-- Contact content area -->
+                <!-- Contact Content Area -->
                 <div id="major_rectangle">
 
-                    <!-- Page title -->
+                    <!-- Page Title -->
                     <div id="section_title" style="margin-bottom: 20px;">
                         <span style="font-size: 24px; font-weight: bold;">Volunteer-Activity Management Application</span>
                     </div>
 
-                    <!-- Page content -->
+                    <!-- Page Content -->
                     <div style="display: flex;">
 
-                        <!-- Left side (general data) -->
+                        <!-- Left Side : General Data -->
                         <div class="home_page_info">
                             <h3>Database Information</h3>
                             <ul>
+                                <!-- Number of Volunteers -->
                                 <li>
                                 <span class="label">Number of Active Volunteers:</span>
                                 <span class="value"><?php echo $number_of_volunteers . " Volunteers"; ?></span>
                                 </li>
+
+                                <!-- Number of Activities -->
                                 <li>
                                 <span class="label">Number of Activities Completed:</span>
                                 <span class="value"><?php echo $number_of_activities_completed . " Activities"; ?></span>
                                 </li>
+
+                                <!-- Number of Hours -->
                                 <li>
                                 <span class="label">Number of Hours Completed:</span>
                                 <span class="value"><?php echo $number_of_hours_completed . " Hours"; ?></span>
                                 </li>
+
+                                <!-- Number of Points -->
                                 <li>
                                 <span class="label">Number of Points Spent:</span>
                                 <span class="value"><?php echo $number_of_points_spent . " Points"; ?></span>
@@ -149,7 +160,7 @@
                             </ul>
                         </div>
 
-                        <!-- Right side (pie charts)-->
+                        <!-- Right Side : Pie Charts-->
                         <div>
                             <!-- 1st row: Volunteer Interests and Activity Interests -->
                             <div style="display: flex; border-bottom: 1px solid #ddd;">
@@ -238,6 +249,8 @@
         </div>
     </body>
 </html>
+
+
 
 <!-- CSS -->
 <style>
