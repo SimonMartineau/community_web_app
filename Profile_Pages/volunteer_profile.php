@@ -5,7 +5,7 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
-    // Updating all backend processes
+    // Updating all backend processesstyle="max-width: 30px;"
     update_backend_data();
 
     // Initializing marching activities filter variables
@@ -329,6 +329,41 @@
                         <span>Volunteer Info</span>
                     </div>
 
+                    <!-- Warnings -->
+                    <?php if ($volunteer_data_row['hours_required'] == 0 || $volunteer_data_row['points'] < 0 || $volunteer_data_row['trashed'] == 1): ?>
+                        <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                    <?php endif; ?>
+
+                    <!-- Profile is Trashed -->
+                    <?php if ($volunteer_data_row['trashed'] == 1): ?>
+                        <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                            <span class="material-symbols-outlined" style="margin-right: 5px;">delete</span>
+                                Profile is trashed.
+                        </span><br>
+                    <?php endif; ?>
+
+                    <?php if ($volunteer_data_row['hours_required'] == 0): ?>
+                        <span class="caution" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                            <span class="material-symbols-outlined" style="margin-right: 5px;">info</span> 
+                            Volunteer doesn't currently have a contract.
+                        </span>
+                        <span style="display: flex; align-items: center; width: 100%;">
+                            <span class="material-symbols-outlined" style="margin-right: 5px;">subdirectory_arrow_right</span>
+                            Click on New Contract to assign a contract.
+                        </span>
+                    <?php endif; ?>
+
+                    <?php if ($volunteer_data_row['points'] < 0): ?>
+                        <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                            <span class="material-symbols-outlined" style="margin-right: 5px;">warning</span> 
+                                Volunteer has spent too many points.
+                            </span>
+                            <span style="display: flex; align-items: center; width: 100%;">
+                            <span class="material-symbols-outlined" style="margin-right: 5px;">subdirectory_arrow_right</span>
+                            Please lower the points spent or increase the points deposit in the current contract.
+                        </span>
+                    <?php endif; ?>
+
                     <!-- Personal Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
@@ -344,13 +379,7 @@
                     
                     <!-- Volunteer Contributions -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Volunteer Contributions</h2>
-                        <?php if ($volunteer_data_row['hours_required'] == 0): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't currently have a contract.</strong><br>
-                        <?php endif; ?>
-                        <?php if ($volunteer_data_row['points'] < 0): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points.</strong><br>
-                        <?php endif; ?>
+                        <h2 style="font-size: 20px; color: #555;">Volunteer Data</h2>
                         <p><strong>Points Left:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['points'] . " Points"); ?></span></p>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['hours_required'] . " Hours"); ?></span></p>
                         <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['hours_completed'] . " Hours"); ?></span></p>

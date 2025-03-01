@@ -45,14 +45,23 @@
                 <p class="widget_info">
                     <!-- Contract Active/Inactive Status -->
                     <?php if ($contract_data_row['contract_active'] == 1): ?>
-                        <span style="color: green; font-weight: bold;"><span class="material-symbols-outlined">check_circle</span> Active Contract</span>
-                    <?php elseif($contract_data_row['contract_active'] == 0): ?>
-                            <span style="color: orange; font-weight: bold;"><span class="material-symbols-outlined">do_not_disturb_on</span> Past Contract</span>
+                        <span class="info_line valid">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Contract is Active
+                        </span>
+                    <?php elseif ($contract_data_row['contract_active'] == 0): ?>
+                        <span class="info_line caution">
+                            <span class="material-symbols-outlined">do_not_disturb_on</span> 
+                            Past Contract
+                        </span>
                     <?php endif; ?>
                     
                     <!-- Contract Points Spent Warning -->
                     <?php if ($contract_data_row['points_deposit'] - $contract_data_row['points_spent'] < 0): ?>
-                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span>Volunteer has spent too many points.</span>
+                        <span class="info_line warning">
+                            <span class="material-symbols-outlined">warning</span>
+                            Volunteer has spent too many points.
+                        </span>
                     <?php endif; ?>
                 </p>
             </div>

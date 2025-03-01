@@ -45,7 +45,7 @@
                 <p class="widget_info">
                     <!-- Purchase In/Out of Contract Status -->         
                     <?php if ($purchase_data_row['contract_id'] == -1): ?>
-                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span>Purchase date outside contract duration.</span>
+                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span>Purchase date is not in any contract.</span>
                     <?php endif; ?>
                 </p>
             </div>

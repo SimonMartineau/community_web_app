@@ -111,30 +111,42 @@
                         <span>Contract Info</span>
                     </div>
 
+                    <!-- Warnings -->
+                    <div class="information_section" style="margin-bottom: 20px;">
+                        <?php if ($contract_data_row['points_deposit'] - $contract_data_row['points_spent'] < 0): ?>
+                            <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                            <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">warning</span>
+                                Volunteer has spent too many points for this contract.
+                            </span>
+                            <span style="display: flex; align-items: center; width: 100%;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">subdirectory_arrow_right</span>
+                                Please lower the points spent or increase the points deposit.
+                            </span>
+                        <?php endif; ?>
+                    </div>
+
                     <!-- Contract Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
+                        <h2 style="font-size: 20px; color: #555;">Information</h2>
 
-                        <?php
-                            // Determine the message and color based on $contract_active
-                            if ($contract_data_row['contract_active'] == 1) {
-                                $message = "Current Volunteer's Contract";
-                                $messageColor = "green";
-                            } else {
-                                $message = "Past Volunteer's Contract";
-                                $messageColor = "orange";
-                            }
-                        ?>
-
-                        <?php if ($contract_data_row['points_deposit'] - $contract_data_row['points_spent'] < 0): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Warning: Volunteer has spent too many points for this contract.</strong><br>
+                        <?php if ($contract_data_row['contract_active'] == 1) : ?>
+                            <p><span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
+                                    Contract is Active
+                                </span>
+                            </p>
                         <?php endif; ?>
 
-                        <!-- Display the message with dynamic color -->
-                        <p style="font-size: 16px; color: <?php echo $messageColor; ?>; font-weight: bold;">
-                            <?php echo $message; ?>
-                        </p>
+                        <?php if ($contract_data_row['contract_active'] == 0) : ?>
+                            <p><span class="caution" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">do_not_disturb_on</span>
+                                    Past Contract
+                                </span>
+                            </p>
+                        <?php endif; ?>
 
+                        <!-- Display Contract Info -->
                         <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: formatDate($contract_data_row['issuance_date'])); ?></p>
                         <p><strong>Validity Date:</strong> <?php echo htmlspecialchars(formatDate($contract_data_row['validity_date'])); ?></p>
                         <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($contract_data_row['points_deposit']) . " Points"; ?></p>
@@ -207,11 +219,9 @@
                         </div>
                         
                     </div>
-
                 </div>
 
             </div>
-            
         </div>
         
     </body>

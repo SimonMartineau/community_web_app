@@ -70,7 +70,36 @@
             <!-- Activity Status Info -->
             <div class="status_container">
                 <p class="widget_info">
-                    
+                    <!-- Activity Is Trashed -->
+                    <?php if ($activity_data_row['trashed'] == 1): ?>
+                        <span class="info_line warning">
+                            <span class="material-symbols-outlined">delete</span> Activity is trashed.
+                        </span>
+                    <?php else: ?>
+                        <!-- Activity is Upcoming -->
+                        <?php if ($activity_data_row['activity_date'] > date('Y-m-d')): ?>
+                            <span class="info_line valid" style="color: green;">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                    Upcoming Activity
+                            </span>
+                        <?php endif; ?>
+
+                        <!-- Activity is Today -->
+                        <?php if ($activity_data_row['activity_date'] == date('Y-m-d')): ?>
+                            <span class="info_line valid" style="color: green;">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                    Activity is Today
+                            </span>
+                        <?php endif; ?>
+
+                        <!-- Activity is Past -->
+                        <?php if ($activity_data_row['activity_date'] < date('Y-m-d')): ?>
+                            <span class="info_line caution">
+                                <span class="material-symbols-outlined">do_not_disturb_on</span>
+                                    Past Activity
+                            </span>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </p>
             </div>
 
@@ -122,7 +151,7 @@
             ?>
 
             <!-- Button placed inside the widget. We call stopPropagation() in the onclick to avoid triggering the link. -->
-            <button class="widget_button" type="button" onclick="toggleDetails(event, '<?php echo $activity_id; ?>')">
+            <button class="widget_button" style="max-width: 30px;" type="button" onclick="toggleDetails(event, '<?php echo $activity_id; ?>')">
                 More Details
             </button>
         </div>

@@ -99,21 +99,28 @@
                         <span>Purchase Info</span>
                     </div>
 
+                    <!-- Warnings -->
+                    <div class="information_section" style="margin-bottom: 20px;">
+                        <?php if ($purchase_data_row['contract_id'] == -1): ?>
+                            <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                            <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">warning</span>
+                                Purchase date is not in any contract.
+                            </span>
+                            <span style="display: flex; align-items: center; width: 100%;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">subdirectory_arrow_right</span>
+                                Please change the purchase date so it's inside a contract.
+                            </span>
+                        <?php endif; ?>
+                    </div>
+
                     <!-- Purchase Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
+                        <h2 style="font-size: 20px; color: #555;">Information</h2>
                         <p><strong>Item Names:</strong> <?php echo htmlspecialchars($purchase_data_row['item_names']); ?></p>
                         <p><strong>Total Cost:</strong> <?php echo htmlspecialchars($purchase_data_row['total_cost']) . " Points"; ?></p>
                         <p><strong>Purchase Date:</strong> <?php echo htmlspecialchars(formatDate($purchase_data_row['purchase_date'])); ?></p>
                         <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($purchase_data_row['entry_clerk']); ?></p>
-                    </div>
-
-                    <!-- Additional Details -->
-                    <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <?php if ($purchase_data_row['contract_id'] == -1): ?>
-                            <strong style="color: rgb(226, 65, 65); width: 100%;">Volunteer doesn't have a contract at this purchase date.</strong><br>
-                        <?php endif; ?>
                         <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($purchase_data_row['additional_notes']) ?: 'None'; ?></p>
                     </div>
                 </div>

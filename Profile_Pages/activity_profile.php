@@ -256,9 +256,42 @@
                         <span>Activity Info</span>
                     </div>
 
-                    <!-- Personal Information -->
+                    <!-- Activity Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Personal Information</h2>
+                        <h2 style="font-size: 20px; color: #555;">Information</h2>
+
+                        <!-- Activity Is Trashed -->
+                        <?php if ($activity_data_row['trashed'] == 1): ?>
+                            <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">delete</span>
+                                    Activity is trashed.
+                            </span>
+                        <?php else: ?>
+                            <!-- Activity is Upcoming -->
+                            <?php if ($activity_data_row['activity_date'] > date('Y-m-d')): ?>
+                                <span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
+                                        Upcoming Activity
+                                </span>
+                            <?php endif; ?>
+
+                            <!-- Activity is Today -->
+                            <?php if ($activity_data_row['activity_date'] == date('Y-m-d')): ?>
+                                <span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
+                                        Activity is Today
+                                </span>
+                            <?php endif; ?>
+
+                            <!-- Activity is Past -->
+                            <?php if ($activity_data_row['activity_date'] < date('Y-m-d')): ?>
+                                <span class="caution" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;">do_not_disturb_on</span>
+                                        Past Activity
+                                </span>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
                         <p><strong>Name:</strong> <?php echo htmlspecialchars($activity_data_row['activity_name']); ?></p>
                         <p><strong>Number of Places:</strong> 
                             <?php 
@@ -432,11 +465,9 @@
                         </div>
 
                     </div>
-
                 </div>
 
             </div>
-            
         </div>
         
     </body>

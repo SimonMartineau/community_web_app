@@ -341,7 +341,7 @@ border-radius: 50%;
 
 .status_container {
     width: 260px;
-    padding-left: 40px;
+    padding-left: 10px;
 }
 
 .widget_info {
@@ -354,8 +354,9 @@ border-radius: 50%;
 .info_line {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .info_label {
@@ -366,10 +367,16 @@ border-radius: 50%;
 
 .info_value {
     color: #2c3e50;
-    font-weight: 500;
 }
 
 .warning {
     color: #e24141;
-    font-weight: 500;
+}
+
+.caution {
+    color: #e26741;
+}
+
+.valid {
+    color: green;
 }

@@ -70,14 +70,19 @@
             <!-- Volunteer Status -->
             <div class="status_container">
                 <p class="widget_info">
-                    <!-- Volunteer Has/Hasn't Contract Status -->
-                    <?php if ($volunteer_data_row['hours_required'] == 0): ?>
-                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Warning: Volunteer doesn't currently have a contract.</span>
+                    <!-- Volunteer Profile Has Errors -->
+                    <?php if ($volunteer_data_row['points'] < 0): ?>
+                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Profile has errors</span>
                     <?php endif; ?>
 
-                    <!-- Volunteer Points Spent Warning -->
-                    <?php if ($volunteer_data_row['points'] < 0): ?>
-                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Warning: Volunteer has spent too many points.</span>
+                    <!-- Volunteer Profile Has Errors -->
+                    <?php if ($volunteer_data_row['hours_required'] == 0): ?>
+                        <span class="info_line caution"><span class="material-symbols-outlined">info</span> Notification</span>
+                    <?php endif; ?> 
+
+                    <!-- Volunteer Profile is Trashed -->
+                    <?php if ($volunteer_data_row['trashed'] == 1): ?>
+                        <span class="info_line warning"><span class="material-symbols-outlined">delete</span> Profile is trashed</span>
                     <?php endif; ?>
                 </p>
             </div>
@@ -129,7 +134,7 @@
             ?>
 
             <!-- Button placed inside the widget. We call stopPropagation() in the onclick to avoid triggering the link. -->
-            <button class="widget_button" type="button" onclick="toggleDetails(event, '<?php echo $volunteer_id; ?>')">
+            <button class="widget_button" style="max-width: 30px;" type="button" onclick="toggleDetails(event, '<?php echo $volunteer_id; ?>')">
                 More Details
             </button>
         </div>
@@ -168,6 +173,22 @@
                         <span class="info_label"><span class="material-symbols-outlined">support_agent</span></span>
                         <span class="info_value">Volunteer Manager: <?php echo $volunteer_data_row['volunteer_manager'] ?></span>
                     </span>
+                </p>
+
+                <!-- Volunteer Warnings -->
+                <?php if ($volunteer_data_row['hours_required'] == 0 || $volunteer_data_row['points'] < 0): ?>
+                    <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                <?php endif; ?>
+                <p>
+                    <!-- Volunteer Hasn't Contract Warning -->
+                    <?php if ($volunteer_data_row['hours_required'] == 0): ?>
+                        <span class="info_line caution"><span class="material-symbols-outlined">info</span> Volunteer doesn't currently have a contract.</span>
+                    <?php endif; ?>
+
+                    <!-- Volunteer Points Spent Warning -->
+                    <?php if ($volunteer_data_row['points'] < 0): ?>
+                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Volunteer has spent too many points.</span>
+                    <?php endif; ?>
                 </p>
             </div>
 
