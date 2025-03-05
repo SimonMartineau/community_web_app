@@ -99,10 +99,10 @@
                         <span>Purchase Info</span>
                     </div>
 
-                    <!-- Warnings -->
+                    <!-- Notifications -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <?php if ($purchase_data_row['contract_id'] == -1): ?>
-                            <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                            <h2 style="font-size: 20px; color: #555;">Notifications</h2>
                             <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
                                 <span class="material-symbols-outlined" style="margin-right: 5px;">warning</span>
                                 Purchase date is not in any contract.

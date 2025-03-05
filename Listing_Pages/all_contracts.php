@@ -21,6 +21,7 @@
         FROM Contracts c
         INNER JOIN Volunteers m ON c.volunteer_id = m.id
         WHERE m.trashed = 0
+        AND contract_active = 1
         ORDER BY c.issuance_date DESC"
     );
 

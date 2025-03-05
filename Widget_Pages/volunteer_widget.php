@@ -70,20 +70,20 @@
             <!-- Volunteer Status -->
             <div class="status_container">
                 <p class="widget_info">
+                    <!-- Volunteer Profile is Trashed -->
+                    <?php if ($volunteer_data_row['trashed'] == 1): ?>
+                        <span class="info_line warning"><span class="material-symbols-outlined">delete</span> Profile is trashed.</span>
+                    <?php endif; ?>
+                    
                     <!-- Volunteer Profile Has Errors -->
                     <?php if ($volunteer_data_row['points'] < 0): ?>
-                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Profile has errors</span>
+                        <span class="info_line warning"><span class="material-symbols-outlined">warning</span> Profile has errors.</span>
                     <?php endif; ?>
 
                     <!-- Volunteer Profile Has Errors -->
                     <?php if ($volunteer_data_row['hours_required'] == 0): ?>
-                        <span class="info_line caution"><span class="material-symbols-outlined">info</span> Notification</span>
+                        <span class="info_line caution"><span class="material-symbols-outlined">info</span> No contract in place.</span>
                     <?php endif; ?> 
-
-                    <!-- Volunteer Profile is Trashed -->
-                    <?php if ($volunteer_data_row['trashed'] == 1): ?>
-                        <span class="info_line warning"><span class="material-symbols-outlined">delete</span> Profile is trashed</span>
-                    <?php endif; ?>
                 </p>
             </div>
 
@@ -173,11 +173,16 @@
                         <span class="info_label"><span class="material-symbols-outlined">support_agent</span></span>
                         <span class="info_value">Volunteer Manager: <?php echo $volunteer_data_row['volunteer_manager'] ?></span>
                     </span>
+
+                    <!-- Volunteer Contract Notification -->
+                    <?php if ($volunteer_data_row['hours_required'] > 0): ?>
+                        <span class="info_line valid"><span class="material-symbols-outlined">info</span> Volunteer currently has a contract.</span>
+                    <?php endif; ?>
                 </p>
 
-                <!-- Volunteer Warnings -->
+                <!-- Volunteer Notifications -->
                 <?php if ($volunteer_data_row['hours_required'] == 0 || $volunteer_data_row['points'] < 0): ?>
-                    <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                    <h2 style="font-size: 20px; color: #555;">Notifications</h2>
                 <?php endif; ?>
                 <p>
                     <!-- Volunteer Hasn't Contract Warning -->

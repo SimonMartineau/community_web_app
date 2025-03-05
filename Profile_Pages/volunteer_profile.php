@@ -329,9 +329,9 @@
                         <span>Volunteer Info</span>
                     </div>
 
-                    <!-- Warnings -->
+                    <!-- Notifications -->
                     <?php if ($volunteer_data_row['hours_required'] == 0 || $volunteer_data_row['points'] < 0 || $volunteer_data_row['trashed'] == 1): ?>
-                        <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                        <h2 style="font-size: 20px; color: #555;">Notifications</h2>
                     <?php endif; ?>
 
                     <!-- Profile is Trashed -->

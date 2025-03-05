@@ -45,14 +45,14 @@
                 <p class="widget_info">
                     <!-- Contract Active/Inactive Status -->
                     <?php if ($contract_data_row['contract_active'] == 1): ?>
-                        <span class="info_line valid">
-                            <span class="material-symbols-outlined">check_circle</span>
-                            Contract is Active
+                        <span class="info_line upcoming">
+                            <span class="material-symbols-outlined">contract</span>
+                            Contract is active.
                         </span>
                     <?php elseif ($contract_data_row['contract_active'] == 0): ?>
-                        <span class="info_line caution">
-                            <span class="material-symbols-outlined">do_not_disturb_on</span> 
-                            Past Contract
+                        <span class="info_line valid">
+                            <span class="material-symbols-outlined">check_circle</span> 
+                            Contract is complete.
                         </span>
                     <?php endif; ?>
                     

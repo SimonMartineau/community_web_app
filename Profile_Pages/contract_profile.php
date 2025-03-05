@@ -131,17 +131,17 @@
                         <h2 style="font-size: 20px; color: #555;">Information</h2>
 
                         <?php if ($contract_data_row['contract_active'] == 1) : ?>
-                            <p><span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
-                                    Contract is Active
+                            <p><span class="upcoming" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">contract</span>
+                                    Contract is active.
                                 </span>
                             </p>
                         <?php endif; ?>
 
                         <?php if ($contract_data_row['contract_active'] == 0) : ?>
-                            <p><span class="caution" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                <span class="material-symbols-outlined" style="margin-right: 5px;">do_not_disturb_on</span>
-                                    Past Contract
+                            <p><span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
+                                    Contract is complete.
                                 </span>
                             </p>
                         <?php endif; ?>

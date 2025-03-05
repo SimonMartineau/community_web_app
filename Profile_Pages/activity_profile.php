@@ -269,25 +269,25 @@
                         <?php else: ?>
                             <!-- Activity is Upcoming -->
                             <?php if ($activity_data_row['activity_date'] > date('Y-m-d')): ?>
-                                <span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                    <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
-                                        Upcoming Activity
+                                <span class="upcoming" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;">event_upcoming</span>
+                                        Upcoming activity.
                                 </span>
                             <?php endif; ?>
 
                             <!-- Activity is Today -->
                             <?php if ($activity_data_row['activity_date'] == date('Y-m-d')): ?>
-                                <span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                    <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
-                                        Activity is Today
+                                <span class="today" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;">today</span>
+                                        Activity is today.
                                 </span>
                             <?php endif; ?>
 
                             <!-- Activity is Past -->
                             <?php if ($activity_data_row['activity_date'] < date('Y-m-d')): ?>
-                                <span class="caution" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                    <span class="material-symbols-outlined" style="margin-right: 5px;">do_not_disturb_on</span>
-                                        Past Activity
+                                <span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
+                                        Activity is complete.
                                 </span>
                             <?php endif; ?>
                         <?php endif; ?>

@@ -78,25 +78,25 @@
                     <?php else: ?>
                         <!-- Activity is Upcoming -->
                         <?php if ($activity_data_row['activity_date'] > date('Y-m-d')): ?>
-                            <span class="info_line valid" style="color: green;">
-                                <span class="material-symbols-outlined">check_circle</span>
-                                    Upcoming Activity
+                            <span class="info_line upcoming">
+                                <span class="material-symbols-outlined">event_upcoming</span>
+                                    Upcoming activity.
                             </span>
                         <?php endif; ?>
 
                         <!-- Activity is Today -->
                         <?php if ($activity_data_row['activity_date'] == date('Y-m-d')): ?>
-                            <span class="info_line valid" style="color: green;">
-                                <span class="material-symbols-outlined">check_circle</span>
-                                    Activity is Today
+                            <span class="info_line today">
+                                <span class="material-symbols-outlined">today</span>
+                                    Activity is today.
                             </span>
                         <?php endif; ?>
 
                         <!-- Activity is Past -->
                         <?php if ($activity_data_row['activity_date'] < date('Y-m-d')): ?>
-                            <span class="info_line caution">
-                                <span class="material-symbols-outlined">do_not_disturb_on</span>
-                                    Past Activity
+                            <span class="info_line valid">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                    Activity is complete.
                             </span>
                         <?php endif; ?>
                     <?php endif; ?>

@@ -380,3 +380,11 @@ border-radius: 50%;
 .valid {
     color: green;
 }
+
+.upcoming {
+    color: #126cf3;
+}
+
+.today {
+    color: #be7c00;
+}
