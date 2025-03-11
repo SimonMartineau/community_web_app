@@ -46,8 +46,6 @@
     }
     $entry_clerk = $activity_data_row['entry_clerk'];
     $additional_notes = $activity_data_row['additional_notes'];
-    $registration_date = $activity_data_row['registration_date'];
-
     
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -76,8 +74,6 @@
             }
             $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
-            $registration_date = $_POST['registration_date'];
-
         } else{
             // There are no errors with the form submit, we can change the page.
             header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
@@ -255,14 +251,6 @@
                             Additional Notes:
                             <br>
                             <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
-                        </div>
-                        <br><br>
-
-                        <!-- Registration Date Text Input -->
-                        <div class="input_container">
-                            Registration date:
-                            <input name="registration_date" type="date" id="text_input" value="<?php echo $registration_date ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->registration_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

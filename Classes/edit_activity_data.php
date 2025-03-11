@@ -11,8 +11,6 @@ class Edit_Activity{
     public $activity_time_periods_error_mes = "";
     public $activity_domains_error_mes = "";
     public $entry_clerk_error_mes = "";
-    public $registration_date_error_mes = "";
-
 
     // Analyses data sent by user
     public function evaluate($activity_id, $data){
@@ -107,15 +105,6 @@ class Edit_Activity{
             }
         }
 
-        // Check registration date completed
-        if (isset($_POST['registration_date'])){
-            $value = $_POST['registration_date'];
-            if (empty($value)){
-                $this->registration_date_error_mes = "*Registration date is empty.<br>";
-                $error = true; // There is an error
-            }
-        }
-
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
@@ -141,7 +130,6 @@ class Edit_Activity{
         $activity_domains = $data['activity_domains'];
         $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
-        $registration_date = date("Y-m-d");
 
         // Initialise Database object
         $DB = new Database();
@@ -154,12 +142,11 @@ class Edit_Activity{
                         activity_location = ?,
                         activity_date = ?,
                         entry_clerk = ?,
-                        additional_notes = ?,
-                        registration_date = ?
+                        additional_notes = ?
                     WHERE id = ?";
-        $types = "siisssssi"; // Types of data to be inserted
+        $types = "siissssi"; // Types of data to be inserted
         $params = array($activity_name, $number_of_places, $activity_duration, $activity_location, $activity_date, 
-                        $entry_clerk, $additional_notes, $registration_date, $activity_id); // Parameters to be inserted
+                        $entry_clerk, $additional_notes, $activity_id); // Parameters to be inserted
         
         // Send prepared statement to Database
         $DB->save_prepared($actvity_query, $types, $params);

@@ -16,8 +16,6 @@ class Edit_Volunteer{
     public $volunteer_interests_error_mes = "";
     public $volunteer_manager_error_mes = "";
     public $entry_clerk_error_mes = "";
-    public $registration_date_error_mes = "";
-
 
     // Analyses data sent by user
     public function evaluate($volunteer_id, $data){
@@ -151,15 +149,6 @@ class Edit_Volunteer{
             }
         }
 
-        // Check registration date completed
-        if (isset($_POST['registration_date'])){
-            $value = $_POST['registration_date'];
-            if (empty($value)){
-                $this->registration_date_error_mes = "*Registration date is empty.<br>";
-                $error = true; // There is an error
-            }
-        }
-
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
@@ -189,7 +178,6 @@ class Edit_Volunteer{
         $volunteer_manager = $data['volunteer_manager'];
         $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
-        $registration_date = $data['registration_date'];
 
         // Initialise Database object
         $DB = new Database();
@@ -206,12 +194,11 @@ class Edit_Volunteer{
                     email = ?,
                     volunteer_manager = ?,
                     entry_clerk = ?,
-                    additional_notes = ?,
-                    registration_date = ?
+                    additional_notes = ?
                 WHERE id = ?;";
-        $types = "ssssssssssssi"; // Types of data to be inserted
+        $types = "sssssssssssi"; // Types of data to be inserted
         $parameters = [$first_name, $last_name, $gender, $date_of_birth, $address, $zip_code, $telephone_number, $email, $volunteer_manager, 
-                        $entry_clerk, $additional_notes, $registration_date, $volunteer_id]; // Parameters to be inserted
+                        $entry_clerk, $additional_notes, $volunteer_id]; // Parameters to be inserted
 
         // Save data into database
         $DB->save_prepared($volunteers_query, $types, $parameters);

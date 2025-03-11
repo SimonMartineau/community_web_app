@@ -318,6 +318,7 @@
                                 echo htmlspecialchars((($location == "") ? 'Not Added' : $location)); 
                             ?>
                         </p>
+                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($activity_data_row['entry_clerk']); ?></p>
                     </div>
 
                     <!-- Time Periods -->

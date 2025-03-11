@@ -40,8 +40,6 @@
     $volunteer_manager = $volunteer_data_row['volunteer_manager'];
     $entry_clerk = $volunteer_data_row['entry_clerk'];
     $additional_notes = $volunteer_data_row['additional_notes'];
-    $registration_date = $volunteer_data_row['registration_date'];
-
     
     // Check if user has submitted info, we update entries.
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -76,8 +74,6 @@
             $volunteer_manager = $_POST['volunteer_manager'];
             $entry_clerk = $_POST['entry_clerk'];
             $additional_notes = $_POST['additional_notes'];
-            $registration_date = $_POST['registration_date'];
-
 
         } else{ 
             // There are no errors with the form submit, we can change the page.
@@ -293,14 +289,6 @@
                             Additional Notes:
                             <br>
                             <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
-                        </div>
-                        <br><br>
-
-                        <!-- Registration Date Text Input -->
-                        <div class="input_container">
-                            Registration date:
-                            <input name="registration_date" type="date" id="text_input" value="<?php echo $registration_date ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->registration_date_error_mes : ''; ?></span>
                         </div>
                         <br><br>
 

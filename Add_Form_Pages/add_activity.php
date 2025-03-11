@@ -233,7 +233,7 @@
                         <div style="text-align: center">
                             Additional Notes:
                             <br>
-                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)" value="<?php echo $additional_notes ?>"></textarea>
+                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
                         </div>
                         <br><br>
 
