@@ -189,11 +189,16 @@ class Add_Volunteer{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Volunteer
-        $volunteers_query = "insert into Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_required, hours_completed, volunteer_manager, entry_clerk, additional_notes, registration_date, trashed)
-                  values ('$first_name', '$last_name', '$gender', '$date_of_birth', '$address', '$zip_code', '$telephone_number', '$email', '$points', '$hours_required', '$hours_completed', '$volunteer_manager', '$entry_clerk', '$additional_notes', '$registration_date', '$trashed')";
-        $DB->save($volunteers_query);
+        // SQL prepared statement into Volunteers
+        $volunteer_query = "INSERT INTO Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_required, hours_completed, volunteer_manager, entry_clerk, additional_notes, registration_date, trashed)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $types = "ssssssssiiissssi"; // Types of data to be inserted
+        $params = [$first_name, $last_name, $gender, $date_of_birth, $address, $zip_code, $telephone_number, $email, $points, $hours_required, $hours_completed, 
+                    $volunteer_manager, $entry_clerk, $additional_notes, $registration_date, $trashed]; // Parameters to be inserted
 
+        // Send prepared statement to Database
+        $DB->save_prepared($volunteer_query, $types, $params);
+        
         // Set volunteer_id to value of primary key in Volunteers table
         $volunteer_id = $DB->last_insert_id;
         $this->volunteer_id = $volunteer_id;
@@ -201,15 +206,15 @@ class Add_Volunteer{
         // SQL query into Volunteer_Availability
         foreach($volunteer_availability as $availability){
             list($weekday, $time_period) = explode('-', $availability);
-            $volunteers_availability_query = "insert into Volunteer_Availability (volunteer_id, weekday, time_period)
-            values ('$volunteer_id', '$weekday', '$time_period')";
+            $volunteers_availability_query = "INSERT INTO Volunteer_Availability (volunteer_id, weekday, time_period)
+                VALUES ('$volunteer_id', '$weekday', '$time_period')";
             $DB->save($volunteers_availability_query);
         }
 
         // SQL query into Volunteer_Interests
         foreach($volunteer_interests as $interest){
-            $volunteers_interests_query = "insert into Volunteer_Interests (volunteer_id, interest)
-            values ('$volunteer_id', '$interest')";
+            $volunteers_interests_query = "INSERT INTO Volunteer_Interests (volunteer_id, interest)
+                VALUES ('$volunteer_id', '$interest')";
             $DB->save($volunteers_interests_query);
         }
     }

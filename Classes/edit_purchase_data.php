@@ -86,15 +86,20 @@ class Edit_Purchase{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Volunteers
-        $purchase_query = "UPDATE Purchases 
-                  SET item_names = '$item_names', 
-                      total_cost = '$total_cost', 
-                      purchase_date = '$purchase_date', 
-                      entry_clerk = '$entry_clerk', 
-                      additional_notes = '$additional_notes'
-                  WHERE id = '$purchase_id';";
-        $DB->update($purchase_query);
+        // SQL prepared statement into Purchases
+        $update_query = "UPDATE Purchases 
+            SET item_names = ?, 
+                total_cost = ?, 
+                purchase_date = ?, 
+                entry_clerk = ?, 
+                additional_notes = ? 
+            WHERE id = ?";
+
+        $types = "sisssi"; // Types of data to be inserted
+        $params = [$item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes, $purchase_id]; // Parameters to be inserted
+
+        // Save data to Database through prepared statements
+        $DB->save_prepared($update_query, $types, $params);
     }
 
 }

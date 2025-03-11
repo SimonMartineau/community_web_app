@@ -102,22 +102,27 @@ class Edit_Contract{
         $hours_required = $data['hours_required'];
         $entry_clerk = $data['entry_clerk'];
         $additional_notes = $data['additional_notes'];
-
         // points_spent does not get updated here.
 
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Volunteers
-        $contract_query = "UPDATE Contracts 
-                  SET issuance_date = '$issuance_date', 
-                      validity_date = '$validity_date', 
-                      points_deposit = '$points_deposit', 
-                      hours_required = '$hours_required', 
-                      entry_clerk = '$entry_clerk', 
-                      additional_notes = '$additional_notes'
-                  WHERE id = '$contract_id';";
-        $DB->update($contract_query);
+        // SQL prepared statement into Contracts
+        $update_query = "UPDATE Contracts 
+            SET issuance_date = ?,
+                validity_date = ?,
+                points_deposit = ?,
+                hours_required = ?,
+                entry_clerk = ?,
+                additional_notes = ?
+            WHERE id = ?";
+        $types = "ssiissi"; // Types of data to be inserted
+        $parameters = [$issuance_date, $validity_date, $points_deposit, $hours_required, $entry_clerk, 
+                        $additional_notes, $contract_id]; // Parameters to be inserted
+        
+        // Send prepared statement to Database
+        $DB->save_prepared($update_query, $types, $parameters);
+    
     }
 
 }

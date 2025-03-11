@@ -113,7 +113,7 @@ function update_volunteer_data(){
             SET v.points = COALESCE(c.points_deposit - c.points_spent, 0),
                 v.hours_required = COALESCE(c.hours_required, 0);";
 
-    $DB->update($points_hours_required_query);
+    $DB->save($points_hours_required_query);
 
     // SQL query to update hours_completed for Volunteers
     $hours_completed_query = 
@@ -121,7 +121,7 @@ function update_volunteer_data(){
             LEFT JOIN Contracts c ON v.id = c.volunteer_id AND c.contract_active = 1
             SET v.hours_completed = COALESCE(c.hours_completed, 0);";
 
-    $DB->update($hours_completed_query);
+    $DB->save($hours_completed_query);
 }
 
 
@@ -139,7 +139,7 @@ function update_contract_data(){
                 WHERE Purchases.contract_id = Contracts.id
             );";
 
-    $DB->update($points_spent_query);
+    $DB->save($points_spent_query);
 
     // SQL query to update hours_completed for Contracts
     $hours_completed_query = 
@@ -151,7 +151,7 @@ function update_contract_data(){
                     WHERE vaj.contract_id = c.id
                 );";
     
-    $DB->update($hours_completed_query);
+    $DB->save($hours_completed_query);
 
     // SQL query to update contract_active for Contracts
     $contract_active_query = 
@@ -167,7 +167,7 @@ function update_contract_data(){
                                 ELSE 0
                             END;";
 
-    $DB->update($contract_active_query);
+    $DB->save($contract_active_query);
 }
 
 
@@ -187,7 +187,7 @@ function update_purchase_data(){
             LIMIT 1
         ),-1);";
 
-    $DB->update($purchase_contract_id_query);
+    $DB->save($purchase_contract_id_query);
     
 }
 
@@ -211,7 +211,7 @@ function update_junction_data(){
             ), -1);";
 
     // Update the database
-    $DB->update(query: $contract_id_query);
+    $DB->save(query: $contract_id_query);
 }
 
 
@@ -230,7 +230,7 @@ function update_activities_data(){
             );";
 
     // Update the database
-    $DB->update(query: $number_of_participants_query);
+    $DB->save(query: $number_of_participants_query);
 }
 
 

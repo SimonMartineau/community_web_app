@@ -143,12 +143,15 @@ class Add_Activity{
 
         // SQL query into Activities
         foreach($activity_dates_array as $activity_date){
-            // SQL query
-            $activity_query = "insert into Activities (activity_name, number_of_places, number_of_participants, activity_duration, activity_location, activity_date, entry_clerk, additional_notes, registration_date, trashed)
-                    values ('$activity_name', '$number_of_places', '$number_of_participants', '$activity_duration', '$activity_location', '$activity_date', '$entry_clerk', '$additional_notes', '$registration_date', '$trashed')";
-                
-            // Send data to db
-            $DB->save($activity_query);
+            // SQL prepared statement into Activities
+            $activity_query = "INSERT INTO Activities (activity_name, number_of_places, number_of_participants, activity_duration, activity_location, activity_date, entry_clerk, additional_notes, registration_date, trashed)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $types = "siiisssssi"; // Types of data to be inserted
+            $params = [$activity_name, $number_of_places, $number_of_participants, $activity_duration, $activity_location, 
+                        $activity_date, $entry_clerk, $additional_notes, $registration_date, $trashed]; // Parameters to be inserted
+
+            // Send prepared statement to Database
+            $DB->save_prepared($activity_query, $types, $params);
 
             // Set activity_id to value of primary key in Activity table
             $activity_id = $DB->last_insert_id;
@@ -156,20 +159,20 @@ class Add_Activity{
             // SQL query into Activity_Time_Periods
             foreach($activity_time_periods as $time_period){
                 // SQL query
-                $activity_time_periods_query = "insert into Activity_Time_Periods (activity_id, time_period)
-                values ('$activity_id', '$time_period')";
+                $activity_time_periods_query = "INSERT INTO Activity_Time_Periods (activity_id, time_period)
+                    VALUES ('$activity_id', '$time_period')";
 
-                // Send data to db
+                // Send data to Database
                 $DB->save($activity_time_periods_query);  
             }
 
             // SQL query into Activity_Domains
             foreach($activity_domains as $domain){
                 // SQL query
-                $activity_domains_query = "insert into Activity_Domains (activity_id, domain)
-                    values ('$activity_id', '$domain')";
+                $activity_domains_query = "INSERT INTO Activity_Domains (activity_id, domain)
+                    VALUES ('$activity_id', '$domain')";
                 
-                // Send data to db
+                // Send data to Database
                 $DB->save($activity_domains_query);  
             }
         }

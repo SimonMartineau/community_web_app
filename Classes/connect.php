@@ -11,13 +11,13 @@ class Database{
     public $last_insert_id;
 
 
-    // Connects to db
+    // Connects to Database
     function connect(){
         $connection = mysqli_connect($this->host, $this->username, $this->password, $this->db);
         return $connection;
     }
 
-    // Reads data from db
+    // Reads data from Database
     function read($query){
         $conn = $this->connect();
         $result = mysqli_query($conn, $query); // return true or false if query worked or not
@@ -35,7 +35,7 @@ class Database{
         }
     }
 
-    // Saves data to db
+    // Saves data to Database
     function save($query){
         $conn = $this->connect();
         $result = mysqli_query($conn, $query); // return true or false if query worked or not
@@ -49,15 +49,26 @@ class Database{
         }
     }
 
-    // Update data to db
-    function update($query){
+    // Save data to Database through prepared statements
+    function save_prepared($query, $types, $params){
         $conn = $this->connect();
-        $result = mysqli_query($conn, $query); // return true or false if query worked or not
+        $stmt = mysqli_stmt_init($conn);
 
-        // If query fails, return false. Else, return true
-        if ($result == false){
+        // Prepare the statement
+        if (!mysqli_stmt_prepare($stmt, $query)){
             return false;
         } else{
+            // Bind parameters to the placeholder
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+
+            // Execute the statement
+            mysqli_stmt_execute($stmt);
+
+            // Close the statement
+            mysqli_stmt_close($stmt);
+
+            $this->last_insert_id = mysqli_insert_id($conn);
+
             return true;
         }
     }

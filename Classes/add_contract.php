@@ -109,10 +109,15 @@ class Add_Contract{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Contracts
-        $contract_query = "insert into Contracts (volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, entry_clerk, contract_active, additional_notes)
-                  values ('$volunteer_id', '$issuance_date', '$validity_date', '$points_deposit', '$points_spent' ,'$hours_required', '$hours_completed', '$entry_clerk', '$contract_active', '$additional_notes')";
-        $DB->save($contract_query);
+        // SQL prepared statement into Contracts
+        $contract_query = "INSERT INTO Contracts (volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, entry_clerk, contract_active, additional_notes)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $types = "issiiiisss"; // Types of data to be inserted
+        $params = [$volunteer_id, $issuance_date, $validity_date, $points_deposit, $points_spent, $hours_required, 
+                    $hours_completed, $entry_clerk, $contract_active, $additional_notes]; // Parameters to be inserted
+
+        // Send prepared statement to Database
+        $DB->save_prepared($contract_query, $types, $params);
     }
 
 }

@@ -42,7 +42,7 @@
 
             // SQL query into Contracts
             $delete_contract_query = "delete from Contracts where id='$contract_id'";
-            $DB->update($delete_contract_query);
+            $DB->save($delete_contract_query);
 
             // Changing the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);

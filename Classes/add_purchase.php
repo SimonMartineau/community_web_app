@@ -98,10 +98,14 @@ class Add_Purchase{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Purchases
-        $purchase_query = "insert into Purchases (volunteer_id, contract_id, item_names, total_cost, purchase_date, entry_clerk, additional_notes)
-                  values ('$volunteer_id', '$contract_id', '$item_names', '$total_cost', '$purchase_date', '$entry_clerk', '$additional_notes')";
-        $DB->save($purchase_query);
+        // SQL prepared statement into Purchases
+        $purchase_query = "INSERT INTO Purchases (volunteer_id, contract_id, item_names, total_cost, purchase_date, entry_clerk, additional_notes)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $types = "iisisss";  // Types of data to be inserted
+        $params = [$volunteer_id, $contract_id, $item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes]; // Parameters to be inserted
+
+        // Send prepared statement to Database
+        $DB->save_prepared($purchase_query, $types, $params);
     }
 
 }

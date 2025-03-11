@@ -146,27 +146,32 @@ class Edit_Activity{
         // Initialise Database object
         $DB = new Database();
 
-        // SQL query into Activities
-        $activity_query = "UPDATE Activities 
-                  SET activity_name = '$activity_name', 
-                      number_of_places = '$number_of_places', 
-                      activity_duration = '$activity_duration', 
-                      activity_location = '$activity_location', 
-                      activity_date = '$activity_date', 
-                      entry_clerk = '$entry_clerk',
-                      additional_notes = '$additional_notes',
-                      registration_date = '$registration_date'
-                  WHERE id = '$activity_id';";
-        $DB->update($activity_query);
+        // SQL prepared statement into Activities
+        $actvity_query = "UPDATE Activities
+                    SET activity_name = ?,
+                        number_of_places = ?,
+                        activity_duration = ?,
+                        activity_location = ?,
+                        activity_date = ?,
+                        entry_clerk = ?,
+                        additional_notes = ?,
+                        registration_date = ?
+                    WHERE id = ?";
+        $types = "siisssssi"; // Types of data to be inserted
+        $params = array($activity_name, $number_of_places, $activity_duration, $activity_location, $activity_date, 
+                        $entry_clerk, $additional_notes, $registration_date, $activity_id); // Parameters to be inserted
+        
+        // Send prepared statement to Database
+        $DB->save_prepared($actvity_query, $types, $params);
 
         // SQL query to delete data from Activity_Time_Periods table
         $delete_activiy_time_periods_query = "DELETE FROM Activity_Time_Periods WHERE activity_id = '$activity_id'";
-        $DB->update($delete_activiy_time_periods_query);
+        $DB->save($delete_activiy_time_periods_query);
 
         // SQL query into Activity_Time_Periods
         foreach($activity_time_periods as $time_period){
-            $activity_time_periods_query = "insert into Activity_Time_Periods (activity_id, time_period)
-            values ('$activity_id', '$time_period')";
+            $activity_time_periods_query = "INSERT INTO Activity_Time_Periods (activity_id, time_period)
+                VALUES ('$activity_id', '$time_period')";
 
             // Send data to db
             $DB->save($activity_time_periods_query);  
@@ -174,12 +179,12 @@ class Edit_Activity{
 
         // SQL query to delete data from Activity_Domains table
         $delete_activity_domains_query = "DELETE FROM Activity_Domains WHERE activity_id = '$activity_id'";
-        $DB->update($delete_activity_domains_query);
+        $DB->save($delete_activity_domains_query);
 
         // SQL query into Activity_Domains
         foreach($activity_domains as $domain){
-            $activity_domains_query = "insert into Activity_Domains (activity_id, domain)
-                values ('$activity_id', '$domain')";
+            $activity_domains_query = "INSERT INTO Activity_Domains (activity_id, domain)
+                VALUES ('$activity_id', '$domain')";
             
             // Send data to db
             $DB->save($activity_domains_query);  

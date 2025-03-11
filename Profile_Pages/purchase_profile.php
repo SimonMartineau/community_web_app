@@ -30,7 +30,7 @@
 
             // SQL query into Purchases
             $delete_purchase_query = "delete from Purchases where id='$purchase_id'";
-            $DB->update($delete_purchase_query);
+            $DB->save($delete_purchase_query);
 
             // Changing the page.
             header("Location: ../Profile_Pages/volunteer_profile.php?volunteer_id=" . $volunteer_id);

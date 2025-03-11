@@ -112,7 +112,7 @@
 
             // SQL query into Purchases
             $trash_activity_query = "UPDATE `Activities` SET `trashed`='1' WHERE `id`='$activity_id'";
-            $DB->update($trash_activity_query);
+            $DB->save($trash_activity_query);
 
             // Changing the page.
             header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
@@ -127,7 +127,7 @@
 
             // SQL query into Purchases
             $restore_activity_query = "UPDATE `Activities` SET `trashed`='0' WHERE `id`='$activity_id'";
-            $DB->update($restore_activity_query);
+            $DB->save($restore_activity_query);
 
             // Changing the page.
             header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
@@ -146,7 +146,7 @@
             // SQL query into Purchases
             $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
                                                     values ('$volunteer_id', -1, '$activity_id')";
-            $DB->update($assign_volunteer_to_activity_query);
+            $DB->save($assign_volunteer_to_activity_query);
 
             // Changing the page.
             header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
@@ -165,7 +165,7 @@
             $unassign_volunteer_from_activity_query = "delete from Volunteer_Activity_Junction 
                                                         where volunteer_id = '$volunteer_id'
                                                         AND activity_id = '$activity_id'";
-            $DB->update($unassign_volunteer_from_activity_query);
+            $DB->save($unassign_volunteer_from_activity_query);
 
             // Changing the page.
             header("Location: ../Profile_Pages/activity_profile.php?activity_id=" . $activity_id);
