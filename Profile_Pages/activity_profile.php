@@ -1,6 +1,5 @@
 <!-- PHP Code -->
 <?php
-    session_start();
 
     // Include classes
     include("../Classes/connect.php");
@@ -9,19 +8,12 @@
     // Updating all backend processes
     update_backend_data();
 
-    // Check if the filter form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
-        $_SESSION['interest_filter'] = $_POST['interest_filter'] ?? '';
-        $_SESSION['weekday_filter'] = $_POST['weekday_filter'] ?? '';  
-        $_SESSION['time_period_filter'] = $_POST['time_period_filter'] ?? '';  
-    }
+    // Initializing marching volunteer filter variables
+    $interest_filter = 'checked';
+    $weekday_filter = 'checked';
+    $time_period_filter = 'checked';
 
-    // Retain previous filter values or set default
-    $interest_filter = $_SESSION['interest_filter'] ?? 'checked';
-    $weekday_filter = $_SESSION['weekday_filter'] ?? 'checked';
-    $time_period_filter = $_SESSION['time_period_filter'] ?? 'checked';
-
-    
+    // Default activity data
     if (isset($_GET['activity_id'])) {
         $activity_id = $_GET['activity_id'];
 
@@ -103,6 +95,39 @@
 
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        // Retrieve filter form data
+        $interest_filter = $_POST['interest_filter'] ?? '';
+        $weekday_filter = $_POST['weekday_filter'] ?? '';
+        $time_period_filter = $_POST['time_period_filter'] ?? '';
+
+        // Filter matching volunteers data
+        $sql_filter_query = "
+        SELECT DISTINCT v.* 
+        FROM Volunteers v
+        JOIN Volunteer_Availability va ON v.id = va.volunteer_id
+        JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
+        WHERE v.trashed = 0
+        ";
+
+        // Interest filter
+        $sql_filter_query .= ($interest_filter ? " AND vi.interest IN ($activity_domains_sql) " : '');
+
+        // Weekday filter
+        $sql_filter_query .= ($weekday_filter ? " AND DAYNAME('$activity_date') = va.weekday " : '');
+
+        // Time period filter
+        $sql_filter_query .= ($time_period_filter ? " AND va.time_period IN ($activity_time_periods_sql) " : '');
+
+        // Completing sql query
+        $sql_filter_query .= " AND v.hours_completed < v.hours_required
+            AND NOT EXISTS (
+                SELECT 1 FROM Volunteer_Activity_Junction vaj 
+                WHERE vaj.volunteer_id = v.id 
+                AND vaj.activity_id = '$activity_id'
+            )
+            ORDER BY v.id DESC";
+
+        $all_matching_participants_data_rows = fetch_data_rows($sql_filter_query);
 
         // Ensure the delete activity button has been pressed
         if (isset($_POST['delete_activity']) && $_POST['delete_activity'] === '1') {

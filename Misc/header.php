@@ -1,7 +1,8 @@
 <div id="blue_bar">
     <div>
         <!-- Logo -->
-        <a href="../Profile_Pages/home.php" class="logo">Give and Receive</a>
+        <!--<a href="../Profile_Pages/home.php" class="logo">Give and Receive</a> -->
+        <span class="logo" style="font-weight: bold;">Give and Receive</span>
 
         <!-- Navigation Menu -->
         <div id="menu_container">
@@ -44,7 +45,7 @@
     }
 
     /* Logo Link */
-    #blue_bar a.logo {
+    #blue_bar span.logo {
         font-size: 24px;
         color: #d0d8e4;
         text-decoration: none;

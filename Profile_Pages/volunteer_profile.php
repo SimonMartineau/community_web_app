@@ -29,6 +29,7 @@
             LIMIT 7"
         );
 
+        // Collect volunteer purchases data
         $purchases_data_rows = fetch_data_rows("
             SELECT * 
             FROM Purchases 
@@ -37,6 +38,7 @@
             LIMIT 7"
         );
 
+        // Collect volunteer's activities data
         $activities_data_rows = fetch_data_rows("
             SELECT a.* 
             FROM Activities a
@@ -86,22 +88,41 @@
     $time_period_availability_sql = "'" . implode("', '", $time_period_availability) . "'";
 
     // Default matching volunteers data
-    $all_matching_activities_data_rows = fetch_data_rows("
-        SELECT DISTINCT a.* 
-        FROM Activities a
-        JOIN Activity_Domains ad ON a.id = ad.activity_id
-        JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
-        WHERE a.trashed = 0
-        AND a.number_of_participants < a.number_of_places
-        AND ad.domain IN ($volunteer_interests_sql)
-        AND a.activity_date >= CURDATE()
+    $sql_filter_query = "
+    SELECT DISTINCT a.* 
+    FROM Activities a
+    JOIN Activity_Domains ad ON a.id = ad.activity_id
+    JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
+    WHERE a.trashed = 0
+    AND a.number_of_participants < a.number_of_places
+    ";
+
+    // Interest filter
+    $sql_filter_query .= ($interest_filter ? " AND ad.domain IN ($volunteer_interests_sql) " : '');
+
+    // Weekday + time_period filter
+    if ($weekday_filter && $time_period_filter){
+        $sql_filter_query .= " AND CONCAT(DAYNAME(a.activity_date), '-', atp.time_period) IN ($weekday_time_period_sql) ";
+    } elseif($weekday_filter){
+        // Weekday filter
+        $sql_filter_query .= " AND DAYNAME(a.activity_date) IN ($weekday_availability_sql) ";
+    } elseif($time_period_filter){
+        // Time period filter
+        $sql_filter_query .= " AND atp.time_period IN ($time_period_availability_sql) ";
+    }
+
+
+    $sql_filter_query .= "
+        AND a.activity_date >= CURDATE() 
         AND NOT EXISTS (
             SELECT 1 FROM Volunteer_Activity_Junction vaj 
             WHERE vaj.activity_id = a.id 
             AND vaj.volunteer_id = '$volunteer_id'
         )
         ORDER BY a.id DESC
-    ");
+    ";
+
+    $all_matching_activities_data_rows = fetch_data_rows($sql_filter_query);
 
     
     // Check if user has submitted info
@@ -111,7 +132,7 @@
         $weekday_filter = $_POST['weekday_filter'] ?? '';
         $time_period_filter = $_POST['time_period_filter'] ?? '';
 
-        // Default matching volunteers data
+        // Filter matching activities data
         $sql_filter_query = "
             SELECT DISTINCT a.* 
             FROM Activities a
@@ -380,7 +401,6 @@
                     <!-- Volunteer Contributions -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Data</h2>
-                        <p><strong>Points Left:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['points'] . " Points"); ?></span></p>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['hours_required'] . " Hours"); ?></span></p>
                         <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['hours_completed'] . " Hours"); ?></span></p>
                         <p><strong>Points Left:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['points'] . " Points"); ?></span></p>
@@ -470,10 +490,10 @@
 
                         <!-- Toggle Buttons -->
                         <div id="widget_toggle_buttons">
-                            <button id="recent_contracts_button" class="active" onclick="ToggleWidgets('contracts', this)">Show Recent Contracts</button>
-                            <button id="recent_purchases_button" onclick="ToggleWidgets('purchases', this)">Show Recent Purchases</button>
-                            <button id="recent_activities_button" onclick="ToggleWidgets('activities', this)">Show Recent Activities</button>
-                            <button id="matching_activities_button" onclick="ToggleWidgets('matching_activities', this)">Show Matching Activities</button>
+                            <button id="recent_contracts_button" class="active" onclick="ToggleWidgets('contracts', this)">Latest Contract</button>
+                            <button id="recent_purchases_button" onclick="ToggleWidgets('purchases', this)">Latest Purchases</button>
+                            <button id="recent_activities_button" onclick="ToggleWidgets('activities', this)">Registered Activities</button>
+                            <button id="matching_activities_button" onclick="ToggleWidgets('matching_activities', this)">Matching Activities</button>
                         </div>
 
                         <!-- Display Contracts Widgets -->
