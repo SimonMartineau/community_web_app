@@ -1,5 +1,7 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
     // Include classes
     include("../Classes/connect.php");
@@ -8,105 +10,92 @@
     // Updating all backend processes
     update_backend_data();
 
-    // Default entry values on page startup
-    $order_filter = "date_of_inscription_desc";
-    $trash_filter = "only_active_volunteers";
-    $active_contract_filter = "active_contracts_only";
-    $earliest_date_filter = "";
-    $latest_date_filter = "";
-
-    // Default page contracts data
-    $all_contracts_data_rows = fetch_data_rows("
-        SELECT c.* 
-        FROM Contracts c
-        INNER JOIN Volunteers m ON c.volunteer_id = m.id
-        WHERE m.trashed = 0
-        AND contract_active = 1
-        ORDER BY c.issuance_date DESC"
-    );
-
-
-    // Getting filter form data
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        // Retrieve filter form data
-        $order_filter = $_POST['order_filter'] ?? '';
-        $trash_filter = $_POST['trash_filter'] ?? '';
-        $active_contract_filter = $_POST['active_contract_filter'] ?? '';
-        $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
-        $latest_date_filter = $_POST['latest_date_filter'] ?? '';
-
-        // Default sql query
-        $sql_filter_query = "SELECT DISTINCT c.* FROM Contracts c JOIN Volunteers v ON v.id = c.volunteer_id WHERE 1=1 ";
-
-        // Volunteer status filter
-        if (!empty($trash_filter)){
-            switch ($trash_filter){
-                case 'only_active_volunteers':
-                    $sql_filter_query .= " AND v.trashed = '0'";
-                    break;
-                case 'only_in_trash':
-                    $sql_filter_query .= " AND v.trashed = '1'";
-                    break;
-                case 'all_volunteers':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
-        }
-
-        // Active contract filter
-        if (!empty($active_contract_filter)){
-            switch ($active_contract_filter){
-                case 'active_contracts_only':
-                    $sql_filter_query .= " AND contract_active = 1";
-                    break;
-                case 'past_contracts_only':
-                    $sql_filter_query .= " AND contract_active = 0";
-                    break;
-                case 'all_contracts':
-                    // No filter added
-                    break;
-            }
-        }
-
-        // Earliest date filter
-        if (!empty($earliest_date_filter)){
-            $sql_filter_query .= " AND '$earliest_date_filter' < c.issuance_date";
-        }
-
-        // Latest date filter
-        if (!empty($latest_date_filter)){
-            $sql_filter_query .= " AND  c.validity_date < '$latest_date_filter'";
-        }
-
-        // Order of appearance filter
-        if (!empty($order_filter)){
-            switch ($order_filter){
-                case 'issuance_date_desc':
-                    $sql_filter_query .= " ORDER BY c.issuance_date DESC";
-                    break;
-                case 'issuance_date_asc':
-                    $sql_filter_query .= " ORDER BY c.issuance_date ASC";
-                    break;
-                case 'validity_date_desc':
-                    $sql_filter_query .= " ORDER BY c.validity_date DESC";
-                    break;
-                case 'validity_date_asc':
-                    $sql_filter_query .= " ORDER BY c.validity_date ASC";
-                    break;
-                case 'first_name_asc':
-                    $sql_filter_query .= " ORDER BY v.first_name ASC";
-                    break;
-                case 'last_name_asc':
-                    $sql_filter_query .= " ORDER BY v.last_name ASC";
-                    break;
-            }
-        }
-
-        // Final query
-        $all_contracts_data_rows = fetch_data_rows($sql_filter_query);
-
+    // Check if the filter form is submitted, "apply_filter" is the name of the submit button
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
+        $_SESSION['all_contracts_order_filter'] = $_POST['order_filter'] ?? '';
+        $_SESSION['all_contracts_trash_filter'] = $_POST['trash_filter'] ?? '';  
+        $_SESSION['all_contracts_active_contract_filter'] = $_POST['active_contract_filter'] ?? '';
+        $_SESSION['all_contracts_earliest_date_filter'] = $_POST['earliest_date_filter'] ?? '';
+        $_SESSION['all_contracts_latest_date_filter'] = $_POST['latest_date_filter'] ?? '';
     }
+
+    // Default entry values on page startup.
+    $order_filter = $_SESSION['all_contracts_order_filter'] ?? "date_of_inscription_desc";
+    $trash_filter = $_SESSION['all_contracts_trash_filter'] ?? "only_active_volunteers";
+    $active_contract_filter = $_SESSION['all_contracts_active_contract_filter'] ?? "active_contracts_only";
+    $earliest_date_filter = $_SESSION['all_contracts_earliest_date_filter'] ?? '';
+    $latest_date_filter = $_SESSION['all_contracts_latest_date_filter'] ?? '';
+
+    // Default sql query
+    $sql_filter_query = "SELECT DISTINCT c.* FROM Contracts c JOIN Volunteers v ON v.id = c.volunteer_id WHERE 1=1 ";
+
+    // Volunteer status filter
+    if (!empty($trash_filter)){
+        switch ($trash_filter){
+            case 'only_active_volunteers':
+                $sql_filter_query .= " AND v.trashed = '0'";
+                break;
+            case 'only_in_trash':
+                $sql_filter_query .= " AND v.trashed = '1'";
+                break;
+            case 'all_volunteers':
+                // No additional condition needed (show all volunteers)
+                break;
+        }
+    }
+
+    // Active contract filter
+    if (!empty($active_contract_filter)){
+        switch ($active_contract_filter){
+            case 'active_contracts_only':
+                $sql_filter_query .= " AND contract_active = 1";
+                break;
+            case 'past_contracts_only':
+                $sql_filter_query .= " AND contract_active = 0";
+                break;
+            case 'all_contracts':
+                // No filter added
+                break;
+        }
+    }
+
+    // Earliest date filter
+    if (!empty($earliest_date_filter)){
+        $sql_filter_query .= " AND '$earliest_date_filter' < c.issuance_date";
+    }
+
+    // Latest date filter
+    if (!empty($latest_date_filter)){
+        $sql_filter_query .= " AND  c.validity_date < '$latest_date_filter'";
+    }
+
+    // Order of appearance filter
+    if (!empty($order_filter)){
+        switch ($order_filter){
+            case 'issuance_date_desc':
+                $sql_filter_query .= " ORDER BY c.issuance_date DESC";
+                break;
+            case 'issuance_date_asc':
+                $sql_filter_query .= " ORDER BY c.issuance_date ASC";
+                break;
+            case 'validity_date_desc':
+                $sql_filter_query .= " ORDER BY c.validity_date DESC";
+                break;
+            case 'validity_date_asc':
+                $sql_filter_query .= " ORDER BY c.validity_date ASC";
+                break;
+            case 'first_name_asc':
+                $sql_filter_query .= " ORDER BY v.first_name ASC";
+                break;
+            case 'last_name_asc':
+                $sql_filter_query .= " ORDER BY v.last_name ASC";
+                break;
+        }
+    }
+
+    // Final query
+    $all_contracts_data_rows = fetch_data_rows($sql_filter_query);
+
 ?>
 
 
@@ -194,7 +183,7 @@
 
                             <!-- Submit Button -->
                             <div style="text-align: center;">
-                                <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                     Apply Filter
                                 </button>
                             </div>

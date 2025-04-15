@@ -1,5 +1,7 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
     // Include classes
     include("../Classes/connect.php");
@@ -8,87 +10,75 @@
     // Updating all backend processes
     update_backend_data();
 
-    // Default entry values on page startup
-    $order_filter = "purchase_date_desc";
-    $trash_filter = "only_active_volunteers";
-    $earliest_date_filter = "";
-    $latest_date_filter = "";
-
-    // Collect volunteer data
-    $all_purchases_data_rows = fetch_data_rows("
-        SELECT p.* 
-        FROM Purchases p
-        INNER JOIN Volunteers m ON p.volunteer_id = m.id
-        WHERE m.trashed = 0
-        ORDER BY p.purchase_date DESC"
-    );
-
-
-    // Getting filter form data
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        // Retrieve filter form data
-        $order_filter = $_POST['order_filter'] ?? '';
-        $trash_filter = $_POST['trash_filter'] ?? '';
-        $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
-        $latest_date_filter = $_POST['latest_date_filter'] ?? '';
-
-        // Default sql query
-        $sql_filter_query = "SELECT DISTINCT p.* FROM Purchases p JOIN Volunteers v ON v.id = p.volunteer_id WHERE 1=1 ";
-
-        // Volunteer status filter
-        if (!empty($trash_filter)){
-            switch ($trash_filter){
-                case 'only_active_volunteers':
-                    $sql_filter_query .= " AND v.trashed = '0'";
-                    break;
-                case 'only_in_trash':
-                    $sql_filter_query .= " AND v.trashed = '1'";
-                    break;
-                case 'all_volunteers':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
-        }
-
-        // Earliest date filter
-        if (!empty($earliest_date_filter)){
-            $sql_filter_query .= " AND '$earliest_date_filter' < p.purchase_date";
-        }
-
-        // Latest date filter
-        if (!empty($latest_date_filter)){
-            $sql_filter_query .= " AND  p.purchase_date < '$latest_date_filter'";
-        }
-
-        // Order of appearance filter
-        if (!empty($order_filter)){
-            switch ($order_filter){
-                case 'purchase_date_desc':
-                    $sql_filter_query .= " ORDER BY p.purchase_date DESC";
-                    break;
-                case 'purchase_date_asc':
-                    $sql_filter_query .= " ORDER BY p.purchase_date ASC";
-                    break;
-                case 'purchase_cost_asc':
-                    $sql_filter_query .= " ORDER BY p.total_cost ASC";
-                    break;
-                case 'purchase_cost_desc':
-                    $sql_filter_query .= " ORDER BY p.total_cost DESC";
-                    break;
-                case 'first_name_asc':
-                    $sql_filter_query .= " ORDER BY v.first_name ASC";
-                    break;
-                case 'last_name_asc':
-                    $sql_filter_query .= " ORDER BY v.last_name ASC";
-                    break;
-            }
-        }
-
-        // Final query
-        $all_purchases_data_rows = fetch_data_rows($sql_filter_query);
-
+       // Check if the filter form is submitted, "apply_filter" is the name of the submit button
+       if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
+        $_SESSION['all_purchases_order_filter'] = $_POST['order_filter'] ?? '';
+        $_SESSION['all_purchases_trash_filter'] = $_POST['trash_filter'] ?? '';  
+        $_SESSION['all_purchases_earliest_date_filter'] = $_POST['earliest_date_filter'] ?? '';
+        $_SESSION['all_purchases_latest_date_filter'] = $_POST['latest_date_filter'] ?? '';
     }
+
+    // Default entry values on page startup.
+    $order_filter = $_SESSION['all_purchases_order_filter'] ?? "purchase_date_desc";
+    $trash_filter = $_SESSION['all_purchases_trash_filter'] ?? "only_active_volunteers";
+    $earliest_date_filter = $_SESSION['all_purchases_earliest_date_filter'] ?? '';
+    $latest_date_filter = $_SESSION['all_purchases_latest_date_filter'] ?? '';
+
+    // Default sql query
+    $sql_filter_query = "SELECT DISTINCT p.* FROM Purchases p JOIN Volunteers v ON v.id = p.volunteer_id WHERE 1=1 ";
+
+    // Volunteer status filter
+    if (!empty($trash_filter)){
+        switch ($trash_filter){
+            case 'only_active_volunteers':
+                $sql_filter_query .= " AND v.trashed = '0'";
+                break;
+            case 'only_in_trash':
+                $sql_filter_query .= " AND v.trashed = '1'";
+                break;
+            case 'all_volunteers':
+                // No additional condition needed (show all volunteers)
+                break;
+        }
+    }
+
+    // Earliest date filter
+    if (!empty($earliest_date_filter)){
+        $sql_filter_query .= " AND '$earliest_date_filter' < p.purchase_date";
+    }
+
+    // Latest date filter
+    if (!empty($latest_date_filter)){
+        $sql_filter_query .= " AND  p.purchase_date < '$latest_date_filter'";
+    }
+
+    // Order of appearance filter
+    if (!empty($order_filter)){
+        switch ($order_filter){
+            case 'purchase_date_desc':
+                $sql_filter_query .= " ORDER BY p.purchase_date DESC";
+                break;
+            case 'purchase_date_asc':
+                $sql_filter_query .= " ORDER BY p.purchase_date ASC";
+                break;
+            case 'purchase_cost_asc':
+                $sql_filter_query .= " ORDER BY p.total_cost ASC";
+                break;
+            case 'purchase_cost_desc':
+                $sql_filter_query .= " ORDER BY p.total_cost DESC";
+                break;
+            case 'first_name_asc':
+                $sql_filter_query .= " ORDER BY v.first_name ASC";
+                break;
+            case 'last_name_asc':
+                $sql_filter_query .= " ORDER BY v.last_name ASC";
+                break;
+        }
+    }
+
+    // Final query
+    $all_purchases_data_rows = fetch_data_rows($sql_filter_query);
+
 ?>
 
 
@@ -166,7 +156,7 @@
 
                             <!-- Submit Button -->
                             <div style="text-align: center;">
-                                <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                     Apply Filter
                                 </button>
                             </div>

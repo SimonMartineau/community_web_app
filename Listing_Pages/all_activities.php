@@ -1,5 +1,7 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
     // Include classes
     include("../Classes/connect.php");
@@ -8,135 +10,124 @@
     // Updating all backend processes
     update_backend_data();
 
-    // Default entry values on page startup.
-    $order_filter = "date_of_inscription_desc";
-    $status_filter = "only_active";
-    $occupancy_filter = "all_activities";
-    $domains_filter = [];
-    $time_periods_filter = [];
-    $available_days_filter = [];
-
-    // Default page volunteer data
-    $all_activities_data_rows = fetch_data_rows("
-        SELECT DISTINCT a.* FROM Activities a
-        JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
-        JOIN Activity_Domains ad ON a.id = ad.activity_id
-        WHERE `trashed` = '0' 
-        AND a.activity_date >= CURDATE() 
-        ORDER BY id DESC"
-    );
-
-    // Getting filter form data
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve filter form data
-        $order_filter = $_POST['order_filter'] ?? '';
-        $status_filter = $_POST['status_filter'] ?? '';
-        $occupancy_filter = $_POST['occupancy_filter'] ?? '';
-        $domains_filter = $_POST['domains_filter'] ?? [];
-        $time_periods_filter = $_POST['time_periods_filter'] ?? [];
-        $available_days_filter = $_POST['available_days_filter'] ?? [];
-
-        // Default sql query
-        $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a 
-                                    JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
-                                    JOIN Activity_Domains ad ON a.id = ad.activity_id";
-
-        // Initialize Where clause
-        $sql_filter_query .= " WHERE 1=1";
-
-        // Volunteer status filter
-        if (!empty($status_filter)){
-            switch ($status_filter){
-                case 'only_active':
-                    $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date >= CURDATE()";
-                    break;
-                case 'only_past':
-                    $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date < CURDATE()";
-                    break;
-                case 'only_in_trash':
-                    $sql_filter_query .= " AND a.trashed = '1'";
-                    break;
-                case 'all_activities':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
-        }
-
-        // Volunteer occupancy filter
-        if (!empty($occupancy_filter)){
-            switch ($occupancy_filter){
-                case 'not_full':
-                    $sql_filter_query .= " AND a.number_of_places - a.number_of_participants > 0";
-                    break;
-                case 'full':
-                    $sql_filter_query .= " AND a.number_of_places - a.number_of_participants <= 0";
-                    break;
-                case 'empty':
-                    $sql_filter_query .= " AND a.number_of_participants = 0";
-                    break;
-                case 'all_activities':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
-        }
-
-        // Add time periods filter
-        if (!empty($time_periods_filter)) {
-            $sql_filter_query .= " AND (";
-            foreach ($time_periods_filter as $time_period) {
-                $sql_filter_query .= " atp.time_period = '$time_period' OR";
-            }
-            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
-        }
-
-        // Add available days filter
-        if (!empty($available_days_filter)) {
-            $sql_filter_query .= " AND (";
-            foreach ($available_days_filter as $weekday) {
-                $sql_filter_query .= " DAYNAME(a.activity_date) = '$weekday' OR";
-            }
-            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
-        }
-
-        // Add domain filter
-        if (!empty($domains_filter)) {
-            $sql_filter_query .= " AND (";
-            foreach ($domains_filter as $domain) {
-                $sql_filter_query .= " ad.domain = '$domain' OR";
-            }
-            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
-        }
-
-        // Order of appearance filter
-        if (!empty($order_filter)){
-            switch ($order_filter){
-                case 'registration_date_desc':
-                    $sql_filter_query .= " ORDER BY a.registration_date DESC";
-                    break;
-                case 'registration_date_asc':
-                    $sql_filter_query .= " ORDER BY a.registration_date ASC";
-                    break;
-                case 'activity_duration_desc':
-                    $sql_filter_query .= " ORDER BY a.activity_duration DESC";
-                    break;
-                case 'activity_duration_asc':
-                    $sql_filter_query .= " ORDER BY a.activity_duration ASC";
-                    break;
-                case 'activity_date_desc':
-                    $sql_filter_query .= " ORDER BY a.activity_date DESC";
-                    break;
-                case 'activity_date_asc':
-                    $sql_filter_query .= " ORDER BY a.activity_date ASC";
-                    break;
-                case 'activity_name_asc':
-                    $sql_filter_query .= " ORDER BY a.activity_name ASC";
-                    break;
-            }
-        }
-
-        // Final query
-        $all_activities_data_rows = fetch_data_rows($sql_filter_query);
+    // Check if the filter form is submitted, "apply_filter" is the name of the submit button
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
+        $_SESSION['all_activities_order_filter'] = $_POST['order_filter'] ?? '';
+        $_SESSION['all_activities_status_filter'] = $_POST['status_filter'] ?? '';  
+        $_SESSION['all_activities_occupancy_filter'] = $_POST['occupancy_filter'] ?? '';
+        $_SESSION['all_activities_domains_filter'] = $_POST['domains_filter'] ?? [];
+        $_SESSION['all_activities_time_periods_filter'] = $_POST['time_periods_filter'] ?? [];  
+        $_SESSION['all_activities_available_days_filter'] = $_POST['available_days_filter'] ?? [];
     }
+
+    // Retain previous filter values or set default
+    $order_filter = $_SESSION['all_activities_order_filter'] ?? 'date_of_inscription_desc';
+    $status_filter = $_SESSION['all_activities_status_filter'] ?? 'only_active';
+    $occupancy_filter = $_SESSION['all_activities_occupancy_filter'] ?? 'all_activities';
+    $domains_filter = $_SESSION['all_activities_domains_filter'] ?? [];
+    $time_periods_filter = $_SESSION['all_activities_time_periods_filter'] ?? [];
+    $available_days_filter = $_SESSION['all_activities_available_days_filter'] ?? [];
+
+    // Default sql query
+    $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a 
+                                JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
+                                JOIN Activity_Domains ad ON a.id = ad.activity_id";
+
+    // Initialize Where clause
+    $sql_filter_query .= " WHERE 1=1";
+
+    // Volunteer status filter
+    if (!empty($status_filter)){
+        switch ($status_filter){
+            case 'only_active':
+                $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date >= CURDATE()";
+                break;
+            case 'only_past':
+                $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date < CURDATE()";
+                break;
+            case 'only_in_trash':
+                $sql_filter_query .= " AND a.trashed = '1'";
+                break;
+            case 'all_activities':
+                // No additional condition needed (show all volunteers)
+                break;
+        }
+    }
+
+    // Volunteer occupancy filter
+    if (!empty($occupancy_filter)){
+        switch ($occupancy_filter){
+            case 'not_full':
+                $sql_filter_query .= " AND a.number_of_places - a.number_of_participants > 0";
+                break;
+            case 'full':
+                $sql_filter_query .= " AND a.number_of_places - a.number_of_participants <= 0";
+                break;
+            case 'empty':
+                $sql_filter_query .= " AND a.number_of_participants = 0";
+                break;
+            case 'all_activities':
+                // No additional condition needed (show all volunteers)
+                break;
+        }
+    }
+
+    // Add time periods filter
+    if (!empty($time_periods_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($time_periods_filter as $time_period) {
+            $sql_filter_query .= " atp.time_period = '$time_period' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+    }
+
+    // Add available days filter
+    if (!empty($available_days_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($available_days_filter as $weekday) {
+            $sql_filter_query .= " DAYNAME(a.activity_date) = '$weekday' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+    }
+
+    // Add domain filter
+    if (!empty($domains_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($domains_filter as $domain) {
+            $sql_filter_query .= " ad.domain = '$domain' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+    }
+
+    // Order of appearance filter
+    if (!empty($order_filter)){
+        switch ($order_filter){
+            case 'registration_date_desc':
+                $sql_filter_query .= " ORDER BY a.registration_date DESC";
+                break;
+            case 'registration_date_asc':
+                $sql_filter_query .= " ORDER BY a.registration_date ASC";
+                break;
+            case 'activity_duration_desc':
+                $sql_filter_query .= " ORDER BY a.activity_duration DESC";
+                break;
+            case 'activity_duration_asc':
+                $sql_filter_query .= " ORDER BY a.activity_duration ASC";
+                break;
+            case 'activity_date_desc':
+                $sql_filter_query .= " ORDER BY a.activity_date DESC";
+                break;
+            case 'activity_date_asc':
+                $sql_filter_query .= " ORDER BY a.activity_date ASC";
+                break;
+            case 'activity_name_asc':
+                $sql_filter_query .= " ORDER BY a.activity_name ASC";
+                break;
+        }
+    }
+
+    // Final query
+    $all_activities_data_rows = fetch_data_rows($sql_filter_query);
 ?>
 
 
@@ -230,12 +221,12 @@
                                 <div style="margin-bottom: 15px;">
                                     <label style="font-weight: bold;">Domains:</label><br>
                                     <div>
-                                        <label><input type="checkbox" name="domains_filter[]" value="Organization of community events" <?php echo (isset($_POST['domains_filter']) && in_array('Organization of community events', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Organization of community events</label><br>
-                                        <label><input type="checkbox" name="domains_filter[]" value="Library support" <?php echo (isset($_POST['domains_filter']) && in_array('Library support', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Library support</label><br>
-                                        <label><input type="checkbox" name="domains_filter[]" value="Help in the community store" <?php echo (isset($_POST['domains_filter']) && in_array('Help in the community store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Help in the community store</label><br>
-                                        <label><input type="checkbox" name="domains_filter[]" value="Support in the community grocery store" <?php echo (isset($_POST['domains_filter']) && in_array('Support in the community grocery store', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Support in the community grocery store</label><br>
-                                        <label><input type="checkbox" name="domains_filter[]" value="Cleaning and maintenance of public spaces" <?php echo (isset($_POST['domains_filter']) && in_array('Cleaning and maintenance of public spaces', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Cleaning and maintenance of public spaces</label><br>
-                                        <label><input type="checkbox" name="domains_filter[]" value="Participation in urban gardening projects" <?php echo (isset($_POST['domains_filter']) && in_array('Participation in urban gardening projects', $_POST['domains_filter'])) ? 'checked' : ''; ?>> Participation in urban gardening projects</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Organization of community events" <?php echo (isset($_SESSION['all_activities_domains_filter']) && in_array('Organization of community events', $_SESSION['all_activities_domains_filter'])) ? 'checked' : ''; ?>> Organization of community events</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Library support" <?php echo (isset($_SESSION['all_activities_domains_filter']) && in_array('Library support', $_SESSION['all_activities_domains_filter'])) ? 'checked' : ''; ?>> Library support</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Help in the community store" <?php echo (isset($_SESSION['all_activities_domains_filter']) && in_array('Help in the community store', $_SESSION['all_activities_domains_filter'])) ? 'checked' : ''; ?>> Help in the community store</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Support in the community grocery store" <?php echo (isset($_SESSION['all_activities_domains_filter']) && in_array('Support in the community grocery store', $_SESSION['all_activities_domains_filter'])) ? 'checked' : ''; ?>> Support in the community grocery store</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Cleaning and maintenance of public spaces" <?php echo (isset($_SESSION['all_activities_domains_filter']) && in_array('Cleaning and maintenance of public spaces', $_SESSION['all_activities_domains_filter'])) ? 'checked' : ''; ?>> Cleaning and maintenance of public spaces</label><br>
+                                        <label><input type="checkbox" name="domains_filter[]" value="Participation in urban gardening projects" <?php echo (isset($_SESSION['all_activities_domains_filter']) && in_array('Participation in urban gardening projects', $_SESSION['all_activities_domains_filter'])) ? 'checked' : ''; ?>> Participation in urban gardening projects</label><br>
                                     </div>
                                 </div>
 
@@ -243,9 +234,9 @@
                                 <div style="margin-bottom: 15px;">
                                     <label style="font-weight: bold;">Acivity Period:</label><br>
                                     <div>
-                                        <label><input type="checkbox" name="time_periods_filter[]" value="Morning" <?php echo (isset($_POST['time_periods_filter']) && in_array('Morning', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Morning</label><br>
-                                        <label><input type="checkbox" name="time_periods_filter[]" value="Afternoon" <?php echo (isset($_POST['time_periods_filter']) && in_array('Afternoon', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Afternoon</label><br>
-                                        <label><input type="checkbox" name="time_periods_filter[]" value="Evening" <?php echo (isset($_POST['time_periods_filter']) && in_array('Evening', $_POST['time_periods_filter'])) ? 'checked' : ''; ?>> Evening</label><br>
+                                        <label><input type="checkbox" name="time_periods_filter[]" value="Morning" <?php echo (isset($_SESSION['all_activities_time_periods_filter']) && in_array('Morning', $_SESSION['all_activities_time_periods_filter'])) ? 'checked' : ''; ?>> Morning</label><br>
+                                        <label><input type="checkbox" name="time_periods_filter[]" value="Afternoon" <?php echo (isset($_SESSION['all_activities_time_periods_filter']) && in_array('Afternoon', $_SESSION['all_activities_time_periods_filter'])) ? 'checked' : ''; ?>> Afternoon</label><br>
+                                        <label><input type="checkbox" name="time_periods_filter[]" value="Evening" <?php echo (isset($_SESSION['all_activities_time_periods_filter']) && in_array('Evening', $_SESSION['all_activities_time_periods_filter'])) ? 'checked' : ''; ?>> Evening</label><br>
                                     </div>
                                 </div>
 
@@ -253,19 +244,19 @@
                                 <div style="margin-bottom: 15px;">
                                     <label style="font-weight: bold;">Available Days:</label><br>
                                     <div>
-                                        <label><input type="checkbox" name="available_days_filter[]" value="Monday" <?php echo (isset($_POST['available_days_filter']) && in_array('Monday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Monday</label><br>
-                                        <label><input type="checkbox" name="available_days_filter[]" value="Tuesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Tuesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Tuesday</label><br>
-                                        <label><input type="checkbox" name="available_days_filter[]" value="Wednesday" <?php echo (isset($_POST['available_days_filter']) && in_array('Wednesday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Wednesday</label><br>
-                                        <label><input type="checkbox" name="available_days_filter[]" value="Thursday" <?php echo (isset($_POST['available_days_filter']) && in_array('Thursday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Thursday</label><br>
-                                        <label><input type="checkbox" name="available_days_filter[]" value="Friday" <?php echo (isset($_POST['available_days_filter']) && in_array('Friday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Friday</label><br>
-                                        <label><input type="checkbox" name="available_days_filter[]" value="Saturday" <?php echo (isset($_POST['available_days_filter']) && in_array('Saturday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
-                                        <label><input type="checkbox" name="available_days_filter[]" value="Sunday" <?php echo (isset($_POST['available_days_filter']) && in_array('Sunday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Monday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Monday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Monday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Tuesday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Tuesday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Tuesday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Wednesday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Wednesday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Wednesday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Thursday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Thursday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Thursday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Friday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Friday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Friday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Saturday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Saturday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
+                                        <label><input type="checkbox" name="available_days_filter[]" value="Sunday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Sunday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
                                     </div>
                                 </div>
 
                                 <!-- Submit Button -->
                                 <div style="text-align: center;">
-                                    <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                    <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                         Apply Filter
                                     </button>
                                 </div>
