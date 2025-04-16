@@ -201,7 +201,7 @@ class Add_Volunteer{
         
         // Set volunteer_id to value of primary key in Volunteers table
         $volunteer_id = $DB->last_insert_id;
-        $this->volunteer_id = $volunteer_id;
+        $this->volunteer_id = $volunteer_id; // Set volunteer_id to the last inserted id
 
         // SQL query into Volunteer_Availability
         foreach($volunteer_availability as $availability){

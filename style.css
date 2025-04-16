@@ -97,7 +97,7 @@
 #form_section{
     background-color: white; 
     width:1200px; 
-    margin: auto; 
+    margin: auto;
     padding: 10px;
     padding-top: 50px;
 }
@@ -388,3 +388,43 @@ border-radius: 50%;
 .today {
     color: #be7c00;
 }
+
+/* Tooltip Design*/
+/*#################################################################################################################################################################*/
+.tooltip {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    margin-left: 5px;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    width: 220px;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the tooltip */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+  

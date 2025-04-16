@@ -11,6 +11,7 @@ class Add_Activity{
     public $activity_time_periods_error_mes = "";
     public $activity_domains_error_mes = "";
     public $entry_clerk_error_mes = "";
+    public $activity_id = "";
 
 
     // Analyses data sent by user
@@ -155,6 +156,7 @@ class Add_Activity{
 
             // Set activity_id to value of primary key in Activity table
             $activity_id = $DB->last_insert_id;
+            $this->activity_id = $activity_id; // Set activity_id to class variable
 
             // SQL query into Activity_Time_Periods
             foreach($activity_time_periods as $time_period){
