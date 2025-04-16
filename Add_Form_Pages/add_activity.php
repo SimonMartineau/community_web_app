@@ -1,52 +1,4 @@
 <!-- PHP Code -->
-<style>
-    /* Container styling for the form */
-    .form-layout {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      background: #f9f9f9;
-      border-radius: 5px;
-    }
-    /* Each form field will be a flex container */
-    .form-field {
-      display: flex;
-      align-items: center;
-    }
-    /* Additional class to add bottom margin */
-    .with-margin {
-    margin-bottom: 15px;
-    }
-    /* The label takes up a fixed width and is left aligned */
-    .form-field label {
-      width: 150px; /* Adjust width as needed */
-      text-align: left;
-      font-weight: bold;
-      margin-right: 10px;
-    }
-    /* The input (or select/textarea) occupies the remaining space and can be styled as needed */
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-    /* Style the submit button separately */
-    .form-field button {
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    .form-field button:hover {
-      background-color: #0056b3;
-    }
-  </style>
 <?php
 
     // Include classes
@@ -141,50 +93,62 @@
                 <form action="../Add_Form_Pages/add_activity.php" method="post" class="form-layout" form>
 
                     <!-- Activity Name Text Input -->
-                    <div class="form-field with-margin">
-                        <label for="username">Activity name:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
+                    <div class="form-field">
+                        <label for="username">
+                            Activity Name:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
                         </span>
+                        </label>
                         <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
                         <span id="error_message"><?php echo isset($activity) ? $activity->activity_name_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Activity Number of Places Text Input -->
-                    <div class="form-field with-margin">
-                        <label for="email">Number of places:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
+                    <div class="form-field">
+                        <label for="email">
+                            Number of Places:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
                         </span>
+                        </label>
                         <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
                         <span id="error_message"><?php echo isset($activity) ? $activity->number_of_places_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Activity Duration Text Input -->
-                    <div class="form-field with-margin">
-                        <label for="password">Activity duration:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
-                        </span>
+                    <div class="form-field">
+                        <label for="password">
+                            Activity Duration:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
                         <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
                         <span id="error_message"><?php echo isset($activity) ? $activity->activity_duration_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Activity Location Text Input -->
-                    <div class="form-field with-margin">
-                        <label for="password">Activity location:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
-                        </span>
+                    <div class="form-field">
+                        <label for="password">
+                            Activity Location:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
                         <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
                     </div>
 
                     <!-- Dates Input -->
-                    <div class="form-field with-margin">
-                        <label for="password">Activity Dates:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
-                        </span>
+                    <div class="form-field">
+                        <label for="password">
+                            Activity Dates:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
                         <!-- Include Flatpickr CSS & JS -->
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
                         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -202,20 +166,15 @@
                     </div>
 
                     <!-- Activity Time Period Table -->
-                    <div class="form-field">
-                        <label for="password">Activity Time Period:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
-                        </span>
-                    </div>
-                    <div class="with-margin" style="text-align: center;">
-                        <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
-                            <tr>
-                                <th>Time Period</th>
-                                <th>Contract</th>
-                            </tr>
+                    <div class="form-field form-field-top">
+                        <label for="password">
+                            Activity Time Period:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <div class="form-checkbox-group">
                             <?php
-
                             // Time periods
                             $time_periods = [
                                 "Morning", 
@@ -223,36 +182,30 @@
                                 "Evening"
                             ];
 
-                            // Create table with checkboxes
+                            // Create vertical list with checkboxes on the left
                             foreach ($time_periods as $time_period) {
-                                echo "<tr>";
-                                echo "<td>$time_period</td>";
-                                if (in_array($time_period, $activity_time_periods)){
-                                    echo "<td><input type='checkbox' name='activity_time_periods[]' value='$time_period' checked></td>";
-                                } else {
-                                    echo "<td><input type='checkbox' name='activity_time_periods[]' value='$time_period'></td>";
-                                } 
-                                echo "</tr>";
+                                $checked = in_array($time_period, $activity_time_periods) ? "checked" : "";
+                                echo "<div class='form-checkbox-item'>";
+                                echo "<input type='checkbox' name='activity_time_periods[]' value='$time_period' $checked>";
+                                echo "<label style='margin: 0;'>$time_period</label>";
+                                echo "</div>";
                             }
                             ?>
-                        </table>
+                        </div>
+                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_periods_error_mes : ''; ?></span>
                     </div>
 
-                    <!-- Activity Domains Table -->
-                    <div class="form-field">
-                        <label for="password">Activity Domains:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
-                        </span>
-                    </div>
-                    <div class="with-margin" style="text-align: center;">
-                        <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
-                            <tr>
-                                <th>Activity</th>
-                                <th>Contract</th>
-                            </tr>
+                    <!-- Activity Domain Section -->
+                    <div class="form-field form-field-top">
+                        <label>
+                            Activity Domains:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+
+                        <div class="form-checkbox-group">
                             <?php
-
                             // Activity domains
                             $domain_types = [
                                 "Organization of community events", 
@@ -263,42 +216,41 @@
                                 "Participation in urban gardening projects"
                             ];
 
-                            // Create table with checkboxes
+                            // Create list with checkboxes and text
                             foreach ($domain_types as $domain) {
-                                echo "<tr>";
-                                echo "<td>$domain</td>";
-                                if (in_array($domain, $activity_domains)){
-                                    echo "<td><input type='checkbox' name='activity_domains[]' value='$domain' checked></td>";
-                                } else {
-                                    echo "<td><input type='checkbox' name='activity_domains[]' value='$domain'></td>";
-                                }  
-                                echo "</tr>";
+                                $checked = in_array($domain, $activity_domains) ? "checked" : "";
+                                echo "<div class='form-checkbox-item'>";
+                                echo "<input type='checkbox' name='activity_domains[]' value='$domain' $checked>";
+                                echo "<label style='margin: 0;'>$domain</label>";
+                                echo "</div>";
                             }
                             ?>
-                        </table>
+                        </div>
+                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_domains_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
-                    <div class="form-field with-margin">
-                        <label for="password">Entry Clerk:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
-                        </span>
+                    <div class="form-field">
+                        <label for="password">
+                            Entry Clerk:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
                         <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->
-                    <div class="form-field">
-                        <label for="password">Additional Notes:</label>
-                        <span class="tooltip">?
-                            <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").</span>
-                        </span>
-                    </div>
-                    <div>
+                    <div class="form-field form-field-top">
+                        <label for="password">
+                            Additional Notes:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>                   
                         <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
                     </div>
-
 
                     <!-- Submit Button -->
                     <div class="input_container">

@@ -85,7 +85,7 @@
 /* individual error message */
 #error_message{
     position: absolute;
-    left: 70%; /* Places the error message to the right of the input */
+    left: 75%; /* Places the error message to the right of the input */
     margin-left: 10px; /* Adds space between the input and error message */
     color: red;
     font-weight: bold; /* Optional: Make it bold for emphasis */
@@ -427,4 +427,73 @@ border-radius: 50%;
     visibility: visible;
     opacity: 1;
   }
+
+/*#################################################################################################################################################################*/
+/* Form Layout */
+/* Container styling for the form */
+.form-layout {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+/* Each form field will be a flex container */
+.form-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-field-top {
+    align-items: flex-start;
+}
+/* The label takes up a fixed width and is left aligned */
+.form-field label {
+    width: 350px; /* Adjust width as needed */
+    text-align: left;
+    font-weight: bold;
+    margin-right: 10px;
+}
+/* The input (or select/textarea) occupies the remaining space and can be styled as needed */
+.form-field input,
+.form-field select,
+.form-field textarea {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+/* Container for a group of checkboxes */
+.form-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px; /* aligns with the input fields by accounting for label width + margin */
+}
+
+/* Each checkbox item (input + label text) */
+.form-checkbox-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* Checkbox input */
+.form-checkbox-item input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Style the submit button separately */
+.form-field button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.form-field button:hover {
+    background-color: #0056b3;
+}
   
