@@ -97,7 +97,7 @@
                         <label for="activity_name">
                             Activity Name:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Enter the name of the activity (ex: "Community Cleanup").
                             </span>
                         </span>
                         </label>
@@ -110,7 +110,7 @@
                         <label for="number_of_places">
                             Number of Places:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Enter the number of places available for this activity (ex: 10).
                             </span>
                         </span>
                         </label>
@@ -123,7 +123,7 @@
                         <label for="activity_duration">
                             Activity Duration:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Enter the duration (in hours) of the activity (ex: 3).
                             </span>
                         </label>
                         <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
@@ -135,7 +135,7 @@
                         <label for="activity_location">
                             Activity Location:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Enter the location of the activity (ex: "Central Park"). This field is optional.
                             </span>
                         </label>
                         <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
@@ -146,7 +146,7 @@
                         <label for="activity_dates">
                             Activity Dates:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Enter the dates when the activity takes place. Select the calendar icon to choose a date. You can select multiple dates if this activity occurs multiple times.
                             </span>
                         </label>
                         <!-- Include Flatpickr CSS & JS -->
@@ -170,7 +170,7 @@
                         <label for="activity_time_periods">
                             Activity Time Period:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Select the time periods when the activity takes place.
                             </span>
                         </label>
                         <div class="form-checkbox-group">
@@ -200,7 +200,7 @@
                         <label>
                             Activity Domains:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Select the domains this activity is related to.
                             </span>
                         </label>
 
@@ -234,7 +234,7 @@
                         <label for="entry_clerk">
                             Entry Clerk:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -246,7 +246,7 @@
                         <label for="additional_notes">
                             Additional Notes:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
                             </span>
                         </label>                   
                         <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
