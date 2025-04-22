@@ -100,120 +100,149 @@
                 </div>
 
                 <!-- Form Area -->
-                <div id="form_section">
+                <form method="post" action="../Add_Form_Pages/add_volunteer.php" class="form-layout" form>
 
-                    <!-- Form Text Input -->
-                    <form method="post" action="../Add_Form_Pages/add_volunteer.php">
+                    <!-- First Name Text Input -->
+                    <div class="form-field">
+                        <label for="first_name">
+                            First Name:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="first_name" type="text" id="text_input" value="<?php echo $first_name ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- First Name Text Input -->
-                        <div class="input_container">
-                            First name:
-                            <input name="first_name" type="text" id="text_input" value="<?php echo $first_name ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
-
-                        <!-- Last Name Text Input -->
-                        <div class="input_container">
+                    <!-- Last Name Text Input -->
+                    <div class="form-field">
+                        <label for="last_name">
                             Last name:
-                            <input name="last_name" type="text" id="text_input" value="<?php echo $last_name ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="last_name" type="text" id="text_input" value="<?php echo $last_name ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Gender Bubble Contract -->
-                        <div class="input_container">
+                    <!-- Gender Bubble Contract -->
+                    <div class="form-field">
+                        <label for="purchase_date">
                             Gender:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <div style="margin-bottom: 20px;">
                             <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> Male
                             <input type="radio" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>> Female
                             <input type="radio" name="gender" value="Other" <?php echo ($gender == 'Other') ? 'checked' : ''; ?>> Other
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
                         </div>
-                        <br><br>
+                       <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Date of Birth Input -->
-                        <div class="input_container">
-                            Date of Birth: <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                    <!-- Date of Birth Input -->
+                    <div class="form-field">
+                        <label for="date_of_birth">
+                            Date of Birth: 
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Address Text Input -->
-                        <div class="input_container">
+                    <!-- Address Text Input -->
+                    <div class="form-field">
+                        <label for="address">
                             Address:
-                            <input name="address" type="text" id="text_input" value="<?php echo $address ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="address" type="text" id="text_input" value="<?php echo $address ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- ZIP Code Text Input -->
-                        <div class="input_container">
+                    <!-- ZIP Code Text Input -->
+                    <div class="form-field">
+                        <label for="zip_code">
                             ZIP code:
-                            <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Telephone Number Text Input -->
-                        <div class="input_container">
+                    <!-- Telephone Number Text Input -->
+                    <div class="form-field">
+                        <label for="telephone_number">
                             Telephone number:
-                            <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
-                        
-                        <!-- Email Text Input -->
-                        <div class="input_container">
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
+                    </div>
+
+                   <!-- Email Text Input -->
+                    <div class="form-field">
+                        <label for="email">
                             Email:
-                            <input name="email" type="text" id="text_input" value="<?php echo $email ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="email" type="text" id="text_input" value="<?php echo $email ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Volunteer's Interests Table -->
-                        <div class="input_container">
-                            <h4 style="text-align: center;">Volunteer's Interests</h4> 
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
-                        </div>
-                        <div style="text-align: center;">
-                            <table border="1" style="border-collapse: collapse; text-align: center; width: 50%;   margin-left: auto; margin-right: auto;">
-                                <tr>
-                                    <th>Activity</th>
-                                    <th>Contract</th>
-                                </tr>
-                                <?php
+                    <!-- Volunteer's Interests Table -->
+                    <div class="form-field form-field-top">
+                        <label for="volunteer_interests">
+                            Volunteer's Interests 
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <div class="form-checkbox-group">
+                            <?php
+                            // List of activities
+                            $activities = [
+                                "Organization of community events", 
+                                "Library support", 
+                                "Help in the community store", 
+                                "Support in the community grocery store", 
+                                "Cleaning and maintenance of public spaces", 
+                                "Participation in urban gardening projects"
+                            ];
 
-                                // List of activities
-                                $activities = [
-                                    "Organization of community events", 
-                                    "Library support", 
-                                    "Help in the community store", 
-                                    "Support in the community grocery store", 
-                                    "Cleaning and maintenance of public spaces", 
-                                    "Participation in urban gardening projects"
-                                ];
-
-                                // Display activities and checkboxes
-                                foreach ($activities as $activity) {
-                                    echo "<tr>";
-                                    echo "<td>$activity</td>";
-                                    if (in_array($activity, $volunteer_interests)){
-                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity' checked></td>";
-                                    } else {
-                                        echo "<td><input type='checkbox' name='volunteer_interests[]' value='$activity'></td>";
-                                    }                                    
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </table>
+                            // Create vertical list with checkboxes on the left
+                            foreach ($activities as $activity) {
+                                $checked = in_array($activity, $volunteer_interests) ? "checked" : "";
+                                echo "<div class='form-checkbox-item'>";
+                                echo "<input type='checkbox' name='volunteer_interests[]' value='$activity' $checked>";
+                                echo "<label style='margin: 0;'>$activity</label>";
+                                echo "</div>";
+                            }
+                            ?>
                         </div>
-                        <br>
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>                    
+                    </div>
 
-                        <!-- Volunteer Availability Text Input -->
-                        <div class="input_container">
-                            <h4 style="text-align: center;">Weekly Availability</h4>
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
-                        </div>
+                    <!-- Volunteer Availability Text Input -->
+                    <div class="form-field form-field-top">
+                        <label for="volunteer_availability">
+                            Weekly Availability: 
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
                         <div style="text-align: center;">
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
                                 <tr>
@@ -231,7 +260,7 @@
                                 // Display days and checkboxes
                                 foreach ($week as $weekday) {
                                     echo "<tr>";
-                                    echo "<td>$weekday</td>";
+                                    echo "<td><strong>$weekday</strong></td>";
                                     foreach ($time_periods as $time_period){
                                         $available_moment = "{$weekday}-{$time_period}";
                                         if (in_array($available_moment, $volunteer_availability)){
@@ -245,40 +274,50 @@
                                 ?>
                             </table>
                         </div>
-                        <br>
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Volunteer Manager Text Input -->
-                        <div class="input_container">
+                    <!-- Volunteer Manager Text Input -->
+                    <div class="form-field">
+                        <label for="volunteer_manager">
                             Volunteer Manager:
-                            <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Entry Clerk Text Input -->
-                        <div class="input_container">
+                    <!-- Entry Clerk Text Input -->
+                    <div class="form-field">
+                        <label for="entry_clerk">
                             Entry Clerk:
-                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
-                            <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>
+                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Additional Notes Text Input -->
-                        <div style="text-align: center">
+                    <!-- Additional Notes Text Input -->
+                    <div class="form-field form-field-top">
+                        <label for="additional_notes">
                             Additional Notes:
-                            <br>
-                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
+                            </span>
+                        </label>                   
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                    </div>
 
-                        <!-- Submit Button -->
-                        <div class="input_container">
-                            <input type="submit" id="submit_button" value="Submit">
-                        </div>
-                        <br><br>
-                        
-                    </form>
-                </div>
+                    <!-- Submit Button -->
+                    <div class="input_container">
+                        <input type="submit" id="submit_button" value="Submit">
+                    </div>
+
+                </form>
 
             </div>
         </div>

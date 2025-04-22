@@ -94,7 +94,7 @@
 
                     <!-- Activity Name Text Input -->
                     <div class="form-field">
-                        <label for="username">
+                        <label for="activity_name">
                             Activity Name:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
@@ -107,7 +107,7 @@
 
                     <!-- Activity Number of Places Text Input -->
                     <div class="form-field">
-                        <label for="email">
+                        <label for="number_of_places">
                             Number of Places:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
@@ -120,7 +120,7 @@
 
                     <!-- Activity Duration Text Input -->
                     <div class="form-field">
-                        <label for="password">
+                        <label for="activity_duration">
                             Activity Duration:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
@@ -132,7 +132,7 @@
 
                     <!-- Activity Location Text Input -->
                     <div class="form-field">
-                        <label for="password">
+                        <label for="activity_location">
                             Activity Location:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
@@ -143,7 +143,7 @@
 
                     <!-- Dates Input -->
                     <div class="form-field">
-                        <label for="password">
+                        <label for="activity_dates">
                             Activity Dates:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
@@ -167,7 +167,7 @@
 
                     <!-- Activity Time Period Table -->
                     <div class="form-field form-field-top">
-                        <label for="password">
+                        <label for="activity_time_periods">
                             Activity Time Period:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
@@ -231,7 +231,7 @@
 
                     <!-- Entry Clerk Text Input -->
                     <div class="form-field">
-                        <label for="password">
+                        <label for="entry_clerk">
                             Entry Clerk:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
@@ -243,7 +243,7 @@
 
                     <!-- Additional Notes Text Input -->
                     <div class="form-field form-field-top">
-                        <label for="password">
+                        <label for="additional_notes">
                             Additional Notes:
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter a short, descriptive name for the activity (e.g., "Morning Run").
