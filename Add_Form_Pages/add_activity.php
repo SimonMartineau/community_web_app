@@ -90,7 +90,7 @@
                 </div>
 
                 <!-- Form Area -->
-                <form action="../Add_Form_Pages/add_activity.php" method="post" class="form-layout" form>
+                <form method="post" action="../Add_Form_Pages/add_activity.php" class="form-layout" form>
 
                     <!-- Activity Name Text Input -->
                     <div class="form-field">
@@ -135,7 +135,7 @@
                         <label for="activity_location">
                             Activity Location:
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter the location of the activity (ex: "Central Park"). This field is optional.
+                                <span class="tooltip-text">Enter the location of the activity (ex: "Miratejo"). This field is optional.
                             </span>
                         </label>
                         <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">

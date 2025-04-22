@@ -86,67 +86,85 @@
                 </div>
 
                 <!-- Form Area -->
-                <div id="form_section">
+                <form method="post" action="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>" class="form-layout" form>
 
-                    <!-- Form Text Input -->
-                    <form method="post" action="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>">
+                    <!-- Issuance Date Input -->
+                    <div class="form-field">
+                        <label for="issuance_date">
+                            Issuance Date: 
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the date the contract is issued. Select the calendar icon to choose a date.
+                            </span>
+                        </label>
+                        <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
+                        <span id="error_message"><?php echo isset($contract) ? $contract->issuance_date_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Issuance Date Input -->
-                        <div class="input_container">
-                            Issuance date: 
-                            <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
-                            <span id="error_message"><?php echo isset($contract) ? $contract->issuance_date_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                    <!-- Validity Date Input -->
+                    <div class="form-field">
+                        <label for="validity_date">
+                            Validity Date: 
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the date the contract is valid until. Select the calendar icon to choose a date.
+                            </span>
+                        </label>
+                        <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
+                        <span id="error_message"><?php echo isset($contract) ? $contract->validity_date_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Validity Date Input -->
-                        <div class="input_container">
-                            Validity date: 
-                            <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
-                            <span id="error_message"><?php echo isset($contract) ? $contract->validity_date_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                    <!-- Points Text Input -->
+                    <div class="form-field">
+                        <label for="points_deposit">
+                            Points Deposit:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the number of points given to the volunteer for the contract (ex: 30). By default, it's 30 points.
+                            </span>
+                        </label>
+                        <input name="points_deposit" type="text" id="text_input" value="<?php echo $points_deposit ?>">
+                        <span id="error_message"><?php echo isset($contract) ? $contract->points_deposit_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Points Text Input -->
-                        <div class="input_container">
-                            Points deposit: 
-                            <input name="points_deposit" type="text" id="text_input" value="<?php echo $points_deposit ?>">
-                            <span id="error_message"><?php echo isset($contract) ? $contract->points_deposit_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                    <!-- Time Requirement Input -->
+                    <div class="form-field">
+                        <label for="hours_required">
+                            Hours Required:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the number of hours required for the contract (ex: 6). By default, it's 6 hours.
+                            </span>
+                        </label>
+                        <input name="hours_required" type="text" id="text_input" value="<?php echo $hours_required ?>">
+                        <span id="error_message"><?php echo isset($contract) ? $contract->hours_required_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Time Requirement Input -->
-                        <div class="input_container">
-                            Hours required: 
-                            <input name="hours_required" type="text" id="text_input" value="<?php echo $hours_required ?>">
-                            <span id="error_message"><?php echo isset($contract) ? $contract->hours_required_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
+                    <!-- Entry Clerk Text Input -->
+                    <div class="form-field">
+                        <label for="entry_clerk">
+                            Entry Clerk:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                            </span>
+                        </label>
+                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
+                        <span id="error_message"><?php echo isset($contract) ? $contract->entry_clerk_error_mes : ''; ?></span>
+                    </div>
 
-                        <!-- Entry Clerk Text Input -->
-                        <div class="input_container">
-                            Entry clerk:
-                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
-                            <span id="error_message"><?php echo isset($contract) ? $contract->entry_clerk_error_mes : ''; ?></span>
-                        </div>
-                        <br><br>
-
-                        <!-- Additional Notes Text Input -->
-                        <div style="text-align: center">
+                    <!-- Additional Notes Text Input -->
+                    <div class="form-field form-field-top">
+                        <label for="additional_notes">
                             Additional Notes:
-                            <br>
-                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
-                        </div>
-                        <br><br>
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                            </span>
+                        </label>                   
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                    </div>
 
-                        <!-- Submit Button -->
-                        <div class="input_container">
-                            <input type="submit" id="submit_button" value="Submit">
-                        </div>
-                        <br><br>
-                        
-                    </form>
-                </div>
+                    <!-- Submit Button -->
+                    <div class="input_container">
+                        <input type="submit" id="submit_button" value="Submit">
+                    </div>
+
+                </form>
 
             </div>
         </div>

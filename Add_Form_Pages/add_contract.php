@@ -86,9 +86,9 @@
                     <!-- Issuance Date Input -->
                     <div class="form-field">
                         <label for="issuance_date">
-                            Issuance date: 
+                            Issuance Date: 
                             <span class="tooltip">?
-                                <span class="tooltip-text">Enter the date the contract was issued. Select the calendar icon to choose a date.
+                                <span class="tooltip-text">Enter the date the contract is issued. Select the calendar icon to choose a date.
                             </span>
                         </label>
                         <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
@@ -98,7 +98,7 @@
                     <!-- Validity Date Input -->
                     <div class="form-field">
                         <label for="validity_date">
-                            Validity date: 
+                            Validity Date: 
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter the date the contract is valid until. Select the calendar icon to choose a date.
                             </span>
