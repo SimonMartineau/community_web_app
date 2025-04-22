@@ -19,8 +19,20 @@
         $_SESSION['all_volunteer_available_days_filter'] = $_POST['available_days_filter'] ?? [];
     }
 
+    if (isset($_GET['reset_filters'])) {
+        unset($_SESSION['all_volunteer_order_filter']);
+        unset($_SESSION['all_volunteer_trash_filter']);
+        unset($_SESSION['all_volunteer_time_filter']);
+        unset($_SESSION['all_volunteer_interests_filter']);
+        unset($_SESSION['all_volunteer_available_days_filter']);
+    
+        // Redirect to clear the query string
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
+
     // Default entry values on page startup.
-    $order_filter = $_SESSION['all_volunteer_order_filter'] ?? "date_of_inscription_desc";
+    $order_filter = $_SESSION['all_volunteer_order_filter'] ?? "registration_date_desc";
     $trash_filter = $_SESSION['all_volunteer_trash_filter'] ?? "only_active_volunteers";
     $time_filter = $_SESSION['all_volunteer_time_filter'] ?? "all_volunteers";
     $interests_filter = $_SESSION['all_volunteer_interests_filter'] ?? [];
@@ -60,6 +72,9 @@
     // Time filter
     if (!empty($time_filter)) {
         switch ($time_filter) {
+            case 'all_volunteers':
+                // No additional condition needed (show all volunteers)
+                break;
             case 'time_completed':
                 // Volunteers who have a time contract and have completed the hours.
                 $sql_filter_query .= " AND v.hours_required > 0 AND v.hours_required <= hours_completed";
@@ -71,9 +86,6 @@
             case 'no_contract':
                 // Volunteers who do not currently have a contract
                 $sql_filter_query .= " AND v.hours_required = 0";
-                break;
-            case 'all_volunteers':
-                // No additional condition needed (show all volunteers)
                 break;
         }
     }
@@ -242,6 +254,11 @@
                                     <label><input type="checkbox" name="available_days_filter[]" value="saturday" <?php echo (isset($_SESSION['all_volunteer_available_days_filter']) && in_array('saturday', $_SESSION['all_volunteer_available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
                                     <label><input type="checkbox" name="available_days_filter[]" value="sunday" <?php echo (isset($_SESSION['all_volunteer_available_days_filter']) && in_array('sunday', $_SESSION['all_volunteer_available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
                                 </div>
+                            </div>
+
+                            <!-- Reset Filters Link -->
+                            <div>
+                                <a href="?reset_filters=1" class="reset-link">Reset Filter</a>
                             </div>
 
                             <!-- Submit Button -->

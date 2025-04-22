@@ -12,87 +12,67 @@
         $volunteer_id = $_GET['volunteer_id'];
     }
 
-    // Default entry values on page startup
-    $order_filter = "date_of_inscription_desc";
-    $trash_filter = "only_active_volunteers";
-    $active_contract_filter = "all_contracts";
-    $earliest_date_filter = "";
-    $latest_date_filter = "";
+    // Retrieve filter form data
+    $order_filter = $_POST['order_filter'] ?? 'issuance_date_desc';
+    $active_contract_filter = $_POST['active_contract_filter'] ?? 'all_contracts';
+    $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
+    $latest_date_filter = $_POST['latest_date_filter'] ?? '';
 
-    // Collect volunteer data
-    $all_contracts_data_rows = fetch_data_rows("
-        SELECT * 
-        FROM Contracts c
-        WHERE c.volunteer_id='$volunteer_id' 
-        ORDER BY c.issuance_date DESC"
-    );
+    // Default sql query
+    $sql_filter_query = "SELECT DISTINCT c.* FROM Contracts c WHERE c.volunteer_id = '$volunteer_id' ";
 
-
-    // Getting filter form data
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        // Retrieve filter form data
-        $order_filter = $_POST['order_filter'] ?? '';
-        $active_contract_filter = $_POST['active_contract_filter'] ?? '';
-        $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
-        $latest_date_filter = $_POST['latest_date_filter'] ?? '';
-
-        // Default sql query
-        $sql_filter_query = "SELECT DISTINCT c.* FROM Contracts c WHERE c.volunteer_id = '$volunteer_id' ";
-
-        // Active contract filter
-        if (!empty($active_contract_filter)){
-            switch ($active_contract_filter){
-                case 'active_contracts_only':
-                    $sql_filter_query .= " AND contract_active = 1";
-                    break;
-                case 'past_contracts_only':
-                    $sql_filter_query .= " AND contract_active = 0";
-                    break;
-                case 'all_contracts':
-                    // No filter added
-                    break;
-            }
+    // Active contract filter
+    if (!empty($active_contract_filter)){
+        switch ($active_contract_filter){
+            case 'active_contracts_only':
+                $sql_filter_query .= " AND contract_active = 1";
+                break;
+            case 'past_contracts_only':
+                $sql_filter_query .= " AND contract_active = 0";
+                break;
+            case 'all_contracts':
+                // No filter added
+                break;
         }
-
-        // Earliest date filter
-        if (!empty($earliest_date_filter)){
-            $sql_filter_query .= " AND '$earliest_date_filter' < c.issuance_date";
-        }
-
-        // Latest date filter
-        if (!empty($latest_date_filter)){
-            $sql_filter_query .= " AND  c.validity_date < '$latest_date_filter'";
-        }
-
-        // Order of appearance filter
-        if (!empty($order_filter)){
-            switch ($order_filter){
-                case 'issuance_date_desc':
-                    $sql_filter_query .= " ORDER BY c.issuance_date DESC";
-                    break;
-                case 'issuance_date_asc':
-                    $sql_filter_query .= " ORDER BY c.issuance_date ASC";
-                    break;
-                case 'validity_date_desc':
-                    $sql_filter_query .= " ORDER BY c.validity_date DESC";
-                    break;
-                case 'validity_date_asc':
-                    $sql_filter_query .= " ORDER BY c.validity_date ASC";
-                    break;
-                case 'addition_order_desc':
-                    $sql_filter_query .= " ORDER BY c.id DESC";
-                    break;
-                case 'addition_order_asc':
-                    $sql_filter_query .= " ORDER BY c.id ASC";
-                    break;
-            }
-        }
-
-        // Final query
-        $all_contracts_data_rows = fetch_data_rows($sql_filter_query);
-
     }
+
+    // Earliest date filter
+    if (!empty($earliest_date_filter)){
+        $sql_filter_query .= " AND '$earliest_date_filter' < c.issuance_date";
+    }
+
+    // Latest date filter
+    if (!empty($latest_date_filter)){
+        $sql_filter_query .= " AND  c.validity_date < '$latest_date_filter'";
+    }
+
+    // Order of appearance filter
+    if (!empty($order_filter)){
+        switch ($order_filter){
+            case 'issuance_date_desc':
+                $sql_filter_query .= " ORDER BY c.issuance_date DESC";
+                break;
+            case 'issuance_date_asc':
+                $sql_filter_query .= " ORDER BY c.issuance_date ASC";
+                break;
+            case 'validity_date_desc':
+                $sql_filter_query .= " ORDER BY c.validity_date DESC";
+                break;
+            case 'validity_date_asc':
+                $sql_filter_query .= " ORDER BY c.validity_date ASC";
+                break;
+            case 'addition_order_desc':
+                $sql_filter_query .= " ORDER BY c.id DESC";
+                break;
+            case 'addition_order_asc':
+                $sql_filter_query .= " ORDER BY c.id ASC";
+                break;
+        }
+    }
+
+    // Final query
+    $all_contracts_data_rows = fetch_data_rows($sql_filter_query);
+
 ?>
 
 
@@ -164,6 +144,11 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
                                 <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                            </div>
+
+                            <!-- Reset Filters Link -->
+                            <div>
+                                <a href="" class="reset-link">Reset Filter</a>
                             </div>
 
                             <!-- Submit Button -->

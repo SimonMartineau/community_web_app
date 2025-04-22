@@ -20,8 +20,21 @@
         $_SESSION['all_activities_available_days_filter'] = $_POST['available_days_filter'] ?? [];
     }
 
+    if (isset($_GET['reset_filters'])) {
+        unset($_SESSION['all_activities_order_filter']);
+        unset($_SESSION['all_activities_status_filter']);
+        unset($_SESSION['all_activities_occupancy_filter']);
+        unset($_SESSION['all_activities_domains_filter']);
+        unset($_SESSION['all_activities_time_periods_filter']);
+        unset($_SESSION['all_activities_available_days_filter']);
+    
+        // Redirect to the same page without the reset_filters parameter
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
+    }
+
     // Retain previous filter values or set default
-    $order_filter = $_SESSION['all_activities_order_filter'] ?? 'date_of_inscription_desc';
+    $order_filter = $_SESSION['all_activities_order_filter'] ?? 'registration_date_desc';
     $status_filter = $_SESSION['all_activities_status_filter'] ?? 'only_active';
     $occupancy_filter = $_SESSION['all_activities_occupancy_filter'] ?? 'all_activities';
     $domains_filter = $_SESSION['all_activities_domains_filter'] ?? [];
@@ -36,7 +49,7 @@
     // Initialize Where clause
     $sql_filter_query .= " WHERE 1=1";
 
-    // Volunteer status filter
+    // Activity status filter
     if (!empty($status_filter)){
         switch ($status_filter){
             case 'only_active':
@@ -54,9 +67,12 @@
         }
     }
 
-    // Volunteer occupancy filter
+    // Activity occupancy filter
     if (!empty($occupancy_filter)){
         switch ($occupancy_filter){
+            case 'all_activities':
+                // No additional condition needed (show all volunteers)
+                break;
             case 'not_full':
                 $sql_filter_query .= " AND a.number_of_places - a.number_of_participants > 0";
                 break;
@@ -66,10 +82,16 @@
             case 'empty':
                 $sql_filter_query .= " AND a.number_of_participants = 0";
                 break;
-            case 'all_activities':
-                // No additional condition needed (show all volunteers)
-                break;
         }
+    }
+
+    // Add domain filter
+    if (!empty($domains_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($domains_filter as $domain) {
+            $sql_filter_query .= " ad.domain = '$domain' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
     // Add time periods filter
@@ -90,14 +112,7 @@
         $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
-    // Add domain filter
-    if (!empty($domains_filter)) {
-        $sql_filter_query .= " AND (";
-        foreach ($domains_filter as $domain) {
-            $sql_filter_query .= " ad.domain = '$domain' OR";
-        }
-        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
-    }
+    
 
     // Order of appearance filter
     if (!empty($order_filter)){
@@ -108,17 +123,17 @@
             case 'registration_date_asc':
                 $sql_filter_query .= " ORDER BY a.registration_date ASC";
                 break;
+            case 'activity_date_asc':
+                $sql_filter_query .= " ORDER BY a.activity_date ASC";
+                break;
+            case 'activity_date_desc':
+                $sql_filter_query .= " ORDER BY a.activity_date DESC";
+                break;
             case 'activity_duration_desc':
                 $sql_filter_query .= " ORDER BY a.activity_duration DESC";
                 break;
             case 'activity_duration_asc':
                 $sql_filter_query .= " ORDER BY a.activity_duration ASC";
-                break;
-            case 'activity_date_desc':
-                $sql_filter_query .= " ORDER BY a.activity_date DESC";
-                break;
-            case 'activity_date_asc':
-                $sql_filter_query .= " ORDER BY a.activity_date ASC";
                 break;
             case 'activity_name_asc':
                 $sql_filter_query .= " ORDER BY a.activity_name ASC";
@@ -179,7 +194,8 @@
                             </div>
 
                             <!-- Filter Form -->
-                            <form action="" method="post">
+                            <form action="" method="post">                                
+
                                 <!-- Sort by Options -->
                                 <div style="margin-bottom: 15px;">
                                     <label for="order_filter" style="font-weight: bold;">Sort Volunteers By:</label><br>
@@ -252,6 +268,11 @@
                                         <label><input type="checkbox" name="available_days_filter[]" value="Saturday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Saturday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
                                         <label><input type="checkbox" name="available_days_filter[]" value="Sunday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Sunday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
                                     </div>
+                                </div>
+
+                                <!-- Reset Filters Link -->
+                                <div>
+                                    <a href="?reset_filters=1" class="reset-link">Reset Filter</a>
                                 </div>
 
                                 <!-- Submit Button -->

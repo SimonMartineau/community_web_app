@@ -12,63 +12,44 @@
         $volunteer_id = $_GET['volunteer_id'];
     }
 
-    // Default entry values on page startup
-    $order_filter = "purchase_date_desc";
-    $earliest_date_filter = "";
-    $latest_date_filter = "";
+    // Retrieve filter form data
+    $order_filter = $_POST['order_filter'] ?? 'purchase_date_desc';
+    $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
+    $latest_date_filter = $_POST['latest_date_filter'] ?? '';
 
-    // Collect volunteer data
-    $all_purchases_data_rows = fetch_data_rows("
-        SELECT p.* 
-        FROM Purchases p
-        WHERE p.volunteer_id='$volunteer_id' 
-        ORDER BY p.purchase_date desc"
-    );
+    // Default sql query
+    $sql_filter_query = "SELECT DISTINCT p.* FROM Purchases p WHERE p.volunteer_id = '$volunteer_id' ";
 
-
-    // Getting filter form data
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        // Retrieve filter form data
-        $order_filter = $_POST['order_filter'] ?? '';
-        $earliest_date_filter = $_POST['earliest_date_filter'] ?? '';
-        $latest_date_filter = $_POST['latest_date_filter'] ?? '';
-
-        // Default sql query
-        $sql_filter_query = "SELECT DISTINCT p.* FROM Purchases p WHERE p.volunteer_id = '$volunteer_id' ";
-
-        // Earliest date filter
-        if (!empty($earliest_date_filter)){
-            $sql_filter_query .= " AND '$earliest_date_filter' < p.purchase_date";
-        }
-
-        // Latest date filter
-        if (!empty($latest_date_filter)){
-            $sql_filter_query .= " AND  p.purchase_date < '$latest_date_filter'";
-        }
-
-        // Order of appearance filter
-        if (!empty($order_filter)){
-            switch ($order_filter){
-                case 'purchase_date_desc':
-                    $sql_filter_query .= " ORDER BY p.purchase_date DESC";
-                    break;
-                case 'purchase_date_asc':
-                    $sql_filter_query .= " ORDER BY p.purchase_date ASC";
-                    break;
-                case 'purchase_cost_asc':
-                    $sql_filter_query .= " ORDER BY p.total_cost ASC";
-                    break;
-                case 'purchase_cost_desc':
-                    $sql_filter_query .= " ORDER BY p.total_cost DESC";
-                    break;
-            }
-        }
-
-        // Final query
-        $all_purchases_data_rows = fetch_data_rows($sql_filter_query);
-
+    // Earliest date filter
+    if (!empty($earliest_date_filter)){
+        $sql_filter_query .= " AND '$earliest_date_filter' < p.purchase_date";
     }
+
+    // Latest date filter
+    if (!empty($latest_date_filter)){
+        $sql_filter_query .= " AND  p.purchase_date < '$latest_date_filter'";
+    }
+
+    // Order of appearance filter
+    if (!empty($order_filter)){
+        switch ($order_filter){
+            case 'purchase_date_desc':
+                $sql_filter_query .= " ORDER BY p.purchase_date DESC";
+                break;
+            case 'purchase_date_asc':
+                $sql_filter_query .= " ORDER BY p.purchase_date ASC";
+                break;
+            case 'purchase_cost_asc':
+                $sql_filter_query .= " ORDER BY p.total_cost ASC";
+                break;
+            case 'purchase_cost_desc':
+                $sql_filter_query .= " ORDER BY p.total_cost DESC";
+                break;
+        }
+    }
+
+    // Final query
+    $all_purchases_data_rows = fetch_data_rows($sql_filter_query);
 
 ?>
 
@@ -131,6 +112,11 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
                                 <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                            </div>
+
+                            <!-- Reset Filters Link -->
+                            <div>
+                                <a href="" class="reset-link">Reset Filter</a>
                             </div>
 
                             <!-- Submit Button -->

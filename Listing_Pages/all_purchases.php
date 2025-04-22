@@ -10,12 +10,23 @@
     // Updating all backend processes
     update_backend_data();
 
-       // Check if the filter form is submitted, "apply_filter" is the name of the submit button
-       if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
+    // Check if the filter form is submitted, "apply_filter" is the name of the submit button
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
         $_SESSION['all_purchases_order_filter'] = $_POST['order_filter'] ?? '';
         $_SESSION['all_purchases_trash_filter'] = $_POST['trash_filter'] ?? '';  
         $_SESSION['all_purchases_earliest_date_filter'] = $_POST['earliest_date_filter'] ?? '';
         $_SESSION['all_purchases_latest_date_filter'] = $_POST['latest_date_filter'] ?? '';
+    }
+
+    if (isset($_GET['reset_filters'])) {
+        unset($_SESSION['all_purchases_order_filter']);
+        unset($_SESSION['all_purchases_trash_filter']);
+        unset($_SESSION['all_purchases_earliest_date_filter']);
+        unset($_SESSION['all_purchases_latest_date_filter']);
+    
+        // Redirect to avoid repeated resets on refresh
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
     }
 
     // Default entry values on page startup.
@@ -152,6 +163,11 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
                                 <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                            </div>
+
+                            <!-- Reset Filters Link -->
+                            <div>
+                                <a href="?reset_filters=1" class="reset-link">Reset Filter</a>
                             </div>
 
                             <!-- Submit Button -->

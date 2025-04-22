@@ -12,140 +12,117 @@
         $volunteer_id = $_GET['volunteer_id'];
     }
 
-    // Default entry values on page startup.
-    $order_filter = "date_of_inscription_desc";
-    $status_filter = "all_activities";
-    $occupancy_filter = "all_activities";
-    $domains_filter = [];
-    $time_periods_filter = [];
-    $available_days_filter = [];
+    // Retrieve filter form data
+    $order_filter = $_POST['order_filter'] ?? 'registration_date_desc';
+    $status_filter = $_POST['status_filter'] ?? 'all_activities';
+    $occupancy_filter = $_POST['occupancy_filter'] ?? 'all_activities';
+    $domains_filter = $_POST['domains_filter'] ?? [];
+    $time_periods_filter = $_POST['time_periods_filter'] ?? [];
+    $available_days_filter = $_POST['available_days_filter'] ?? [];
 
-    // Collect volunteer's activities
-    $all_activities_data_rows = fetch_data_rows("
-        SELECT DISTINCT a.* FROM Activities a
-        JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
-        JOIN Activity_Domains ad ON a.id = ad.activity_id
-        Join Volunteer_Activity_Junction vaj ON a.id = vaj.activity_id
-        WHERE `trashed` = '0' 
-        AND vaj.volunteer_id = '$volunteer_id'
-        ORDER BY id DESC"
-    );
+    // Default sql query
+    $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a 
+                                JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
+                                JOIN Activity_Domains ad ON a.id = ad.activity_id
+                                Join Volunteer_Activity_Junction vaj ON a.id = vaj.activity_id";
 
 
-    // Getting filter form data
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve filter form data
-        $order_filter = $_POST['order_filter'] ?? '';
-        $status_filter = $_POST['status_filter'] ?? '';
-        $occupancy_filter = $_POST['occupancy_filter'] ?? '';
-        $domains_filter = $_POST['domains_filter'] ?? [];
-        $time_periods_filter = $_POST['time_periods_filter'] ?? [];
-        $available_days_filter = $_POST['available_days_filter'] ?? [];
+    // Initialize Where clause
+    $sql_filter_query .= " WHERE 1=1 AND vaj.volunteer_id = '$volunteer_id' ";
 
-        // Default sql query
-        $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a 
-                                    JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
-                                    JOIN Activity_Domains ad ON a.id = ad.activity_id
-                                    Join Volunteer_Activity_Junction vaj ON a.id = vaj.activity_id
-        ";
-
-
-        // Initialize Where clause
-        $sql_filter_query .= " WHERE 1=1 AND vaj.volunteer_id = '$volunteer_id' ";
-
-        // Volunteer status filter
-        if (!empty($status_filter)){
-            switch ($status_filter){
-                case 'only_active':
-                    $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date >= CURDATE()";
-                    break;
-                case 'only_past':
-                    $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date < CURDATE()";
-                    break;
-                case 'only_in_trash':
-                    $sql_filter_query .= " AND a.trashed = '1'";
-                    break;
-                case 'all_activities':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
+    // Volunteer status filter
+    if (!empty($status_filter)){
+        switch ($status_filter){
+            case 'only_active':
+                $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date >= CURDATE()";
+                break;
+            case 'only_past':
+                $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date < CURDATE()";
+                break;
+            case 'only_in_trash':
+                $sql_filter_query .= " AND a.trashed = '1'";
+                break;
+            case 'all_activities':
+                // No additional condition needed (show all volunteers)
+                break;
         }
-
-        // Volunteer occupancy filter
-        if (!empty($occupancy_filter)){
-            switch ($occupancy_filter){
-                case 'not_full':
-                    $sql_filter_query .= " AND a.number_of_places - a.number_of_participants > 0";
-                    break;
-                case 'full':
-                    $sql_filter_query .= " AND a.number_of_places - a.number_of_participants <= 0";
-                    break;
-                case 'empty':
-                    $sql_filter_query .= " AND a.number_of_participants = 0";
-                    break;
-                case 'all_activities':
-                    // No additional condition needed (show all volunteers)
-                    break;
-            }
-        }
-
-        // Add time periods filter
-        if (!empty($time_periods_filter)) {
-            $sql_filter_query .= " AND (";
-            foreach ($time_periods_filter as $time_period) {
-                $sql_filter_query .= " atp.time_period = '$time_period' OR";
-            }
-            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
-        }
-
-        // Add available days filter
-        if (!empty($available_days_filter)) {
-            $sql_filter_query .= " AND (";
-            foreach ($available_days_filter as $weekday) {
-                $sql_filter_query .= " DAYNAME(a.activity_date) = '$weekday' OR";
-            }
-            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
-        }
-
-        // Add domain filter
-        if (!empty($domains_filter)) {
-            $sql_filter_query .= " AND (";
-            foreach ($domains_filter as $domain) {
-                $sql_filter_query .= " ad.domain = '$domain' OR";
-            }
-            $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
-        }
-
-        // Order of appearance filter
-        if (!empty($order_filter)){
-            switch ($order_filter){
-                case 'registration_date_desc':
-                    $sql_filter_query .= " ORDER BY a.registration_date DESC";
-                    break;
-                case 'registration_date_asc':
-                    $sql_filter_query .= " ORDER BY a.registration_date ASC";
-                    break;
-                case 'activity_duration_desc':
-                    $sql_filter_query .= " ORDER BY a.activity_duration DESC";
-                    break;
-                case 'activity_duration_asc':
-                    $sql_filter_query .= " ORDER BY a.activity_duration ASC";
-                    break;
-                case 'activity_date_desc':
-                    $sql_filter_query .= " ORDER BY a.activity_date DESC";
-                    break;
-                case 'activity_date_asc':
-                    $sql_filter_query .= " ORDER BY a.activity_date ASC";
-                    break;
-                case 'activity_name_asc':
-                    $sql_filter_query .= " ORDER BY a.activity_name ASC";
-                    break;
-            }
-        }
-
-        // Final query
-        $all_activities_data_rows = fetch_data_rows($sql_filter_query);
     }
+
+    // Volunteer occupancy filter
+    if (!empty($occupancy_filter)){
+        switch ($occupancy_filter){
+            case 'not_full':
+                $sql_filter_query .= " AND a.number_of_places - a.number_of_participants > 0";
+                break;
+            case 'full':
+                $sql_filter_query .= " AND a.number_of_places - a.number_of_participants <= 0";
+                break;
+            case 'empty':
+                $sql_filter_query .= " AND a.number_of_participants = 0";
+                break;
+            case 'all_activities':
+                // No additional condition needed (show all volunteers)
+                break;
+        }
+    }
+
+    // Add time periods filter
+    if (!empty($time_periods_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($time_periods_filter as $time_period) {
+            $sql_filter_query .= " atp.time_period = '$time_period' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+    }
+
+    // Add available days filter
+    if (!empty($available_days_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($available_days_filter as $weekday) {
+            $sql_filter_query .= " DAYNAME(a.activity_date) = '$weekday' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+    }
+
+    // Add domain filter
+    if (!empty($domains_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($domains_filter as $domain) {
+            $sql_filter_query .= " ad.domain = '$domain' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+    }
+
+    // Order of appearance filter
+    if (!empty($order_filter)){
+        switch ($order_filter){
+            case 'registration_date_desc':
+                $sql_filter_query .= " ORDER BY a.registration_date DESC";
+                break;
+            case 'registration_date_asc':
+                $sql_filter_query .= " ORDER BY a.registration_date ASC";
+                break;
+            case 'activity_duration_desc':
+                $sql_filter_query .= " ORDER BY a.activity_duration DESC";
+                break;
+            case 'activity_duration_asc':
+                $sql_filter_query .= " ORDER BY a.activity_duration ASC";
+                break;
+            case 'activity_date_desc':
+                $sql_filter_query .= " ORDER BY a.activity_date DESC";
+                break;
+            case 'activity_date_asc':
+                $sql_filter_query .= " ORDER BY a.activity_date ASC";
+                break;
+            case 'activity_name_asc':
+                $sql_filter_query .= " ORDER BY a.activity_name ASC";
+                break;
+        }
+    }
+
+    // Final query
+    $all_activities_data_rows = fetch_data_rows($sql_filter_query);
+
 ?>
 
 
@@ -258,6 +235,11 @@
                                     <label><input type="checkbox" name="available_days_filter[]" value="Saturday" <?php echo (isset($_POST['available_days_filter']) && in_array('Saturday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Saturday</label><br>
                                     <label><input type="checkbox" name="available_days_filter[]" value="Sunday" <?php echo (isset($_POST['available_days_filter']) && in_array('Sunday', $_POST['available_days_filter'])) ? 'checked' : ''; ?>> Sunday</label>
                                 </div>
+                            </div>
+
+                            <!-- Reset Filters Link -->
+                            <div>
+                                <a href="" class="reset-link">Reset Filter</a>
                             </div>
 
                             <!-- Submit Button -->

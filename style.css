@@ -496,3 +496,14 @@ border-radius: 50%;
 .form-field button:hover {
     background-color: #0056b3;
 }
+
+/*#################################################################################################################################################################*/
+/* Reset Filter */
+.reset-link {
+    text-decoration: underline;
+    color: blue;
+}
+
+.reset-link:hover {
+    text-decoration: none;
+}

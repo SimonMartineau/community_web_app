@@ -19,9 +19,21 @@
         $_SESSION['all_contracts_latest_date_filter'] = $_POST['latest_date_filter'] ?? '';
     }
 
+    if (isset($_GET['reset_filters'])) {
+        unset($_SESSION['all_contracts_order_filter']);
+        unset($_SESSION['all_contracts_trash_filter']);
+        unset($_SESSION['all_contracts_active_contract_filter']);
+        unset($_SESSION['all_contracts_earliest_date_filter']);
+        unset($_SESSION['all_contracts_latest_date_filter']);
+    
+        // Redirect to the same page to remove the query string
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
+
     // Default entry values on page startup.
-    $order_filter = $_SESSION['all_contracts_order_filter'] ?? "date_of_inscription_desc";
-    $trash_filter = $_SESSION['all_contracts_trash_filter'] ?? "only_active_volunteers";
+    $order_filter = $_SESSION['all_contracts_order_filter'] ?? "issuance_date_desc";
+    $trash_filter = $_SESSION['all_contracts_trash_filter'] ?? "active_volunteers_only";
     $active_contract_filter = $_SESSION['all_contracts_active_contract_filter'] ?? "active_contracts_only";
     $earliest_date_filter = $_SESSION['all_contracts_earliest_date_filter'] ?? '';
     $latest_date_filter = $_SESSION['all_contracts_latest_date_filter'] ?? '';
@@ -32,7 +44,7 @@
     // Volunteer status filter
     if (!empty($trash_filter)){
         switch ($trash_filter){
-            case 'only_active_volunteers':
+            case 'active_volunteers_only':
                 $sql_filter_query .= " AND v.trashed = '0'";
                 break;
             case 'only_in_trash':
@@ -153,7 +165,7 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="trash_filter" style="font-weight: bold;">Volunteer Status:</label><br>
                                 <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="only_active_volunteers" <?php echo ($trash_filter == 'only_active_volunteers') ? 'selected' : ''; ?>>Only Active Volunteers</option>
+                                    <option value="active_volunteers_only" <?php echo ($trash_filter == 'active_volunteers_only') ? 'selected' : ''; ?>>Only Active Volunteers</option>
                                     <option value="only_in_trash" <?php echo ($trash_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
                                     <option value="all_volunteers" <?php echo ($trash_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
                                 </select>
@@ -179,6 +191,11 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
                                 <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                            </div>
+
+                            <!-- Reset Filters Link -->
+                            <div>
+                                <a href="?reset_filters=1" class="reset-link">Reset Filter</a>
                             </div>
 
                             <!-- Submit Button -->
