@@ -84,3 +84,49 @@ body {
 .footer a:hover {
     text-decoration: underline;
 }
+
+/* Success message container */
+.success {
+    display: flex;
+    align-items: center;
+    background-color: #f0fff4;    /* very light green */
+    color: #2e7d32;               /* accessible dark green */
+    border: 1px solid #c8e6c9;    /* pale green border */
+    padding: 0.75rem 1rem;         /* comfortable padding */
+    border-radius: 0.5rem;         /* soft corners */
+    font-size: 0.95rem;            /* slightly smaller than body copy */
+    margin-bottom: 1.5rem;         /* space before the form fields */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  /* Icon inside the success */
+  .success-icon {
+    font-size: 1.25rem;        /* a bit bigger than the text */
+    margin-right: 0.5rem;      /* space between icon and message */
+    color: #2e7d32;            /* same green as the text */
+    flex-shrink: 0;
+  }
+  
+
+/* Error message container */
+.error {
+    display: flex;
+    align-items: center;
+    background-color: #fff0f0;    /* very light red/pink */
+    color: #b00020;               /* strong, accessible red */
+    border: 1px solid #f5c2c7;    /* pale red border */
+    padding: 0.75rem 1rem;         /* comfortable padding */
+    border-radius: 0.5rem;         /* soft corners */
+    font-size: 0.95rem;            /* slightly smaller than body copy */
+    margin-bottom: 1.5rem;         /* space before the form fields */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  /* Icon inside the error */
+  .error-icon {
+    font-size: 1.25rem;        /* a bit bigger than the text */
+    margin-right: 0.5rem;      /* space between icon and message */
+    color: #b00020;            /* same red as the text */
+    flex-shrink: 0;
+  }
+  

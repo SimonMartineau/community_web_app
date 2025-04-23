@@ -7,8 +7,9 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
-    // Check if user is logged in. If not, redirect to login page.
+    // Connect to the database
     $DB = new Database();
+    // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
 
     // Updating all backend processes
