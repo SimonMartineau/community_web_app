@@ -17,6 +17,22 @@ class Database{
         return $connection;
     }
 
+    function check_login(){
+        $conn = $this->connect();
+        if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+            $user_id = $_SESSION['user_id'];
+            $query = "select * from Users where user_id='$user_id' limit 1";
+            $result = mysqli_query($conn, $query);
+            if($result && mysqli_num_rows($result) > 0){
+                $user_data = mysqli_fetch_assoc($result);
+                return $user_data; // Return user data if logged in
+            }
+        }
+        // Redirect to login page if not logged in
+        header("Location: ../Login_Pages/login.php");
+        die;
+    }
+
     // Reads data from Database
     function read($query){
         $conn = $this->connect();

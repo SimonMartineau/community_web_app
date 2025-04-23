@@ -1,5 +1,21 @@
 <?php
 
+// This file contains all the functions used in the website.
+
+
+// This function generates a random number of a given length.
+function random_num($length){
+    $text = "";
+    if($length < 5){
+        $length = 5;
+    }
+    $len = rand(4, $length);
+    for($i = 0; $i < $len; $i++){
+        $text .= rand(0, 9);
+    }
+    return $text;
+}
+
 function fetch_data_rows($query){
 
     $DB = new Database();

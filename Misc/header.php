@@ -15,6 +15,7 @@
         </div>
 
         <!-- Logout Button -->
+        <a href="../Login_Pages/logout.php" class="logout">Logout</a>
         
     </div>
 </div>
