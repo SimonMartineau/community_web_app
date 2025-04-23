@@ -1,10 +1,17 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
     // Include classes
     include("../Classes/connect.php");
     include("../Classes/edit_volunteer_data.php");
     include("../Classes/functions.php");
+
+    // Connect to the database
+    $DB = new Database();
+    // Check if user is logged in. If not, redirect to login page.
+    $user_data = $DB->check_login();
 
     // Create a Edit_Activity object for form validation
     if (isset($_GET['volunteer_id'])) {

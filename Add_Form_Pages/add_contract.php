@@ -1,9 +1,16 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
-    // Include classes
+    // Include necessary files
     include("../Classes/connect.php");
-    include("../Classes/add_contract.php");
+    include("../Classes/functions.php");
+
+    // Connect to the database
+    $DB = new Database();
+    // Check if user is logged in. If not, redirect to login page.
+    $user_data = $DB->check_login();
 
     // Get volunteer_id from the URL
     if (isset($_GET['volunteer_id'])) {

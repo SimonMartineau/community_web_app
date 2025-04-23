@@ -1,9 +1,16 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
-    // Include classes
+    // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
+
+    // Connect to the database
+    $DB = new Database();
+    // Check if user is logged in. If not, redirect to login page.
+    $user_data = $DB->check_login();
 
     // Updating all backend processes
     update_backend_data();
@@ -36,9 +43,6 @@
 
         // Ensure the delete contract button has been pressed
         if (isset($_POST['delete_contract']) && $_POST['delete_contract'] === '1') {
-
-            // Initialise Database object
-            $DB = new Database();
 
             // SQL query into Contracts
             $delete_contract_query = "delete from Contracts where id='$contract_id'";

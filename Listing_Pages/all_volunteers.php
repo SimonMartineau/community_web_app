@@ -3,7 +3,7 @@
     // Start session
     session_start();
 
-    // Include classes
+    // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 

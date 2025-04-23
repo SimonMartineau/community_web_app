@@ -1,10 +1,17 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
     // Include classes
     include("../Classes/connect.php");
     include("../Classes/edit_contract_data.php");
     include("../Classes/functions.php");
+
+    // Connect to the database
+    $DB = new Database();
+    // Check if user is logged in. If not, redirect to login page.
+    $user_data = $DB->check_login();
 
     // Get contract_id from the URL
     if (isset($_GET['contract_id'])) {

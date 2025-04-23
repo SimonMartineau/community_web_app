@@ -1,9 +1,16 @@
 <!-- PHP Code -->
 <?php
+    // Start session
+    session_start();
 
-    // Include classes
+    // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
+
+    // Connect to the database
+    $DB = new Database();
+    // Check if user is logged in. If not, redirect to login page.
+    $user_data = $DB->check_login();
 
     // Updating all backend processesstyle="max-width: 30px;"
     update_backend_data();
@@ -173,9 +180,6 @@
         // Ensure the delete volunteer button has been pressed
         if (isset($_POST['delete_volunteer']) && $_POST['delete_volunteer'] === '1') {
 
-            // Initialise Database object
-            $DB = new Database();
-
             // SQL query into Purchases
             $trash_volunteer_query = "UPDATE `Volunteers` SET `trashed`='1' WHERE `id`='$volunteer_id'";
             $DB->save($trash_volunteer_query);
@@ -187,9 +191,6 @@
 
         // Ensure the restore volunteer button has been pressed
         if (isset($_POST['restore_volunteer']) && $_POST['restore_volunteer'] === '1') {
-
-            // Initialise Database object
-            $DB = new Database();
 
             // SQL query into Purchases
             $restore_volunteer_query = "UPDATE `Volunteers` SET `trashed`='0' WHERE `id`='$volunteer_id'";
@@ -205,9 +206,6 @@
         if (isset($_POST['assign_volunteer_activity']) && $_POST['assign_volunteer_activity'] === '1') {
 
             $activity_id = $_POST['activity_id'];
-
-            // Initialise Database object
-            $DB = new Database();
 
             // SQL query into Purchases
             $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
@@ -226,9 +224,6 @@
         if (isset($_POST['unassign_volunteer_activity']) && $_POST['unassign_volunteer_activity'] === '1') {
 
             $activity_id = $_POST['activity_id'];
-
-            // Initialise Database object
-            $DB = new Database();
 
             // SQL query into Purchases
             $unassign_volunteer_from_activity_query = "delete from Volunteer_Activity_Junction 
