@@ -2,7 +2,7 @@
     <div>
         <!-- Logo -->
         <!--<a href="../Profile_Pages/home.php" class="logo">Give and Receive</a> -->
-        <span class="logo" style="font-weight: bold;">Give and Receive</span>
+        <span class="logo" style="font-weight: bold;">Scheduling System</span>
 
         <!-- Navigation Menu -->
         <div id="menu_container">
@@ -25,6 +25,9 @@
 <!-- CSS Styling -->
 <style>
     #blue_bar {
+        position: sticky;
+        left: 0;
+        right : 0;
         height: 60px;
         background-color: #405d9b;
         color: #d9dfeb;
@@ -54,7 +57,7 @@
         white-space: nowrap; /* Prevent logo wrapping */
     }
 
-    .menu_button { /* Changed from ID to class */
+    .menu_button {
         padding: 10px 15px;
         display: inline-block;
         white-space: nowrap;

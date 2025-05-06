@@ -11,6 +11,7 @@
     $DB = new Database();
     // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
+    $user_id = $user_data['user_id'];
 
     // Updating all backend processes
     update_backend_data();
@@ -18,9 +19,9 @@
     if (isset($_GET['contract_id'])) {
         $contract_id = $_GET['contract_id'];
 
-        $contract_data_row = fetch_contract_data_row($contract_id);
+        $contract_data_row = fetch_contract_data_row($user_id,$contract_id);
         $volunteer_id = $contract_data_row['volunteer_id'];
-        $volunteer_data_row = fetch_volunteer_data_row($volunteer_id); // We link the correct owner of the contract.
+        $volunteer_data_row = fetch_volunteer_data_row($user_id,$volunteer_id); // We link the correct owner of the contract.
 
         $purchases_data_rows = fetch_data_rows("
             SELECT * 
@@ -45,7 +46,7 @@
         if (isset($_POST['delete_contract']) && $_POST['delete_contract'] === '1') {
 
             // SQL query into Contracts
-            $delete_contract_query = "delete from Contracts where id='$contract_id'";
+            $delete_contract_query = "DELETE FROM Contracts WHERE id='$contract_id'";
             $DB->save($delete_contract_query);
 
             // Changing the page.
@@ -188,8 +189,8 @@
                             <?php
                             if ($volunteer_data_row) {
                                 $volunteer_id = $volunteer_data_row['id'];
-                                $interest_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
-                                $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
+                                $interest_data_rows = fetch_volunteer_interest_data_rows($user_id,$volunteer_id);
+                                $availability_data_rows = fetch_volunteer_availability_data_rows($user_id,$volunteer_id);
                                 include("../Widget_Pages/volunteer_widget.php");
                             }
                             ?>
@@ -201,7 +202,7 @@
                             if ($purchases_data_rows) {
                                 foreach ($purchases_data_rows as $purchase_data_row) {
                                     $purchase_id = $purchase_data_row['id'];
-                                    $volunteer_data_row = fetch_volunteer_data_row($volunteer_id);
+                                    $volunteer_data_row = fetch_volunteer_data_row($user_id,$volunteer_id);
                                     include("../Widget_Pages/purchase_widget.php");
                                 }
                             }
@@ -214,8 +215,8 @@
                             if ($activities_data_rows) {
                                 foreach ($activities_data_rows as $activity_data_row) {
                                     $activity_id = $activity_data_row['id'];
-                                    $activity_time_periods_data_rows = fetch_data_rows("select * from Activity_Time_Periods where activity_id = '$activity_id'");
-                                    $activity_domains_data_rows = fetch_data_rows("select * from Activity_Domains where activity_id = '$activity_id'");
+                                    $activity_time_periods_data_rows = fetch_data_rows("SELECT * FROM Activity_Time_Periods WHERE activity_id = '$activity_id'");
+                                    $activity_domains_data_rows = fetch_data_rows("SELECT * FROM Activity_Domains WHERE activity_id = '$activity_id'");
                                     include("../Widget_Pages/activity_widget.php");
                                 }
                             }

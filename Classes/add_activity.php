@@ -12,6 +12,11 @@ class Add_Activity{
     public $activity_domains_error_mes = "";
     public $entry_clerk_error_mes = "";
     public $activity_id = "";
+    public $user_id;
+
+    public function __construct($user_id) {
+        $this->user_id = $user_id;
+    }
 
 
     // Analyses data sent by user
@@ -123,6 +128,7 @@ class Add_Activity{
     public function add_activity($data){
 
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id;
         $activity_name = $data['activity_name']; // ucfirst makes first letter capital.
         $number_of_participants = 0; // Number of participants is 0 when activity is created
         $number_of_places = $data['number_of_places'];
@@ -145,10 +151,10 @@ class Add_Activity{
         // SQL query into Activities
         foreach($activity_dates_array as $activity_date){
             // SQL prepared statement into Activities
-            $activity_query = "INSERT INTO Activities (activity_name, number_of_places, number_of_participants, activity_duration, activity_location, activity_date, entry_clerk, additional_notes, registration_date, trashed)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $types = "siiisssssi"; // Types of data to be inserted
-            $params = [$activity_name, $number_of_places, $number_of_participants, $activity_duration, $activity_location, 
+            $activity_query = "INSERT INTO Activities (user_id, activity_name, number_of_places, number_of_participants, activity_duration, activity_location, activity_date, entry_clerk, additional_notes, registration_date, trashed)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $types = "isiiisssssi"; // Types of data to be inserted
+            $params = [$user_id, $activity_name, $number_of_places, $number_of_participants, $activity_duration, $activity_location, 
                         $activity_date, $entry_clerk, $additional_notes, $registration_date, $trashed]; // Parameters to be inserted
 
             // Send prepared statement to Database
@@ -161,8 +167,8 @@ class Add_Activity{
             // SQL query into Activity_Time_Periods
             foreach($activity_time_periods as $time_period){
                 // SQL query
-                $activity_time_periods_query = "INSERT INTO Activity_Time_Periods (activity_id, time_period)
-                    VALUES ('$activity_id', '$time_period')";
+                $activity_time_periods_query = "INSERT INTO Activity_Time_Periods (user_id, activity_id, time_period)
+                    VALUES ('$user_id', '$activity_id', '$time_period')";
 
                 // Send data to Database
                 $DB->save($activity_time_periods_query);  
@@ -171,8 +177,8 @@ class Add_Activity{
             // SQL query into Activity_Domains
             foreach($activity_domains as $domain){
                 // SQL query
-                $activity_domains_query = "INSERT INTO Activity_Domains (activity_id, domain)
-                    VALUES ('$activity_id', '$domain')";
+                $activity_domains_query = "INSERT INTO Activity_Domains (user_id, activity_id, domain)
+                    VALUES ('$user_id', '$activity_id', '$domain')";
                 
                 // Send data to Database
                 $DB->save($activity_domains_query);  

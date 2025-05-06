@@ -8,6 +8,11 @@ class Add_Purchase{
     public $total_cost_error_mes = "";
     public $purchase_date_error_mes = "";
     public $entry_clerk_error_mes = "";
+    public $user_id;
+
+    public function __construct($user_id) {
+        $this->user_id = $user_id;
+    }
 
 
     // Analyses data sent by user
@@ -76,6 +81,7 @@ class Add_Purchase{
     public function add_purchase($volunteer_id, $data){
 
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id;
         $item_names = $data['item_names'];
         $total_cost = $data['total_cost'];
         $purchase_date = $data['purchase_date'];
@@ -85,7 +91,9 @@ class Add_Purchase{
         // Assigning the purchase to a contract
         $contract_data_row = fetch_data_rows("SELECT * 
                                        FROM Contracts c
-                                       WHERE c.volunteer_id = '$volunteer_id' 
+                                       WHERE c.user_id = '$user_id'
+                                       AND c.volunteer_id = '$volunteer_id' 
+                                       AND c.user_id = '$user_id'
                                        AND '$purchase_date' between c.issuance_date AND c.validity_date");
 
         // Check if the query returned any rows
@@ -99,10 +107,10 @@ class Add_Purchase{
         $DB = new Database();
 
         // SQL prepared statement into Purchases
-        $purchase_query = "INSERT INTO Purchases (volunteer_id, contract_id, item_names, total_cost, purchase_date, entry_clerk, additional_notes)
-                   VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $types = "iisisss";  // Types of data to be inserted
-        $params = [$volunteer_id, $contract_id, $item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes]; // Parameters to be inserted
+        $purchase_query = "INSERT INTO Purchases (user_id, volunteer_id, contract_id, item_names, total_cost, purchase_date, entry_clerk, additional_notes)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $types = "iiisisss";  // Types of data to be inserted
+        $params = [$user_id, $volunteer_id, $contract_id, $item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes]; // Parameters to be inserted
 
         // Send prepared statement to Database
         $DB->save_prepared($purchase_query, $types, $params);

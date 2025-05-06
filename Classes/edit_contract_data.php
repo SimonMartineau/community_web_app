@@ -9,6 +9,11 @@ class Edit_Contract{
     public $points_deposit_error_mes = "";
     public $hours_required_error_mes = "";
     public $entry_clerk_error_mes = "";
+    public $user_id;
+
+    public function __construct($user_id) {
+        $this->user_id = $user_id;
+    }
 
 
     // Analyses data sent by user
@@ -96,6 +101,7 @@ class Edit_Contract{
     public function edit_contract($contract_id, $data){
     
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id;
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
         $points_deposit = $data['points_deposit'];
@@ -115,9 +121,9 @@ class Edit_Contract{
                 hours_required = ?,
                 entry_clerk = ?,
                 additional_notes = ?
-            WHERE id = ?";
-        $types = "ssiissi"; // Types of data to be inserted
-        $parameters = [$issuance_date, $validity_date, $points_deposit, $hours_required, $entry_clerk, 
+            WHERE id = ? AND user_id = ?";
+        $types = "ssiissii"; // Types of data to be inserted
+        $parameters = [$user_id, $issuance_date, $validity_date, $points_deposit, $hours_required, $entry_clerk, 
                         $additional_notes, $contract_id]; // Parameters to be inserted
         
         // Send prepared statement to Database

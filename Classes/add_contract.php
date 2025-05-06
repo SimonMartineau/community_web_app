@@ -9,6 +9,11 @@ class Add_Contract{
     public $points_deposit_error_mes = "";
     public $hours_required_error_mes = "";
     public $entry_clerk_error_mes = "";
+    public $user_id;
+
+    public function __construct($user_id) {
+        $this->user_id = $user_id;
+    }
 
 
     // Analyses data sent by user
@@ -96,6 +101,7 @@ class Add_Contract{
     public function add_contract($volunteer_id, $data){
 
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id;
         $issuance_date = $data['issuance_date'];
         $validity_date = $data['validity_date'];
         $points_deposit = $data['points_deposit'];
@@ -110,10 +116,10 @@ class Add_Contract{
         $DB = new Database();
 
         // SQL prepared statement into Contracts
-        $contract_query = "INSERT INTO Contracts (volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, entry_clerk, contract_active, additional_notes)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $types = "issiiiisss"; // Types of data to be inserted
-        $params = [$volunteer_id, $issuance_date, $validity_date, $points_deposit, $points_spent, $hours_required, 
+        $contract_query = "INSERT INTO Contracts (user_id, volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, entry_clerk, contract_active, additional_notes)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $types = "iissiiiisss"; // Types of data to be inserted
+        $params = [$user_id, $volunteer_id, $issuance_date, $validity_date, $points_deposit, $points_spent, $hours_required, 
                     $hours_completed, $entry_clerk, $contract_active, $additional_notes]; // Parameters to be inserted
 
         // Send prepared statement to Database

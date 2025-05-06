@@ -11,6 +11,7 @@
     $DB = new Database();
     // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
+    $user_id = $user_data['user_id'];
 
     // Updating all backend processes
     update_backend_data();
@@ -18,12 +19,12 @@
     if (isset($_GET['purchase_id'])) {
         $purchase_id = $_GET['purchase_id'];
 
-        $purchase_data_row = fetch_purchase_data_row($purchase_id);
+        $purchase_data_row = fetch_purchase_data_row($user_id,$purchase_id);
         $volunteer_id = $purchase_data_row['volunteer_id'];
-        $volunteer_data_row = fetch_volunteer_data_row($volunteer_id); // We link the correct owner of the purchase.
+        $volunteer_data_row = fetch_volunteer_data_row($user_id,$volunteer_id); // We link the correct owner of the purchase.
 
         $contract_id = $purchase_data_row['contract_id'];
-        $contract_data_row = fetch_contract_data_row($contract_id);
+        $contract_data_row = fetch_contract_data_row($user_id,$contract_id);
     }
 
     // Check if user has submitted info
@@ -33,7 +34,7 @@
         if (isset($_POST['delete_purchase']) && $_POST['delete_purchase'] === '1') {
 
             // SQL query into Purchases
-            $delete_purchase_query = "delete from Purchases where id='$purchase_id'";
+            $delete_purchase_query = "DELETE FROM Purchases WHERE id='$purchase_id'";
             $DB->save($delete_purchase_query);
 
             // Changing the page.
@@ -146,8 +147,8 @@
                             <?php
                             if ($volunteer_data_row) {
                                 $volunteer_id = $volunteer_data_row['id'];
-                                $interest_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
-                                $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
+                                $interest_data_rows = fetch_volunteer_interest_data_rows($user_id,$volunteer_id);
+                                $availability_data_rows = fetch_volunteer_availability_data_rows($user_id,$volunteer_id);
                                 include("../Widget_Pages/volunteer_widget.php");
                             }
                             ?>
@@ -157,7 +158,7 @@
                         <div id="contract_widgets" class="widget-container" style="display: none;">
                             <?php
                             if ($contract_data_row) {
-                                $volunteer_data_row = fetch_volunteer_data_row($volunteer_id);
+                                $volunteer_data_row = fetch_volunteer_data_row($user_id,$volunteer_id);
                                 $date = new DateTime($contract_data_row['issuance_date']);
                                 $month = $date->format('F'); // Full month name (ex: "January")
                                 include("../Widget_Pages/contract_widget.php");

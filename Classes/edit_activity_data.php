@@ -11,6 +11,11 @@ class Edit_Activity{
     public $activity_time_periods_error_mes = "";
     public $activity_domains_error_mes = "";
     public $entry_clerk_error_mes = "";
+    public $user_id;
+
+    public function __construct($user_id) {
+        $this->user_id = $user_id;
+    }
 
     // Analyses data sent by user
     public function evaluate($activity_id, $data){
@@ -121,6 +126,7 @@ class Edit_Activity{
     public function edit_activity($activity_id, $data){
         
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id['user_id'];
         $activity_name = $data['activity_name']; // ucfirst makes first letter capital.
         $number_of_places = $data['number_of_places'];
         $activity_duration = $data['activity_duration'];
@@ -143,35 +149,35 @@ class Edit_Activity{
                         activity_date = ?,
                         entry_clerk = ?,
                         additional_notes = ?
-                    WHERE id = ?";
-        $types = "siissssi"; // Types of data to be inserted
-        $params = array($activity_name, $number_of_places, $activity_duration, $activity_location, $activity_date, 
+                    WHERE id = ? AND user_id = ?";
+        $types = "siissssii"; // Types of data to be inserted
+        $params = array($user_id, $activity_name, $number_of_places, $activity_duration, $activity_location, $activity_date, 
                         $entry_clerk, $additional_notes, $activity_id); // Parameters to be inserted
         
         // Send prepared statement to Database
         $DB->save_prepared($actvity_query, $types, $params);
 
         // SQL query to delete data from Activity_Time_Periods table
-        $delete_activiy_time_periods_query = "DELETE FROM Activity_Time_Periods WHERE activity_id = '$activity_id'";
+        $delete_activiy_time_periods_query = "DELETE FROM Activity_Time_Periods WHERE activity_id = '$activity_id' AND user_id = '$user_id'";
         $DB->save($delete_activiy_time_periods_query);
 
         // SQL query into Activity_Time_Periods
         foreach($activity_time_periods as $time_period){
-            $activity_time_periods_query = "INSERT INTO Activity_Time_Periods (activity_id, time_period)
-                VALUES ('$activity_id', '$time_period')";
+            $activity_time_periods_query = "INSERT INTO Activity_Time_Periods (user_id, activity_id, time_period)
+                VALUES ('$user_id', '$activity_id', '$time_period')";
 
             // Send data to db
             $DB->save($activity_time_periods_query);  
         }
 
         // SQL query to delete data from Activity_Domains table
-        $delete_activity_domains_query = "DELETE FROM Activity_Domains WHERE activity_id = '$activity_id'";
+        $delete_activity_domains_query = "DELETE FROM Activity_Domains WHERE activity_id = '$activity_id' AND user_id = '$user_id'";
         $DB->save($delete_activity_domains_query);
 
         // SQL query into Activity_Domains
         foreach($activity_domains as $domain){
-            $activity_domains_query = "INSERT INTO Activity_Domains (activity_id, domain)
-                VALUES ('$activity_id', '$domain')";
+            $activity_domains_query = "INSERT INTO Activity_Domains (user_id, activity_id, domain)
+                VALUES ('$user_id', '$activity_id', '$domain')";
             
             // Send data to db
             $DB->save($activity_domains_query);  

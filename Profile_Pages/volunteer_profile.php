@@ -11,6 +11,7 @@
     $DB = new Database();
     // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
+    $user_id = $user_data['user_id'];
 
     // Updating all backend processesstyle="max-width: 30px;"
     update_backend_data();
@@ -23,9 +24,9 @@
     // Default volunteer data
     if (isset($_GET['volunteer_id'])) {
         $volunteer_id = $_GET['volunteer_id'];
-        $volunteer_data_row = fetch_volunteer_data_row($volunteer_id);
-        $volunteer_interests_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
-        $volunteer_availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
+        $volunteer_data_row = fetch_volunteer_data_row($user_id,$volunteer_id);
+        $volunteer_interests_data_rows = fetch_volunteer_interest_data_rows($user_id,$volunteer_id);
+        $volunteer_availability_data_rows = fetch_volunteer_availability_data_rows($user_id,$volunteer_id);
 
         // Collect volunteer data
         $contracts_data_rows = fetch_data_rows("
@@ -208,8 +209,8 @@
             $activity_id = $_POST['activity_id'];
 
             // SQL query into Purchases
-            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
-                                                    values ('$volunteer_id', -1, '$activity_id')";
+            $assign_volunteer_to_activity_query = "INSERT INTO Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
+                                                    VALUES ('$volunteer_id', -1, '$activity_id')";
             $DB->save($assign_volunteer_to_activity_query);
 
             // Updating all backend processes
@@ -226,8 +227,8 @@
             $activity_id = $_POST['activity_id'];
 
             // SQL query into Purchases
-            $unassign_volunteer_from_activity_query = "delete from Volunteer_Activity_Junction 
-                                                        where volunteer_id = '$volunteer_id'
+            $unassign_volunteer_from_activity_query = "DELETE FROM Volunteer_Activity_Junction 
+                                                        WHERE volunteer_id = '$volunteer_id'
                                                         AND activity_id = '$activity_id'";
             $DB->save($unassign_volunteer_from_activity_query);
 
@@ -497,7 +498,7 @@
                             if ($contracts_data_rows) {
                                 foreach ($contracts_data_rows as $contract_data_row) {
                                     $contract_id = $contract_data_row['id'];
-                                    $volunteer_data_row = fetch_volunteer_data_row($contract_data_row['volunteer_id']);
+                                    $volunteer_data_row = fetch_volunteer_data_row($user_id,$contract_data_row['volunteer_id']);
                                     $date = new DateTime($contract_data_row['issuance_date']);
                                     $month = $date->format('F'); // Full month name (ex: "January")
                                     include("../Widget_Pages/contract_widget.php");
@@ -520,7 +521,7 @@
                             if ($purchases_data_rows) {
                                 foreach ($purchases_data_rows as $purchase_data_row) {
                                     $purchase_id = $purchase_data_row['id'];
-                                    $volunteer_data_row = fetch_volunteer_data_row($purchase_data_row['volunteer_id']);
+                                    $volunteer_data_row = fetch_volunteer_data_row($user_id,$purchase_data_row['volunteer_id']);
                                     include("../Widget_Pages/purchase_widget.php");
                                 }
                             }
@@ -541,8 +542,8 @@
                             if ($activities_data_rows) {
                                 foreach ($activities_data_rows as $activity_data_row) {
                                     $activity_id = $activity_data_row['id'];
-                                    $activity_time_periods_data_rows = fetch_data_rows("select * from Activity_Time_Periods where activity_id = '$activity_id'");
-                                    $activity_domains_data_rows = fetch_data_rows("select * from Activity_Domains where activity_id = '$activity_id'");
+                                    $activity_time_periods_data_rows = fetch_data_rows("SELECT * FROM Activity_Time_Periods WHERE activity_id = '$activity_id'");
+                                    $activity_domains_data_rows = fetch_data_rows("SELECT * FROM Activity_Domains WHERE activity_id = '$activity_id'");
                                     include("../Widget_Pages/activity_widget.php");
                                 }
                             }
@@ -619,8 +620,8 @@
                                 if($all_matching_activities_data_rows){
                                     foreach($all_matching_activities_data_rows as $activity_data_row){
                                         $activity_id = $activity_data_row['id'];
-                                        $activity_time_periods_data_rows = fetch_data_rows("select * from Activity_Time_Periods where activity_id = '$activity_id'");
-                                        $activity_domains_data_rows = fetch_data_rows("select * from Activity_Domains where activity_id = '$activity_id'");
+                                        $activity_time_periods_data_rows = fetch_data_rows("SELECT * FROM Activity_Time_Periods WHERE activity_id = '$activity_id'");
+                                        $activity_domains_data_rows = fetch_data_rows("SELECT * FROM Activity_Domains WHERE activity_id = '$activity_id'");
                                         include("../Widget_Pages/activity_widget.php");
                                     }
                                 }

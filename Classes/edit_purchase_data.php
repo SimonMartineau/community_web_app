@@ -8,6 +8,11 @@ class Edit_Purchase{
     public $total_cost_error_mes = "";
     public $purchase_date_error_mes = "";
     public $entry_clerk_error_mes = "";
+    public $user_id;
+
+    public function __construct($user_id){
+        $this->user_id = $user_id;
+    }
 
 
     // Analyses data sent by user
@@ -77,6 +82,7 @@ class Edit_Purchase{
     public function edit_purchase($purchase_id, $data){
 
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id;
         $item_names = $data['item_names'];
         $total_cost = $data['total_cost'];
         $purchase_date = $data['purchase_date'];
@@ -93,10 +99,10 @@ class Edit_Purchase{
                 purchase_date = ?, 
                 entry_clerk = ?, 
                 additional_notes = ? 
-            WHERE id = ?";
+            WHERE id = ? AND user_id = ?";
 
-        $types = "sisssi"; // Types of data to be inserted
-        $params = [$item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes, $purchase_id]; // Parameters to be inserted
+        $types = "sisssii"; // Types of data to be inserted
+        $params = [$user_id, $item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes, $purchase_id]; // Parameters to be inserted
 
         // Save data to Database through prepared statements
         $DB->save_prepared($update_query, $types, $params);

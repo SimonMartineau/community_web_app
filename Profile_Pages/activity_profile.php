@@ -11,6 +11,7 @@
     $DB = new Database();
     // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
+    $user_id = $user_data['user_id'];
 
     // Updating all backend processes
     update_backend_data();
@@ -76,6 +77,7 @@
         JOIN Volunteer_Availability va ON v.id = va.volunteer_id
         JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
         WHERE v.trashed = 0
+        AND v.user_id = '$user_id'
     ";
 
     // Interest filter
@@ -114,6 +116,7 @@
         JOIN Volunteer_Availability va ON v.id = va.volunteer_id
         JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
         WHERE v.trashed = 0
+        AND v.user_id = '$user_id'
         ";
 
         // Interest filter
@@ -167,8 +170,8 @@
             $volunteer_id = $_POST['volunteer_id'];
 
             // SQL query into Purchases
-            $assign_volunteer_to_activity_query = "insert into Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
-                                                    values ('$volunteer_id', -1, '$activity_id')";
+            $assign_volunteer_to_activity_query = "INSERT INTO Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
+                                                    VALUES ('$volunteer_id', -1, '$activity_id')";
             $DB->save($assign_volunteer_to_activity_query);
 
             // Changing the page.
@@ -182,8 +185,8 @@
             $volunteer_id = $_POST['volunteer_id'];
 
             // SQL query into Purchases
-            $unassign_volunteer_from_activity_query = "delete from Volunteer_Activity_Junction 
-                                                        where volunteer_id = '$volunteer_id'
+            $unassign_volunteer_from_activity_query = "DELETE FROM Volunteer_Activity_Junction 
+                                                        WHERE volunteer_id = '$volunteer_id'
                                                         AND activity_id = '$activity_id'";
             $DB->save($unassign_volunteer_from_activity_query);
 
@@ -406,8 +409,8 @@
                                 if($all_current_participants_data_rows){
                                     foreach($all_current_participants_data_rows as $volunteer_data_row){
                                         $volunteer_id = $volunteer_data_row['id'];
-                                        $interest_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
-                                        $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
+                                        $interest_data_rows = fetch_volunteer_interest_data_rows($user_id, $volunteer_id);
+                                        $availability_data_rows = fetch_volunteer_availability_data_rows($user_id, $volunteer_id);
                                         include("../Widget_Pages/volunteer_widget.php");
                                     }
                                 }
@@ -477,8 +480,8 @@
                                 if($all_matching_participants_data_rows){
                                     foreach($all_matching_participants_data_rows as $volunteer_data_row){
                                         $volunteer_id = $volunteer_data_row['id'];
-                                        $interest_data_rows = fetch_volunteer_interest_data_rows($volunteer_id);
-                                        $availability_data_rows = fetch_volunteer_availability_data_rows($volunteer_id);
+                                        $interest_data_rows = fetch_volunteer_interest_data_rows($user_id, $volunteer_id);
+                                        $availability_data_rows = fetch_volunteer_availability_data_rows($user_id, $volunteer_id);
                                         include("../Widget_Pages/volunteer_widget.php");
                                     }
                                 }

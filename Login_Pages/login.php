@@ -18,7 +18,7 @@
 
         if(!empty($email) && !empty($password)){
             // Read from database
-            $query = "select * from Users where email='$email' and password='$password'";
+            $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
             $conn = $DB->connect();
             $result = mysqli_query($conn, $query); // return true or false if query worked or not
             if ($result){

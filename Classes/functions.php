@@ -30,8 +30,8 @@ function fetch_data_rows($query){
     }
 }
 
-function fetch_volunteer_data_row($volunteer_id){
-    $query = "select * from Volunteers where id='$volunteer_id'";
+function fetch_volunteer_data_row($user_id, $volunteer_id){
+    $query = "SELECT * FROM Volunteers WHERE user_id='$user_id' AND id='$volunteer_id'";
 
     $DB = new Database();
     $DB->save($query);
@@ -45,8 +45,8 @@ function fetch_volunteer_data_row($volunteer_id){
     }
 }
 
-function fetch_volunteer_interest_data_rows($volunteer_id){
-    $query = "select * from Volunteer_Interests where volunteer_id='$volunteer_id'";
+function fetch_volunteer_interest_data_rows($user_id, $volunteer_id){
+    $query = "SELECT * FROM Volunteer_Interests WHERE user_id='$user_id' AND volunteer_id='$volunteer_id'";
 
     $DB = new Database();
     $DB->save($query);
@@ -60,8 +60,8 @@ function fetch_volunteer_interest_data_rows($volunteer_id){
     }
 }
 
-function fetch_volunteer_availability_data_rows($volunteer_id){
-    $query = "select * from Volunteer_Availability where volunteer_id='$volunteer_id'";
+function fetch_volunteer_availability_data_rows($user_id, $volunteer_id){
+    $query = "SELECT * FROM Volunteer_Availability WHERE user_id='$user_id' AND volunteer_id='$volunteer_id'";
 
     $DB = new Database();
     $DB->save($query);
@@ -75,8 +75,8 @@ function fetch_volunteer_availability_data_rows($volunteer_id){
     }
 }
 
-function fetch_contract_data_row($contract_id){
-    $query = "select * from Contracts where id='$contract_id'";
+function fetch_contract_data_row($user_id, $contract_id){
+    $query = "SELECT * FROM Contracts WHERE user_id='$user_id' AND id='$contract_id'";
 
     $DB = new Database();
     $DB->save($query);
@@ -90,8 +90,8 @@ function fetch_contract_data_row($contract_id){
     }
 }
 
-function fetch_purchase_data_row($purchase_id){
-    $query = "select * from Purchases where id='$purchase_id'";
+function fetch_purchase_data_row($user_id, $purchase_id){
+    $query = "SELECT * FROM Purchases WHERE user_id='$user_id' AND id='$purchase_id'";
 
     $DB = new Database();
     $DB->save($query);

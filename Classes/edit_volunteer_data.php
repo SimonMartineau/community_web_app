@@ -16,6 +16,11 @@ class Edit_Volunteer{
     public $volunteer_interests_error_mes = "";
     public $volunteer_manager_error_mes = "";
     public $entry_clerk_error_mes = "";
+    public $user_id;
+
+    public function __construct($user_id) {
+        $this->user_id = $user_id;
+    }
 
     // Analyses data sent by user
     public function evaluate($volunteer_id, $data){
@@ -165,6 +170,7 @@ class Edit_Volunteer{
     public function edit_volunteer($volunteer_id, $data){
 
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id;
         $first_name = ucfirst($data['first_name']);
         $last_name = ucfirst($data['last_name']);
         $gender = $data['gender'];
@@ -195,34 +201,34 @@ class Edit_Volunteer{
                     volunteer_manager = ?,
                     entry_clerk = ?,
                     additional_notes = ?
-                WHERE id = ?;";
-        $types = "sssssssssssi"; // Types of data to be inserted
-        $parameters = [$first_name, $last_name, $gender, $date_of_birth, $address, $zip_code, $telephone_number, $email, $volunteer_manager, 
+                WHERE id = ? AND user_id = ?;";
+        $types = "sssssssssssii"; // Types of data to be inserted
+        $parameters = [$user_id, $first_name, $last_name, $gender, $date_of_birth, $address, $zip_code, $telephone_number, $email, $volunteer_manager, 
                         $entry_clerk, $additional_notes, $volunteer_id]; // Parameters to be inserted
 
         // Save data into database
         $DB->save_prepared($volunteers_query, $types, $parameters);
 
         // SQL query to delete data from Volunteer_Interests table
-        $delete_interests_query = "DELETE FROM Volunteer_Interests WHERE volunteer_id = '$volunteer_id'";
+        $delete_interests_query = "DELETE FROM Volunteer_Interests WHERE volunteer_id = '$volunteer_id' AND user_id = '$user_id'";
         $DB->save($delete_interests_query);
 
         // SQL query into Volunteer_Interests
         foreach($volunteer_interests as $interest){
-            $volunteers_interests_query = "INSERT INTO Volunteer_Interests (volunteer_id, interest)
-                    VALUES ('$volunteer_id', '$interest')";
+            $volunteers_interests_query = "INSERT INTO Volunteer_Interests (user_id, volunteer_id, interest)
+                    VALUES ('$user_id', '$volunteer_id', '$interest')";
             $DB->save($volunteers_interests_query);
         }
 
         // SQL query to delete data from Volunteer_Availability table
-        $delete_availability_query = "DELETE FROM Volunteer_Availability WHERE volunteer_id = '$volunteer_id'";
+        $delete_availability_query = "DELETE FROM Volunteer_Availability WHERE volunteer_id = '$volunteer_id' AND user_id = '$user_id'";
         $DB->save($delete_availability_query);
 
         // SQL query into Volunteer_Availability
         foreach($volunteer_availability as $availability){
             list($weekday, $time_period) = explode('-', $availability);
-            $volunteers_availability_query = "INSERT INTO Volunteer_Availability (volunteer_id, weekday, time_period)
-                    VALUES ('$volunteer_id', '$weekday', '$time_period')";
+            $volunteers_availability_query = "INSERT INTO Volunteer_Availability (user_id, volunteer_id, weekday, time_period)
+                    VALUES ('$user_id', '$volunteer_id', '$weekday', '$time_period')";
             $DB->save($volunteers_availability_query);
         }
 

@@ -17,6 +17,11 @@ class Add_Volunteer{
     public $volunteer_manager_error_mes = "";
     public $entry_clerk_error_mes = "";
     public $volunteer_id = "";
+    public $user_id = "";
+
+    public function __construct($user_id) {
+        $this->user_id = $user_id;
+    }
 
 
     // Analyses data sent by user
@@ -167,6 +172,7 @@ class Add_Volunteer{
     public function add_volunteer($data){
 
         // Creating all the varaibles for the SQL input
+        $user_id = $this->user_id;
         $first_name = ucfirst($data['first_name']); // ucfirst makes first letter capital.
         $last_name = ucfirst($data['last_name']);
         $gender = $data['gender'];
@@ -190,10 +196,10 @@ class Add_Volunteer{
         $DB = new Database();
 
         // SQL prepared statement into Volunteers
-        $volunteer_query = "INSERT INTO Volunteers (first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_required, hours_completed, volunteer_manager, entry_clerk, additional_notes, registration_date, trashed)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $types = "ssssssssiiissssi"; // Types of data to be inserted
-        $params = [$first_name, $last_name, $gender, $date_of_birth, $address, $zip_code, $telephone_number, $email, $points, $hours_required, $hours_completed, 
+        $volunteer_query = "INSERT INTO Volunteers (user_id, first_name, last_name, gender, date_of_birth, address, zip_code, telephone_number, email, points, hours_required, hours_completed, volunteer_manager, entry_clerk, additional_notes, registration_date, trashed)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $types = "issssssssiiissssi"; // Types of data to be inserted
+        $params = [$user_id, $first_name, $last_name, $gender, $date_of_birth, $address, $zip_code, $telephone_number, $email, $points, $hours_required, $hours_completed, 
                     $volunteer_manager, $entry_clerk, $additional_notes, $registration_date, $trashed]; // Parameters to be inserted
 
         // Send prepared statement to Database
@@ -206,15 +212,15 @@ class Add_Volunteer{
         // SQL query into Volunteer_Availability
         foreach($volunteer_availability as $availability){
             list($weekday, $time_period) = explode('-', $availability);
-            $volunteers_availability_query = "INSERT INTO Volunteer_Availability (volunteer_id, weekday, time_period)
-                VALUES ('$volunteer_id', '$weekday', '$time_period')";
+            $volunteers_availability_query = "INSERT INTO Volunteer_Availability (user_id, volunteer_id, weekday, time_period)
+                VALUES ('$user_id', '$volunteer_id', '$weekday', '$time_period')";
             $DB->save($volunteers_availability_query);
         }
 
         // SQL query into Volunteer_Interests
         foreach($volunteer_interests as $interest){
-            $volunteers_interests_query = "INSERT INTO Volunteer_Interests (volunteer_id, interest)
-                VALUES ('$volunteer_id', '$interest')";
+            $volunteers_interests_query = "INSERT INTO Volunteer_Interests (user_id, volunteer_id, interest)
+                VALUES ('$user_id', '$volunteer_id', '$interest')";
             $DB->save($volunteers_interests_query);
         }
     }

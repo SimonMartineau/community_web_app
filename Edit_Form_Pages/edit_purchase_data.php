@@ -12,6 +12,7 @@
     $DB = new Database();
     // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
+    $user_id = $user_data['user_id'];
 
     // Get purchase_id from the URL
     if (isset($_GET['purchase_id'])) {
@@ -19,7 +20,7 @@
     }
 
     // Fetch SQL data
-    $purchase_data_row = fetch_purchase_data_row($purchase_id);
+    $purchase_data_row = fetch_purchase_data_row($user_id,$purchase_id);
 
     // Default entry values on page startup.
     $item_names = $purchase_data_row['item_names'];
@@ -33,7 +34,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         // Create a Edit_Purchase object for form evaluation
-        $purchase = new Edit_Purchase();
+        $purchase = new Edit_Purchase($user_id);
         $submit_success = $purchase->evaluate($purchase_id, $_POST); // Evaluate the form
 
         // If there are errors 
@@ -67,99 +68,101 @@
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
+        <div class="page-container">
 
-        <!-- Header Bar -->
-        <?php include("../Misc/header.php"); ?>
+            <!-- Header Bar -->
+            <?php include("../Misc/header.php"); ?>
 
-        <!-- Middle Area -->
-        <div style="width: 1500px; min-height: 400px; margin:auto;">
-            
-            <!-- Major Rectangle Area -->
-            <div id="major_rectangle">
+            <!-- Middle Area -->
+            <div style="width: 1500px; min-height: 400px; margin:auto;">
                 
-                <!-- Title -->
-                <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Edit Purchase Data</span>
+                <!-- Major Rectangle Area -->
+                <div id="major_rectangle">
+                    
+                    <!-- Title -->
+                    <div id="section_title" style="margin-bottom: 20px;">
+                        <span style="font-size: 24px; font-weight: bold;">Edit Purchase Data</span>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div style="text-align: center;">
+                        <span id="main_error" style="color: red; font-weight: bold;">
+                            <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                        </span>
+                    </div>
+
+                    <!-- Form Area -->
+                    <form method="post" action="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?php echo $purchase_id; ?>" class="form-layout" form>
+
+                        <!-- Item Names Text Input -->
+                        <div class="form-field">
+                            <label for="item_names">
+                                Item Names:
+                                <span class="tooltip">?
+                                    <span class="tooltip-text">Enter the names of the purchased items (ex: Apples).
+                                </span>
+                            </label>
+                            <input name="item_names" type="text" id="text_input" value="<?php echo $item_names ?>">
+                            <span id="error_message"><?php echo isset($purchase) ? $purchase->item_names_error_mes : ''; ?></span>
+                        </div>
+
+                        <!-- Total Cost Text Input -->
+                        <div class="form-field">
+                            <label for="total_cost">
+                                Total Cost:
+                                <span class="tooltip">?
+                                    <span class="tooltip-text">Enter the total cost (in points) of the purchase (ex: 3).
+                                </span>
+                            </label>
+                            <input name="total_cost" type="text" id="text_input" value="<?php echo $total_cost ?>">
+                            <span id="error_message"><?php echo isset($purchase) ? $purchase->total_cost_error_mes : ''; ?></span>
+                        </div>
+
+                        <!-- Purchase Date Input -->
+                        <div class="form-field">
+                            <label for="purchase_date">
+                                Purchase Date:
+                                <span class="tooltip">?
+                                    <span class="tooltip-text">Enter the date of the purchase. Click the calendar icon to choose a date.
+                                </span>
+                            </label>
+                            <input type="date" name="purchase_date" value="<?php echo $purchase_date ?>">
+                            <span id="error_message"><?php echo isset($purchase) ? $purchase->purchase_date_error_mes : ''; ?></span>
+                        </div>
+
+                        <!-- Entry Clerk Text Input -->
+                        <div class="form-field">
+                            <label for="hours_required">
+                                Entry Clerk:
+                                <span class="tooltip">?
+                                    <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                                </span>
+                            </label>
+                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
+                            <span id="error_message"><?php echo isset($purchase) ? $purchase->entry_clerk_error_mes : ''; ?></span>
+                        </div>
+
+                        <!-- Additional Notes Text Input -->
+                        <div class="form-field form-field-top">
+                            <label for="additional_notes">
+                                Additional Notes:
+                                <span class="tooltip">?
+                                    <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                                </span>
+                            </label>                   
+                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="input_container">
+                            <input type="submit" id="submit_button" value="Submit">
+                        </div>
+
+                    </form>
+
                 </div>
-
-                <!-- Error Message -->
-                <div style="text-align: center;">
-                    <span id="main_error" style="color: red; font-weight: bold;">
-                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
-                    </span>
-                </div>
-
-                <!-- Form Area -->
-                <form method="post" action="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?php echo $purchase_id; ?>" class="form-layout" form>
-
-                    <!-- Item Names Text Input -->
-                    <div class="form-field">
-                        <label for="item_names">
-                            Item Names:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the names of the purchased items (ex: Apples).
-                            </span>
-                        </label>
-                        <input name="item_names" type="text" id="text_input" value="<?php echo $item_names ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->item_names_error_mes : ''; ?></span>
-                    </div>
-
-                    <!-- Total Cost Text Input -->
-                    <div class="form-field">
-                        <label for="total_cost">
-                            Total Cost:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the total cost (in points) of the purchase (ex: 3).
-                            </span>
-                        </label>
-                        <input name="total_cost" type="text" id="text_input" value="<?php echo $total_cost ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->total_cost_error_mes : ''; ?></span>
-                    </div>
-
-                    <!-- Purchase Date Input -->
-                    <div class="form-field">
-                        <label for="purchase_date">
-                            Purchase Date:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the date of the purchase. Click the calendar icon to choose a date.
-                            </span>
-                        </label>
-                        <input type="date" name="purchase_date" value="<?php echo $purchase_date ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->purchase_date_error_mes : ''; ?></span>
-                    </div>
-
-                    <!-- Entry Clerk Text Input -->
-                    <div class="form-field">
-                        <label for="hours_required">
-                            Entry Clerk:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
-                            </span>
-                        </label>
-                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->entry_clerk_error_mes : ''; ?></span>
-                    </div>
-
-                    <!-- Additional Notes Text Input -->
-                    <div class="form-field form-field-top">
-                        <label for="additional_notes">
-                            Additional Notes:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
-                            </span>
-                        </label>                   
-                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="input_container">
-                        <input type="submit" id="submit_button" value="Submit">
-                    </div>
-
-                </form>
-
             </div>
-        </div>
-        
+            
+        </div>    
     </body>
 </html>

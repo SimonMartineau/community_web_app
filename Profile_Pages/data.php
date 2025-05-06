@@ -10,26 +10,28 @@
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
+        <div class="page-container">
 
-        <!-- Header Bar -->
-        <?php include("../Misc/header.php"); ?>
+            <!-- Header Bar -->
+            <?php include("../Misc/header.php"); ?>
 
-        <!-- Cover Area -->
-        <div style="width: 1500px; min-height: 400px; margin:auto;">
-                    
-            <!-- Below Cover Area -->
-            <div style="display: flex;">
+            <!-- Cover Area -->
+            <div style="width: 1500px; min-height: 400px; margin:auto;">
+                        
+                <!-- Below Cover Area -->
+                <div style="display: flex;">
 
-                <!-- Contact Content Area -->
-                <div id="major_rectangle">
-                    <!-- Section Title of Contact Section -->
-                    <div id="section_title" style="margin-bottom: 20px;">
-                        <span style="font-size: 24px; font-weight: bold;">Data</span>
+                    <!-- Contact Content Area -->
+                    <div id="major_rectangle">
+                        <!-- Section Title of Contact Section -->
+                        <div id="section_title" style="margin-bottom: 20px;">
+                            <span style="font-size: 24px; font-weight: bold;">Data</span>
+                        </div>
+                        
                     </div>
-                    
                 </div>
             </div>
-            
+              
         </div>
     </body>
 </html>
