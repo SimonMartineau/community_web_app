@@ -83,13 +83,20 @@
 
             <!-- Email Inputs -->
             <div class="form-group">
-                <label for="email"><span class="material-symbols-outlined">mail</span><strong> Email</strong></label>
-                <input type="text" id="email" name="email" placeholder="Enter your email" required>
+                <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <span class="material-symbols-outlined">mail</span>
+                    <strong> Email</strong>
+                </label>
+                <input type="text" id="email" name="email" placeholder="Enter your email" required
+                    value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
             </div>
 
             <!-- Password Input -->
             <div class="form-group">
-                <label for="password"><span class="material-symbols-outlined">lock</span><strong> Password</strong></label>
+                <label for="password" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <span class="material-symbols-outlined">lock</span>
+                    <strong> Password</strong>
+                </label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             <button type="submit" class="btn">Log In</button>

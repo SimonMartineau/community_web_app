@@ -12,6 +12,9 @@
     // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
 
+
+    echo $user_data['user_id'];
+
     // Updating all backend processes
     update_backend_data();
 

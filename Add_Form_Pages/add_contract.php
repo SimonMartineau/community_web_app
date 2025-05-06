@@ -6,6 +6,7 @@
     // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
+    include("../Classes/add_contract.php");
 
     // Connect to the database
     $DB = new Database();

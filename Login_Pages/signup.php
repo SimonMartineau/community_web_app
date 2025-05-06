@@ -10,12 +10,15 @@
     // Connect to the database
     $DB = new Database();
 
+    // Initialize error
+    $error = [];
+
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         // Something was posted
         $email = $_POST['email'];
-        $password = hash("sha256", $_POST['password']);
-
+        $password = $_POST['password'];
+    
         if(!empty($email) && !empty($password)){
             // Validate email format
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -27,10 +30,34 @@
                 if($result){
                     // Tell the user if email already exists.
                     $_SESSION['email_exists'] = true;
-                    
-                } else{
-                    // Email does not exist, proceed to save to database
+
+                // Email is good, check password
+                } elseif (strlen($password) < 8){
+                    $error[] = "Password must be at least 8 characters long.";
+                } elseif (!preg_match('/[A-Z]/', $password)) {
+                    $error[] = "Password must contain at least one uppercase letter.";
+                } elseif (!preg_match('/[a-z]/', $password)) {
+                    $error[] = "Password must contain at least one lowercase letter.";
+                } elseif (!preg_match('/[0-9]/', $password)) {
+                    $error[] = "Password must contain at least one number.";
+                } elseif (!preg_match('/[\W_]/', $password)) {
+                    $error[] = "Password must contain at least one special character.";
+                } else {
+                    // Password is valid and email does not exist, proceed to save to database
                     $user_id = random_num(20); // Generate a random user ID
+
+                    // Hash the password
+                    $password = hash("sha256", $_POST['password']);
+
+                    // Check if the user ID already exists, if so, generate a new one
+                    $query = "SELECT * FROM Users WHERE user_id='$user_id'";
+                    $result_user_id = $DB->read($query);
+                    while ($result_user_id) {
+                        // If user ID already exists, generate a new one
+                        $user_id = random_num(20);
+                        $query = "SELECT * FROM Users WHERE user_id='$user_id'";
+                        $result_user_id = $DB->read($query);
+                    }
 
                     // SQL prepared statement into Users
                     $users_query = "INSERT INTO Users (user_id, email, password) VALUES (?, ?, ?)";
@@ -68,9 +95,16 @@
         <!-- Title -->
         <h2>Sign up</h2>
         <form action="signup.php" method="post">
+
+        
         
             <!-- Messages -->
             <?php
+                // Check if signup was successful
+                foreach ($error as $err){
+                    echo "<div class='error'>$err</div>";
+                }
+
                 // Check if email already exists.
                 if (!empty($_SESSION['email_exists'])) {
                     echo "
@@ -94,13 +128,20 @@
 
             <!-- Email Input -->
             <div class="form-group">
-                <label for="email"><span class="material-symbols-outlined">mail</span><strong> Email</strong></label>
-                <input type="text" id="email" name="email" placeholder="Enter your email" required>
+                <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <span class="material-symbols-outlined">mail</span>
+                    <strong> Email</strong>
+                </label>
+                <input type="text" id="email" name="email" placeholder="Enter your email" required
+                    value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
             </div>
 
             <!-- Password Input -->
             <div class="form-group">
-                <label for="password"><span class="material-symbols-outlined">lock</span><strong> Password</strong></label>
+                <label for="password" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <span class="material-symbols-outlined">lock</span>
+                    <strong> Password</strong>
+                </label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             <button type="submit" class="btn">Sign Up</button>

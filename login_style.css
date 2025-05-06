@@ -53,6 +53,12 @@ body {
     box-shadow: 0 0 5px rgba(0, 102, 204, 0.2);
 }
 
+.icon-align {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
 .btn {
     width: 100%;
     padding: 0.75rem;
@@ -128,5 +134,4 @@ body {
     margin-right: 0.5rem;      /* space between icon and message */
     color: #b00020;            /* same red as the text */
     flex-shrink: 0;
-  }
-  
+  }  

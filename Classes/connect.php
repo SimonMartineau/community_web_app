@@ -33,6 +33,12 @@ class Database{
         die;
     }
 
+    function base_query($query){
+        $conn = $this->connect();
+        $result = mysqli_query($conn, $query); // return true or false if query worked or not
+        return $result;
+    }
+
     // Reads data from Database
     function read($query){
         $conn = $this->connect();
