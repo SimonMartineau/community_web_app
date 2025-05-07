@@ -130,131 +130,129 @@
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-        <div class="page-container">
+         
+        <!-- Header Bar -->
+        <?php include("../Misc/header.php"); ?>
 
-            <!-- Header Bar -->
-            <?php include("../Misc/header.php"); ?>
+        <!-- Cover Area -->
+        <div style="width: 1500px; min-height: 400px; margin:auto;">
+            <br>
+    
+            <!-- Below Cover Area -->
+            <div style="display: flex;">
 
-            <!-- Cover Area -->
-            <div style="width: 1500px; min-height: 400px; margin:auto;">
-                <br>
-        
-                <!-- Below Cover Area -->
-                <div style="display: flex;">
+                <!-- Left Area -->
+                <div style="flex:0.6;">
 
-                    <!-- Left Area -->
-                    <div style="flex:0.6;">
+                    <!-- Filter Form Area -->
+                    <div id="medium_rectangle">
 
-                        <!-- Filter Form Area -->
-                        <div id="medium_rectangle">
+                        <!-- Section Title of Filter Area -->
+                        <div id="section_title">
+                            <span>Filter</span>
+                        </div>
 
-                            <!-- Section Title of Filter Area -->
-                            <div id="section_title">
-                                <span>Filter</span>
+                        <!-- Filter Form -->
+                        <form action="" method="post">
+                            <!-- Sort By Options -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
+                                <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Latest to Oldest)</option>
+                                    <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Latest)</option>
+                                    <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Latest to Oldest)</option>
+                                    <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Latest)</option>
+                                    <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
+                                    <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
+                                </select>
                             </div>
 
-                            <!-- Filter Form -->
-                            <form action="" method="post">
-                                <!-- Sort By Options -->
-                                <div style="margin-bottom: 15px;">
-                                    <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
-                                    <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                        <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Latest to Oldest)</option>
-                                        <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Latest)</option>
-                                        <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Latest to Oldest)</option>
-                                        <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Latest)</option>
-                                        <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
-                                        <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
-                                    </select>
-                                </div>
-
-                                <!-- Volunteer Status Filter -->
-                                <div style="margin-bottom: 15px;">
-                                    <label for="trash_filter" style="font-weight: bold;">Volunteer Status:</label><br>
-                                    <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                        <option value="active_volunteers_only" <?php echo ($trash_filter == 'active_volunteers_only') ? 'selected' : ''; ?>>Only Active Volunteers</option>
-                                        <option value="only_in_trash" <?php echo ($trash_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
-                                        <option value="all_volunteers" <?php echo ($trash_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
-                                    </select>
-                                </div>
-
-                                <!-- Active Contract Filter -->
-                                <div style="margin-bottom: 15px;">
-                                    <label for="active_contract_filter" style="font-weight: bold;">Contract Status:</label><br>
-                                    <select name="active_contract_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                        <option value="active_contracts_only" <?php echo ($active_contract_filter == 'active_contracts_only') ? 'selected' : ''; ?>>Active Contracts</option>
-                                        <option value="past_contracts_only" <?php echo ($active_contract_filter == 'past_contracts_only') ? 'selected' : ''; ?>>Past Contracts</option>
-                                        <option value="all_contracts" <?php echo ($active_contract_filter == 'all_contracts') ? 'selected' : ''; ?>>All Contracts</option>
-                                    </select>
-                                </div>
-
-                                <!-- Earliest Date Filter -->
-                                <div style="margin-bottom: 15px;">
-                                    <label for="earliest_date_filter" style="font-weight: bold;">Earliest date:</label><br>
-                                    <input name="earliest_date_filter" type="date" value="<?php echo $earliest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                </div>
-
-                                <!-- Latest Date Filter -->
-                                <div style="margin-bottom: 15px;">
-                                    <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
-                                    <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                </div>
-
-                                <!-- Reset Filters Link -->
-                                <div>
-                                    <a href="?reset_filters=1" class="reset-link">Reset Filter</a>
-                                </div>
-
-                                <!-- Submit Button -->
-                                <div style="text-align: center;">
-                                    <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                                        Apply Filter
-                                    </button>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-
-                    <!-- Right Area -->
-                    <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
-
-                        <!-- Volunteer Widget Display -->
-                        <div id="medium_rectangle">
-
-                            <!-- Section Title of Recent Activities Section -->
-                            <div id="section_title">
-                                <span>Contracts</span>
+                            <!-- Volunteer Status Filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="trash_filter" style="font-weight: bold;">Volunteer Status:</label><br>
+                                <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="active_volunteers_only" <?php echo ($trash_filter == 'active_volunteers_only') ? 'selected' : ''; ?>>Only Active Volunteers</option>
+                                    <option value="only_in_trash" <?php echo ($trash_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
+                                    <option value="all_volunteers" <?php echo ($trash_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
+                                </select>
                             </div>
 
-                            <!-- Counting Number of Elements Post Filter -->
-                            <?php 
-                            if (empty($all_contracts_data_rows)) {
-                                echo "No purchases found.";
-                            } else {
-                                echo count($all_contracts_data_rows) . " contracts found.";
-                            } ?>
+                            <!-- Active Contract Filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="active_contract_filter" style="font-weight: bold;">Contract Status:</label><br>
+                                <select name="active_contract_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                    <option value="active_contracts_only" <?php echo ($active_contract_filter == 'active_contracts_only') ? 'selected' : ''; ?>>Active Contracts</option>
+                                    <option value="past_contracts_only" <?php echo ($active_contract_filter == 'past_contracts_only') ? 'selected' : ''; ?>>Past Contracts</option>
+                                    <option value="all_contracts" <?php echo ($active_contract_filter == 'all_contracts') ? 'selected' : ''; ?>>All Contracts</option>
+                                </select>
+                            </div>
 
-                            <!-- Display Contracts Widgets --> 
-                            <?php
-                                if($all_contracts_data_rows){
-                                    foreach($all_contracts_data_rows as $contract_data_row){
-                                        $contract_id = $contract_data_row['id'];
-                                        $volunteer_data_row = fetch_volunteer_data_row($user_id,$contract_data_row['volunteer_id']);
-                                        $date = new DateTime($contract_data_row['issuance_date']);
-                                        $month = $date->format('F'); // Full month name (ex: "January")
-                                        include("../Widget_Pages/contract_widget.php");
-                                    }
-                                }
-                            ?>
-            
+                            <!-- Earliest Date Filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="earliest_date_filter" style="font-weight: bold;">Earliest date:</label><br>
+                                <input name="earliest_date_filter" type="date" value="<?php echo $earliest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                            </div>
 
-                        </div>
+                            <!-- Latest Date Filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
+                                <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                            </div>
+
+                            <!-- Reset Filters Link -->
+                            <div>
+                                <a href="?reset_filters=1" class="reset-link">Reset Filter</a>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div style="text-align: center;">
+                                <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                                    Apply Filter
+                                </button>
+                            </div>
+                        </form>
 
                     </div>
                 </div>
+
+                <!-- Right Area -->
+                <div style="min-height: 400px; flex:1.5; padding-left: 20px; padding-right: 0px;">
+
+                    <!-- Volunteer Widget Display -->
+                    <div id="medium_rectangle">
+
+                        <!-- Section Title of Recent Activities Section -->
+                        <div id="section_title">
+                            <span>Contracts</span>
+                        </div>
+
+                        <!-- Counting Number of Elements Post Filter -->
+                        <?php 
+                        if (empty($all_contracts_data_rows)) {
+                            echo "No purchases found.";
+                        } else {
+                            echo count($all_contracts_data_rows) . " contracts found.";
+                        } ?>
+
+                        <!-- Display Contracts Widgets --> 
+                        <?php
+                            if($all_contracts_data_rows){
+                                foreach($all_contracts_data_rows as $contract_data_row){
+                                    $contract_id = $contract_data_row['id'];
+                                    $volunteer_data_row = fetch_volunteer_data_row($user_id,$contract_data_row['volunteer_id']);
+                                    $date = new DateTime($contract_data_row['issuance_date']);
+                                    $month = $date->format('F'); // Full month name (ex: "January")
+                                    include("../Widget_Pages/contract_widget.php");
+                                }
+                            }
+                        ?>
+        
+
+                    </div>
+
+                </div>
             </div>
-            
         </div>
+        
     </body>
 </html>

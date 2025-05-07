@@ -106,190 +106,188 @@
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-        <div class="page-container">
+         
+        <!-- Header Bar -->
+        <?php include("../Misc/header.php"); ?>
 
-            <!-- Header Bar -->
-            <?php include("../Misc/header.php"); ?>
+        <!-- Middle Area -->
+        <div style="width: 1500px; min-height: 400px; margin:auto;">
+            
+            <!-- Major Rectangle Area -->
+            <div id="major_rectangle">
 
-            <!-- Middle Area -->
-            <div style="width: 1500px; min-height: 400px; margin:auto;">
-                
-                <!-- Major Rectangle Area -->
-                <div id="major_rectangle">
-
-                    <!-- Title -->
-                    <div id="section_title" style="margin-bottom: 20px;">
-                        <span style="font-size: 24px; font-weight: bold;">Edit Activity Form</span>
-                    </div>
-
-                    <!-- Error Message -->
-                    <div style="text-align: center;">
-                        <span id="main_error" style="color: red; font-weight: bold;">
-                            <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
-                        </span>
-                    </div>
-
-                    <!-- Form Area -->
-                    <form method="post" action="../Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>" class="form-layout" form>
-
-                        <!-- Activity Name Text Input -->
-                        <div class="form-field">
-                            <label for="activity_name">
-                                Activity Name:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Enter the name of the activity (ex: "Community Cleanup").
-                                </span>
-                            </span>
-                            </label>
-                            <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_name_error_mes : ''; ?></span>
-                        </div>
-
-                        <!-- Activity Number of Places Text Input -->
-                        <div class="form-field">
-                            <label for="number_of_places">
-                                Number of Places:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Enter the number of places available for this activity (ex: 10).
-                                </span>
-                            </span>
-                            </label>
-                            <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->number_of_places_error_mes : ''; ?></span>
-                        </div>
-
-                        <!-- Activity Duration Text Input -->
-                        <div class="form-field">
-                            <label for="activity_duration">
-                                Activity Duration:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Enter the duration (in hours) of the activity (ex: 3).
-                                </span>
-                            </label>
-                            <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_duration_error_mes : ''; ?></span>
-                        </div>
-
-                        <!-- Activity Location Text Input -->
-                        <div class="form-field">
-                            <label for="activity_location">
-                                Activity Location:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Enter the location of the activity (ex: "Miratejo"). This field is optional.
-                                </span>
-                            </label>
-                            <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
-                        </div>
-
-                        <!-- Dates Input -->
-                        <div class="form-field">
-                            <label for="activity_dates">
-                                Activity Date:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Enter the date to edit when this activity takes place. Select the calendar icon to choose a date.
-                                </span>
-                            </label>
-                            <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_date_error_mes : ''; ?></span>
-                        </div>
-
-                        <!-- Activity Time Period Table -->
-                        <div class="form-field form-field-top">
-                            <label for="activity_time_periods">
-                                Activity Time Period:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Select the time periods when the activity takes place.
-                                </span>
-                            </label>
-                            <div class="form-checkbox-group">
-                                <?php
-                                // Time periods
-                                $time_periods = [
-                                    "Morning", 
-                                    "Afternoon", 
-                                    "Evening"
-                                ];
-
-                                // Create vertical list with checkboxes on the left
-                                foreach ($time_periods as $time_period) {
-                                    $checked = in_array($time_period, $activity_time_periods) ? "checked" : "";
-                                    echo "<div class='form-checkbox-item'>";
-                                    echo "<input type='checkbox' name='activity_time_periods[]' value='$time_period' $checked>";
-                                    echo "<label style='margin: 0;'>$time_period</label>";
-                                    echo "</div>";
-                                }
-                                ?>
-                            </div>
-                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_periods_error_mes : ''; ?></span>
-                        </div>
-
-                        <!-- Activity Domain Section -->
-                        <div class="form-field form-field-top">
-                            <label>
-                                Activity Domains:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Select the domains this activity is related to.
-                                </span>
-                            </label>
-
-                            <div class="form-checkbox-group">
-                                <?php
-                                // Activity domains
-                                $domain_types = [
-                                    "Organization of community events", 
-                                    "Library support", 
-                                    "Help in the community store", 
-                                    "Support in the community grocery store", 
-                                    "Cleaning and maintenance of public spaces", 
-                                    "Participation in urban gardening projects"
-                                ];
-
-                                // Create list with checkboxes and text
-                                foreach ($domain_types as $domain) {
-                                    $checked = in_array($domain, $activity_domains) ? "checked" : "";
-                                    echo "<div class='form-checkbox-item'>";
-                                    echo "<input type='checkbox' name='activity_domains[]' value='$domain' $checked>";
-                                    echo "<label style='margin: 0;'>$domain</label>";
-                                    echo "</div>";
-                                }
-                                ?>
-                            </div>
-                            <span id="error_message"><?php echo isset($activity) ? $activity->activity_domains_error_mes : ''; ?></span>
-                        </div>
-
-                        <!-- Entry Clerk Text Input -->
-                        <div class="form-field">
-                            <label for="entry_clerk">
-                                Entry Clerk:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
-                                </span>
-                            </label>
-                            <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
-                            <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
-                        </div>
-
-                        <!-- Additional Notes Text Input -->
-                        <div class="form-field form-field-top">
-                            <label for="additional_notes">
-                                Additional Notes:
-                                <span class="tooltip">?
-                                    <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
-                                </span>
-                            </label>                   
-                            <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="input_container">
-                            <input type="submit" id="submit_button" value="Submit">
-                        </div>
-
-                    </form>
-
+                <!-- Title -->
+                <div id="section_title" style="margin-bottom: 20px;">
+                    <span style="font-size: 24px; font-weight: bold;">Edit Activity Form</span>
                 </div>
-            </div>
 
+                <!-- Error Message -->
+                <div style="text-align: center;">
+                    <span id="main_error" style="color: red; font-weight: bold;">
+                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                    </span>
+                </div>
+
+                <!-- Form Area -->
+                <form method="post" action="../Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>" class="form-layout" form>
+
+                    <!-- Activity Name Text Input -->
+                    <div class="form-field">
+                        <label for="activity_name">
+                            Activity Name:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the name of the activity (ex: "Community Cleanup").
+                            </span>
+                        </span>
+                        </label>
+                        <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
+                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_name_error_mes : ''; ?></span>
+                    </div>
+
+                    <!-- Activity Number of Places Text Input -->
+                    <div class="form-field">
+                        <label for="number_of_places">
+                            Number of Places:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the number of places available for this activity (ex: 10).
+                            </span>
+                        </span>
+                        </label>
+                        <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
+                        <span id="error_message"><?php echo isset($activity) ? $activity->number_of_places_error_mes : ''; ?></span>
+                    </div>
+
+                    <!-- Activity Duration Text Input -->
+                    <div class="form-field">
+                        <label for="activity_duration">
+                            Activity Duration:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the duration (in hours) of the activity (ex: 3).
+                            </span>
+                        </label>
+                        <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
+                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_duration_error_mes : ''; ?></span>
+                    </div>
+
+                    <!-- Activity Location Text Input -->
+                    <div class="form-field">
+                        <label for="activity_location">
+                            Activity Location:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the location of the activity (ex: "Miratejo"). This field is optional.
+                            </span>
+                        </label>
+                        <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
+                    </div>
+
+                    <!-- Dates Input -->
+                    <div class="form-field">
+                        <label for="activity_dates">
+                            Activity Date:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the date to edit when this activity takes place. Select the calendar icon to choose a date.
+                            </span>
+                        </label>
+                        <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
+                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_date_error_mes : ''; ?></span>
+                    </div>
+
+                    <!-- Activity Time Period Table -->
+                    <div class="form-field form-field-top">
+                        <label for="activity_time_periods">
+                            Activity Time Period:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Select the time periods when the activity takes place.
+                            </span>
+                        </label>
+                        <div class="form-checkbox-group">
+                            <?php
+                            // Time periods
+                            $time_periods = [
+                                "Morning", 
+                                "Afternoon", 
+                                "Evening"
+                            ];
+
+                            // Create vertical list with checkboxes on the left
+                            foreach ($time_periods as $time_period) {
+                                $checked = in_array($time_period, $activity_time_periods) ? "checked" : "";
+                                echo "<div class='form-checkbox-item'>";
+                                echo "<input type='checkbox' name='activity_time_periods[]' value='$time_period' $checked>";
+                                echo "<label style='margin: 0;'>$time_period</label>";
+                                echo "</div>";
+                            }
+                            ?>
+                        </div>
+                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_periods_error_mes : ''; ?></span>
+                    </div>
+
+                    <!-- Activity Domain Section -->
+                    <div class="form-field form-field-top">
+                        <label>
+                            Activity Domains:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Select the domains this activity is related to.
+                            </span>
+                        </label>
+
+                        <div class="form-checkbox-group">
+                            <?php
+                            // Activity domains
+                            $domain_types = [
+                                "Organization of community events", 
+                                "Library support", 
+                                "Help in the community store", 
+                                "Support in the community grocery store", 
+                                "Cleaning and maintenance of public spaces", 
+                                "Participation in urban gardening projects"
+                            ];
+
+                            // Create list with checkboxes and text
+                            foreach ($domain_types as $domain) {
+                                $checked = in_array($domain, $activity_domains) ? "checked" : "";
+                                echo "<div class='form-checkbox-item'>";
+                                echo "<input type='checkbox' name='activity_domains[]' value='$domain' $checked>";
+                                echo "<label style='margin: 0;'>$domain</label>";
+                                echo "</div>";
+                            }
+                            ?>
+                        </div>
+                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_domains_error_mes : ''; ?></span>
+                    </div>
+
+                    <!-- Entry Clerk Text Input -->
+                    <div class="form-field">
+                        <label for="entry_clerk">
+                            Entry Clerk:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                            </span>
+                        </label>
+                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
+                        <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
+                    </div>
+
+                    <!-- Additional Notes Text Input -->
+                    <div class="form-field form-field-top">
+                        <label for="additional_notes">
+                            Additional Notes:
+                            <span class="tooltip">?
+                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                            </span>
+                        </label>                   
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="input_container">
+                        <input type="submit" id="submit_button" value="Submit">
+                    </div>
+
+                </form>
+
+            </div>
         </div>
+
     </body>
 </html>

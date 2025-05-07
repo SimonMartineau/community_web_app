@@ -20,21 +20,50 @@
     </div>
 </div>
 
+<script>
+  (function() {
+    const bar = document.getElementById('blue_bar');
+    bar.style.position = 'relative';
+
+    let targetX = 0;    // where we want to go
+    let currentX = 0;   // where we are now
+    const ease = 0.1;   // lower = more smoothing
+
+    function animate() {
+      // Update the target each frame
+      targetX = window.scrollX || window.pageXOffset;
+
+      // Ease currentX toward targetX
+      currentX += (targetX - currentX) * ease;
+
+      // Apply the transform
+      bar.style.transform = `translateX(${currentX}px)`;
+
+      // Loop
+      requestAnimationFrame(animate);
+    }
+
+    // Kick it off
+    animate();
+  })();
+</script>
+
 
 
 <!-- CSS Styling -->
 <style>
     #blue_bar {
-        position: sticky;
+        position: relative;
         left: 0;
-        right : 0;
         height: 60px;
+        z-index: 1000;
         background-color: #405d9b;
         color: #d9dfeb;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 8px;
+        will-change: transform;
     }
 
     #blue_bar > div {

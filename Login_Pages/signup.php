@@ -140,7 +140,7 @@
             <div class="form-group">
                 <label for="password" style="display: inline-flex; align-items: center; gap: 0.25rem;">
                     <span class="material-symbols-outlined">lock</span>
-                    <strong> Password</strong>
+                    <strong>Password (min 8 characters)</strong>
                 </label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>

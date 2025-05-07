@@ -117,7 +117,7 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-        <div class="page-container">
+         
 
             <!-- Header Bar -->
             <?php include("../Misc/header.php"); ?>
