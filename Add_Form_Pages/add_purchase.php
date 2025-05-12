@@ -61,7 +61,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add Purchase | Give and Receive</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">

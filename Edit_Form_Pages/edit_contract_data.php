@@ -23,8 +23,8 @@
     $contract_data_row = fetch_contract_data_row($user_id,$contract_id);
 
     // Default entry values on page startup.
-    $issuance_date = $contract_data_row['issuance_date'];
-    $validity_date = $contract_data_row['validity_date'];
+    $start_date = $contract_data_row['start_date'];
+    $end_date = $contract_data_row['end_date'];
     $points_deposit = $contract_data_row['points_deposit'];
     $hours_required = $contract_data_row['hours_required'];
     $entry_clerk = $contract_data_row['entry_clerk'];
@@ -41,8 +41,8 @@
         // If there are errors 
         if(!$submit_success){
             // Re-enter user input data in prompts
-            $issuance_date = $_POST['issuance_date'];
-            $validity_date = $_POST['validity_date'];
+            $start_date = $_POST['start_date'];
+            $end_date = $_POST['end_date'];
             $points_deposit = $_POST['points_deposit'];
             $hours_required = $_POST['hours_required'];
             $entry_clerk = $_POST['entry_clerk'];
@@ -67,7 +67,7 @@
         <title>Edit Contract Data | Give and Receive</title>
         <link rel="icon" href="../Images/favicon.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -96,27 +96,27 @@
                 <!-- Form Area -->
                 <form method="post" action="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>" class="form-layout" form>
 
-                    <!-- Issuance Date Input -->
+                    <!-- Start Date Input -->
                     <div class="form-field">
-                        <label for="issuance_date">
-                            Issuance Date: 
+                        <label for="start_date">
+                            Start Date: 
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter the date the contract is issued. Select the calendar icon to choose a date.
                             </span>
                         </label>
-                        <input name="issuance_date" type="date" value="<?php echo $issuance_date ?>" value="<?php echo $issuance_date ?>">
-                        <span id="error_message"><?php echo isset($contract) ? $contract->issuance_date_error_mes : ''; ?></span>
+                        <input name="start_date" type="date" value="<?php echo $start_date ?>" value="<?php echo $start_date ?>">
+                        <span id="error_message"><?php echo isset($contract) ? $contract->start_date_error_mes : ''; ?></span>
                     </div>
 
-                    <!-- Validity Date Input -->
+                    <!-- End Date Input -->
                     <div class="form-field">
-                        <label for="validity_date">
-                            Validity Date: 
+                        <label for="end_date">
+                            End Date: 
                             <span class="tooltip">?
                                 <span class="tooltip-text">Enter the date the contract is valid until. Select the calendar icon to choose a date.
                             </span>
                         </label>
-                        <input name="validity_date" type="date" value="<?php echo $validity_date ?>" value="<?php echo $validity_date ?>">
+                        <input name="end_date" type="date" value="<?php echo $end_date ?>" value="<?php echo $end_date ?>">
                         <span id="error_message"><?php echo isset($contract) ? $contract->validity_date_error_mes : ''; ?></span>
                     </div>
 

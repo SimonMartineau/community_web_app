@@ -16,6 +16,8 @@ function random_num($length){
     return $text;
 }
 
+// This function retrieves the data from the database using the query and returns it as an array.
+// It is used to fetch any data from any table.
 function fetch_data_rows($query){
 
     $DB = new Database();
@@ -30,6 +32,8 @@ function fetch_data_rows($query){
     }
 }
 
+// This function retrieves the data from the database using the volunteer_id and user_id and returns it as an array.
+// It is used to fetch the data of a specific volunteer.
 function fetch_volunteer_data_row($user_id, $volunteer_id){
     $query = "SELECT * FROM Volunteers WHERE user_id='$user_id' AND id='$volunteer_id'";
 
@@ -45,6 +49,7 @@ function fetch_volunteer_data_row($user_id, $volunteer_id){
     }
 }
 
+// This function retrieves the interests of a specific volunteer using the user_id and volunteer_id.
 function fetch_volunteer_interest_data_rows($user_id, $volunteer_id){
     $query = "SELECT * FROM Volunteer_Interests WHERE user_id='$user_id' AND volunteer_id='$volunteer_id'";
 
@@ -60,6 +65,7 @@ function fetch_volunteer_interest_data_rows($user_id, $volunteer_id){
     }
 }
 
+// This function retrieves the availability of a specific volunteer using the user_id and volunteer_id.
 function fetch_volunteer_availability_data_rows($user_id, $volunteer_id){
     $query = "SELECT * FROM Volunteer_Availability WHERE user_id='$user_id' AND volunteer_id='$volunteer_id'";
 
@@ -75,6 +81,7 @@ function fetch_volunteer_availability_data_rows($user_id, $volunteer_id){
     }
 }
 
+// This function retrieves the contract data of a specific volunteer using the user_id and contract_id.
 function fetch_contract_data_row($user_id, $contract_id){
     $query = "SELECT * FROM Contracts WHERE user_id='$user_id' AND id='$contract_id'";
 
@@ -90,6 +97,7 @@ function fetch_contract_data_row($user_id, $contract_id){
     }
 }
 
+// This function retrieves the purchase data of a specific volunteer using the user_id and purchase_id.
 function fetch_purchase_data_row($user_id, $purchase_id){
     $query = "SELECT * FROM Purchases WHERE user_id='$user_id' AND id='$purchase_id'";
 
@@ -173,12 +181,12 @@ function update_contract_data(){
     $contract_active_query = 
        "UPDATE Contracts c
         SET c.contract_active = CASE
-                                WHEN CURRENT_DATE BETWEEN c.issuance_date AND c.validity_date
-                                    AND c.issuance_date = (
-                                        SELECT MAX(issuance_date)
+                                WHEN CURRENT_DATE BETWEEN c.start_date AND c.end_date
+                                    AND c.start_date = (
+                                        SELECT MAX(start_date)
                                         FROM Contracts
                                         WHERE volunteer_id = c.volunteer_id
-                                        AND CURRENT_DATE BETWEEN issuance_date AND validity_date
+                                        AND CURRENT_DATE BETWEEN start_date AND end_date
                                     ) THEN 1
                                 ELSE 0
                             END;";
@@ -199,7 +207,7 @@ function update_purchase_data(){
             SELECT c.id
             FROM Contracts c
             WHERE c.volunteer_id = p.volunteer_id
-            AND p.purchase_date BETWEEN c.issuance_date AND c.validity_date
+            AND p.purchase_date BETWEEN c.start_date AND c.end_date
             LIMIT 1
         ),-1);";
 
@@ -222,7 +230,7 @@ function update_junction_data(){
                 SELECT c.id
                 FROM Contracts c
                 WHERE c.volunteer_id = vaj.volunteer_id
-                AND a.activity_date BETWEEN c.issuance_date AND c.validity_date
+                AND a.activity_date BETWEEN c.start_date AND c.end_date
                 LIMIT 1
             ), -1);";
 

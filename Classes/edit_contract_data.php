@@ -4,7 +4,7 @@
 class Edit_Contract{
 
     // Error messages for each form field
-    public $issuance_date_error_mes = "";
+    public $start_date_error_mes = "";
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
     public $hours_required_error_mes = "";
@@ -22,20 +22,20 @@ class Edit_Contract{
         // Initialize error contract variable
         $error = false;
 
-        // Check issuance date
-        if (isset($_POST['issuance_date'])){
-            $value = $_POST['issuance_date'];
+        // Check Start Date
+        if (isset($_POST['start_date'])){
+            $value = $_POST['start_date'];
             if (empty($value)){
-                $this->issuance_date_error_mes = "*Issuance date is empty.<br>";
+                $this->start_date_error_mes = "*Start Date is empty.<br>";
                 $error = true; // There is an error
             }
         }
 
-        // Check validity date
-        if (isset($_POST['validity_date'])){
-            $value = $_POST['validity_date'];
+        // Check End Date
+        if (isset($_POST['end_date'])){
+            $value = $_POST['end_date'];
             if (empty($value)){
-                $this->validity_date_error_mes = "*Validity date is empty.<br>";
+                $this->validity_date_error_mes = "*End Date is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -102,8 +102,8 @@ class Edit_Contract{
     
         // Creating all the varaibles for the SQL input
         $user_id = $this->user_id;
-        $issuance_date = $data['issuance_date'];
-        $validity_date = $data['validity_date'];
+        $start_date = $data['start_date'];
+        $end_date = $data['end_date'];
         $points_deposit = $data['points_deposit'];
         $hours_required = $data['hours_required'];
         $entry_clerk = $data['entry_clerk'];
@@ -115,16 +115,16 @@ class Edit_Contract{
 
         // SQL prepared statement into Contracts
         $update_query = "UPDATE Contracts 
-            SET issuance_date = ?,
-                validity_date = ?,
+            SET start_date = ?,
+                end_date = ?,
                 points_deposit = ?,
                 hours_required = ?,
                 entry_clerk = ?,
                 additional_notes = ?
             WHERE id = ? AND user_id = ?";
         $types = "ssiissii"; // Types of data to be inserted
-        $parameters = [$user_id, $issuance_date, $validity_date, $points_deposit, $hours_required, $entry_clerk, 
-                        $additional_notes, $contract_id]; // Parameters to be inserted
+        $parameters = [$start_date, $end_date, $points_deposit, $hours_required, $entry_clerk, 
+                        $additional_notes, $contract_id, $user_id]; // Parameters to be inserted
         
         // Send prepared statement to Database
         $DB->save_prepared($update_query, $types, $parameters);

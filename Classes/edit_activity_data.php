@@ -126,7 +126,7 @@ class Edit_Activity{
     public function edit_activity($activity_id, $data){
         
         // Creating all the varaibles for the SQL input
-        $user_id = $this->user_id['user_id'];
+        $user_id = $this->user_id;
         $activity_name = $data['activity_name']; // ucfirst makes first letter capital.
         $number_of_places = $data['number_of_places'];
         $activity_duration = $data['activity_duration'];
@@ -151,8 +151,8 @@ class Edit_Activity{
                         additional_notes = ?
                     WHERE id = ? AND user_id = ?";
         $types = "siissssii"; // Types of data to be inserted
-        $params = array($user_id, $activity_name, $number_of_places, $activity_duration, $activity_location, $activity_date, 
-                        $entry_clerk, $additional_notes, $activity_id); // Parameters to be inserted
+        $params = array($activity_name, $number_of_places, $activity_duration, $activity_location, $activity_date, 
+                        $entry_clerk, $additional_notes, $activity_id, $user_id); // Parameters to be inserted
         
         // Send prepared statement to Database
         $DB->save_prepared($actvity_query, $types, $params);

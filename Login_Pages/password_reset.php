@@ -100,7 +100,7 @@
     function prepare_email($DB, $email){
         $expire = time() + (60*5);
         $code = rand(10000, 99999);
-        $query = "INSERT INTO Forgot_Password (email, code, expire) value ('$email', '$code', '$expire')";
+        $query = "INSERT INTO Forgot_Password (email, code, expire) VALUES ('$email', '$code', '$expire')";
         $DB -> save($query);
 
         // Send email here
@@ -161,7 +161,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Give and Receive</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="../login_style.css">
+    <link rel="stylesheet" href="../Styles/login_style.css">
 </head>
 <body>
     <?php 

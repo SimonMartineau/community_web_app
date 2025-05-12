@@ -11,7 +11,7 @@
             <a href="../Listing_Pages/all_contracts.php" class="menu_button">Contracts</a>
             <a href="../Listing_Pages/all_purchases.php" class="menu_button">Purchases</a>
             <a href="../Profile_Pages/about.php" class="menu_button">About</a>
-            <a href="../Profile_Pages/contact.php" class="menu_button">Contact</a>
+            <!--<a href="../Profile_Pages/contact.php" class="menu_button">Contact</a>-->
         </div>
 
         <!-- Logout Button -->

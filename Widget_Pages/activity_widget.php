@@ -1,5 +1,5 @@
 <!-- Imports -->
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../Styles/style.css">
 <script src="../functions.js"></script>
 
 <!-- PHP Code -->
@@ -42,7 +42,7 @@
 
             <!-- Activity Icon -->
             <div class="icon_container">
-                <span class="material-symbols-outlined">construction</span>
+                <span class="material-symbols-outlined">volunteer_activism</span>
             </div>
 
             <!-- Activity Name -->

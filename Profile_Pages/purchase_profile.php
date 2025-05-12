@@ -55,7 +55,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Purchase Profile | Give and Receive</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
@@ -76,7 +76,7 @@
                 <a href="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?php echo $purchase_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
-                        <span>Edit Purchase Info</span>
+                        <span>Edit Purchase Profile</span>
                     </button>
                 </a>
             </div>
@@ -101,7 +101,7 @@
 
                     <!-- Section Title of Contact Section -->
                     <div id="section_title">
-                        <span>Purchase Info</span>
+                        <span>Purchase Profile</span>
                     </div>
 
                     <!-- Notifications -->
@@ -159,7 +159,7 @@
                             <?php
                             if ($contract_data_row) {
                                 $volunteer_data_row = fetch_volunteer_data_row($user_id,$volunteer_id);
-                                $date = new DateTime($contract_data_row['issuance_date']);
+                                $date = new DateTime($contract_data_row['start_date']);
                                 $month = $date->format('F'); // Full month name (ex: "January")
                                 include("../Widget_Pages/contract_widget.php");
                             }

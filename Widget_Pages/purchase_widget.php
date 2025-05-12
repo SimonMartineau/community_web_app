@@ -1,5 +1,5 @@
 <!-- Imports -->
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../Styles/style.css">
 <script src="../functions.js"></script>
 
 <!-- HTML Code -->

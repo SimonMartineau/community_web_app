@@ -95,15 +95,31 @@
     // For the time_period_availability array:
     $time_period_availability_sql = "'" . implode("', '", $time_period_availability) . "'";
 
+    // Check if user has submitted info
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        // Retrieve filter form data
+        $interest_filter = $_POST['interest_filter'] ?? '';
+        $weekday_filter = $_POST['weekday_filter'] ?? '';
+        $time_period_filter = $_POST['time_period_filter'] ?? '';
+    }
+
     // Default matching volunteers data
     $sql_filter_query = "
-    SELECT DISTINCT a.* 
-    FROM Activities a
-    JOIN Activity_Domains ad ON a.id = ad.activity_id
-    JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
-    WHERE a.trashed = 0
-    AND a.number_of_participants < a.number_of_places
-    ";
+            SELECT DISTINCT a.* 
+            FROM Activities a
+            JOIN Activity_Domains ad ON a.id = ad.activity_id
+            JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
+            WHERE a.trashed = 0
+            AND a.user_id = '$user_id'
+            AND a.number_of_participants < a.number_of_places
+            AND a.activity_date >= CURDATE()
+            AND EXISTS (
+                SELECT 1
+                FROM Contracts c
+                WHERE c.volunteer_id = '$volunteer_id'
+                    AND a.activity_date BETWEEN c.start_date AND c.end_date
+            )            
+            ";
 
     // Interest filter
     $sql_filter_query .= ($interest_filter ? " AND ad.domain IN ($volunteer_interests_sql) " : '');
@@ -121,7 +137,6 @@
 
 
     $sql_filter_query .= "
-        AND a.activity_date >= CURDATE() 
         AND NOT EXISTS (
             SELECT 1 FROM Volunteer_Activity_Junction vaj 
             WHERE vaj.activity_id = a.id 
@@ -132,54 +147,10 @@
 
     $all_matching_activities_data_rows = fetch_data_rows($sql_filter_query);
 
-    
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        // Retrieve filter form data
-        $interest_filter = $_POST['interest_filter'] ?? '';
-        $weekday_filter = $_POST['weekday_filter'] ?? '';
-        $time_period_filter = $_POST['time_period_filter'] ?? '';
-
-        // Filter matching activities data
-        $sql_filter_query = "
-            SELECT DISTINCT a.* 
-            FROM Activities a
-            JOIN Activity_Domains ad ON a.id = ad.activity_id
-            JOIN Activity_Time_Periods atp ON a.id = atp.activity_id
-            WHERE a.trashed = 0
-            AND a.number_of_participants < a.number_of_places
-        ";
-
-        // Interest filter
-        $sql_filter_query .= ($interest_filter ? " AND ad.domain IN ($volunteer_interests_sql) " : '');
-
-        // Weekday + time_period filter
-        if ($weekday_filter && $time_period_filter){
-            $sql_filter_query .= " AND CONCAT(DAYNAME(a.activity_date), '-', atp.time_period) IN ($weekday_time_period_sql) ";
-        } elseif($weekday_filter){
-            // Weekday filter
-            $sql_filter_query .= " AND DAYNAME(a.activity_date) IN ($weekday_availability_sql) ";
-        } elseif($time_period_filter){
-            // Time period filter
-            $sql_filter_query .= " AND atp.time_period IN ($time_period_availability_sql) ";
-        }
-
-
-        $sql_filter_query .= "
-            AND a.activity_date >= CURDATE() 
-            AND NOT EXISTS (
-                SELECT 1 FROM Volunteer_Activity_Junction vaj 
-                WHERE vaj.activity_id = a.id 
-                AND vaj.volunteer_id = '$volunteer_id'
-            )
-            ORDER BY a.id DESC
-        ";
-
-        $all_matching_activities_data_rows = fetch_data_rows($sql_filter_query);
-
-
         // Ensure the delete volunteer button has been pressed
-        if (isset($_POST['delete_volunteer']) && $_POST['delete_volunteer'] === '1') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_volunteer']) && $_POST['delete_volunteer'] === '1') {
 
             // SQL query into Purchases
             $trash_volunteer_query = "UPDATE `Volunteers` SET `trashed`='1' WHERE `id`='$volunteer_id'";
@@ -209,8 +180,8 @@
             $activity_id = $_POST['activity_id'];
 
             // SQL query into Purchases
-            $assign_volunteer_to_activity_query = "INSERT INTO Volunteer_Activity_Junction (volunteer_id, contract_id, activity_id) 
-                                                    VALUES ('$volunteer_id', -1, '$activity_id')";
+            $assign_volunteer_to_activity_query = "INSERT INTO Volunteer_Activity_Junction (user_id, volunteer_id, contract_id, activity_id) 
+                                                    VALUES ('$user_id', '$volunteer_id', -1, '$activity_id')";
             $DB->save($assign_volunteer_to_activity_query);
 
             // Updating all backend processes
@@ -252,7 +223,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Volunteer Profile | Give and Receive</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
@@ -273,7 +244,7 @@
                 <a href="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
-                        <span>Edit Volunteer Info</span>
+                        <span>Edit Volunteer Profile</span>
                     </button>
                     
                 </a>
@@ -343,7 +314,7 @@
 
                     <!-- Section Title of Contact Section -->
                     <div id="section_title">
-                        <span>Volunteer Info</span>
+                        <span>Volunteer Profile</span>
                     </div>
 
                     <!-- Notifications -->
@@ -398,7 +369,7 @@
                     <div class="information_section" style="margin-bottom: 20px;">
                         <h2 style="font-size: 20px; color: #555;">Volunteer Data</h2>
                         <p><strong>Hours Required:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['hours_required'] . " Hours"); ?></span></p>
-                        <p><strong>Hours Completed:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['hours_completed'] . " Hours"); ?></span></p>
+                        <p><strong>Hours Assigned:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['hours_completed'] . " Hours"); ?></span></p>
                         <p><strong>Points Left:</strong> <span><?php echo htmlspecialchars($volunteer_data_row['points'] . " Points"); ?></span></p>
                         <p><strong>Volunteer Manager:</strong> <?php echo htmlspecialchars($volunteer_data_row['volunteer_manager']); ?></p>
                         <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($volunteer_data_row['entry_clerk']); ?></p>
@@ -499,7 +470,7 @@
                                 foreach ($contracts_data_rows as $contract_data_row) {
                                     $contract_id = $contract_data_row['id'];
                                     $volunteer_data_row = fetch_volunteer_data_row($user_id,$contract_data_row['volunteer_id']);
-                                    $date = new DateTime($contract_data_row['issuance_date']);
+                                    $date = new DateTime($contract_data_row['start_date']);
                                     $month = $date->format('F'); // Full month name (ex: "January")
                                     include("../Widget_Pages/contract_widget.php");
                                 }
@@ -568,7 +539,11 @@
                                     <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Matching Interests</span>
+                                <span>Matching Interests
+                                    <span class="hint">?
+                                        <span class="hint-text">If checked, only activities with matching interests with the volunteer will be shown.
+                                    </span>
+                                </span>
                                 <br>
 
                                 <!-- Weekday Filters -->
@@ -576,7 +551,11 @@
                                     <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Matching Weekdays</span>
+                                <span>Matching Weekdays
+                                    <span class="hint">?
+                                        <span class="hint-text">If checked, only activities taking place on the weekdays the volunteer is available will be shown.
+                                    </span>
+                                </span>
                                 <br>
 
                                 <!-- Time Period Filters -->
@@ -584,15 +563,20 @@
                                     <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Matching Time Periods</span>
-                                <br>
+                                <span>Matching Time Periods
+                                    <span class="hint">?
+                                        <span class="hint-text">If checked, only activities with matching time periods with the volunteer will be shown.
+                                    </span>
+                                </span>
+                                <br><br>
 
                                 <!-- Submit Button -->
-                                <div style="text-align: center;">
+                                <div style="text-align: left;">
                                     <button type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
                                         Apply Filter
                                     </button>
                                 </div>
+                                <br>
                             </form>
 
                             <!-- Show Matching Volunteers if POST -->
@@ -613,7 +597,7 @@
                                 if (empty($all_matching_activities_data_rows)) {
                                     echo "No activities found.";
                                 } else {
-                                    echo "This volunteer has " . count($all_matching_activities_data_rows) . ((count($all_matching_activities_data_rows) == 1) ? " activity that matches." : " activities that match");
+                                    echo "This volunteer has " . count($all_matching_activities_data_rows) . ((count($all_matching_activities_data_rows) == 1) ? " activity that matches." : " activities that match.");
                                 } 
 
                                 // Display the widgets

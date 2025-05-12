@@ -102,7 +102,7 @@ class Edit_Purchase{
             WHERE id = ? AND user_id = ?";
 
         $types = "sisssii"; // Types of data to be inserted
-        $params = [$user_id, $item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes, $purchase_id]; // Parameters to be inserted
+        $params = [$item_names, $total_cost, $purchase_date, $entry_clerk, $additional_notes, $purchase_id, $user_id]; // Parameters to be inserted
 
         // Save data to Database through prepared statements
         $DB->save_prepared($update_query, $types, $params);

@@ -94,7 +94,7 @@ class Add_Purchase{
                                        WHERE c.user_id = '$user_id'
                                        AND c.volunteer_id = '$volunteer_id' 
                                        AND c.user_id = '$user_id'
-                                       AND '$purchase_date' between c.issuance_date AND c.validity_date");
+                                       AND '$purchase_date' between c.start_date AND c.end_date");
 
         // Check if the query returned any rows
         if (empty($contract_data_row)) {

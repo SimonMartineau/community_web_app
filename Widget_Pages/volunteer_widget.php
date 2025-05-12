@@ -1,5 +1,5 @@
 <!-- Imports -->
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../Styles/style.css">
 <script src="../functions.js"></script>
 
 <!-- PHP Code -->
@@ -62,7 +62,7 @@
                     <!-- Volunteer Hours Info -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">schedule</span></span>
-                        <span class="info_value"><?php echo $volunteer_data_row['hours_completed'] ?>/<?php echo $volunteer_data_row['hours_required'] ?> Hours Completed</span>
+                        <span class="info_value"><?php echo $volunteer_data_row['hours_completed'] ?>/<?php echo $volunteer_data_row['hours_required'] ?> Hours Assigned</span>
                     </span>
                 </p>
             </div>

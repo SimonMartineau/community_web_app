@@ -67,7 +67,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Contract Profile | Give and Receive</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
@@ -113,7 +113,7 @@
 
                     <!-- Section Title of Contact Section -->
                     <div id="section_title">
-                        <span>Contract Info</span>
+                        <span>Contract Profile</span>
                     </div>
 
                     <!-- Warnings -->
@@ -152,12 +152,12 @@
                         <?php endif; ?>
 
                         <!-- Display Contract Info -->
-                        <p><strong>Issuance Date:</strong> <?php echo htmlspecialchars(string: formatDate($contract_data_row['issuance_date'])); ?></p>
-                        <p><strong>Validity Date:</strong> <?php echo htmlspecialchars(formatDate($contract_data_row['validity_date'])); ?></p>
+                        <p><strong>Start Date:</strong> <?php echo htmlspecialchars(string: formatDate($contract_data_row['start_date'])); ?></p>
+                        <p><strong>End Date:</strong> <?php echo htmlspecialchars(formatDate($contract_data_row['end_date'])); ?></p>
                         <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($contract_data_row['points_deposit']) . " Points"; ?></p>
                         <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($contract_data_row['points_spent']) . " Points"; ?></p>
                         <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($contract_data_row['hours_required']) . " Hours"; ?></p>
-                        <p><strong>Hours Completed:</strong> <?php echo htmlspecialchars($contract_data_row['hours_completed']) . " Hours"; ?></p>
+                        <p><strong>Hours Assigned:</strong> <?php echo htmlspecialchars($contract_data_row['hours_completed']) . " Hours"; ?></p>
                         <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($contract_data_row['entry_clerk']); ?></p>
 
                     </div>

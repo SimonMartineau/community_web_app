@@ -4,7 +4,7 @@
 class Add_Contract{
 
     // Error messages for each form field
-    public $issuance_date_error_mes = "";
+    public $start_date_error_mes = "";
     public $validity_date_error_mes = "";
     public $points_deposit_error_mes = "";
     public $hours_required_error_mes = "";
@@ -22,20 +22,20 @@ class Add_Contract{
         // Initialize error contract variable
         $error = false;
 
-        // Check issuance date
-        if (isset($_POST['issuance_date'])){
-            $value = $_POST['issuance_date'];
+        // Check Start Date
+        if (isset($_POST['start_date'])){
+            $value = $_POST['start_date'];
             if (empty($value)){
-                $this->issuance_date_error_mes = "*Issuance date is empty.<br>";
+                $this->start_date_error_mes = "*Start Date is empty.<br>";
                 $error = true; // There is an error
             }
         }
 
-        // Check validity date
-        if (isset($_POST['validity_date'])){
-            $value = $_POST['validity_date'];
+        // Check End Date
+        if (isset($_POST['end_date'])){
+            $value = $_POST['end_date'];
             if (empty($value)){
-                $this->validity_date_error_mes = "*Validity date is empty.<br>";
+                $this->validity_date_error_mes = "*End Date is empty.<br>";
                 $error = true; // There is an error
             }
         }
@@ -102,8 +102,8 @@ class Add_Contract{
 
         // Creating all the varaibles for the SQL input
         $user_id = $this->user_id;
-        $issuance_date = $data['issuance_date'];
-        $validity_date = $data['validity_date'];
+        $start_date = $data['start_date'];
+        $end_date = $data['end_date'];
         $points_deposit = $data['points_deposit'];
         $points_spent = 0;
         $hours_required = $data['hours_required'];
@@ -116,10 +116,10 @@ class Add_Contract{
         $DB = new Database();
 
         // SQL prepared statement into Contracts
-        $contract_query = "INSERT INTO Contracts (user_id, volunteer_id, issuance_date, validity_date, points_deposit, points_spent, hours_required, hours_completed, entry_clerk, contract_active, additional_notes)
+        $contract_query = "INSERT INTO Contracts (user_id, volunteer_id, start_date, end_date, points_deposit, points_spent, hours_required, hours_completed, entry_clerk, contract_active, additional_notes)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $types = "iissiiiisss"; // Types of data to be inserted
-        $params = [$user_id, $volunteer_id, $issuance_date, $validity_date, $points_deposit, $points_spent, $hours_required, 
+        $params = [$user_id, $volunteer_id, $start_date, $end_date, $points_deposit, $points_spent, $hours_required, 
                     $hours_completed, $entry_clerk, $contract_active, $additional_notes]; // Parameters to be inserted
 
         // Send prepared statement to Database

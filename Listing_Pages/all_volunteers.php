@@ -159,7 +159,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Volunteers | Give and Receive</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -207,8 +207,8 @@
                                     <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>>Registration Date (Oldest to Latest)</option>
                                     <option value="points_asc" <?php echo ($order_filter == 'points_asc') ? 'selected' : ''; ?>>Points (Lowest to Highest)</option>
                                     <option value="points_desc" <?php echo ($order_filter == 'points_desc') ? 'selected' : ''; ?>>Points (Highest to Lowest)</option>
-                                    <option value="hours_completed_asc" <?php echo ($order_filter == 'hours_completed_asc') ? 'selected' : ''; ?>>Hours Completed (Lowest to Highest)</option>
-                                    <option value="hours_completed_desc" <?php echo ($order_filter == 'hours_completed_desc') ? 'selected' : ''; ?>>Hours Completed (Highest to Lowest)</option>
+                                    <option value="hours_completed_asc" <?php echo ($order_filter == 'hours_completed_asc') ? 'selected' : ''; ?>>Hours Assigned (Lowest to Highest)</option>
+                                    <option value="hours_completed_desc" <?php echo ($order_filter == 'hours_completed_desc') ? 'selected' : ''; ?>>Hours Assigned (Highest to Lowest)</option>
                                     <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
                                     <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
                                 </select>

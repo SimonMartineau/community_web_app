@@ -38,7 +38,7 @@
     }
 
     // Default entry values on page startup.
-    $order_filter = $_SESSION['all_contracts_order_filter'] ?? "issuance_date_desc";
+    $order_filter = $_SESSION['all_contracts_order_filter'] ?? "start_date_desc";
     $trash_filter = $_SESSION['all_contracts_trash_filter'] ?? "active_volunteers_only";
     $active_contract_filter = $_SESSION['all_contracts_active_contract_filter'] ?? "active_contracts_only";
     $earliest_date_filter = $_SESSION['all_contracts_earliest_date_filter'] ?? '';
@@ -79,28 +79,28 @@
 
     // Earliest date filter
     if (!empty($earliest_date_filter)){
-        $sql_filter_query .= " AND '$earliest_date_filter' < c.issuance_date";
+        $sql_filter_query .= " AND '$earliest_date_filter' < c.start_date";
     }
 
     // Latest date filter
     if (!empty($latest_date_filter)){
-        $sql_filter_query .= " AND  c.validity_date < '$latest_date_filter'";
+        $sql_filter_query .= " AND  c.end_date < '$latest_date_filter'";
     }
 
     // Order of appearance filter
     if (!empty($order_filter)){
         switch ($order_filter){
-            case 'issuance_date_desc':
-                $sql_filter_query .= " ORDER BY c.issuance_date DESC";
+            case 'start_date_desc':
+                $sql_filter_query .= " ORDER BY c.start_date DESC";
                 break;
-            case 'issuance_date_asc':
-                $sql_filter_query .= " ORDER BY c.issuance_date ASC";
+            case 'start_date_asc':
+                $sql_filter_query .= " ORDER BY c.start_date ASC";
                 break;
             case 'validity_date_desc':
-                $sql_filter_query .= " ORDER BY c.validity_date DESC";
+                $sql_filter_query .= " ORDER BY c.end_date DESC";
                 break;
             case 'validity_date_asc':
-                $sql_filter_query .= " ORDER BY c.validity_date ASC";
+                $sql_filter_query .= " ORDER BY c.end_date ASC";
                 break;
             case 'first_name_asc':
                 $sql_filter_query .= " ORDER BY v.first_name ASC";
@@ -126,7 +126,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Contracts | Give and Receive</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -158,10 +158,10 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
                                 <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="issuance_date_desc" <?php echo ($order_filter == 'issuance_date_desc') ? 'selected' : ''; ?>>Issuance Date (Latest to Oldest)</option>
-                                    <option value="issuance_date_asc" <?php echo ($order_filter == 'issuance_date_asc') ? 'selected' : ''; ?>>Issuance Date (Oldest to Latest)</option>
-                                    <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>Validity Date (Latest to Oldest)</option>
-                                    <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>Validity Date (Oldest to Latest)</option>
+                                    <option value="start_date_desc" <?php echo ($order_filter == 'start_date_desc') ? 'selected' : ''; ?>>Start Date (Latest to Oldest)</option>
+                                    <option value="start_date_asc" <?php echo ($order_filter == 'start_date_asc') ? 'selected' : ''; ?>>Start Date (Oldest to Latest)</option>
+                                    <option value="validity_date_desc" <?php echo ($order_filter == 'validity_date_desc') ? 'selected' : ''; ?>>End Date (Latest to Oldest)</option>
+                                    <option value="validity_date_asc" <?php echo ($order_filter == 'validity_date_asc') ? 'selected' : ''; ?>>End Date (Oldest to Latest)</option>
                                     <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
                                     <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
                                 </select>
@@ -240,7 +240,7 @@
                                 foreach($all_contracts_data_rows as $contract_data_row){
                                     $contract_id = $contract_data_row['id'];
                                     $volunteer_data_row = fetch_volunteer_data_row($user_id,$contract_data_row['volunteer_id']);
-                                    $date = new DateTime($contract_data_row['issuance_date']);
+                                    $date = new DateTime($contract_data_row['start_date']);
                                     $month = $date->format('F'); // Full month name (ex: "January")
                                     include("../Widget_Pages/contract_widget.php");
                                 }

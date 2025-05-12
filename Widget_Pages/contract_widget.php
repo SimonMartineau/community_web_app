@@ -1,5 +1,5 @@
 <!-- Imports -->
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../Styles/style.css">
 <script src="../functions.js"></script>
 
 <!-- HTML Code -->
@@ -23,7 +23,7 @@
                     <!-- Contract Dates Info -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">calendar_month</span></span>
-                        <span class="info_value"><?php echo formatDate($contract_data_row['issuance_date'])?> - <br> <?php echo formatDate($contract_data_row['validity_date'])?></span>
+                        <span class="info_value"><?php echo formatDate($contract_data_row['start_date'])?> - <br> <?php echo formatDate($contract_data_row['end_date'])?></span>
                     </span>
 
                     <!-- Contract Points Info -->
@@ -35,7 +35,7 @@
                     <!-- Contract Hours Info -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">schedule</span></span>
-                        <span class="info_value"><?php echo $contract_data_row['hours_completed'] ?>/<?php echo $contract_data_row['hours_required'] ?> Hours Completed</span>
+                        <span class="info_value"><?php echo $contract_data_row['hours_completed'] ?>/<?php echo $contract_data_row['hours_required'] ?> Hours Assigned</span>
                     </span>
                 </p>
             </div>

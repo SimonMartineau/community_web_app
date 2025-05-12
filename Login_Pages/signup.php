@@ -86,7 +86,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="../login_style.css">
+    <link rel="stylesheet" href="../Styles/login_style.css">
 </head>
 <body>
     <!-- Signup Form -->
