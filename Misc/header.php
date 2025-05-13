@@ -22,7 +22,7 @@ echo $_SESSION['lang'];
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home | Give and Receive</title>
+        <title>CivicLink | Home</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/header_style.css">
     </head>
@@ -31,10 +31,11 @@ echo $_SESSION['lang'];
         <div id="blue_bar">
             <div>
                 <!-- Logo -->
-                <a href="../Profile_Pages/index.php" class="logo">Volunteer Management</a>
+                <a href="../Profile_Pages/index.php" class="logo">CivicLink</a>
 
                 <!-- Navigation Menu -->
                 <div id="menu_container">
+                    <a href="../Profile_Pages/index.php" class="menu_button">Home</a>
                     <a href="../Listing_Pages/all_volunteers.php" class="menu_button">Volunteers</a>
                     <a href="../Listing_Pages/all_activities.php" class="menu_button">Activities</a>
                     <a href="../Listing_Pages/all_contracts.php" class="menu_button">Contracts</a>

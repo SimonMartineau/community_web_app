@@ -25,7 +25,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>About | Give and Receive</title>
+        <title>CivicLink | About</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/style.css">
     </head>
@@ -47,7 +47,7 @@
                 </div>
 
                 <p style="line-height: 1.6; font-size: 16px; color: #333;">
-                    Welcome to <strong>Give and Receive</strong>, a platform designed to connect individuals looking to make a difference in their communities. Whether you want to volunteer, participate in activities, or simply explore opportunities to contribute, this website has everything you need.
+                    Welcome to <strong>CivicLink</strong>, a platform designed to connect individuals looking to make a difference in their communities. Whether you want to volunteer, participate in activities, or simply explore opportunities to contribute, this website has everything you need.
                 </p>
 
                 <h3 style="margin-top: 20px; color: #405d9b;">How to Use the Website</h3>

@@ -68,8 +68,8 @@
         FROM Activity_Domains
         JOIN Activities ON Activity_Domains.activity_id = Activities.id
         WHERE Activities.trashed = 0
-        GROUP BY domain
         AND Activities.user_id = '$user_id'
+        GROUP BY domain
         ORDER BY total_count DESC;
     ");
     // Process the data
@@ -117,7 +117,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home | Give and Receive</title>
+        <title>CivicLink | Home</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/style.css">
     </head>
@@ -142,7 +142,7 @@
 
                         <!-- Page Title -->
                         <div id="section_title" style="margin-bottom: 20px;">
-                            <span style="font-size: 24px; font-weight: bold;">Volunteer-Activity Management Application</span>
+                            <span style="font-size: 24px; font-weight: bold;">CivicLink: A Volunteer-Activity Management Application</span>
                         </div>
 
                         <!-- Page Content -->
@@ -160,7 +160,7 @@
 
                                     <!-- Number of Activities -->
                                     <li>
-                                    <span class="label">Number of Activities Assigned :</span>
+                                    <span class="label">Number of Completed Activities :</span>
                                     <span class="value"><?php echo $number_of_activities_completed . " Activities"; ?></span>
                                     </li>
 
@@ -242,7 +242,7 @@
                             // Plot 1: Volunteer Interests Distribution
                             Plotly.newPlot("volunteer_interests_Plot", [{labels:xArray_interests, values:volunteer_interests_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForInterests}}], {
                                 title: {text: "Volunteer Interests Distribution", x: 0.825, xanchor: "right"}, 
-                                legend: {orientation: "v",x: -1, y: 0.5, itemclick: false, itemdoubleclick: false},
+                                legend: {orientation: "v",x: -1.3, y: 0.5, itemclick: false, itemdoubleclick: false},
                                 margin: {b: 10}
                             });
 
@@ -255,7 +255,7 @@
                             // Plot 3: Volunteer Availability Distribution
                             Plotly.newPlot("volunteer_availability_Plot", [{labels:xArray_weekdays, values:volunteer_weekdays_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForAvailability}}], {
                                 title: {text: "Volunteer Availability Distribution", x: 0.835, xanchor: "right"}, 
-                                legend: {orientation: "v",x: -1, y: 0.5,itemclick: false, itemdoubleclick: false },
+                                legend: {orientation: "v",x: -1.3, y: 0.5,itemclick: false, itemdoubleclick: false },
                                 margin: {b: 10}
                             });
 

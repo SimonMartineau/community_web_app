@@ -20,7 +20,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contact | Give and Receive</title>
+        <title>CivicLink | Contact</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/style.css">
     </head>
@@ -41,7 +41,7 @@
                 </div>
 
                 <p style="line-height: 1.6; font-size: 16px; color: #333;">
-                    We're here to help! If you have any questions, feedback, or need assistance using <strong>Give and Receive</strong>, don’t hesitate to get in touch with us. Our team is dedicated to ensuring your experience on the platform is seamless and fulfilling.
+                    We're here to help! If you have any questions, feedback, or need assistance using <strong>CivicLink</strong>, don’t hesitate to get in touch with us. Our team is dedicated to ensuring your experience on the platform is seamless and fulfilling.
                 </p>
 
                 <h3 style="margin-top: 20px; color: #405d9b;">How to Reach Us</h3>
