@@ -388,9 +388,9 @@ border-radius: 50%;
     color: #be7c00;
 }
 
-/* Tooltip Design*/
+/* Hint Design*/
 /*#################################################################################################################################################################*/
-.tooltip {
+.hint {
     position: relative;
     cursor: pointer;
     display: inline-block;
@@ -405,7 +405,7 @@ border-radius: 50%;
     margin-left: 5px;
   }
   
-  .tooltip-text {
+  .hint-text {
     visibility: hidden;
     width: 220px;
     background-color: #333;
@@ -415,14 +415,14 @@ border-radius: 50%;
     padding: 8px;
     position: absolute;
     z-index: 1;
-    bottom: 125%; /* Position above the tooltip */
+    bottom: 125%; /* Position above the hint */
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
   }
   
-  .tooltip:hover .tooltip-text {
+  .hint:hover .hint-text {
     visibility: visible;
     opacity: 1;
   }

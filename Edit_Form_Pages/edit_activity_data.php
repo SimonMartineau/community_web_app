@@ -135,8 +135,8 @@
                     <div class="form-field">
                         <label for="activity_name">
                             Activity Name:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the name of the activity (ex: "Community Cleanup").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the name of the activity (ex: "Community Cleanup").
                             </span>
                         </span>
                         </label>
@@ -148,8 +148,8 @@
                     <div class="form-field">
                         <label for="number_of_places">
                             Number of Places:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the number of places available for this activity (ex: 10).
+                            <span class="hint">?
+                                <span class="hint-text">Enter the number of places available for this activity (ex: 10).
                             </span>
                         </span>
                         </label>
@@ -161,8 +161,8 @@
                     <div class="form-field">
                         <label for="activity_duration">
                             Activity Duration:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the duration (in hours) of the activity (ex: 3).
+                            <span class="hint">?
+                                <span class="hint-text">Enter the duration (in hours) of the activity (ex: 3).
                             </span>
                         </label>
                         <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
@@ -173,8 +173,8 @@
                     <div class="form-field">
                         <label for="activity_location">
                             Activity Location:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the location of the activity (ex: "Miratejo"). This field is optional.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the location of the activity (ex: "Miratejo"). This field is optional.
                             </span>
                         </label>
                         <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
@@ -184,8 +184,8 @@
                     <div class="form-field">
                         <label for="activity_dates">
                             Activity Date:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the date to edit when this activity takes place. Select the calendar icon to choose a date.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the date to edit when this activity takes place. Select the calendar icon to choose a date.
                             </span>
                         </label>
                         <input type="date" name="activity_date" value="<?php echo $activity_date ?>">
@@ -196,8 +196,8 @@
                     <div class="form-field form-field-top">
                         <label for="activity_time_periods">
                             Activity Time Period:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Select the time periods when the activity takes place.
+                            <span class="hint">?
+                                <span class="hint-text">Select the time periods when the activity takes place.
                             </span>
                         </label>
                         <div class="form-checkbox-group">
@@ -226,8 +226,8 @@
                     <div class="form-field form-field-top">
                         <label>
                             Activity Domains:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Select the domains this activity is related to.
+                            <span class="hint">?
+                                <span class="hint-text">Select the domains this activity is related to.
                             </span>
                         </label>
 
@@ -260,8 +260,8 @@
                     <div class="form-field">
                         <label for="entry_clerk">
                             Entry Clerk:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -272,8 +272,8 @@
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
                             Additional Notes:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                            <span class="hint">?
+                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
                             </span>
                         </label>                   
                         <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>

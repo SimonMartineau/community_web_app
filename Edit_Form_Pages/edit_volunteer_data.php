@@ -134,8 +134,8 @@
                     <div class="form-field">
                         <label for="first_name">
                             First Name:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the volunteer's first name (ex: "John").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the volunteer's first name (ex: "John").
                             </span>
                         </label>
                         <input name="first_name" type="text" id="text_input" value="<?php echo $first_name ?>">
@@ -146,8 +146,8 @@
                     <div class="form-field">
                         <label for="last_name">
                             Last name:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the volunteer's last name (ex: "Doe").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the volunteer's last name (ex: "Doe").
                             </span>
                         </label>
                         <input name="last_name" type="text" id="text_input" value="<?php echo $last_name ?>">
@@ -158,8 +158,8 @@
                     <div class="form-field">
                         <label for="purchase_date">
                             Gender:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Select the bubble that matches the volunteer's gender.
+                            <span class="hint">?
+                                <span class="hint-text">Select the bubble that matches the volunteer's gender.
                             </span>
                         </label>
                         <div style="margin-bottom: 20px;">
@@ -174,8 +174,8 @@
                     <div class="form-field">
                         <label for="date_of_birth">
                             Date of Birth: 
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the volunteer's date of birth. Click the calendar icon to select a date.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the volunteer's date of birth. Click the calendar icon to select a date.
                             </span>
                         </label>
                         <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
@@ -186,8 +186,8 @@
                     <div class="form-field">
                         <label for="address">
                             Address:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the volunteer's address (ex: "123 Main St, City, Country").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the volunteer's address (ex: "123 Main St, City, Country").
                             </span>
                         </label>
                         <input name="address" type="text" id="text_input" value="<?php echo $address ?>">
@@ -198,8 +198,8 @@
                     <div class="form-field">
                         <label for="zip_code">
                             ZIP code:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the volunteer's ZIP code (ex: "12345").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the volunteer's ZIP code (ex: "12345").
                             </span>
                         </label>
                         <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code ?>">
@@ -210,8 +210,8 @@
                     <div class="form-field">
                         <label for="telephone_number">
                             Telephone number:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the volunteer's telephone number (ex: "+123456789").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the volunteer's telephone number (ex: "+123456789").
                             </span>
                         </label>
                         <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number ?>">
@@ -222,8 +222,8 @@
                     <div class="form-field">
                         <label for="email">
                             Email:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the volunteer's email address (ex: johndoe@gmail.com).
+                            <span class="hint">?
+                                <span class="hint-text">Enter the volunteer's email address (ex: johndoe@gmail.com).
                             </span>
                         </label>
                         <input name="email" type="text" id="text_input" value="<?php echo $email ?>">
@@ -234,8 +234,8 @@
                     <div class="form-field form-field-top">
                         <label for="volunteer_interests">
                             Volunteer's Interests 
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Select the activities the volunteer is interested in doing.
+                            <span class="hint">?
+                                <span class="hint-text">Select the activities the volunteer is interested in doing.
                             </span>
                         </label>
                         <div class="form-checkbox-group">
@@ -267,8 +267,8 @@
                     <div class="form-field form-field-top">
                         <label for="volunteer_availability">
                             Weekly Availability: 
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Select the weekdays and time periods when the volunteer is available.
+                            <span class="hint">?
+                                <span class="hint-text">Select the weekdays and time periods when the volunteer is available.
                             </span>
                         </label>
                         <div style="text-align: center;">
@@ -309,8 +309,8 @@
                     <div class="form-field">
                         <label for="volunteer_manager">
                             Volunteer Manager:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the name of the volunteer manager (ex: "James Stewart").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the name of the volunteer manager (ex: "James Stewart").
                             </span>
                         </label>
                         <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager ?>">
@@ -321,8 +321,8 @@
                     <div class="form-field">
                         <label for="entry_clerk">
                             Entry Clerk:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -333,8 +333,8 @@
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
                             Additional Notes:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                            <span class="hint">?
+                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
                             </span>
                         </label>                   
                         <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>

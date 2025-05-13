@@ -20,7 +20,8 @@
     $number_of_volunteers = fetch_data_rows("
         SELECT COUNT(*) AS total_volunteers
         FROM Volunteers 
-        WHERE `trashed` = '0'"
+        WHERE `trashed` = '0'
+        AND user_id = '$user_id'"
     )[0]['total_volunteers'];
 
     // Collect activities data
@@ -28,19 +29,22 @@
         SELECT COUNT(*) AS total_activities
         FROM Activities 
         WHERE activity_date < CURDATE()
-        AND number_of_participants > 0"
+        AND number_of_participants > 0
+        AND user_id = '$user_id'"
     )[0]['total_activities'];
 
     // Collect contracts data
     $number_of_hours_completed = fetch_data_rows("
         SELECT SUM(hours_completed) AS total_hours
-        FROM Contracts"
+        FROM Contracts
+        WHERE user_id = '$user_id'"
     )[0]['total_hours'];
 
     // Collect purchases data
     $number_of_points_spent = fetch_data_rows("
         SELECT SUM(points_spent) AS total_points
-        FROM Contracts"
+        FROM Contracts
+        WHERE user_id = '$user_id'"
     )[0]['total_points'];
 
     // Collect volunteer interests data
@@ -49,6 +53,7 @@
         FROM Volunteer_Interests
         JOIN Volunteers ON Volunteer_Interests.volunteer_id = Volunteers.id
         WHERE Volunteers.trashed = 0
+        AND Volunteers.user_id = '$user_id'
         GROUP BY interest;
     ");
     // Process the data
@@ -64,6 +69,7 @@
         JOIN Activities ON Activity_Domains.activity_id = Activities.id
         WHERE Activities.trashed = 0
         GROUP BY domain
+        AND Activities.user_id = '$user_id'
         ORDER BY total_count DESC;
     ");
     // Process the data
@@ -78,8 +84,10 @@
         FROM Volunteer_Availability
         JOIN Volunteers ON Volunteer_Availability.volunteer_id = Volunteers.id
         WHERE Volunteers.trashed = 0
+        AND Volunteers.user_id = '$user_id'
         GROUP BY weekday
     ");
+
     // Process the data
     $volunteer_availability_count = [];
     foreach($volunteer_weekdays_count_data_rows as $row){
@@ -91,6 +99,7 @@
         SELECT DAYNAME(activity_date) AS weekday, COUNT(*) AS total_count
         FROM Activities
         WHERE trashed = 0
+        AND user_id = '$user_id'
         GROUP BY weekday
     ");
     // Process the data
@@ -145,26 +154,31 @@
                                 <ul>
                                     <!-- Number of Volunteers -->
                                     <li>
-                                    <span class="label">Number of Active Volunteers:</span>
+                                    <span class="label">Number of Active Volunteers :</span>
                                     <span class="value"><?php echo $number_of_volunteers . " Volunteers"; ?></span>
                                     </li>
 
                                     <!-- Number of Activities -->
                                     <li>
-                                    <span class="label">Number of Activities Assigned:</span>
+                                    <span class="label">Number of Activities Assigned :</span>
                                     <span class="value"><?php echo $number_of_activities_completed . " Activities"; ?></span>
                                     </li>
 
                                     <!-- Number of Hours -->
                                     <li>
-                                    <span class="label">Number of Hours Assigned:</span>
+                                    <span class="label">Number of Hours Assigned :</span>
                                     <span class="value"><?php echo $number_of_hours_completed . " Hours"; ?></span>
                                     </li>
 
                                     <!-- Number of Points -->
                                     <li>
-                                    <span class="label">Number of Points Spent:</span>
+                                    <span class="label">Number of Points Spent :</span>
                                     <span class="value"><?php echo $number_of_points_spent . " Points"; ?></span>
+                                    </li>
+
+                                    <!-- Export to CSV -->
+                                    <li>
+                                    <span class="label">Export to CSV:</span>
                                     </li>
                                 </ul>
                             </div>

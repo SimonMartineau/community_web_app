@@ -94,8 +94,8 @@
                     <div class="form-field">
                         <label for="item_names">
                             Item Names:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the names of the purchased items (ex: Apples).
+                            <span class="hint">?
+                                <span class="hint-text">Enter the names of the purchased items (ex: Apples).
                             </span>
                         </label>
                         <input name="item_names" type="text" id="text_input" value="<?php echo $item_names ?>">
@@ -106,8 +106,8 @@
                     <div class="form-field">
                         <label for="total_cost">
                             Total Cost:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the total cost (in points) of the purchase (ex: 3).
+                            <span class="hint">?
+                                <span class="hint-text">Enter the total cost (in points) of the purchase (ex: 3).
                             </span>
                         </label>
                         <input name="total_cost" type="text" id="text_input" value="<?php echo $total_cost ?>">
@@ -118,8 +118,8 @@
                     <div class="form-field">
                         <label for="purchase_date">
                             Purchase Date:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the date of the purchase. Click the calendar icon to choose a date.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the date of the purchase. Click the calendar icon to choose a date.
                             </span>
                         </label>
                         <input type="date" name="purchase_date" value="<?php echo $purchase_date ?>">
@@ -130,8 +130,8 @@
                     <div class="form-field">
                         <label for="hours_required">
                             Entry Clerk:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -142,8 +142,8 @@
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
                             Additional Notes:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                            <span class="hint">?
+                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
                             </span>
                         </label>                   
                         <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>

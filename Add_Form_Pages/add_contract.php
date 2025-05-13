@@ -96,8 +96,8 @@
                     <div class="form-field">
                         <label for="start_date">
                             Start Date: 
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the date the contract is issued. Select the calendar icon to choose a date.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the date the contract is issued. Select the calendar icon to choose a date.
                             </span>
                         </label>
                         <input name="start_date" type="date" value="<?php echo $start_date ?>" value="<?php echo $start_date ?>">
@@ -108,8 +108,8 @@
                     <div class="form-field">
                         <label for="end_date">
                             End Date: 
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the date the contract is valid until. Select the calendar icon to choose a date.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the date the contract is valid until. Select the calendar icon to choose a date.
                             </span>
                         </label>
                         <input name="end_date" type="date" value="<?php echo $end_date ?>" value="<?php echo $end_date ?>">
@@ -120,8 +120,8 @@
                     <div class="form-field">
                         <label for="points_deposit">
                             Points Deposit:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the number of points given to the volunteer for the contract (ex: 30). By default, it's 30 points.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the number of points given to the volunteer for the contract (ex: 30). By default, it's 30 points.
                             </span>
                         </label>
                         <input name="points_deposit" type="text" id="text_input" value="<?php echo $points_deposit ?>">
@@ -132,8 +132,8 @@
                     <div class="form-field">
                         <label for="hours_required">
                             Hours Required:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the number of hours required for the contract (ex: 6). By default, it's 6 hours.
+                            <span class="hint">?
+                                <span class="hint-text">Enter the number of hours required for the contract (ex: 6). By default, it's 6 hours.
                             </span>
                         </label>
                         <input name="hours_required" type="text" id="text_input" value="<?php echo $hours_required ?>">
@@ -144,8 +144,8 @@
                     <div class="form-field">
                         <label for="entry_clerk">
                             Entry Clerk:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                            <span class="hint">?
+                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
@@ -156,8 +156,8 @@
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
                             Additional Notes:
-                            <span class="tooltip">?
-                                <span class="tooltip-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                            <span class="hint">?
+                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
                             </span>
                         </label>                   
                         <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
