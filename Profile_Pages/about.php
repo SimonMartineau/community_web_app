@@ -7,6 +7,9 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
 
+    // Default to English if not set
+    $lang = $_SESSION['lang'] ?? 'en';
+
     // Connect to the database
     $DB = new Database();
     // Check if user is logged in. If not, redirect to login page.

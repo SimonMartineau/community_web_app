@@ -1,8 +1,26 @@
+<?php
+// Handle a POSTed language choice
+if ($_SERVER['REQUEST_METHOD'] === 'POST'
+    && isset($_POST['lang'])
+    && in_array($_POST['lang'], ['en','pt'], true)
+) {
+    $_SESSION['lang'] = $_POST['lang'];
+    // Redirect to self to clear POST data (and keep URL clean)
+    header('Location: ' . $_SERVER['REQUEST_URI']);
+    exit;
+}
+
+// Determine current language (fallback to English)
+$lang = $_SESSION['lang'] ?? 'en';
+echo $_SESSION['lang'];
+?>
+
+
 <div id="blue_bar">
     <div>
         <!-- Logo -->
         <!--<a href="../Profile_Pages/home.php" class="logo">Give and Receive</a> -->
-        <span class="logo" style="font-weight: bold;">Scheduling System</span>
+        <span class="logo" style="font-weight: bold;">Volunteer Management</span>
 
         <!-- Navigation Menu -->
         <div id="menu_container">
@@ -12,6 +30,23 @@
             <a href="../Listing_Pages/all_purchases.php" class="menu_button">Purchases</a>
             <a href="../Profile_Pages/about.php" class="menu_button">About</a>
             <!--<a href="../Profile_Pages/contact.php" class="menu_button">Contact</a>-->
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn">
+                <span class="flag"><?= $lang === 'pt' ? '🇵🇹' : '🇬🇧' ?></span>
+                <?= $lang === 'pt' ? 'Português' : 'English' ?>
+            </button>
+            <div class="dropdown-content">
+                <form method="post">
+                    <input type="hidden" name="lang" value="en">
+                    <button type="submit"><span class="flag">🇬🇧</span> English</button>
+                </form>
+                <form method="post">
+                    <input type="hidden" name="lang" value="pt">
+                    <button type="submit"><span class="flag">🇵🇹</span> Português</button>
+                </form>
+            </div>
         </div>
 
         <!-- Logout Button -->
@@ -172,5 +207,63 @@
             margin-top: 10px;
             padding: 5px 0;
         }
+    }
+
+    .dropbtn {
+        background-color: #506db8;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        display: inline-block;
+        white-space: nowrap;
+        text-decoration: none;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        min-width: 130px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 130px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        z-index: 1;
+        font-size: 1rem;
+    }
+
+    /* target both links and buttons */
+    .dropdown-content button {
+        display: block;           /* full‐width clickable area */
+        width: 100%;
+        padding: 12px 16px;
+        text-align: left;
+        text-decoration: none;    /* remove underline from links */
+        background: none;         /* remove default button bg */
+        border: none;             /* remove default button border */
+        color: black;
+        cursor: pointer;
+        font: inherit;            /* inherit font settings */
+    }
+
+    /* hover state */
+    .dropdown-content button:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #6c85d3;
     }
 </style>
