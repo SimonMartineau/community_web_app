@@ -1,0 +1,42 @@
+.home_page_info {
+background: white;
+border-radius: 8px;
+padding: 20px;
+max-width: 500px;
+margin: 0px auto;
+}
+
+.home_page_info h3 {
+color: #405d9b;
+text-align: center;
+margin-bottom: 20px;
+}
+
+.home_page_info ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.home_page_info li {
+display: flex;
+flex-direction: column;
+padding: 10px 0;
+border-bottom: 1px solid #eee;
+}
+
+.home_page_info li:last-child {
+border-bottom: none;
+}
+
+.home_page_info .label {
+font-weight: bold;
+font-size: 16px;
+color: #333;
+}
+
+.home_page_info .value {
+font-size: 18px;
+color: #555;
+margin-top: 5px;
+}

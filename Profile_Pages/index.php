@@ -120,14 +120,16 @@
         <title>CivicLink | Home</title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="../Styles/home_page.css">
     </head>
 
     <!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-         
 
+        <script src="../JavaScript/plot.js"></script>
+         
             <!-- Header Bar -->
             <?php include("../Misc/header.php"); ?>
 
@@ -138,11 +140,11 @@
                 <div style="display: flex;">
 
                     <!-- Contact Content Area -->
-                    <div id="major_rectangle">
+                    <div id="major_rectangle" style="height: 800px;">
 
                         <!-- Page Title -->
                         <div id="section_title" style="margin-bottom: 20px;">
-                            <span style="font-size: 24px; font-weight: bold;">CivicLink: A Volunteer-Activity Management Application</span>
+                            <span style="font-size: 24px; font-weight: bold;">CivicLink: A Volunteer & Activity Management Application</span>
                         </div>
 
                         <!-- Page Content -->
@@ -175,29 +177,21 @@
                                     <span class="label">Number of Points Spent :</span>
                                     <span class="value"><?php echo $number_of_points_spent . " Points"; ?></span>
                                     </li>
-
-                                    <!-- Export to CSV -->
-                                    <li>
-                                    <span class="label">Export to CSV:</span>
-                                    </li>
                                 </ul>
                             </div>
 
-                            <!-- Right Side : Pie Charts-->
-                            <div>
-                                <!-- 1st row: Volunteer Interests and Activity Interests -->
-                                <div style="display: flex; border-bottom: 1px solid #ddd;">
-                                    <div id="volunteer_interests_Plot" style="width:100%; max-width:650px; max-height: 365px;"></div>
-                                    <div id="activity_interests_Plot" style="width:100%; max-width:450px"></div>
+                            <!-- Right Side : Bar Graphs -->
+                            <div>                            
+                                <!-- 1st row: Volunteer & Activity Interests Distribution  -->
+                                <div style="width: 1100px; margin: 0 auto; height:350px;">
+                                    <div id="volunteer_activity_interests_plot" style="width:100%; height:350px;"></div>
                                 </div>
 
-                                <!-- 2nd row: Volunteer Availability and Activity Availability -->
-                                <div style="display: flex">
-                                    <div id="volunteer_availability_Plot" style="width:100%; max-width:650px; max-height: 365px;"></div>
-                                    <div id="activity_availability_Plot" style="width:100%; max-width:450px"></div>
+                                <!-- 2nd row: Volunteer & Activity Availability Distribution -->
+                                <div style="width: 1100px; margin: 0 auto; height:350px;">
+                                    <div id="volunteer_activity_availability_plot" style="width:100%; height:350px;"></div>
                                 </div>
                             </div>
-
                         </div>
 
                         <!-- JavaScript code for Plotly.js -->
@@ -205,6 +199,11 @@
                             // Database arrays
                             const xArray_interests = ["Organization of community events", "Library support", "Help in the community store", "Support in the community grocery store", "Cleaning and maintenance of public spaces", "Participation in urban gardening projects"];
                             const xArray_weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+                            // Labels for the bar graphs
+                            const xArray_interests_labels = ["Organization of<br>community events", "Library support", "Help in the community<br>store", "Support in the<br>community  grocery store", "Cleaning and maintenance<br>of public spaces", "Participation in urban<br>gardening projects"];
+                            const xArray_weekdays_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
 
                             const colorsForInterests = [
                                 "#ff7f0e", // orange
@@ -215,7 +214,15 @@
                                 "#60C9D7"  //  light blue
                             ];
 
-                                const colorsForAvailability = [
+                            // Light Green for volunteer
+                            const volunteer_bar_color = Array(7).fill("#5AD8A6");
+
+
+                            // Light blue for activity
+                            const activity_bar_color = Array(7).fill("#5B8FF9");
+
+
+                            const colorsForAvailability = [
                                 "#5B8FF9", // blue
                                 "#5AD8A6", // green
                                 "#F6BD16", // yellow-orange
@@ -225,7 +232,7 @@
                             ];
 
 
-                            // Processing the data for the pie charts
+                            // Processing the data for the bar graphs
                             const volunteer_interests = <?php echo json_encode($volunteer_interests_count); ?>;
                             const volunteer_interests_count = xArray_interests.map(label => volunteer_interests[label] || 0);
 
@@ -238,31 +245,112 @@
                             const activity_availability = <?php echo json_encode($activity_availability_count); ?>;
                             const activity_weekdays_count = xArray_weekdays.map(label => activity_availability[label] || 0);
 
+                            
+                            var volunteer_interest_trace = {
+                                x: xArray_interests_labels,
+                                y: volunteer_interests_count,
+                                name: 'Volunteer',
+                                type: 'bar',
+                                marker: {
+                                    color: volunteer_bar_color,
+                                    opacity: 0.8
+                                }
+                            };
 
-                            // Plot 1: Volunteer Interests Distribution
-                            Plotly.newPlot("volunteer_interests_Plot", [{labels:xArray_interests, values:volunteer_interests_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForInterests}}], {
-                                title: {text: "Volunteer Interests Distribution", x: 0.825, xanchor: "right"}, 
-                                legend: {orientation: "v",x: -1.3, y: 0.5, itemclick: false, itemdoubleclick: false},
-                                margin: {b: 10}
+                            var activity_interest_trace = {
+                                x: xArray_interests_labels,
+                                y: activity_interests_count,
+                                name: 'Activity',
+                                type: 'bar',
+                                marker: {
+                                    color: activity_bar_color,
+                                    opacity: 0.8
+                                }
+                            };
+
+                            Plotly.newPlot("volunteer_activity_interests_plot", [volunteer_interest_trace, activity_interest_trace], {
+                            title: {
+                                text: "Volunteer & Activity Interests History",
+                                x: 0.5
+                            },
+                            barmode: 'group',        // side-by-side bars
+                            showlegend: true,
+                            legend: {
+                                orientation: 'v',
+                                x: 0.9,
+                                y: 1.2,
+                                itemclick: false,
+                                itemdoubleclick: false
+                            },
+                            xaxis: {
+                                title: 'Interests',
+                                tickangle: 0,
+                                automargin: true
+                            },
+                            yaxis: {
+                                title: 'Count',
+                            },
+                            margin: {
+                                b: 40,
+                                l: 100,
+                                t: 80
+                            },
+                            width: 1100,
+                            height: 350
                             });
 
-                            // Plot 2: Activity Interests Distribution
-                            Plotly.newPlot("activity_interests_Plot", [{labels:xArray_interests, values:activity_interests_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForInterests}, showlegend: false}], {
-                                title:"Activity Interests Distribution",
-                                margin: {b: 10}
-                            });
 
-                            // Plot 3: Volunteer Availability Distribution
-                            Plotly.newPlot("volunteer_availability_Plot", [{labels:xArray_weekdays, values:volunteer_weekdays_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForAvailability}}], {
-                                title: {text: "Volunteer Availability Distribution", x: 0.835, xanchor: "right"}, 
-                                legend: {orientation: "v",x: -1.3, y: 0.5,itemclick: false, itemdoubleclick: false },
-                                margin: {b: 10}
-                            });
+                            var volunteer_availability_trace = {
+                                x: xArray_weekdays_labels,
+                                y: volunteer_weekdays_count,
+                                name: 'Volunteer',
+                                type: 'bar',
+                                marker: {
+                                    color: volunteer_bar_color,
+                                    opacity: 0.8
+                                }
+                            };
 
-                            // Plot 4: Activity Availability Distribution
-                            Plotly.newPlot("activity_availability_Plot", [{labels:xArray_weekdays, values:activity_weekdays_count, hole:.4, type:"pie", sort: false, marker: {colors: colorsForAvailability}, showlegend: false}], { 
-                                title:"Activity Availability Distribution",
-                                margin: {b: 10}
+                            var activity_availability_trace = {
+                                x: xArray_weekdays_labels,
+                                y: activity_weekdays_count,
+                                name: 'Activity',
+                                type: 'bar',
+                                marker: {
+                                    color: activity_bar_color,
+                                    opacity: 0.8
+                                }
+                            };
+
+                            Plotly.newPlot("volunteer_activity_availability_plot", [volunteer_availability_trace, activity_availability_trace], {
+                            title: {
+                                text: "Volunteer & Activity Availability History",
+                                x: 0.5
+                            },
+                            barmode: 'group',        // side-by-side bars
+                            showlegend: true,
+                            legend: {
+                                orientation: 'v',
+                                x: 0.9,
+                                y: 1.2,
+                                itemclick: false,
+                                itemdoubleclick: false
+                            },
+                            xaxis: {
+                                title: 'Weekday',
+                                tickangle: 0,
+                                automargin: true
+                            },
+                            yaxis: {
+                                title: 'Count'
+                            },
+                            margin: {
+                                b: 40,
+                                l: 100,
+                                t: 80
+                            },
+                            width: 1100,
+                            height: 350
                             });
 
                         </script>
@@ -274,51 +362,3 @@
         </div>
     </body>
 </html>
-
-
-
-<!-- CSS -->
-<style>
-    .home_page_info {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 500px;
-    margin: 0px auto;
-    }
-
-    .home_page_info h3 {
-    color: #405d9b;
-    text-align: center;
-    margin-bottom: 20px;
-    }
-
-    .home_page_info ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    }
-
-    .home_page_info li {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    }
-
-    .home_page_info li:last-child {
-    border-bottom: none;
-    }
-
-    .home_page_info .label {
-    font-weight: bold;
-    font-size: 16px;
-    color: #333;
-    }
-
-    .home_page_info .value {
-    font-size: 18px;
-    color: #555;
-    margin-top: 5px;
-    }
-</style>

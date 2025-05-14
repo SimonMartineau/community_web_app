@@ -228,7 +228,7 @@
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
-        <script src="../functions.js"></script>
+        <script src="../JavaScript/functions.js"></script>
 
         <!-- Header Bar -->
         <?php include("../Misc/header.php"); ?>

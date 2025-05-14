@@ -1,6 +1,6 @@
 <!-- Imports -->
 <link rel="stylesheet" href="../Styles/style.css">
-<script src="../functions.js"></script>
+<script src="../JavaScript/functions.js"></script>
 
 <!-- HTML Code -->
 <a href="../Profile_Pages/contract_profile.php?contract_id=<?php echo $contract_id; ?>" style="text-decoration: none;">

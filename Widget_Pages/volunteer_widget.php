@@ -1,6 +1,6 @@
 <!-- Imports -->
 <link rel="stylesheet" href="../Styles/style.css">
-<script src="../functions.js"></script>
+<script src="../JavaScript/functions.js"></script>
 
 <!-- PHP Code -->
 <?php

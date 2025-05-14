@@ -1,6 +1,6 @@
 <!-- Imports -->
 <link rel="stylesheet" href="../Styles/style.css">
-<script src="../functions.js"></script>
+<script src="../JavaScript/functions.js"></script>
 
 <!-- HTML Code -->
 <a href="../Profile_Pages/purchase_profile.php?purchase_id=<?php echo $purchase_id; ?>" style="text-decoration: none;">

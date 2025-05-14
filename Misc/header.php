@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
 
 // Determine current language (fallback to English)
 $lang = $_SESSION['lang'] ?? 'en';
-echo $_SESSION['lang'];
 ?>
 
 
