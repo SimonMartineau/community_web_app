@@ -96,7 +96,7 @@
 
     // Collect activity availability data
     $activity_weekdays_count_data_rows = fetch_data_rows("
-        SELECT DAYNAME(activity_date) AS weekday, COUNT(*) AS total_count
+        SELECT DAYNAME(activity_date) AS weekday, SUM(number_of_places) AS total_count
         FROM Activities
         WHERE trashed = 0
         AND user_id = '$user_id'
