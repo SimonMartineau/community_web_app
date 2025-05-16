@@ -7,6 +7,7 @@
     include("../Classes/connect.php");
     include("../Classes/add_purchase.php");
     include("../Classes/functions.php");
+    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();

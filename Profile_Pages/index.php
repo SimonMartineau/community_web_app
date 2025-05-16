@@ -6,6 +6,7 @@
     // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
+    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
@@ -144,7 +145,7 @@
 
                         <!-- Page Title -->
                         <div id="section_title" style="margin-bottom: 20px;">
-                            <span style="font-size: 24px; font-weight: bold;">CivicLink: A Volunteer & Activity Management Application</span>
+                            <span style="font-size: 24px; font-weight: bold;"><?= __('CivicLink: A Volunteer & Activity Management Application') ?></span>
                         </div>
 
                         <!-- Page Content -->
@@ -152,30 +153,30 @@
 
                             <!-- Left Side : General Data -->
                             <div class="home_page_info">
-                                <h3>Database Information</h3>
+                                <h3><?= __('Database Information') ?></h3>
                                 <ul>
                                     <!-- Number of Volunteers -->
                                     <li>
-                                    <span class="label">Number of Active Volunteers :</span>
-                                    <span class="value"><?php echo $number_of_volunteers . " Volunteers"; ?></span>
+                                        <span class="label"><?= __('Number of Active Volunteers :') ?></span>
+                                        <span class="value"><?php echo $number_of_volunteers . ' ' . __('Volunteers'); ?></span>
                                     </li>
 
                                     <!-- Number of Activities -->
                                     <li>
-                                    <span class="label">Number of Completed Activities :</span>
-                                    <span class="value"><?php echo $number_of_activities_completed . " Activities"; ?></span>
+                                        <span class="label"><?= __('Number of Completed Activities :') ?></span>
+                                        <span class="value"><?php echo $number_of_activities_completed . ' ' . __('Activities'); ?></span>
                                     </li>
 
                                     <!-- Number of Hours -->
                                     <li>
-                                    <span class="label">Number of Hours Assigned :</span>
-                                    <span class="value"><?php echo $number_of_hours_completed . " Hours"; ?></span>
+                                        <span class="label"><?= __('Number of Hours Assigned :') ?></span>
+                                        <span class="value"><?php echo $number_of_hours_completed . ' ' . __('Hours'); ?></span>
                                     </li>
 
                                     <!-- Number of Points -->
                                     <li>
-                                    <span class="label">Number of Points Spent :</span>
-                                    <span class="value"><?php echo $number_of_points_spent . " Points"; ?></span>
+                                        <span class="label"><?= __('Number of Points Spent :') ?></span>
+                                        <span class="value"><?php echo $number_of_points_spent . ' ' . __('Points'); ?></span>
                                     </li>
                                 </ul>
                             </div>
@@ -196,40 +197,106 @@
 
                         <!-- JavaScript code for Plotly.js -->
                         <script>
-                            // Database arrays
-                            const xArray_interests = ["Organization of community events", "Library support", "Help in the community store", "Support in the community grocery store", "Cleaning and maintenance of public spaces", "Participation in urban gardening projects"];
-                            const xArray_weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                            // Language variable to determine the language of the page
+                            const lang = "<?php echo $_SESSION['lang']; ?>";
 
-                            // Labels for the bar graphs
-                            const xArray_interests_labels = ["Organization of<br>community events", "Library support", "Help in the community<br>store", "Support in the<br>community  grocery store", "Cleaning and maintenance<br>of public spaces", "Participation in urban<br>gardening projects"];
-                            const xArray_weekdays_labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                            // Initalize the labels for the bar graphs
+                            let xArray_interests_labels;
+                            let xArray_weekdays_labels;
+                            let interest_plot_title;
+                            let availability_plot_title;
+                            let xaxis_interest_title;
+                            let xaxis_availability_title;
+                            let yaxis_interest_title;
+                            let yaxis_availability_title;
+                            let volunteer_legend_title;
+                            let activity_legend_title;
 
 
-                            const colorsForInterests = [
-                                "#ff7f0e", // orange
-                                "#2ca02c", // green
-                                "#d62728", // red
-                                "#9467bd", // violet
-                                "#1f77b4", // blue
-                                "#60C9D7"  //  light blue
+                            // Database arrays. This is to associate the data with the labels.
+                            const xArray_interests = [
+                                'Organization of community events', 
+                                'Library support', 
+                                'Help in the community store', 
+                                'Support in the community grocery store', 
+                                'Cleaning and maintenance of public spaces', 
+                                'Participation in urban gardening projects'
+                            ];
+                            const xArray_weekdays = [
+                                'Monday', 
+                                'Tuesday', 
+                                'Wednesday', 
+                                'Thursday', 
+                                'Friday', 
+                                'Saturday', 
+                                'Sunday'
                             ];
 
+
+                            // Labels for the bar graphs, translation done here due to issues with Plotly.js.
+                            if (lang === 'en') {
+                                // English labels
+                                xArray_interests_labels = [
+                                    "Organization of<br>community events", 
+                                    "Library support", 
+                                    "Help in the community<br>store", 
+                                    "Support in the<br>community grocery store", 
+                                    "Cleaning and maintenance<br>of public spaces", 
+                                    "Participation in urban<br>gardening projects"
+                                ];
+                                xArray_weekdays_labels = [
+                                    "Monday", 
+                                    "Tuesday", 
+                                    "Wednesday", 
+                                    "Thursday", 
+                                    "Friday", 
+                                    "Saturday", 
+                                    "Sunday"
+                                ];
+                                interest_plot_title = "Volunteer & Activity Interests History";
+                                availability_plot_title = "Volunteer & Activity Availability History";
+                                xaxis_interest_title = "Interests";
+                                xaxis_availability_title = "Weekday";
+                                yaxis_interest_title = "Count";
+                                yaxis_availability_title = "Count";
+                                volunteer_legend_title = "Volunteer";
+                                activity_legend_title = "Activity";
+                            } else {
+                                // Portuguese labels
+                                xArray_interests_labels = [
+                                    "Organização de<br>eventos comunitários", 
+                                    "Apoio à biblioteca", 
+                                    "Ajuda na<br>loja comunitária", 
+                                    "Apoio na<br>mercearia comunitária", 
+                                    "Limpeza e manutenção<br>de espaços públicos", 
+                                    "Participação em projetos de<br>jardinagem urbana"
+                                ];
+                                xArray_weekdays_labels = [
+                                    "Segunda‑feira", 
+                                    "Terça‑feira", 
+                                    "Quarta‑feira", 
+                                    "Quinta‑feira", 
+                                    "Sexta‑feira", 
+                                    "Sábado", 
+                                    "Domingo"
+                                ];
+                                interest_plot_title = "Histórico de Interesses de Voluntariado e Atividades";
+                                availability_plot_title = "Histórico de Disponibilidade de Voluntariado e Atividades";
+                                xaxis_interest_title = "Interesses";
+                                xaxis_availability_title = "Dia da Semana";
+                                yaxis_interest_title = "Contagem";
+                                yaxis_availability_title = "Contagem";
+                                volunteer_legend_title = "Voluntário";
+                                activity_legend_title = "Atividade";
+
+                            }
+                    
+                                
                             // Light Green for volunteer
                             const volunteer_bar_color = Array(7).fill("#5AD8A6");
-
-
+                            
                             // Light blue for activity
                             const activity_bar_color = Array(7).fill("#5B8FF9");
-
-
-                            const colorsForAvailability = [
-                                "#5B8FF9", // blue
-                                "#5AD8A6", // green
-                                "#F6BD16", // yellow-orange
-                                "#E8684A", // red
-                                "#6F5EF9", // purple
-                                "#FF86B4"  // pink
-                            ];
 
 
                             // Processing the data for the bar graphs
@@ -249,7 +316,7 @@
                             var volunteer_interest_trace = {
                                 x: xArray_interests_labels,
                                 y: volunteer_interests_count,
-                                name: 'Volunteer',
+                                name: volunteer_legend_title,
                                 type: 'bar',
                                 marker: {
                                     color: volunteer_bar_color,
@@ -260,7 +327,7 @@
                             var activity_interest_trace = {
                                 x: xArray_interests_labels,
                                 y: activity_interests_count,
-                                name: 'Activity',
+                                name: activity_legend_title,
                                 type: 'bar',
                                 marker: {
                                     color: activity_bar_color,
@@ -270,10 +337,10 @@
 
                             Plotly.newPlot("volunteer_activity_interests_plot", [volunteer_interest_trace, activity_interest_trace], {
                             title: {
-                                text: "Volunteer & Activity Interests History",
+                                text: interest_plot_title,
                                 x: 0.5
                             },
-                            barmode: 'group',        // side-by-side bars
+                            barmode: 'group',
                             showlegend: true,
                             legend: {
                                 orientation: 'v',
@@ -283,12 +350,12 @@
                                 itemdoubleclick: false
                             },
                             xaxis: {
-                                title: 'Interests',
+                                title: xaxis_interest_title,
                                 tickangle: 0,
                                 automargin: true
                             },
                             yaxis: {
-                                title: 'Count',
+                                title: yaxis_interest_title,
                             },
                             margin: {
                                 b: 40,
@@ -303,7 +370,7 @@
                             var volunteer_availability_trace = {
                                 x: xArray_weekdays_labels,
                                 y: volunteer_weekdays_count,
-                                name: 'Volunteer',
+                                name: volunteer_legend_title,
                                 type: 'bar',
                                 marker: {
                                     color: volunteer_bar_color,
@@ -314,7 +381,7 @@
                             var activity_availability_trace = {
                                 x: xArray_weekdays_labels,
                                 y: activity_weekdays_count,
-                                name: 'Activity',
+                                name: activity_legend_title,
                                 type: 'bar',
                                 marker: {
                                     color: activity_bar_color,
@@ -324,10 +391,10 @@
 
                             Plotly.newPlot("volunteer_activity_availability_plot", [volunteer_availability_trace, activity_availability_trace], {
                             title: {
-                                text: "Volunteer & Activity Availability History",
+                                text: availability_plot_title,
                                 x: 0.5
                             },
-                            barmode: 'group',        // side-by-side bars
+                            barmode: 'group',
                             showlegend: true,
                             legend: {
                                 orientation: 'v',
@@ -337,12 +404,12 @@
                                 itemdoubleclick: false
                             },
                             xaxis: {
-                                title: 'Weekday',
+                                title: xaxis_availability_title,
                                 tickangle: 0,
                                 automargin: true
                             },
                             yaxis: {
-                                title: 'Count'
+                                title: yaxis_availability_title,
                             },
                             margin: {
                                 b: 40,

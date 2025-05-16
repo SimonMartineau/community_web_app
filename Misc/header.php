@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
     exit;
 }
 
-// Determine current language (fallback to English)
-$lang = $_SESSION['lang'] ?? 'en';
+// Determine current language (fallback to Portugese)
+$lang = $_SESSION['lang'] ?? 'pt';
 ?>
 
 
@@ -34,35 +34,40 @@ $lang = $_SESSION['lang'] ?? 'en';
 
                 <!-- Navigation Menu -->
                 <div id="menu_container">
-                    <a href="../Profile_Pages/index.php" class="menu_button">Home</a>
-                    <a href="../Listing_Pages/all_volunteers.php" class="menu_button">Volunteers</a>
-                    <a href="../Listing_Pages/all_activities.php" class="menu_button">Activities</a>
-                    <a href="../Listing_Pages/all_contracts.php" class="menu_button">Contracts</a>
-                    <a href="../Listing_Pages/all_purchases.php" class="menu_button">Purchases</a>
-                    <a href="../Profile_Pages/about.php" class="menu_button">About</a>
-                    <!--<a href="../Profile_Pages/contact.php" class="menu_button">Contact</a>-->
+                    <a href="../Profile_Pages/index.php" class="menu_button"><?= __('Home') ?></a>
+                    <a href="../Listing_Pages/all_volunteers.php" class="menu_button"><?= __('Volunteers') ?></a>
+                    <a href="../Listing_Pages/all_activities.php" class="menu_button"><?= __('Activities') ?></a>
+                    <a href="../Listing_Pages/all_contracts.php" class="menu_button"><?= __('Contracts') ?></a>
+                    <a href="../Listing_Pages/all_purchases.php" class="menu_button"><?= __('Purchases') ?></a>
+                    <a href="../Profile_Pages/about.php" class="menu_button"><?= __('About') ?></a>
+                    <!--<a href="../Profile_Pages/contact.php" class="menu_button"><?= __('Contact') ?></a>-->
                 </div>
 
                 <!-- Language Dropdown -->
                 <div class="dropdown">
                     <button class="dropbtn">
-                        <span class="flag"><?= $lang === 'pt' ? '🇵🇹' : '🇬🇧' ?></span>
-                        <?= $lang === 'pt' ? 'Português' : 'English' ?>
+                        <span class="flag"><?= $_SESSION['lang'] === 'pt' ? '🇵🇹' : '🇬🇧' ?></span>
+                        <?= $_SESSION['lang'] === 'pt' ? __('Português') : __('English') ?>
                     </button>
                     <div class="dropdown-content">
                         <form method="post">
                             <input type="hidden" name="lang" value="en">
-                            <button type="submit"><span class="flag">🇬🇧</span> English</button>
+                            <button type="submit">
+                                <span class="flag">🇬🇧</span> <?= __('English') ?>
+                            </button>
                         </form>
                         <form method="post">
                             <input type="hidden" name="lang" value="pt">
-                            <button type="submit"><span class="flag">🇵🇹</span> Português</button>
+                            <button type="submit">
+                                <span class="flag">🇵🇹</span> <?= __('Português') ?>
+                            </button>
                         </form>
                     </div>
                 </div>
 
                 <!-- Logout Button -->
-                <a href="../Login_Pages/logout.php" class="logout">Logout</a>
+                <a href="../Login_Pages/logout.php" class="logout"><?= __('Logout') ?></a>
+
         
             </div>
         </div>
