@@ -47,22 +47,22 @@
 
             <!-- Activity Name -->
             <div class="name_container">
-                <span class="widget_name"><?php echo $activity_data_row['activity_name'] ?></span>
+                <span class="widget_name"><?= htmlspecialchars($activity_data_row['activity_name']) ?></span>
             </div>
-            
+
             <!-- Activity Basic Info -->
             <div class="info_container">
                 <p class="widget_info">
                     <!-- Activity Dates Info -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">calendar_month</span></span>
-                        <span class="info_value"><?php echo "Date : " . formatDate($activity_data_row['activity_date'])?></span>
+                        <span class="info_value"><?= __('Date:') ?> <?= formatDate($activity_data_row['activity_date']) ?></span>
                     </span>
 
                     <!-- Activity Occupancy Info -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">person</span></span>
-                        <span class="info_value"><?php echo $activity_data_row['number_of_participants']?>/<?php echo $activity_data_row['number_of_places']?> Participants</span>
+                        <span class="info_value"><?= $activity_data_row['number_of_participants'] ?>/<?= $activity_data_row['number_of_places'] ?> <?= __('Participants') ?></span>
                     </span>
                 </p>
             </div>
@@ -70,33 +70,35 @@
             <!-- Activity Status Info -->
             <div class="status_container">
                 <p class="widget_info">
-                    <!-- Activity Is Trashed -->
                     <?php if ($activity_data_row['trashed'] == 1): ?>
                         <span class="info_line warning">
-                            <span class="material-symbols-outlined">delete</span> Activity is trashed.
+                            <span class="material-symbols-outlined">delete</span> <?= __('Activity is trashed.') ?>
                         </span>
                     <?php else: ?>
+                        <?php
+                            $today = date('Y-m-d');
+                        ?>
                         <!-- Activity is Upcoming -->
-                        <?php if ($activity_data_row['activity_date'] > date('Y-m-d')): ?>
+                        <?php if ($activity_data_row['activity_date'] > $today): ?>
                             <span class="info_line upcoming">
                                 <span class="material-symbols-outlined">event_upcoming</span>
-                                    Upcoming activity.
+                                <?= __('Upcoming activity.') ?>
                             </span>
                         <?php endif; ?>
 
                         <!-- Activity is Today -->
-                        <?php if ($activity_data_row['activity_date'] == date('Y-m-d')): ?>
+                        <?php if ($activity_data_row['activity_date'] == $today): ?>
                             <span class="info_line today">
                                 <span class="material-symbols-outlined">today</span>
-                                    Activity is today.
+                                <?= __('Activity is today.') ?>
                             </span>
                         <?php endif; ?>
 
                         <!-- Activity is Past -->
-                        <?php if ($activity_data_row['activity_date'] < date('Y-m-d')): ?>
+                        <?php if ($activity_data_row['activity_date'] < $today): ?>
                             <span class="info_line valid">
                                 <span class="material-symbols-outlined">check_circle</span>
-                                    Activity is complete.
+                                <?= __('Activity is complete.') ?>
                             </span>
                         <?php endif; ?>
                     <?php endif; ?>
@@ -104,102 +106,83 @@
             </div>
 
             <!-- Assign/Unassign Button -->
-            <?php
-                if ($show_assign_button == false) {
-                    // Do not show the assign/unassign buttons
-                } else {
-                    // Show the assign/unassign buttons
-
-                    // If the volunteer is assigned to the activity
-                    if($volunteer_activity_assigned == true){
-                        // Show the unassign button
-            ?>
+            <?php if ($show_assign_button): ?>
+                <?php if ($volunteer_activity_assigned): ?>
                     <!-- Show Unassign Button -->
-                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" onsubmit="return confirm('Are you sure you want to unassign <?php echo $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] . ' from ' . $activity_data_row['activity_name']?>?')">
+                    <div style="text-align:right; padding:10px 20px; display:inline-block;">
+                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?= $volunteer_id ?>"
+                            onsubmit="return confirm('<?= __('Are you sure you want to unassign') ?> <?= $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] ?> <?= __('from') ?> <?= $activity_data_row['activity_name'] ?>?')">
                             <button class="widget_button">
-                                <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="unassign_volunteer_activity" value="1">
-                                <!-- Hidden input to send activity_id -->
-                                <input type="hidden" name="activity_id" value="<?php echo $activity_id; ?>">
-                                Unassign Volunteer from Activity
+                                <input type="hidden" name="activity_id" value="<?= $activity_id ?>">
+                                <?= __('Unassign Volunteer from Activity') ?>
                             </button>
                         </form>
                     </div>
-
-                <?php
-                } elseif ($volunteer_activity_assigned == false){
-                // Show the assign button
-                ?>
-
+                <?php else: ?>
                     <!-- Show Assign Button -->
-                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" onsubmit="return confirm('Are you sure you want to assign <?php echo $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] . ' to ' . $activity_data_row['activity_name']?>?')">
+                    <div style="text-align:right; padding:10px 20px; display:inline-block;">
+                        <form method="POST" action="../Profile_Pages/volunteer_profile.php?volunteer_id=<?= $volunteer_id ?>"
+                            onsubmit="return confirm('<?= __('Are you sure you want to assign') ?> <?= $volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'] ?> <?= __('to') ?> <?= $activity_data_row['activity_name'] ?>?')">
                             <button class="widget_button">
-                                <!-- Hidden input to confirm source -->
                                 <input type="hidden" name="assign_volunteer_activity" value="1">
-                                <!-- Hidden input to send activity_id -->
-                                <input type="hidden" name="activity_id" value="<?php echo $activity_id; ?>">
-                                Assign Volunteer to Activity
+                                <input type="hidden" name="activity_id" value="<?= $activity_id ?>">
+                                <?= __('Assign Volunteer to Activity') ?>
                             </button>
                         </form>
                     </div>
+                <?php endif; ?>
+            <?php endif; ?>
 
-                <?php
-                    }
-                }
-            ?>
-
-            <!-- Button placed inside the widget. We call stopPropagation() in the onclick to avoid triggering the link. -->
-            <button class="widget_button" style="max-width: 30px;" type="button" onclick="toggleDetails(event, '<?php echo $activity_id; ?>')">
-                More Details
+            <button class="widget_button" style="max-width:30px;" type="button" onclick="toggleDetails(event, '<?= $activity_id ?>')">
+                <?= __('More Details') ?>
             </button>
         </div>
 
         <!-- Extra Details Row -->
         <div id="extra_details_row-<?php echo $activity_id; ?>" class="widget_row" style="display: none; align-items: flex-start;">
             <div class="widget_section">
-                <h2 style="font-size: 20px; color: #555;">Activity Info</h2>
+                <h2 style="font-size: 20px; color: #555;"><?= __('Activity Info') ?></h2>
                 <p class="widget_info">
                     <!-- Activity Duration -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">timer</span></span>
-                        <span class="info_value">Duration: <?php echo $activity_data_row['activity_duration'] . " Hours"?></span>
+                        <span class="info_value"><?= __('Duration: ') ?><?php echo $activity_data_row['activity_duration'] . " " .__('Hours')?></span>
                     </span>
 
                     <!-- Activity Location -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">location_on</span></span>
-                        <span class="info_value">Location: <?php echo (($activity_data_row['activity_location']=="")? 'Not added': $activity_data_row['activity_location']) ?></span>
+                        <span class="info_value"><?= __('Location: ') ?><?php echo (($activity_data_row['activity_location']=="")? __('Not added'): $activity_data_row['activity_location']) ?></span>
                     </span>
                 </p>
             </div>
 
             <!-- Activity Domains -->
             <div class="widget_section">
-                <h2 style="font-size: 20px; color: #555;">Domains</h2>
+                <h2 style="font-size: 20px; color: #555;"><?= __('Domains') ?></h2>
                 <?php if (!empty($activity_domains_data_rows)): ?>
                     <ul style="list-style-type: disc; padding-left: 20px;">
                         <?php foreach ($activity_domains_data_rows as $activity_domains_data_row): ?>
-                            <li><?php echo htmlspecialchars($activity_domains_data_row['domain'] ?: 'No specific interest provided'); ?></li>
+                            <li><?php echo htmlspecialchars(__($activity_domains_data_row['domain']) ?: __('No specific interest provided')); ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
-                    <p>No domain provided.</p>
+                    <p><?= __('No domain provided.') ?></p>
                 <?php endif; ?>
             </div>
 
             <!-- Activity Time Periods -->
             <div class="widget_section">
-                <h2 style="font-size: 20px; color: #555;">Time Periods</h2>
+                <h2 style="font-size: 20px; color: #555;"><?= __('Time Periods') ?></h2>
                 <?php if (!empty($activity_time_periods_data_rows)): ?>
                     <ul style="list-style-type: disc; padding-left: 20px;">
                         <?php foreach ($activity_time_periods_data_rows as $activity_time_periods_data_row): ?>
-                            <li><?php echo htmlspecialchars($activity_time_periods_data_row['time_period'] ?: 'No specific time period provided'); ?></li>
+                            <li><?php echo htmlspecialchars(__($activity_time_periods_data_row['time_period']) ?: __('No specific time period provided')); ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
-                    <p>No time period provided.</p>
+                    <p><?= __('No time period provided.') ?></p>
                 <?php endif; ?>
             </div>
 

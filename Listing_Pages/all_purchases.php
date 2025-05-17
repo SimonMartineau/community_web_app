@@ -132,58 +132,59 @@
 
                         <!-- Section Title of Filter Area -->
                         <div id="section_title">
-                            <span>Filter</span>
+                            <span><?= __('Filter') ?></span>
                         </div>
 
                         <!-- Filter Form -->
                         <form action="" method="post">
                             <!-- Sort by Options -->
                             <div style="margin-bottom: 15px;">
-                            <label for="order_filter" style="font-weight: bold;">Sort Contracts By:</label><br>
-                                <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="purchase_date_desc" <?php echo ($order_filter == 'purchase_date_desc') ? 'selected' : ''; ?>>Purchase Date (Latest to Oldest)</option>
-                                    <option value="purchase_date_asc" <?php echo ($order_filter == 'purchase_date_asc') ? 'selected' : ''; ?>>Purchase Date (Oldest to Latest)</option>
-                                    <option value="purchase_cost_asc" <?php echo ($order_filter == 'purchase_cost_asc') ? 'selected' : ''; ?>>Purchase Cost (Lowest to Highest)</option>
-                                    <option value="purchase_cost_desc" <?php echo ($order_filter == 'purchase_cost_desc') ? 'selected' : ''; ?>>Purchase Cost (Highest to Lowest)</option>
-                                    <option value="first_name_asc" <?php echo ($order_filter == 'first_name_asc') ? 'selected' : ''; ?>>First Name (A-Z)</option>
-                                    <option value="last_name_asc" <?php echo ($order_filter == 'last_name_asc') ? 'selected' : ''; ?>>Last Name (A-Z)</option>
+                                <label for="order_filter" style="font-weight: bold;"><?= __('Sort Contracts By:') ?></label><br>
+                                <select name="order_filter" style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc;">
+                                    <option value="purchase_date_desc" <?= ($order_filter=='purchase_date_desc')?'selected':''; ?>><?= __('Purchase Date (Latest to Oldest)') ?></option>
+                                    <option value="purchase_date_asc" <?= ($order_filter=='purchase_date_asc')?'selected':''; ?>><?= __('Purchase Date (Oldest to Latest)') ?></option>
+                                    <option value="purchase_cost_asc" <?= ($order_filter=='purchase_cost_asc')?'selected':''; ?>><?= __('Purchase Cost (Lowest to Highest)') ?></option>
+                                    <option value="purchase_cost_desc" <?= ($order_filter=='purchase_cost_desc')?'selected':''; ?>><?= __('Purchase Cost (Highest to Lowest)') ?></option>
+                                    <option value="first_name_asc" <?= ($order_filter=='first_name_asc')?'selected':''; ?>><?= __('First Name (A-Z)') ?></option>
+                                    <option value="last_name_asc" <?= ($order_filter=='last_name_asc')?'selected':''; ?>><?= __('Last Name (A-Z)') ?></option>
                                 </select>
                             </div>
 
                             <!-- Volunteer Status Filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="trash_filter" style="font-weight: bold;">Volunteer Status:</label><br>
-                                <select name="trash_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                    <option value="only_active_volunteers" <?php echo ($trash_filter == 'only_active_volunteers') ? 'selected' : ''; ?>>Only Active Volunteers</option>
-                                    <option value="only_in_trash" <?php echo ($trash_filter == 'only_in_trash') ? 'selected' : ''; ?>>Only In Trash</option>
-                                    <option value="all_volunteers" <?php echo ($trash_filter == 'all_volunteers') ? 'selected' : ''; ?>>All Volunteers</option>
+                                <label for="trash_filter" style="font-weight: bold;"><?= __('Volunteer Status:') ?></label><br>
+                                <select name="trash_filter" style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc;">
+                                    <option value="only_active_volunteers" <?= ($trash_filter=='only_active_volunteers')?'selected':''; ?>><?= __('Only Active Volunteers') ?></option>
+                                    <option value="only_in_trash" <?= ($trash_filter=='only_in_trash')?'selected':''; ?>><?= __('Only In Trash') ?></option>
+                                    <option value="all_volunteers" <?= ($trash_filter=='all_volunteers')?'selected':''; ?>><?= __('All Volunteers') ?></option>
                                 </select>
                             </div>
 
                             <!-- Earliest Date Filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="earliest_date_filter" style="font-weight: bold;">Earliest date:</label><br>
-                                <input name="earliest_date_filter" type="date" value="<?php echo $earliest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <label for="earliest_date_filter" style="font-weight: bold;"><?= __('Earliest date:') ?></label><br>
+                                <input name="earliest_date_filter" type="date" value="<?= $earliest_date_filter ?>" style="width:96%; padding:8px; border-radius:5px; border:1px solid #ccc;">
                             </div>
 
                             <!-- Latest Date Filter -->
                             <div style="margin-bottom: 15px;">
-                                <label for="latest_date_filter" style="font-weight: bold;">Latest date:</label><br>
-                                <input name="latest_date_filter" type="date" value="<?php echo $latest_date_filter ?>" style="width: 96%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <label for="latest_date_filter" style="font-weight: bold;"><?= __('Latest date:') ?></label><br>
+                                <input name="latest_date_filter" type="date" value="<?= $latest_date_filter ?>" style="width:96%; padding:8px; border-radius:5px; border:1px solid #ccc;">
                             </div>
 
                             <!-- Reset Filters Link -->
                             <div>
-                                <a href="?reset_filters=1" class="reset-link">Reset Filter</a>
+                                <a href="?reset_filters=1" class="reset-link"><?= __('Reset Filter') ?></a>
                             </div>
 
                             <!-- Submit Button -->
                             <div style="text-align: center;">
-                                <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                                    Apply Filter
+                                <button name="apply_filter" type="submit" style="padding:10px 20px; background-color:#405d9b; color:white; border:none; border-radius:5px; font-size:16px; cursor:pointer;">
+                                    <?= __('Apply Filter') ?>
                                 </button>
                             </div>
                         </form>
+
 
                     </div>
                 </div>
@@ -196,16 +197,19 @@
 
                         <!-- Section Title of Recent Activities Section -->
                         <div id="section_title">
-                            <span>Purchases</span>
+                            <span><?= __('Purchases') ?></span>
                         </div>
 
                         <!-- Counting Number of Elements Post Filter -->
                         <?php 
                         if (empty($all_purchases_data_rows)) {
-                            echo "No purchases found.";
+                            echo __('No purchases found.');
+                        } elseif (count($all_purchases_data_rows) == 1) {
+                            echo '1 ' . __('purchase found.');
                         } else {
-                            echo count($all_purchases_data_rows) . " purchases found.";
-                        } ?>
+                            echo count($all_purchases_data_rows) . ' ' . __('purchases found.');
+                        }
+                        ?>
 
                         <!-- Display Purchases Widgets --> 
                         <?php

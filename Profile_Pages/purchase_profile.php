@@ -161,7 +161,7 @@
                             if ($contract_data_row) {
                                 $volunteer_data_row = fetch_volunteer_data_row($user_id,$volunteer_id);
                                 $date = new DateTime($contract_data_row['start_date']);
-                                $month = $date->format('F'); // Full month name (ex: "January")
+                                $month = __($date->format('F'));
                                 include("../Widget_Pages/contract_widget.php");
                             }
                             ?>

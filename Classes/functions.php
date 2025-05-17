@@ -260,12 +260,46 @@ function update_activities_data(){
 
 
 function formatDate(?string $date_str): string {
+    // Determine language, default to English
+    $lang = $_SESSION['lang'] ?? 'en';
+
+    // Fallback messages in each language
+    $noDateMsg = $lang === 'pt'
+        ? 'Sem data específica fornecida'
+        : 'No specific date provided';
+    $invalidMsg = $lang === 'pt'
+        ? 'Formato de data inválido'
+        : 'Invalid date format';
+
+    // Empty check
     if (empty($date_str)) {
-        return 'No specific date provided';
+        return $noDateMsg;
     }
-    
+
+    // Parse the incoming Y‑m‑d date string
     $date = DateTime::createFromFormat('Y-m-d', $date_str);
-    return $date ? $date->format('l, jS \o\f F Y') : 'Invalid date format';
+    if (!$date) {
+        return $invalidMsg;
+    }
+
+    // Format via IntlDateFormatter for proper localization
+    if ($lang === 'pt') {
+        // Portuguese (Portugal), FULL weekday, day, month, year
+        $fmt = new IntlDateFormatter(
+            'pt_PT',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::NONE,
+            $date->getTimezone(),
+            IntlDateFormatter::GREGORIAN,
+            "EEEE, d 'de' MMMM 'de' y"
+        );
+    } else {
+        // English (United States), FULL weekday, day-month-year with ordinal
+        // Note: IntlDateFormatter doesn’t support ordinals, so we fall back to DateTime::format
+        return $date->format('l, jS \o\f F Y');
+    }
+
+    return $fmt->format($date);
 }
 
 ?>
