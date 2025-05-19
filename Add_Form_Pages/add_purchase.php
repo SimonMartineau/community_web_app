@@ -1,6 +1,7 @@
 <!-- PHP Code -->
 <?php
-include("../Misc/header.php");
+    // Include header
+    include("../Misc/header.php");
 
     // Include classes
     include("../Classes/connect.php");
@@ -64,9 +65,6 @@ include("../Misc/header.php");
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-         
-        <!-- Header Bar -->
-        <?php  ?>
 
         <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">

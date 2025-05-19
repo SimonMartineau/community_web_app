@@ -1,8 +1,9 @@
 <?php
-session_start();
-// Include classes
-include("../Languages/translate.php");
-
+    // Start session
+    session_start();
+    
+    // Include classes
+    include("../Languages/translate.php");
 
 // Handle a POSTed language choice
 if ($_SERVER['REQUEST_METHOD'] === 'POST'

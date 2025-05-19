@@ -1,13 +1,12 @@
 <!-- PHP Code -->
 <?php
-    // Start session
-    session_start();
+    // Include header
+    include("../Misc/header.php");
 
     // Include classes
     include("../Classes/connect.php");
     include("../Classes/edit_volunteer_data.php");
     include("../Classes/functions.php");
-    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
@@ -106,9 +105,6 @@
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-         
-        <!-- Header Bar -->
-        <?php include("../Misc/header.php"); ?>
 
         <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">

@@ -1,13 +1,12 @@
 <!-- PHP Code -->
 <?php
-    // Start session
-    session_start();
+    // Include header
+    include("../Misc/header.php");
 
     // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
     include("../Classes/add_contract.php");
-    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
@@ -27,12 +26,9 @@
     $hours_required = "6"; // Default value
     $entry_clerk = "";
     $additional_notes = "";
-    echo "hello world";
     
-    echo $_SERVER['REQUEST_METHOD'];
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        echo "funny";
 
         // Create a Add_Contract object for form evaluation
         $contract = new Add_Contract($user_id);
@@ -70,9 +66,6 @@
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-
-        <!-- Header Bar -->
-        <?php include("../Misc/header.php"); ?>
 
         <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">

@@ -1,13 +1,12 @@
 <!-- PHP Code -->
 <?php
-    // Start session
-    session_start();
+    // Include header
+    include("../Misc/header.php");
 
     // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
     include("../Classes/add_volunteer.php");
-    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
@@ -29,12 +28,9 @@
     $volunteer_manager = "";
     $entry_clerk = "";
     $additional_notes = "";
-    echo "hello world";
     
-    echo $_SERVER['REQUEST_METHOD'];
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        echo "funny";
 
         // Create a Add_Volunteer object for form evaluation
         $volunteer = new Add_Volunteer($user_id);
@@ -89,9 +85,6 @@
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
-        
-        <!-- Header Bar -->
-        <?php include("../Misc/header.php"); ?>
 
         <!-- Middle Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
