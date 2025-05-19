@@ -31,128 +31,128 @@ class Add_Volunteer{
         $error = false;
 
         // Check first name
-        if (isset($_POST['first_name'])){
+        if (isset($_POST['first_name'])) {
             $value = $_POST['first_name'];
-            if (empty($value)){
-                $this->first_name_error_mes = "*First name is empty.<br>";
-                $error = true; // There is an error
-            } elseif (!preg_match("/^[a-zA-Z-' ]*$/",$value)){
-                $this->first_name_error_mes = "*Please enter a valid first name.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->first_name_error_mes = '*' . __('First name is empty.') . "<br>";
+                $error = true;
+            } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $value)) {
+                $this->first_name_error_mes = '*' . __('Please enter a valid first name.') . "<br>";
+                $error = true;
             }
         }
 
         // Check last name
-        if (isset($_POST['last_name'])){
+        if (isset($_POST['last_name'])) {
             $value = $_POST['last_name'];
-            if (empty($value)){
-                $this->last_name_error_mes = "*Last name is empty.<br>";
-                $error = true; // There is an error
-            } elseif (!preg_match("/^[a-zA-Z-' ]*$/",$value)){
-                $this->last_name_error_mes = "*Please enter a valid last name.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->last_name_error_mes = '*' . __('Last name is empty.') . "<br>";
+                $error = true;
+            } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $value)) {
+                $this->last_name_error_mes = '*' . __('Please enter a valid last name.') . "<br>";
+                $error = true;
             }
         }
 
         // Check gender
-        if (isset($_POST['gender'])){
+        if (isset($_POST['gender'])) {
             $value = $_POST['gender'];
-            if (empty($value)){
-                $this->gender_error_mes = "*Gender is empty.<br>";
-                $error = true; // There is an error
-            } 
-        } else{
-            $this->gender_error_mes = "*Gender is empty.<br>";
-            $error = true; // There is an error
+            if (empty($value)) {
+                $this->gender_error_mes = '*' . __('Gender is empty.') . "<br>";
+                $error = true;
+            }
+        } else {
+            $this->gender_error_mes = '*' . __('Gender is empty.') . "<br>";
+            $error = true;
         }
 
         // Check date of birth
-        if (isset($_POST['date_of_birth'])){
+        if (isset($_POST['date_of_birth'])) {
             $value = $_POST['date_of_birth'];
-            if (empty($value)){
-                $this->date_of_birth_error_mes = "*Date of birth is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->date_of_birth_error_mes = '*' . __('Date of birth is empty.') . "<br>";
+                $error = true;
             }
         }
 
         // Check address
-        if (isset($_POST['address'])){
+        if (isset($_POST['address'])) {
             $value = $_POST['address'];
-            if (empty($value)){
-                $this->address_error_mes = "*Address is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->address_error_mes = '*' . __('Address is empty.') . "<br>";
+                $error = true;
             }
         }
 
         // Check zip code
-        if (isset($_POST['zip_code'])){
+        if (isset($_POST['zip_code'])) {
             $value = $_POST['zip_code'];
-            if (empty($value)){
-                $this->zip_code_error_mes = "*ZIP code is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->zip_code_error_mes = '*' . __('ZIP code is empty.') . "<br>";
+                $error = true;
             }
         }
 
         // Check telephone number
-        if (isset($_POST['telephone_number'])){
+        if (isset($_POST['telephone_number'])) {
             $value = $_POST['telephone_number'];
-            if (empty($value)){
-                $this->telephone_number_error_mes = "*Telephone number is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->telephone_number_error_mes = '*' . __('Telephone number is empty.') . "<br>";
+                $error = true;
             }
         }
 
         // Check email
-        if (isset($_POST['email'])){
+        if (isset($_POST['email'])) {
             $value = $_POST['email'];
-            if (empty($value)){
-                $this->email_error_mes = "*Email is empty.<br>";
-                $error = true; // There is an error
-            } elseif (!filter_var($value, FILTER_VALIDATE_EMAIL)){
-                $this->email_error_mes = "*Please enter a valid email.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->email_error_mes = '*' . __('Email is empty.') . "<br>";
+                $error = true;
+            } elseif (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                $this->email_error_mes = '*' . __('Please enter a valid email.') . "<br>";
+                $error = true;
             }
         }
 
         // Check volunteer availability
-        if (isset($_POST['volunteer_availability'])){
+        if (isset($_POST['volunteer_availability'])) {
             $value = $_POST['volunteer_availability'];
-            if (empty($value)){
-                $this->volunteer_availability_error_mes = "*Volunteer availability is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->volunteer_availability_error_mes = '*' . __('Volunteer availability is empty.') . "<br>";
+                $error = true;
             }
-        } else{
-            $this->volunteer_availability_error_mes = "*Volunteer availability is empty.<br>";
-                $error = true; // There is an error
+        } else {
+            $this->volunteer_availability_error_mes = '*' . __('Volunteer availability is empty.') . "<br>";
+            $error = true;
         }
 
         // Check volunteer interests
-        if (isset($_POST['volunteer_interests'])){
+        if (isset($_POST['volunteer_interests'])) {
             $value = $_POST['volunteer_interests'];
-            if (empty($value)){
-                $this->volunteer_interests_error_mes = "*Volunteer interests is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->volunteer_interests_error_mes = '*' . __('Volunteer interests is empty.') . "<br>";
+                $error = true;
             }
-        } else{
-            $this->volunteer_interests_error_mes = "*Volunteer interests is empty.<br>";
-                $error = true; // There is an error
+        } else {
+            $this->volunteer_interests_error_mes = '*' . __('Volunteer interests is empty.') . "<br>";
+            $error = true;
         }
 
         // Check volunteer manager
-        if (isset($_POST['volunteer_manager'])){
+        if (isset($_POST['volunteer_manager'])) {
             $value = $_POST['volunteer_manager'];
-            if (empty($value)){
-                $this->volunteer_manager_error_mes = "*Volunteer manager is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->volunteer_manager_error_mes = '*' . __('Volunteer manager is empty.') . "<br>";
+                $error = true;
             }
         }
 
         // Check entry clerk name
-        if (isset($_POST['entry_clerk'])){
+        if (isset($_POST['entry_clerk'])) {
             $value = $_POST['entry_clerk'];
-            if (empty($value)){
-                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
-                $error = true; // There is an error
+            if (empty($value)) {
+                $this->entry_clerk_error_mes = '*' . __('Entry clerk is empty.') . "<br>";
+                $error = true;
             }
         }
 

@@ -7,7 +7,7 @@
     include("../Classes/connect.php");
     include("../Classes/functions.php");
     include("../Classes/add_volunteer.php");
-    include("../Languages/portugese.php");
+    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
@@ -30,7 +30,7 @@
     $entry_clerk = "";
     $additional_notes = "";
     
-
+    echo $_SERVER['REQUEST_METHOD'];
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -99,13 +99,13 @@
                 
                 <!-- Title -->
                 <div id="section_title">
-                    <span style="font-size: 24px; font-weight: bold;">Add Volunteer Form</span>
+                    <span style="font-size: 24px; font-weight: bold;"><?php echo __('Add Volunteer Form'); ?></span>
                 </div>
 
                 <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
-                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                        <?php echo isset($submit_success) ? __('Missing information. Could not send. Please try again.') : ''; ?>
                     </span>
                 </div>
 
@@ -115,109 +115,109 @@
                     <!-- First Name Text Input -->
                     <div class="form-field">
                         <label for="first_name">
-                            First Name:
+                            <?php echo __('First Name:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the volunteer's first name (ex: "John").
+                                <span class="hint-text"><?php echo __('Enter the volunteer\'s first name (ex: "John").'); ?></span>
                             </span>
                         </label>
-                        <input name="first_name" type="text" id="text_input" value="<?php echo $first_name ?>">
+                        <input name="first_name" type="text" id="text_input" value="<?php echo $first_name; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Last Name Text Input -->
                     <div class="form-field">
                         <label for="last_name">
-                            Last name:
+                            <?php echo __('Last name:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the volunteer's last name (ex: "Doe").
+                                <span class="hint-text"><?php echo __('Enter the volunteer\'s last name (ex: "Doe").'); ?></span>
                             </span>
                         </label>
-                        <input name="last_name" type="text" id="text_input" value="<?php echo $last_name ?>">
+                        <input name="last_name" type="text" id="text_input" value="<?php echo $last_name; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                     </div>
 
-                    <!-- Gender Bubble Contract -->
+                    <!-- Gender Bubble -->
                     <div class="form-field">
-                        <label for="purchase_date">
-                            Gender:
+                        <label for="gender">
+                            <?php echo __('Gender:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Select the bubble that matches the volunteer's gender.
+                                <span class="hint-text"><?php echo __('Select the bubble that matches the volunteer\'s gender.'); ?></span>
                             </span>
                         </label>
                         <div style="margin-bottom: 20px;">
-                            <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> Male
-                            <input type="radio" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>> Female
-                            <input type="radio" name="gender" value="Other" <?php echo ($gender == 'Other') ? 'checked' : ''; ?>> Other
+                            <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> <?php echo __('Male'); ?>
+                            <input type="radio" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>> <?php echo __('Female'); ?>
+                            <input type="radio" name="gender" value="Other" <?php echo ($gender == 'Other') ? 'checked' : ''; ?>> <?php echo __('Other'); ?>
                         </div>
-                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
+                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Date of Birth Input -->
                     <div class="form-field">
                         <label for="date_of_birth">
-                            Date of Birth: 
+                            <?php echo __('Date of Birth: '); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the volunteer's date of birth. Click the calendar icon to select a date.
+                                <span class="hint-text"><?php echo __('Enter the volunteer\'s date of birth. Click the calendar icon to select a date.'); ?></span>
                             </span>
                         </label>
-                        <input type="date" name="date_of_birth" value="<?php echo $date_of_birth ?>">
+                        <input type="date" name="date_of_birth" value="<?php echo $date_of_birth; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Address Text Input -->
                     <div class="form-field">
                         <label for="address">
-                            Address:
+                            <?php echo __('Address:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the volunteer's address (ex: "123 Main St, City, Country").
+                                <span class="hint-text"><?php echo __('Enter the volunteer\'s address (ex: "123 Main St, City, Country").'); ?></span>
                             </span>
                         </label>
-                        <input name="address" type="text" id="text_input" value="<?php echo $address ?>">
+                        <input name="address" type="text" id="text_input" value="<?php echo $address; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                     </div>
 
                     <!-- ZIP Code Text Input -->
                     <div class="form-field">
                         <label for="zip_code">
-                            ZIP code:
+                            <?php echo __('ZIP code:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the volunteer's ZIP code (ex: "12345").
+                                <span class="hint-text"><?php echo __('Enter the volunteer\'s ZIP code (ex: "12345").'); ?></span>
                             </span>
                         </label>
-                        <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code ?>">
+                        <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Telephone Number Text Input -->
                     <div class="form-field">
                         <label for="telephone_number">
-                            Telephone number:
+                            <?php echo __('Telephone number:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the volunteer's telephone number (ex: "+123456789").
+                                <span class="hint-text"><?php echo __('Enter the volunteer\'s telephone number (ex: "+123456789").'); ?></span>
                             </span>
                         </label>
-                        <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number ?>">
+                        <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                     </div>
 
-                <!-- Email Text Input -->
+                    <!-- Email Text Input -->
                     <div class="form-field">
                         <label for="email">
-                            Email:
+                            <?php echo __('Email:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the volunteer's email address (ex: johndoe@gmail.com).
+                                <span class="hint-text"><?php echo __('Enter the volunteer\'s email address (ex: johndoe@gmail.com).'); ?></span>
                             </span>
                         </label>
-                        <input name="email" type="text" id="text_input" value="<?php echo $email ?>">
+                        <input name="email" type="text" id="text_input" value="<?php echo $email; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Volunteer's Interests Table -->
                     <div class="form-field form-field-top">
                         <label for="volunteer_interests">
-                            Volunteer's Interests 
+                            <?php echo __('Volunteer\'s Interests'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Select the activities the volunteer is interested in doing.
+                                <span class="hint-text"><?php echo __('Select the activities the volunteer is interested in doing.'); ?></span>
                             </span>
                         </label>
                         <div class="form-checkbox-group">
@@ -237,7 +237,7 @@
                                 $checked = in_array($activity, $volunteer_interests) ? "checked" : "";
                                 echo "<div class='form-checkbox-item'>";
                                 echo "<input type='checkbox' name='volunteer_interests[]' value='$activity' $checked>";
-                                echo "<label style='margin: 0;'>$activity</label>";
+                                echo "<label style='margin: 0;'>" . __($activity) . "</label>";
                                 echo "</div>";
                             }
                             ?>
@@ -248,18 +248,19 @@
                     <!-- Volunteer Availability Text Input -->
                     <div class="form-field form-field-top">
                         <label for="volunteer_availability">
-                            Weekly Availability: 
+                            <?php echo __('Weekly Availability:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Select the weekdays and time periods when the volunteer is available.
+                                <span class="hint-text"><?php echo __('Select the weekdays and time periods when the volunteer is available.'); ?></span>
                             </span>
                         </label>
                         <div style="text-align: center;">
                             <table border="1" style="border-collapse: collapse; text-align: center; width: 50%; margin-left: auto; margin-right: auto;">
                                 <tr>
-                                    <th>Day</th>
-                                    <th>Morning</th>
-                                    <th>Afternoon</th>
-                                    <th>Evening</th>
+                                    <th><?php echo __('Weekday'); ?></th>
+                                    <th><?php echo __('Morning'); ?></th>
+                                    <th><?php echo __('Afternoon'); ?></th>
+                                    <th><?php echo __('Evening'); ?></th>
+
                                 </tr>
                                 <?php
                                 
@@ -270,7 +271,7 @@
                                 // Display days and checkboxes
                                 foreach ($week as $weekday) {
                                     echo "<tr>";
-                                    echo "<td><strong>$weekday</strong></td>";
+                                    echo "<td><strong>" . __($weekday) . "</strong></td>";
                                     foreach ($time_periods as $time_period){
                                         $available_moment = "{$weekday}-{$time_period}";
                                         if (in_array($available_moment, $volunteer_availability)){
@@ -290,41 +291,42 @@
                     <!-- Volunteer Manager Text Input -->
                     <div class="form-field">
                         <label for="volunteer_manager">
-                            Volunteer Manager:
+                            <?php echo __('Volunteer Manager:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the name of the volunteer manager (ex: "James Stewart").
+                                <span class="hint-text"><?php echo __('Enter the name of the volunteer manager (ex: "James Stewart").'); ?></span>
                             </span>
                         </label>
-                        <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager ?>">
+                        <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
                     </div>
+
 
                     <!-- Entry Clerk Text Input -->
                     <div class="form-field">
                         <label for="entry_clerk">
-                            Entry Clerk:
+                            <?php echo __('Entry Clerk:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                                <span class="hint-text"><?php echo __('Enter the name of the person filling out this form (ex: "Jane Smith").'); ?></span>
                             </span>
                         </label>
-                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
+                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk; ?>">
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
-                            Additional Notes:
+                            <?php echo __('Additional Notes:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                                <span class="hint-text"><?php echo __('Enter any additional notes or comments about the volunteer. This field is optional.'); ?>
                             </span>
                         </label>                   
-                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="<?php echo __('(Optional)'); ?>"><?php echo $additional_notes ?></textarea>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="input_container">
-                        <input type="submit" id="submit_button" value="Submit">
+                        <input type="submit" id="submit_button" value="<?php echo __('Submit'); ?>">
                     </div>
 
                 </form>

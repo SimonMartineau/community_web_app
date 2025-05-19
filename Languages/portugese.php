@@ -1,6 +1,72 @@
 <?php
 // This file contains the Portuguese translations for the strings used in the "About" page of the application.
 return [
+    'Missing information. Could not send. Please try again.' => 'Informações em falta. Não foi possível enviar. Por favor, tente novamente.',
+    'First name is empty.'                      => 'O primeiro nome está vazio.',
+    'Please enter a valid first name.'           => 'Por favor, insira um primeiro nome válido.',
+
+    'Last name is empty.'                       => 'O sobrenome está vazio.',
+    'Please enter a valid last name.'            => 'Por favor, insira um sobrenome válido.',
+
+    'Gender is empty.'                          => 'O gênero está vazio.',
+
+    'Date of birth is empty.'                   => 'A data de nascimento está<br>vazia.',
+
+    'Address is empty.'                         => 'O endereço está vazio.',
+
+    'ZIP code is empty.'                        => 'O CEP está vazio.',
+
+    'Telephone number is empty.'                => 'O número de telefone está vazio.',
+
+    'Email is empty.'                           => 'O e-mail está vazio.',
+    'Please enter a valid email.'               => 'Por favor, insira um e-mail válido.',
+
+    'Volunteer availability is empty.'          => 'A disponibilidade do voluntário<br>está vazia.',
+
+    'Volunteer interests is empty.'             => 'Os interesses do voluntário estão<br>vazios.',
+
+    'Volunteer manager is empty.'               => 'O gerente de voluntários está<br>vazio.',
+
+    'Entry clerk is empty.'                     => 'O responsável pelo registro está<br>vazio.',
+
+    'Volunteer\'s Interests' => 'Interesses do Voluntário',
+    'Select the activities the volunteer is interested in doing.' => 'Selecione as atividades pelas quais o voluntário tem interesse.',
+    'Weekly Availability:' => 'Disponibilidade Semanal:',
+    'Select the weekdays and time periods when the volunteer is available.' => 'Selecione os dias da semana e os períodos de tempo em que o voluntário está disponível.',
+    'Add Volunteer Form' => 'Formulário de Adição de Voluntário',
+    'First Name:' => 'Nome:',
+    'Enter the volunteer\'s first name (ex: "John").' => 'Insira o primeiro nome do voluntário (ex: "John").',
+
+    'Last name:' => 'Sobrenome:',
+    'Enter the volunteer\'s last name (ex: "Doe").' => 'Insira o sobrenome do voluntário (ex: "Doe").',
+
+    'Gender:' => 'Gênero:',
+    'Select the bubble that matches the volunteer\'s gender.' => 'Selecione a opção que corresponde ao gênero do voluntário.',
+    'Male' => 'Masculino',
+    'Female' => 'Feminino',
+    'Other' => 'Outro',
+
+    'Date of Birth: ' => 'Data de Nascimento:',
+    'Enter the volunteer\'s date of birth. Click the calendar icon to select a date.' => 'Insira a data de nascimento do voluntário. Clique no ícone de calendário para selecionar uma data.',
+
+    'Address:' => 'Endereço:',
+    'Enter the volunteer\'s address (ex: "123 Main St, City, Country").' => 'Insira o endereço do voluntário (ex: "123 Main St, Cidade, País").',
+
+    'ZIP code:' => 'CEP:',
+    'Enter the volunteer\'s ZIP code (ex: "12345").' => 'Insira o CEP do voluntário (ex: "12345").',
+
+    'Telephone number:' => 'Número de telefone:',
+    'Enter the volunteer\'s telephone number (ex: "+123456789").' => 'Insira o número de telefone do voluntário (ex: "+123456789").',
+
+    'Email:' => 'Email:',
+    'Enter the volunteer\'s email address (ex: johndoe@gmail.com).' => 'Insira o endereço de email do voluntário (ex: johndoe@gmail.com).',
+    'Volunteer Manager:' => 'Gerente de Voluntários:',
+    'Enter the name of the volunteer manager (ex: "James Stewart").' => 'Insira o nome do gerente de voluntários (ex: "James Stewart").',
+    'Entry Clerk:' => 'Responsável pelo Registro:',
+    'Enter the name of the person filling out this form (ex: "Jane Smith").' => 'Insira o nome da pessoa que está preenchendo este formulário (ex: "Jane Smith").',
+    'Additional Notes:' => 'Notas Adicionais:',
+    'Enter any additional notes or comments about the volunteer. This field is optional.' => 'Insira quaisquer notas ou comentários adicionais sobre o voluntário. Este campo é opcional.',
+    '(Optional)' => '(Opcional)',
     'Activity Info' => 'Informações da Atividade',
     'Duration: ' => 'Duração: ',
     'Hours' => 'Horas',
@@ -30,11 +96,8 @@ return [
     'Weekly Availability'           => 'Disponibilidade Semanal',
     'Weekday'                        => 'Dia da Semana',
     'Volunteer Info'                                    => 'Informações do Voluntário',
-    'Address:'                                          => 'Morada:',
     'Zip-code:'                                         => 'Código Postal:',
     'Phone:'                                            => 'Telefone:',
-    'Email:'                                            => 'Email:',
-    'Volunteer Manager:'                                => 'Responsável:',
     'Volunteer currently has a contract.'               => 'Voluntário com contrato.',
     'Notifications'                                     => 'Notificações',
     'Volunteer doesn\'t currently have a contract.'     => 'Voluntário sem contrato.',
@@ -174,13 +237,6 @@ return [
     'Activity Domains:'                                                 => 'Domínios da Atividade:',
     'Select the domains this activity is related to.'                   => 'Selecione os domínios relacionados com esta atividade.',
 
-    'Entry Clerk:'                                                      => 'Responsável do Registo:',
-    'Enter the name of the person filling out this form (ex: "Jane Smith").' =>
-        'Introduza o nome da pessoa que está a preencher este formulário (ex.: "Jane Smith").',
-
-    'Additional Notes:'                                                 => 'Notas Adicionais:',
-    'Enter any additional notes or comments about the volunteer. This field is optional.' =>
-        'Introduza quaisquer notas ou comentários adicionais sobre o voluntário. Este campo é opcional.',
 
     'Submit'                                                            => 'Submeter',
 

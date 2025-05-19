@@ -28,7 +28,7 @@
     $entry_clerk = "";
     $additional_notes = "";
     
-
+    echo $_SERVER['REQUEST_METHOD'];
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -156,17 +156,17 @@
                     <!-- Additional Notes Text Input -->
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
-                            Additional Notes:
+                            <?php echo __('Additional Notes:'); ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                                <span class="hint-text"><?php echo __('Enter any additional notes or comments about the volunteer. This field is optional.'); ?>
                             </span>
                         </label>                   
-                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="<?php echo __('(Optional)'); ?>"><?php echo $additional_notes ?></textarea>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="input_container">
-                        <input type="submit" id="submit_button" value="Submit">
+                        <input type="submit" id="submit_button" value="<?php echo __('Submit'); ?>">
                     </div>
 
                 </form>

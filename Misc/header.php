@@ -40,7 +40,6 @@ $lang = $_SESSION['lang'] ?? 'pt';
                     <a href="../Listing_Pages/all_contracts.php" class="menu_button"><?= __('Contracts') ?></a>
                     <a href="../Listing_Pages/all_purchases.php" class="menu_button"><?= __('Purchases') ?></a>
                     <a href="../Profile_Pages/about.php" class="menu_button"><?= __('About') ?></a>
-                    <!--<a href="../Profile_Pages/contact.php" class="menu_button"><?= __('Contact') ?></a>-->
                 </div>
 
                 <!-- Language Dropdown -->
@@ -49,6 +48,7 @@ $lang = $_SESSION['lang'] ?? 'pt';
                         <span class="flag"><?= $_SESSION['lang'] === 'pt' ? '🇵🇹' : '🇬🇧' ?></span>
                         <?= $_SESSION['lang'] === 'pt' ? __('Português') : __('English') ?>
                     </button>
+                    
                     <div class="dropdown-content">
                         <form method="post">
                             <input type="hidden" name="lang" value="en">

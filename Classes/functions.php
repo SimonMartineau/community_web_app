@@ -235,7 +235,7 @@ function update_junction_data(){
             ), -1);";
 
     // Update the database
-    $DB->save(query: $contract_id_query);
+    $DB->save($contract_id_query);
 }
 
 
