@@ -156,6 +156,17 @@ class Add_Volunteer{
             }
         }
 
+        // Check if the keys exist in the data array
+        if (isset($data['first_name']) && isset($data['last_name']) && isset($data['gender']) && isset($data['date_of_birth']) && 
+            isset($data['address']) && isset($data['zip_code']) && isset($data['telephone_number']) && isset($data['email']) && 
+            isset($data['volunteer_availability']) && isset($data['volunteer_interests']) && isset($data['volunteer_manager']) && 
+            isset($data['entry_clerk'])) {
+            // All keys exist
+        } else {
+            $error = true; // There is an error
+        }
+
+
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error

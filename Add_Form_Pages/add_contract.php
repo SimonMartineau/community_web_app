@@ -27,10 +27,12 @@
     $hours_required = "6"; // Default value
     $entry_clerk = "";
     $additional_notes = "";
+    echo "hello world";
     
     echo $_SERVER['REQUEST_METHOD'];
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        echo "funny";
 
         // Create a Add_Contract object for form evaluation
         $contract = new Add_Contract($user_id);

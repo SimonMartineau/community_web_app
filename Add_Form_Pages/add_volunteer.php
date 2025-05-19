@@ -29,10 +29,12 @@
     $volunteer_manager = "";
     $entry_clerk = "";
     $additional_notes = "";
+    echo "hello world";
     
     echo $_SERVER['REQUEST_METHOD'];
     // Check if user has submitted info
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        echo "funny";
 
         // Create a Add_Volunteer object for form evaluation
         $volunteer = new Add_Volunteer($user_id);

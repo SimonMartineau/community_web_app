@@ -85,6 +85,14 @@ class Add_Contract{
             }
         }
 
+        // Check if the necessary keys exist in the data array
+            if (isset($data['start_date']) && isset($data['end_date']) && isset($data['points_deposit']) && isset($data['hours_required']) && isset($data['entry_clerk'])) {
+                // All keys exist, proceed with adding the contract
+            } else {
+                // One or more keys do not exist, handle the error
+                return false;
+            }
+
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error

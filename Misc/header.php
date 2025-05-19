@@ -1,4 +1,9 @@
 <?php
+session_start();
+// Include classes
+include("../Languages/translate.php");
+
+
 // Handle a POSTed language choice
 if ($_SERVER['REQUEST_METHOD'] === 'POST'
     && isset($_POST['lang'])
@@ -11,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
 }
 
 // Determine current language (fallback to Portugese)
-$lang = $_SESSION['lang'] ?? 'pt';
+$_SESSION['lang'] = $_SESSION['lang'] ?? 'pt';
+$lang = $_SESSION['lang'];
 ?>
 
 
