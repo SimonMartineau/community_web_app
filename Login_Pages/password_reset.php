@@ -6,95 +6,95 @@
     // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
+    include("../Languages/translate.php");
 
     require "mail.php";
 
     // Connect to the database
     $DB = new Database();
 
+    // Handle lang switch
+    if (isset($_GET['lang']) && in_array($_GET['lang'], ['en','pt'])) {
+        $_SESSION['lang'] = $_GET['lang'];
+        // Redirect back to the same page without the lang param
+        $url = strtok($_SERVER['REQUEST_URI'], '?');
+        header("Location: $url");
+        exit;
+    }
+
+    // Fallback default
+    if (!isset($_SESSION['lang'])) {
+        $_SESSION['lang'] = 'en';
+    }
+
     // Initialize error
-    $error = [];
+$error = [];
 
-    // Set default mode
-    $mode = "enter_email"; // Default mode
-    if (isset($_GET['mode'])) {
-        $mode = $_GET['mode'];
+// Set default mode
+$mode = "enter_email"; // Default mode
+if (isset($_GET['mode'])) {
+    $mode = $_GET['mode'];
+}
+
+// Something is posted
+if (count($_POST) > 0) {
+    switch ($mode) {
+        case "enter_email":
+            // Change to enter code page
+            $email = $_POST['email'];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error[] = __("Invalid email format.");
+            } elseif (!valid_email($DB, $email)) {
+                $error[] = __("Email not found.");
+            } else {
+                $_SESSION['forgot']['email'] = $email; // To use later
+                prepare_email($DB, $email);
+                header("Location: password_reset.php?mode=enter_code");
+                die;
+            }
+            break;
+
+        case "enter_code":
+            $code = $_POST['code'];
+            $result = is_code_correct($DB, $code);
+
+            if ($result == "The code is correct.") {
+                $_SESSION['forgot']['code'] = $code;
+                header("Location: password_reset.php?mode=enter_password");
+                die;
+            } else {
+                $error[] = __($result);
+            }
+            break;
+
+        case "enter_password":
+            $password = $_POST['new_password'];
+            $password2 = $_POST['new_password2'];
+
+            if (strlen($password) < 8) {
+                $error[] = __("Password must be at least 8 characters.");
+            } elseif (!preg_match('/[A-Z]/', $password)) {
+                $error[] = __("Password must contain at least one uppercase letter.");
+            } elseif (!preg_match('/[a-z]/', $password)) {
+                $error[] = __("Password must contain at least one lowercase letter.");
+            } elseif (!preg_match('/[0-9]/', $password)) {
+                $error[] = __("Password must contain at least one number.");
+            } elseif (!preg_match('/[\W_]/', $password)) {
+                $error[] = __("Password must contain at least one special character.");
+            } elseif ($password != $password2) {
+                $error[] = __("Passwords do not match.");
+            } elseif (!isset($_SESSION['forgot']['email']) || !isset($_SESSION['forgot']['code'])) {
+                header("Location: password_reset.php?mode=enter_email");
+                die;
+            } else {
+                save_password($DB, $password);
+                unset($_SESSION['forgot']);
+                header("Location: login.php");
+                die;
+            }
+            break;
     }
-
-    // Something is posted
-    if (count($_POST) > 0){
-        switch ($mode) {
-            case "enter_email":
-                // Change to enter code page
-                $email = $_POST['email'];
-                if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                    // Invalid email format
-                    $error[] = "Invalid email format.";
-                } elseif (!valid_email($DB, $email)){
-                    // Email not found
-                    $error[] = "Email not found.";
-                } else{
-                    $_SESSION['forgot']['email'] = $email; // To use later
-                    prepare_email($DB, $email);
-                    header("Location: password_reset.php?mode=enter_code");
-                    die;
-                }
-                break;
-                
-            case "enter_code":
-                $code = $_POST['code'];
-                $result = is_code_correct($DB, $code);
-
-                if ($result == "The code is correct."){
-                    // Change to enter new password page
-                    $_SESSION['forgot']['code'] = $code;
-                    header("Location: password_reset.php?mode=enter_password");
-                    die;
-                } else {
-                    $error[] = $result;
-                }
-                break;
-                
-            case "enter_password":                    
-                // Change to login page
-                $password = $_POST['new_password'];
-                $password2 = $_POST['new_password2'];
-
-                if (strlen($password) < 8){
-                    // Password too short
-                    $error[] = "Password must be at least 8 characters.";
-                } elseif (!preg_match('/[A-Z]/', $password)){
-                    // Password must contain at least one uppercase letter
-                    $error[] = "Password must contain at least one uppercase letter.";
-                } elseif (!preg_match('/[a-z]/', $password)){
-                    // Password must contain at least one lowercase letter
-                    $error[] = "Password must contain at least one lowercase letter.";
-                } elseif (!preg_match('/[0-9]/', $password)){
-                    // Password must contain at least one number
-                    $error[] = "Password must contain at least one number.";
-                } elseif (!preg_match('/[\W_]/', $password)){
-                    // Password must contain at least one special character
-                    $error[] = "Password must contain at least one special character.";
-                } elseif ($password != $password2){
-                    // Passwords do not match
-                    $error[] = "Passwords do not match.";
-                    // Security check to make sure the user is not trying to access this page directly
-                } elseif(!isset($_SESSION['forgot']['email']) || !isset($_SESSION['forgot']['code'])){
-                    // Redirect to enter email page
-                    header("Location: password_reset.php?mode=enter_email");
-                    die;
-                } else{
-                    save_password($DB, $password);
-                    // Clear session
-                    if (isset($_SESSION['forgot'])){
-                        unset($_SESSION['forgot']);
-                    }
-                    header("Location: login.php");
-                    die;
-                }
-        }
-            
-    }
+}
 
 
     function prepare_email($DB, $email){
@@ -174,13 +174,14 @@
                 <div class="login-container">
 
                     <!-- Title -->
-                    <h2>Lost Your Password?</h2>
+                    <h2><?= __('Lost Your Password?') ?></h2>
+
                     <form action="password_reset.php?mode=enter_email" method="post">
-                    
+
                         <!-- Messages -->
                         <?php 
                             foreach ($error as $err){
-                                echo "<div class='error'>$err</div>";
+                                echo "<div class='error'>" . __($err) . "</div>";
                             }
                         ?>
 
@@ -188,16 +189,21 @@
                         <div class="form-group">
                             <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
                                 <span class="material-symbols-outlined">mail</span>
-                                <strong>Email</strong>
+                                <strong><?= __('Email') ?></strong>
                             </label>
-                            <input type="text" id="email" name="email" placeholder="Enter your email" required>
+                            <input type="text" id="email" name="email" placeholder="<?= __('Enter your email') ?>" required>
                         </div>
-                        <button type="submit" class="btn">Get New Password</button>
+
+                        <button type="submit" class="btn"><?= __('Get New Password') ?></button>
                     </form>
 
                     <!-- Footer Links -->
                     <div class="footer">
-                        <p>Already have an account? <a href="login.php">Login</a></p>
+                        <p><?= __('Already have an account?') ?> <a href="login.php"><?= __('Login') ?></a></p>
+                        <p>
+                            <a href="?lang=en">Switch to English?</a> |
+                            <a href="?lang=pt">Mudar para português?</a>
+                        </p>
                     </div>
                 </div>
 
@@ -212,30 +218,36 @@
                 <div class="login-container">
 
                     <!-- Title -->
-                    <h2>Enter the code</h2>
+                    <h2><?= __('Enter the code') ?></h2>
+
                     <form action="password_reset.php?mode=enter_code" method="post">
-                    
+
                         <!-- Messages -->
                         <?php 
                             foreach ($error as $err){
-                                echo "<div class='error'>$err</div>";
+                                echo "<div class='error'>" . __($err) . "</div>";
                             }
                         ?>
 
                         <!-- Code Input -->
                         <div class="form-group">
-                            <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                            <label for="code" style="display: inline-flex; align-items: center; gap: 0.25rem;">
                                 <span class="material-symbols-outlined">mail</span>
-                                <strong>Code</strong>
+                                <strong><?= __('Code') ?></strong>
                             </label>
-                            <input type="text" id="code" name="code" placeholder="Enter the code" required>
+                            <input type="text" id="code" name="code" placeholder="<?= __('Enter the code') ?>" required>
                         </div>
-                        <button type="submit" class="btn">Submit</button>
+
+                        <button type="submit" class="btn"><?= __('Submit') ?></button>
                     </form>
 
                     <!-- Footer Links -->
                     <div class="footer">
-                        <p>Already have an account? <a href="login.php">Login</a></p>
+                        <p><?= __('Already have an account?') ?> <a href="login.php"><?= __('Login') ?></a></p>
+                        <p>
+                            <a href="?lang=en">Switch to English?</a> |
+                            <a href="?lang=pt">Mudar para português?</a>
+                        </p>
                     </div>
                 </div>
 
@@ -249,38 +261,43 @@
                 <div class="login-container">
 
                     <!-- Title -->
-                    <h2>New password</h2>
+                    <h2><?= __('New password') ?></h2>
+
                     <form action="password_reset.php?mode=enter_password" method="post">
-                    
+
                         <!-- Messages -->
                         <?php 
                             foreach ($error as $err){
-                                echo "<div class='error'>$err</div>";
+                                echo "<div class='error'>" . __($err) . "</div>";
                             }
                         ?>
 
                         <!-- New Password Input -->
                         <div class="form-group">
-                            <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
-                                <span class="material-symbols-outlined">mail</span>
-                                <strong>Enter your new password</strong>
+                            <label for="new_password" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <span class="material-symbols-outlined">lock</span>
+                                <strong><?= __('Enter your new password') ?></strong>
                             </label>
-                            <input type="password" id="password" name="new_password" placeholder="Enter your new password" required>
+                            <input type="password" id="new_password" name="new_password" placeholder="<?= __('Enter your new password') ?>" required>
                             <br><br>
-                            
-                            <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
-                                <span class="material-symbols-outlined">mail</span>
-                                <strong>Retype your new password</strong>
+
+                            <label for="new_password2" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <span class="material-symbols-outlined">lock</span>
+                                <strong><?= __('Retype your new password') ?></strong>
                             </label>
-                            <input type="password" id="password" name="new_password2" placeholder="Retype your new password" required>
-                        
+                            <input type="password" id="new_password2" name="new_password2" placeholder="<?= __('Retype your new password') ?>" required>
                         </div>
-                        <button type="submit" class="btn">Submit</button>
+
+                        <button type="submit" class="btn"><?= __('Submit') ?></button>
                     </form>
 
                     <!-- Footer Links -->
                     <div class="footer">
-                        <p>Already have an account? <a href="login.php">Login</a></p>
+                        <p><?= __('Already have an account?') ?> <a href="login.php"><?= __('Login') ?></a></p>
+                        <p>
+                            <a href="?lang=en">Switch to English?</a> |
+                            <a href="?lang=pt">Mudar para português?</a>
+                        </p>
                     </div>
                 </div>
 
@@ -290,7 +307,5 @@
 
     ?>
 
-
-    
 </body>
 </html>

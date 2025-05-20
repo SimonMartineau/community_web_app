@@ -6,9 +6,24 @@
     // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
+    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
+
+    // Handle lang switch
+    if (isset($_GET['lang']) && in_array($_GET['lang'], ['en','pt'])) {
+        $_SESSION['lang'] = $_GET['lang'];
+        // Redirect back to the same page without the lang param
+        $url = strtok($_SERVER['REQUEST_URI'], '?');
+        header("Location: $url");
+        exit;
+    }
+
+    // Fallback default
+    if (!isset($_SESSION['lang'])) {
+        $_SESSION['lang'] = 'en';
+    }
 
     // Initialize error
     $error = [];
@@ -84,7 +99,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?= __('CivicLink | Signup') ?></title>
+    <title><?= __('CivicLink | Signup') ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="../Styles/login_style.css">
 </head>
@@ -93,16 +108,14 @@
     <div class="login-container">
 
         <!-- Title -->
-        <h2>Sign up</h2>
+        <h2><?= __('Sign up') ?></h2>
         <form action="signup.php" method="post">
 
-        
-        
             <!-- Messages -->
             <?php
                 // Check if signup was successful
                 foreach ($error as $err){
-                    echo "<div class='error'>$err</div>";
+                    echo "<div class='error'>" . __($err) . "</div>";
                 }
 
                 // Check if email already exists.
@@ -110,7 +123,7 @@
                     echo "
                     <p class='error'>
                         <span class='material-symbols-outlined error-icon'>error_outline</span>
-                        An account already has that email.
+                        " . __('An account already has that email.') . "
                     </p>";
                     unset($_SESSION['email_exists']);
                 }
@@ -120,7 +133,7 @@
                     echo "
                     <p class='error'>
                         <span class='material-symbols-outlined error-icon'>error_outline</span>
-                        Invalid email format.
+                        " . __('Invalid email format.') . "
                     </p>";
                     unset($_SESSION['invalid_email']);
                 }
@@ -130,28 +143,34 @@
             <div class="form-group">
                 <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
                     <span class="material-symbols-outlined">mail</span>
-                    <strong> Email</strong>
+                    <strong><?= __('Email') ?></strong>
                 </label>
-                <input type="text" id="email" name="email" placeholder="Enter your email" required
-                    value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                <input type="text" id="email" name="email" placeholder="<?= __('Enter your email') ?>" required
+                    value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
             </div>
 
             <!-- Password Input -->
             <div class="form-group">
                 <label for="password" style="display: inline-flex; align-items: center; gap: 0.25rem;">
                     <span class="material-symbols-outlined">lock</span>
-                    <strong>Password (min 8 characters)</strong>
+                    <strong><?= __('Password (min 8 characters)') ?></strong>
                 </label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input type="password" id="password" name="password" placeholder="<?= __('Enter your password') ?>" required>
             </div>
-            <button type="submit" class="btn">Sign Up</button>
+
+            <button type="submit" class="btn"><?= __('Sign Up') ?></button>
         </form>
 
         <!-- Footer Links -->
         <div class="footer">
-            <p>Already have an account? <a href="login.php">Login</a></p>
-            <p><a href="password_reset.php">Forgot password?</a></p>
+            <p><?= __('Already have an account?') ?> <a href="login.php"><?= __('Login') ?></a></p>
+            <p><a href="password_reset.php"><?= __('Forgot password?') ?></a></p>
+            <p>
+                <a href="?lang=en">Switch to English?</a> |
+                <a href="?lang=pt">Mudar para português?</a>
+            </p>
         </div>
+
     </div>
 </body>
 </html>

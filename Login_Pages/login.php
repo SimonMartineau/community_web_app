@@ -6,9 +6,24 @@
     // Include necessary files
     include("../Classes/connect.php");
     include("../Classes/functions.php");
+    include("../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
+
+    // Handle lang switch
+    if (isset($_GET['lang']) && in_array($_GET['lang'], ['en','pt'])) {
+        $_SESSION['lang'] = $_GET['lang'];
+        // Redirect back to the same page without the lang param
+        $url = strtok($_SERVER['REQUEST_URI'], '?');
+        header("Location: $url");
+        exit;
+    }
+
+    // Fallback default
+    if (!isset($_SESSION['lang'])) {
+        $_SESSION['lang'] = 'en';
+    }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -56,7 +71,7 @@
     <div class="login-container">
 
         <!-- Title -->
-        <h2>Login</h2>
+        <h2><?= __('Login') ?></h2>
         <form action="login.php" method="post">
 
             <!-- Messages -->
@@ -66,7 +81,7 @@
                     echo "
                     <p class='success'>
                         <span class='material-symbols-outlined success-icon'>check_circle</span>
-                        Signup successful!
+                        " . __('Signup successful!') . "
                     </p>";
                     unset($_SESSION['signup_successful']);
                 }
@@ -76,7 +91,7 @@
                     echo "
                     <p class='error'>
                         <span class='material-symbols-outlined error-icon'>error_outline</span>
-                        Invalid email or password.
+                        " . __('Invalid email or password.') . "
                     </p>";
                     unset($_SESSION['login_failed']);
                 }
@@ -86,27 +101,43 @@
             <div class="form-group">
                 <label for="email" style="display: inline-flex; align-items: center; gap: 0.25rem;">
                     <span class="material-symbols-outlined">mail</span>
-                    <strong> Email</strong>
+                    <strong><?= __('Email') ?></strong>
                 </label>
-                <input type="text" id="email" name="email" placeholder="Enter your email" required
-                    value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                <input 
+                    type="text" 
+                    id="email" 
+                    name="email" 
+                    placeholder="<?= __('Enter your email') ?>" 
+                    required
+                    value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>"
+                >
             </div>
 
             <!-- Password Input -->
             <div class="form-group">
                 <label for="password" style="display: inline-flex; align-items: center; gap: 0.25rem;">
                     <span class="material-symbols-outlined">lock</span>
-                    <strong> Password</strong>
+                    <strong><?= __('Password') ?></strong>
                 </label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="<?= __('Enter your password') ?>" 
+                    required
+                >
             </div>
-            <button type="submit" class="btn">Log In</button>
+
+            <button type="submit" class="btn"><?= __('Log In') ?></button>
         </form>
 
         <!-- Footer Links -->
         <div class="footer">
-            <p>Don't have an account? <a href="signup.php">Sign up</a></p>
-            <p><a href="password_reset.php">Forgot password?</a></p>
+            <p><?= __("Don't have an account? ") ?><a href="signup.php"><?= __('Sign up') ?></a></p>
+            <p><a href="password_reset.php"><?= __('Forgot password?') ?></a></p>
+                <a href="?lang=en">Switch to English?</a> |
+                <a href="?lang=pt">Mudar para português?</a>
+            </p>
         </div>
     </div>
 </body>
