@@ -183,7 +183,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CivicLink | Activity Profile</title>
+        <title><?= __('CivicLink | Activity Profile') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/style.css">
     </head>
@@ -196,14 +196,12 @@
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
-            <!-- Submenu Button Area -->
-
             <!-- Edit Activity Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
                 <a href="../Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
-                        <span>Edit Activity Profile</span>
+                        <span><?php echo __('Edit Activity Profile'); ?></span>
                     </button>
                 </a>
             </div>
@@ -213,31 +211,31 @@
                 // If the activity is not trashed, propose delete option
                 if($activity_data_row['trashed'] == 0){
                     // Show delete button (default case)
-                ?>
-                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('Are you sure you want to delete this profile? It will be placed in the trash.')">
-                            <button id="submenu_button">
-                                <!-- Hidden input to confirm source -->
-                                <input type="hidden" name="delete_activity" value="1">
-                                <span class="material-symbols-outlined" style="margin-right: 8px;">delete</span>
-                                <span>Trash Activity</span>
-                            </button>
-                        </form>
-                    </div>
-                <?php
-                } else{
-                // Propose restore option for trashed activity
-                ?>
-                    <div style="text-align: right; padding: 10px 20px; display: inline-block;">
-                        <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('Are you sure you want to restore this profile from trash?')">
-                            <button id="submenu_button">
-                                <!-- Hidden input to confirm source -->
-                                <input type="hidden" name="restore_activity" value="1">
-                                <span class="material-symbols-outlined" style="margin-right: 8px;">restore_from_trash</span>
-                                <span>Restore Activity</span>
-                            </button>
-                        </form>
-                    </div>
+            ?>
+                <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                    <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('<?php echo __('Are you sure you want to delete this profile? It will be placed in the trash.'); ?>')">
+                        <button id="submenu_button">
+                            <!-- Hidden input to confirm source -->
+                            <input type="hidden" name="delete_activity" value="1">
+                            <span class="material-symbols-outlined" style="margin-right: 8px;">delete</span>
+                            <span><?php echo __('Trash Activity'); ?></span>
+                        </button>
+                    </form>
+                </div>
+            <?php
+                } else {
+                    // Propose restore option for trashed activity
+            ?>
+                <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                    <form method="POST" action="../Profile_Pages/activity_profile.php?activity_id=<?php echo $activity_id; ?>" onsubmit="return confirm('<?php echo __('Are you sure you want to restore this profile from trash?'); ?>')">
+                        <button id="submenu_button">
+                            <!-- Hidden input to confirm source -->
+                            <input type="hidden" name="restore_activity" value="1">
+                            <span class="material-symbols-outlined" style="margin-right: 8px;">restore_from_trash</span>
+                            <span><?php echo __('Restore Activity'); ?></span>
+                        </button>
+                    </form>
+                </div>
                 <?php
                 }
             ?>
@@ -251,108 +249,108 @@
 
                     <!-- Section Title of Contact Section -->
                     <div id="section_title">
-                        <span>Activity Profile</span>
+                        <span><?php echo __('Activity Profile'); ?></span>
                     </div>
 
                     <!-- Activity Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Information</h2>
+                        <h2 style="font-size: 20px; color: #555;"><?php echo __('Information'); ?></h2>
 
                         <!-- Activity Is Trashed -->
                         <?php if ($activity_data_row['trashed'] == 1): ?>
                             <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                <span class="material-symbols-outlined" style="margin-right: 5px;">delete</span>
-                                    Activity is trashed.
+                                <span class="material-symbols-outlined" style="margin-right: 5px;"><?php echo __('delete'); ?></span>
+                                <?php echo __('Activity is trashed.'); ?>
                             </span>
                         <?php else: ?>
                             <!-- Activity is Upcoming -->
                             <?php if ($activity_data_row['activity_date'] > date('Y-m-d')): ?>
                                 <span class="upcoming" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                    <span class="material-symbols-outlined" style="margin-right: 5px;">event_upcoming</span>
-                                        Upcoming activity.
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;"><?php echo __('event_upcoming'); ?></span>
+                                    <?php echo __('Upcoming activity.'); ?>
                                 </span>
                             <?php endif; ?>
 
                             <!-- Activity is Today -->
                             <?php if ($activity_data_row['activity_date'] == date('Y-m-d')): ?>
                                 <span class="today" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                    <span class="material-symbols-outlined" style="margin-right: 5px;">today</span>
-                                        Activity is today.
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;"><?php echo __('today'); ?></span>
+                                    <?php echo __('Activity is today.'); ?>
                                 </span>
                             <?php endif; ?>
 
                             <!-- Activity is Past -->
                             <?php if ($activity_data_row['activity_date'] < date('Y-m-d')): ?>
                                 <span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
-                                    <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
-                                        Activity is complete.
+                                    <span class="material-symbols-outlined" style="margin-right: 5px;"><?php echo __('check_circle'); ?></span>
+                                    <?php echo __('Activity is complete.'); ?>
                                 </span>
                             <?php endif; ?>
                         <?php endif; ?>
 
-                        <p><strong>Name:</strong> <?php echo htmlspecialchars($activity_data_row['activity_name']); ?></p>
-                        <p><strong>Number of Places:</strong> 
+                        <p><strong><?php echo __('Name:'); ?></strong> <?php echo htmlspecialchars($activity_data_row['activity_name']); ?></p>
+                        <p><strong><?php echo __('Number of Places:'); ?></strong> 
                             <?php 
                                 $count = $activity_data_row['number_of_places'];
-                                echo htmlspecialchars($count) . ' ' . (($count == 1) ? 'Place' : 'Places'); 
+                                echo htmlspecialchars($count) . ' ' . __($count == 1 ? 'Place' : 'Places'); 
                             ?>
                         </p>
-                        <p><strong>Number of Participants:</strong> 
+                        <p><strong><?php echo __('Number of Participants:'); ?></strong> 
                             <?php 
                                 $count = $activity_data_row['number_of_participants'];
-                                echo htmlspecialchars($count) . ' ' . (($count == 1) ? 'Participant' : 'Participants'); 
+                                echo htmlspecialchars($count) . ' ' . __($count == 1 ? 'Participant' : 'Participants'); 
                             ?>
                         </p>
-                        <p><strong>Duration:</strong> 
+                        <p><strong><?php echo __('Duration:'); ?></strong> 
                             <?php 
                                 $duration = $activity_data_row['activity_duration'];
-                                echo htmlspecialchars($duration) . ' ' . (($duration == 1) ? 'Hour' : 'Hours'); 
+                                echo htmlspecialchars($duration) . ' ' . __($duration == 1 ? 'Hour' : 'Hours'); 
                             ?>
                         </p>
-                        <p><strong>Date:</strong> <?php echo htmlspecialchars(formatDate($activity_data_row['activity_date'])); ?></p>
-                        <p><strong>Location:</strong> 
+                        <p><strong><?php echo __('Date:'); ?></strong> <?php echo htmlspecialchars(formatDate($activity_data_row['activity_date'])); ?></p>
+                        <p><strong><?php echo __('Location:'); ?></strong> 
                             <?php 
                                 $location = $activity_data_row['activity_location'];
-                                echo htmlspecialchars((($location == "") ? 'Not Added' : $location)); 
+                                echo htmlspecialchars($location == "" ? __('Not Added') : $location); 
                             ?>
                         </p>
-                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($activity_data_row['entry_clerk']); ?></p>
+                        <p><strong><?php echo __('Entry Clerk:'); ?></strong> <?php echo htmlspecialchars($activity_data_row['entry_clerk']); ?></p>
                     </div>
 
                     <!-- Time Periods -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Time Periods</h2>
+                        <h2 style="font-size: 20px; color: #555;"><?php echo __('Time Periods'); ?></h2>
                         <?php if (!empty($activity_time_periods_data_rows)): ?>
                             <ul style="list-style-type: disc; padding-left: 20px;">
                                 <?php foreach ($activity_time_periods_data_rows as $activity_time_periods_data_row): ?>
-                                    <li><?php echo htmlspecialchars($activity_time_periods_data_row['time_period'] ?: 'No specific time period provided'); ?></li>
+                                    <li><?php echo htmlspecialchars(__($activity_time_periods_data_row['time_period']) ?: __('No specific time period provided')); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php else: ?>
-                            <p>No time period provided.</p>
+                            <p><?php echo __('No time period provided.'); ?></p>
                         <?php endif; ?>
                     </div>
 
                     <!-- Domains -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Domains</h2>
+                        <h2 style="font-size: 20px; color: #555;"><?php echo __('Domains'); ?></h2>
                         <?php if (!empty($activity_domains_data_rows)): ?>
                             <ul style="list-style-type: disc; padding-left: 20px;">
                                 <?php foreach ($activity_domains_data_rows as $activity_domains_data_row): ?>
-                                    <li><?php echo htmlspecialchars($activity_domains_data_row['domain'] ?: 'No specific interest provided'); ?></li>
+                                    <li><?php echo htmlspecialchars(__($activity_domains_data_row['domain']) ?: __('No specific interest provided')); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php else: ?>
-                            <p>No domain provided.</p>
+                            <p><?php echo __('No domain provided.'); ?></p>
                         <?php endif; ?>
                     </div>
 
                     <!-- Additional Details -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($activity_data_row['additional_notes']) ?: 'None'; ?></p>
-                        <p><strong>Registration Date:</strong> <?php echo htmlspecialchars(formatDate($activity_data_row['registration_date'])); ?></p>
-                        <p><strong>Profile In Trash:</strong> <?php echo htmlspecialchars($activity_data_row['trashed'] ? "Yes" : "No"); ?></p>
+                        <h2 style="font-size: 20px; color: #555;"><?php echo __('Additional Details'); ?></h2>
+                        <p><strong><?php echo __('Additional Notes:'); ?></strong> <?php echo htmlspecialchars($activity_data_row['additional_notes']) ?: __('None'); ?></p>
+                        <p><strong><?php echo __('Registration Date:'); ?></strong> <?php echo htmlspecialchars(formatDate($activity_data_row['registration_date'])); ?></p>
+                        <p><strong><?php echo __('Profile In Trash:'); ?></strong> <?php echo htmlspecialchars($activity_data_row['trashed'] ? __('Yes') : __('No')); ?></p>
                     </div>
                 </div>
 
@@ -364,25 +362,33 @@
                     <div id="medium_rectangle">
 
                         <!-- Toggle Buttons -->
-                         <div id="widget_toggle_buttons">
-                            <button id="show_participants_button" class="active" onclick="ToggleWidgets('current_participants', this)">Show Participants</button>
-                            <button id="matching_volunteers_button" onclick="ToggleWidgets('matching_volunteers', this)">Show Matching Volunteers</button>
-                        </div> 
+                        <div id="widget_toggle_buttons">
+                            <button id="show_participants_button" class="active" onclick="ToggleWidgets('current_participants', this)">
+                                <?php echo __('Show Participants'); ?>
+                            </button>
+                            <button id="matching_volunteers_button" onclick="ToggleWidgets('matching_volunteers', this)">
+                                <?php echo __('Show Matching Volunteers'); ?>
+                            </button>
+                        </div>
 
                         <!-- Display Participants Widgets --> 
                         <div id="current_participants_widgets" class="widget-container">
                             <?php
                                 // Counting the number of elements post filter
                                 if (empty($all_current_participants_data_rows)) {
-                                    echo "This activity doesn't have any participants yet.";
+                                    echo __('This activity doesn\'t have any participants yet.');
                                 } else {
-                                    echo "This activity has " . count($all_current_participants_data_rows) . ((count($all_current_participants_data_rows) == 1) ?" participant." : " participants.");
+                                    $count = count($all_current_participants_data_rows);
+                                    echo sprintf(
+                                        __('This activity has %d %s.'),
+                                        $count,
+                                        ($count == 1) ? __('participant') : __('participants')
+                                    );
                                 }
-                           
 
                                 // Display the widgets
-                                if($all_current_participants_data_rows){
-                                    foreach($all_current_participants_data_rows as $volunteer_data_row){
+                                if ($all_current_participants_data_rows) {
+                                    foreach ($all_current_participants_data_rows as $volunteer_data_row) {
                                         $volunteer_id = $volunteer_data_row['id'];
                                         $interest_data_rows = fetch_volunteer_interest_data_rows($user_id, $volunteer_id);
                                         $availability_data_rows = fetch_volunteer_availability_data_rows($user_id, $volunteer_id);
@@ -400,36 +406,36 @@
 
                                 <!-- Interests Filter -->
                                 <label class="switch">
-                                    <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ?'checked' : ''); ?>>>
+                                    <input type="checkbox" name="interest_filter" <?php echo ($interest_filter ? 'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Matching Interests
+                                <span><?php echo __('Matching Interests'); ?>
                                     <span class="hint">?
-                                        <span class="hint-text">If checked, only volunteers with matching interests with the activity will be shown.
+                                        <span class="hint-text"><?php echo __('If checked, only volunteers with matching interests with the activity will be shown.'); ?></span>
                                     </span>
                                 </span>
                                 <br>
 
                                 <!-- Weekday Filter -->
                                 <label class="switch">
-                                    <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ?'checked' : ''); ?>>
+                                    <input type="checkbox" name="weekday_filter" <?php echo ($weekday_filter ? 'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Matching Weekdays
+                                <span><?php echo __('Matching Weekdays'); ?>
                                     <span class="hint">?
-                                        <span class="hint-text">If checked, only volunteers available on the same weekday as the activity will be shown.
+                                        <span class="hint-text"><?php echo __('If checked, only volunteers available on the same weekday as the activity will be shown.'); ?></span>
                                     </span>
                                 </span>
                                 <br>
 
                                 <!-- Time Period Filter -->
                                 <label class="switch">
-                                    <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ?'checked' : ''); ?>>
+                                    <input type="checkbox" name="time_period_filter" <?php echo ($time_period_filter ? 'checked' : ''); ?>>
                                     <span class="slider round"></span>
                                 </label>
-                                <span>Matching Time Periods
+                                <span><?php echo __('Matching Time Periods'); ?>
                                     <span class="hint">?
-                                        <span class="hint-text">If checked, only volunteers available on the same time periods as the activity will be shown.
+                                        <span class="hint-text"><?php echo __('If checked, only volunteers available on the same time periods as the activity will be shown.'); ?></span>
                                     </span>
                                 </span>
                                 <br>
@@ -437,7 +443,7 @@
                                 <!-- Submit Button -->
                                 <div style="text-align: center;">
                                     <button name="apply_filter" type="submit" style="padding: 10px 20px; background-color: #405d9b; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                                        Apply Filter
+                                        <?php echo __('Apply Filter'); ?>
                                     </button>
                                 </div>
                             </form>
@@ -458,14 +464,18 @@
                             <?php
                                 // Counting the number of elements post filter
                                 if (empty($all_matching_participants_data_rows)) {
-                                    echo "No volunteers found.";
+                                    echo __('No volunteers found.');
                                 } else {
-                                    echo "This activity has " . count($all_matching_participants_data_rows) . ((count($all_matching_participants_data_rows) == 1) ? " volunteer that matches." : " volunteers that match");
-                                } 
+                                    $count = count($all_matching_participants_data_rows);
+                                    echo __('This activity has') . ' ' . $count . ' ' . 
+                                        ($count == 1 
+                                            ? __('volunteer that matches.') 
+                                            : __('volunteers that match'));
+                                }
 
                                 // Display the widgets
-                                if($all_matching_participants_data_rows){
-                                    foreach($all_matching_participants_data_rows as $volunteer_data_row){
+                                if ($all_matching_participants_data_rows) {
+                                    foreach ($all_matching_participants_data_rows as $volunteer_data_row) {
                                         $volunteer_id = $volunteer_data_row['id'];
                                         $interest_data_rows = fetch_volunteer_interest_data_rows($user_id, $volunteer_id);
                                         $availability_data_rows = fetch_volunteer_availability_data_rows($user_id, $volunteer_id);

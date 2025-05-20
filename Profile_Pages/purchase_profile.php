@@ -53,7 +53,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CivicLink | Purchase Profile</title>
+        <title><?= __('CivicLink | Purchase Profile') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/style.css">
     </head>
@@ -66,26 +66,24 @@
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
-            <!-- Submenu Button Area -->
-
             <!-- Edit Purchase Button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?php echo $purchase_id; ?>" style="text-decoration: none; display: inline-block;">
+            <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_purchase_data.php?purchase_id=<?= $purchase_id ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
-                        <span>Edit Purchase Profile</span>
+                        <span><?= __('Edit Purchase Profile') ?></span>
                     </button>
                 </a>
             </div>
 
             <!-- Delete Purchase Button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <form method="POST" action="../Profile_Pages/purchase_profile.php?purchase_id=<?php echo $purchase_id; ?>" onsubmit="return confirm('Are you sure you want to delete this purchase?')">
+            <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                <form method="POST" action="../Profile_Pages/purchase_profile.php?purchase_id=<?= $purchase_id ?>" onsubmit="return confirm('<?= __('Are you sure you want to delete this purchase?') ?>')">
                     <button id="submenu_button">
                         <!-- Hidden input to confirm source -->
                         <input type="hidden" name="delete_purchase" value="1">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">delete_forever</span>
-                        <span>Delete Purchase</span>
+                        <span><?= __('Delete Purchase') ?></span>
                     </button>
                 </form>
             </div>
@@ -98,32 +96,32 @@
 
                     <!-- Section Title of Contact Section -->
                     <div id="section_title">
-                        <span>Purchase Profile</span>
+                        <span><?= __('Purchase Profile') ?></span>
                     </div>
 
                     <!-- Notifications -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <?php if ($purchase_data_row['contract_id'] == -1): ?>
-                            <h2 style="font-size: 20px; color: #555;">Notifications</h2>
+                            <h2 style="font-size: 20px; color: #555;"><?= __('Notifications') ?></h2>
                             <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
                                 <span class="material-symbols-outlined" style="margin-right: 5px;">warning</span>
-                                Purchase date is not in any contract.
+                                <?= __('Purchase date is not in any contract.') ?>
                             </span>
                             <span style="display: flex; align-items: center; width: 100%;">
                                 <span class="material-symbols-outlined" style="margin-right: 5px;">subdirectory_arrow_right</span>
-                                Please change the purchase date so it's inside a contract.
+                                <?= __('Please change the purchase date so it\'s inside a contract.') ?>
                             </span>
                         <?php endif; ?>
                     </div>
 
                     <!-- Purchase Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Information</h2>
-                        <p><strong>Item Names:</strong> <?php echo htmlspecialchars($purchase_data_row['item_names']); ?></p>
-                        <p><strong>Total Cost:</strong> <?php echo htmlspecialchars($purchase_data_row['total_cost']) . " Points"; ?></p>
-                        <p><strong>Purchase Date:</strong> <?php echo htmlspecialchars(formatDate($purchase_data_row['purchase_date'])); ?></p>
-                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($purchase_data_row['entry_clerk']); ?></p>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($purchase_data_row['additional_notes']) ?: 'None'; ?></p>
+                        <h2 style="font-size: 20px; color: #555;"><?= __('Information') ?></h2>
+                        <p><strong><?= __('Item Names:') ?></strong> <?php echo htmlspecialchars($purchase_data_row['item_names']); ?></p>
+                        <p><strong><?= __('Total Cost:') ?></strong> <?php echo htmlspecialchars($purchase_data_row['total_cost']) . ' ' . __('Points'); ?></p>
+                        <p><strong><?= __('Purchase Date:') ?></strong> <?php echo htmlspecialchars(formatDate($purchase_data_row['purchase_date'])); ?></p>
+                        <p><strong><?= __('Entry Clerk:') ?></strong> <?php echo htmlspecialchars($purchase_data_row['entry_clerk']); ?></p>
+                        <p><strong><?= __('Additional Notes:') ?></strong> <?php echo htmlspecialchars($purchase_data_row['additional_notes']) ?: __('None'); ?></p>
                     </div>
                 </div>
 
@@ -135,8 +133,8 @@
 
                         <!-- Toggle Buttons -->
                         <div id="widget_toggle_buttons">
-                            <button class="active" onclick="ToggleWidgets('volunteer', this)">Show Volunteer</button>
-                            <button onclick="ToggleWidgets('contract', this)">Show Contract</button>
+                            <button class="active" onclick="ToggleWidgets('volunteer', this)"><?= __('Show Volunteer') ?></button>
+                            <button onclick="ToggleWidgets('contract', this)"><?= __('Show Contract') ?></button>
                         </div>
 
                         <!-- Display Volunteer Widget -->

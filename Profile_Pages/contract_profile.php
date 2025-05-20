@@ -65,7 +65,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CivicLink | Contract Profile</title>
+        <title><?= __('CivicLink | Contract Profile') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <link rel="stylesheet" href="../Styles/style.css">
     </head>
@@ -78,26 +78,24 @@
         <div style="width: 1500px; min-height: 400px; margin:auto;">
             <br>
 
-            <!-- Submenu Button Area -->
-
             <!-- Edit Contract Button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?php echo $contract_id; ?>" style="text-decoration: none; display: inline-block;">
+            <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                <a href="../Edit_Form_Pages/edit_contract_data.php?contract_id=<?= $contract_id ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
-                        <span>Edit Contract Info</span>
+                        <span><?= __('Edit Contract Info') ?></span>
                     </button>
                 </a>
             </div>
 
             <!-- Delete Contract Button -->
-            <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <form method="POST" action="../Profile_Pages/contract_profile.php?contract_id=<?php echo $contract_id; ?>" onsubmit="return confirm('Are you sure you want to delete this contract?')">
+            <div style="text-align: right; padding: 10px 20px; display: inline-block;">
+                <form method="POST" action="../Profile_Pages/contract_profile.php?contract_id=<?= $contract_id ?>" onsubmit="return confirm('<?= __('Are you sure you want to delete this contract?') ?>')">
                     <button id="submenu_button">
                         <!-- Hidden input to confirm source -->
                         <input type="hidden" name="delete_contract" value="1">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">delete_forever</span>
-                        <span>Delete Contract</span>
+                        <span><?= __('Delete Contract') ?></span>
                     </button>
                 </form>
             </div>
@@ -108,63 +106,59 @@
                 <!-- Left Area; Contract Information Area -->
                 <div id="medium_rectangle" style="flex:0.57;">
 
-                    <!-- Section Title of Contact Section -->
+                    <!-- Section Title of Contract Section -->
                     <div id="section_title">
-                        <span>Contract Profile</span>
+                        <span><?= __('Contract Profile') ?></span>
                     </div>
 
                     <!-- Warnings -->
                     <div class="information_section" style="margin-bottom: 20px;">
                         <?php if ($contract_data_row['points_deposit'] - $contract_data_row['points_spent'] < 0): ?>
-                            <h2 style="font-size: 20px; color: #555;">Warnings</h2>
+                            <h2 style="font-size: 20px; color: #555;"><?= __('Warnings') ?></h2>
                             <span class="warning" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
                                 <span class="material-symbols-outlined" style="margin-right: 5px;">warning</span>
-                                Volunteer has spent too many points for this contract.
+                                <?= __('Volunteer has spent too many points for this contract.') ?>
                             </span>
                             <span style="display: flex; align-items: center; width: 100%;">
                                 <span class="material-symbols-outlined" style="margin-right: 5px;">subdirectory_arrow_right</span>
-                                Please lower the points spent or increase the points deposit.
+                                <?= __('Please lower the points spent or increase the points deposit.') ?>
                             </span>
                         <?php endif; ?>
                     </div>
 
                     <!-- Contract Information -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Information</h2>
+                        <h2 style="font-size: 20px; color: #555;"><?= __('Information') ?></h2>
 
                         <?php if ($contract_data_row['contract_active'] == 1) : ?>
                             <p><span class="upcoming" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
                                 <span class="material-symbols-outlined" style="margin-right: 5px;">contract</span>
-                                    Contract is active.
-                                </span>
-                            </p>
+                                <?= __('Contract is active.') ?>
+                            </span></p>
                         <?php endif; ?>
 
                         <?php if ($contract_data_row['contract_active'] == 0) : ?>
                             <p><span class="valid" style="display: flex; align-items: center; width: 100%; font-weight: bold;">
                                 <span class="material-symbols-outlined" style="margin-right: 5px;">check_circle</span>
-                                    Contract is complete.
-                                </span>
-                            </p>
+                                <?= __('Contract is complete.') ?>
+                            </span></p>
                         <?php endif; ?>
 
                         <!-- Display Contract Info -->
-                        <p><strong>Start Date:</strong> <?php echo htmlspecialchars(string: formatDate($contract_data_row['start_date'])); ?></p>
-                        <p><strong>End Date:</strong> <?php echo htmlspecialchars(formatDate($contract_data_row['end_date'])); ?></p>
-                        <p><strong>Points Deposit:</strong> <?php echo htmlspecialchars($contract_data_row['points_deposit']) . " Points"; ?></p>
-                        <p><strong>Points Spent:</strong> <?php echo htmlspecialchars($contract_data_row['points_spent']) . " Points"; ?></p>
-                        <p><strong>Hours Required:</strong> <?php echo htmlspecialchars($contract_data_row['hours_required']) . " Hours"; ?></p>
-                        <p><strong>Hours Assigned:</strong> <?php echo htmlspecialchars($contract_data_row['hours_completed']) . " Hours"; ?></p>
-                        <p><strong>Entry Clerk:</strong> <?php echo htmlspecialchars($contract_data_row['entry_clerk']); ?></p>
-
+                        <p><strong><?= __('Start Date:') ?></strong> <?= htmlspecialchars(formatDate($contract_data_row['start_date'])) ?></p>
+                        <p><strong><?= __('End Date:') ?></strong> <?= htmlspecialchars(formatDate($contract_data_row['end_date'])) ?></p>
+                        <p><strong><?= __('Points Deposit:') ?></strong> <?= htmlspecialchars($contract_data_row['points_deposit']) . ' ' . __('Points') ?></p>
+                        <p><strong><?= __('Points Spent:') ?></strong> <?= htmlspecialchars($contract_data_row['points_spent']) . ' ' . __('Points') ?></p>
+                        <p><strong><?= __('Hours Required:') ?></strong> <?= htmlspecialchars($contract_data_row['hours_required']) . ' ' . __('Hours') ?></p>
+                        <p><strong><?= __('Hours Assigned:') ?></strong> <?= htmlspecialchars($contract_data_row['hours_completed']) . ' ' . __('Hours') ?></p>
+                        <p><strong><?= __('Entry Clerk:') ?></strong> <?= htmlspecialchars($contract_data_row['entry_clerk']) ?></p>
                     </div>
 
                     <!-- Additional Details -->
                     <div class="information_section" style="margin-bottom: 20px;">
-                        <h2 style="font-size: 20px; color: #555;">Additional Details</h2>
-                        <p><strong>Additional Notes:</strong> <?php echo htmlspecialchars($contract_data_row['additional_notes']) ?: 'None'; ?></p>
-                    </div>
-                    
+                        <h2 style="font-size: 20px; color: #555;"><?= __('Additional Details') ?></h2>
+                        <p><strong><?= __('Additional Notes:') ?></strong> <?= htmlspecialchars($contract_data_row['additional_notes']) ?: __('None') ?></p>
+                    </div>                    
                 </div>
 
                 <!-- Right Area -->
@@ -175,9 +169,9 @@
 
                         <!-- Toggle Buttons -->
                         <div id="widget_toggle_buttons">
-                            <button class="active" onclick="ToggleWidgets('volunteer', this)">Show Volunteer</button>
-                            <button onclick="ToggleWidgets('purchases', this)">Show Purchases</button>
-                            <button onclick="ToggleWidgets('activities', this)">Show Activities</button>
+                            <button class="active" onclick="ToggleWidgets('volunteer', this)"><?= __('Show Volunteer') ?></button>
+                            <button onclick="ToggleWidgets('purchases', this)"><?= __('Show Purchases') ?></button>
+                            <button onclick="ToggleWidgets('activities', this)"><?= __('Show Activities') ?></button>
                         </div>
 
 
