@@ -1,7 +1,91 @@
 <?php
 // This file contains the Portuguese translations for the strings used in the "About" page of the application.
 return [
-    'Missing information. Could not send. Please try again.' => 'Informações em falta. Não foi possível enviar. Por favor, tente novamente.',
+    '*Activity date is empty.<br>'  => '*A data da atividade<br>está vazia.<br>',
+    '*Activity dates are empty.<br>'  => '*As datas das atividades<br>estão vazias.<br>',
+    '*Activity time period is empty.<br>'  => '*O período de tempo da atividade<br>está vazio.<br>',
+    '*Activity domains is empty.<br>'      => '*Os domínios da atividade<br>estão vazios.<br>',
+    '*Entry clerk is empty.<br>'           => '*O operador de registo<br>está vazio.<br>',
+    '*Activity name is empty.<br>'                     => '*O nome da atividade<br>está vazio.<br>',
+    '*Number of participants is empty.<br>'            => '*O número de participantes<br>está vazio.<br>',
+    '*Please enter a number.<br>'                      => '*Por favor, insira um número.<br>',
+    '*Please enter a positive number.<br>'             => '*Por favor, insira um número positivo.<br>',
+    '*Please enter a number less than 1000.<br>'       => '*Por favor, insira um número<br>inferior a 1000.<br>',
+    '*Activity duration is empty.<br>'                 => '*A duração da atividade<br>está vazia.<br>',
+
+    'Enter the dates when the activity takes place. Select the calendar icon to choose a date. You can select multiple dates if this activity occurs multiple times.'                                                             
+                            => 'Insira as datas em que a atividade ocorre. Selecione o ícone de calendário para escolher uma data. Você pode selecionar várias datas se essa atividade ocorrer várias vezes.',
+    'Activity Dates:'                                                              => 'Datas da Atividade:',
+    'Activity Date:'                                                              => 'Data da Atividade:',
+    'Enter the date to edit when this activity takes place. Select the calendar icon to choose a date.',
+    'Activity Time Period:'                                          => 'Período de Tempo da Atividade:',
+    'Select the time periods when the activity takes place.'        => 'Selecione os períodos de tempo em que a atividade decorre.',
+    'Morning'                                                       => 'Manhã',
+    'Afternoon'                                                     => 'Tarde',
+    'Evening'                                                       => 'Noite',
+    'Activity Domains:'                                             => 'Domínios da Atividade:',
+    'Select the domains this activity is related to.'               => 'Selecione os domínios a que esta atividade está relacionada.',
+    'Organization of community events'                              => 'Organização de eventos comunitários',
+    'Library support'                                               => 'Apoio à biblioteca',
+    'Help in the community store'                                   => 'Ajuda na loja comunitária',
+    'Support in the community grocery store'                        => 'Apoio na mercearia comunitária',
+    'Cleaning and maintenance of public spaces'                     => 'Limpeza e manutenção de espaços públicos',
+    'Participation in urban gardening projects'                     => 'Participação em projetos de jardinagem urbana',
+    'Entry Clerk:'                                                  => 'Operador de Registo:',
+    'Enter the name of the person filling out this form (ex: "Jane Smith").'
+                                                                    => 'Insira o nome da pessoa que preenche este formulário (ex.: "Jane Smith").',
+    'Additional Notes:'                                             => 'Notas Adicionais:',
+    'Enter any additional notes or comments about the volunteer. This field is optional.'
+                                                                    => 'Insira quaisquer notas ou comentários adicionais sobre o voluntário. Este campo é opcional.',
+    '(Optional)'                                                    => '(Opcional)',
+    'Submit'                                                        => 'Enviar',
+
+    'Activity Name:'                                                  => 'Nome da Atividade:',
+    'Enter the name of the activity (ex: "Community Cleanup").'       => 'Insira o nome da atividade (ex.: "Limpeza Comunitária").',
+    'Number of Places:'                                               => 'Número de Lugares:',
+    'Enter the number of places available for this activity (ex: 10).' 
+                                                                      => 'Insira o número de lugares disponíveis para esta atividade (ex.: 10).',
+    'Activity Duration:'                                              => 'Duração da Atividade:',
+    'Enter the duration (in hours) of the activity (ex: 3).'          => 'Insira a duração (em horas) da atividade (ex.: 3).',
+    'Activity Location:'                                              => 'Local da Atividade:',
+    'Enter the location of the activity (ex: "Miratejo"). This field is optional.'  
+                                                                      => 'Insira o local da atividade (ex.: "Miratejo"). Este campo é opcional.',
+    'Add Activity Form'                                             => 'Adicionar Formulário de Atividade',
+    'Edit Activity Form'                                             => 'Editar Formulário de Atividade',
+    '*Item names is empty.<br>'                        => '*Os nomes dos itens estão vazios.<br>',
+    '*Total cost is empty.<br>'                        => '*O custo total está vazio.<br>',
+    '*Please enter a valid number.<br>'                => '*Por favor, insira um número válido.<br>',
+    '*Purchase date is empty.<br>'                     => '*A data da compra está vazia.<br>',
+    'Item Names:'                                                     => 'Nomes dos Itens:',
+    'Enter the names of the purchased items (ex: Apples).'            => 'Insira os nomes dos itens comprados (ex.: Maçãs).',
+    'Total Cost:'                                                     => 'Custo Total:',
+    'Enter the total cost (in points) of the purchase (ex: 3).'       => 'Insira o custo total (em pontos) da compra (ex.: 3).',
+    'Purchase Date:'                                                  => 'Data da Compra:',
+    'Enter the date of the purchase. Click the calendar icon to choose a date.'  
+                                                                      => 'Insira a data da compra. Clique no ícone do calendário para escolher uma data.',
+    'Edit Purchase Data'                                             => 'Editar Dados da Compra',
+    'Purchase Form'                                                  => 'Formulário de Compra',
+    'Missing information. Could not send. Please try again.'          => 'Faltam informações. Não foi possível enviar. Por favor, tente novamente.',
+
+    'Edit Contract Data'                    => 'Editar Dados do Contrato',
+    '*Start Date is empty.<br>'                  => '*A data de início está vazia.<br>',
+    '*End Date is empty.<br>'                    => '*A data de término está vazia.<br>',
+    '*Points amount is empty.<br>'               => '*A quantidade de pontos está vazia.<br>',
+
+    'Contract Form'                                                   => 'Formulário de Contrato',
+    'Start Date:'                                                     => 'Data de Início:',
+    'Enter the date the contract is issued. Select the calendar icon to choose a date.'  
+                                                                    => 'Insira a data de emissão do contrato. Selecione o ícone de calendário para escolher uma data.',
+    'End Date:'                                                       => 'Data de Término:',
+    'Enter the date the contract is valid until. Select the calendar icon to choose a date.'  
+                                                                    => 'Insira a data até à qual o contrato é válido. Selecione o ícone de calendário para escolher uma data.',
+    'Points Deposit:'                                                 => 'Depósito de Pontos:',
+    'Enter the number of points given to the volunteer for the contract (ex: 30). By default, it\'s 30 points.'  
+                                                                    => 'Insira o número de pontos atribuídos ao voluntário para o contrato (ex.: 30). Por padrão, são 30 pontos.',
+    'Hours Required:'                                                 => 'Horas Requeridas:',
+    'Enter the number of hours required for the contract (ex: 6). By default, it\'s 6 hours.'  
+                                                                    => 'Insira o número de horas exigidas para o contrato (ex.: 6). Por padrão, são 6 horas.',
+
     'First name is empty.'                      => 'O primeiro nome está vazio.',
     'Please enter a valid first name.'           => 'Por favor, insira um primeiro nome válido.',
 
@@ -62,11 +146,6 @@ return [
     'Enter the volunteer\'s email address (ex: johndoe@gmail.com).' => 'Insira o endereço de email do voluntário (ex: johndoe@gmail.com).',
     'Volunteer Manager:' => 'Gerente de Voluntários:',
     'Enter the name of the volunteer manager (ex: "James Stewart").' => 'Insira o nome do gerente de voluntários (ex: "James Stewart").',
-    'Entry Clerk:' => 'Responsável pelo Registro:',
-    'Enter the name of the person filling out this form (ex: "Jane Smith").' => 'Insira o nome da pessoa que está preenchendo este formulário (ex: "Jane Smith").',
-    'Additional Notes:' => 'Notas Adicionais:',
-    'Enter any additional notes or comments about the volunteer. This field is optional.' => 'Insira quaisquer notas ou comentários adicionais sobre o voluntário. Este campo é opcional.',
-    '(Optional)' => '(Opcional)',
     'Activity Info' => 'Informações da Atividade',
     'Duration: ' => 'Duração: ',
     'Hours' => 'Horas',
@@ -126,9 +205,6 @@ return [
     'Cost:'                                   => 'Custo:',
     'Points'                                  => 'Pontos',
     'Purchase date is not in any contract.'  => 'Data da compra não está num contrato.',
-    'Morning'                                    => 'Manhã',
-    'Afternoon'                                  => 'Tarde',
-    'Evening'                                    => 'Noite',
     'Filter'                                    => 'Filtro',
     'Sort Purchases By:'                        => 'Ordenar Compras Por:',
     'Purchase Date (Latest to Oldest)'          => 'Data de Compra (Mais Recentes para Mais Antigos)',
@@ -177,12 +253,6 @@ return [
     'Full'                                                     => 'Lotada',
     'Empty'                                                    => 'Vazia',
     'Domains:'                                                 => 'Domínios:',
-    'Organization of community events'                         => 'Organização de eventos comunitários',
-    'Library support'                                          => 'Apoio à biblioteca',
-    'Help in the community store'                             => 'Ajuda na loja comunitária',
-    'Support in the community grocery store'                   => 'Apoio na mercearia comunitária',
-    'Cleaning and maintenance of public spaces'                => 'Limpeza e manutenção de espaços públicos',
-    'Participation in urban gardening projects'                => 'Participação em projetos de jardinagem urbana',
     'Activity Period:'                                         => 'Período da Atividade:',
     'Available Days:'                                          => 'Dias Disponíveis:',
     'Monday'                                                   => 'Segunda‑feira',
@@ -213,32 +283,6 @@ return [
     'No volunteers found.'                                            => 'Nenhum voluntário encontrado.',
     'volunteer found.'                                                => 'voluntário encontrado.',
     'volunteers found.'                                               => 'voluntários encontrados.',
-
-    'Activity Name:'                                                    => 'Nome da Atividade:',
-    'Enter the name of the activity (ex: "Community Cleanup").'         => 'Introduza o nome da atividade (ex.: "Limpeza Comunitária").',
-
-    'Number of Places:'                                                 => 'Número de Vagas:',
-    'Enter the number of places available for this activity (ex: 10).'  => 'Introduza o número de vagas disponíveis para esta atividade (ex.: 10).',
-
-    'Activity Duration:'                                                => 'Duração da Atividade:',
-    'Enter the duration (in hours) of the activity (ex: 3).'            => 'Introduza a duração (em horas) da atividade (ex.: 3).',
-
-    'Activity Location:'                                                => 'Local da Atividade:',
-    'Enter the location of the activity (ex: "Miratejo"). This field is optional.' =>
-        'Introduza o local da atividade (ex.: "Miratejo"). Este campo é opcional.',
-
-    'Activity Dates:'                                                   => 'Datas da Atividade:',
-    'Enter the dates when the activity takes place. Select the calendar icon to choose a date. You can select multiple dates if this activity occurs multiple times.' =>
-        'Introduza as datas em que a atividade decorre. Selecione o ícone de calendário para escolher uma data. Pode selecionar várias datas se a atividade ocorrer várias vezes.',
-
-    'Activity Time Period:'                                             => 'Períodos da Atividade:',
-    'Select the time periods when the activity takes place.'            => 'Selecione os períodos do dia em que a atividade decorre.',
-
-    'Activity Domains:'                                                 => 'Domínios da Atividade:',
-    'Select the domains this activity is related to.'                   => 'Selecione os domínios relacionados com esta atividade.',
-
-
-    'Submit'                                                            => 'Submeter',
 
     'CivicLink: A Volunteer & Activity Management Application' =>
         'CivicLink: Uma Aplicação de Gestão de Voluntários e Atividades',

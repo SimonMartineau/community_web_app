@@ -454,7 +454,7 @@
 
                         <!-- Toggle Buttons -->
                         <div id="widget_toggle_buttons">
-                            <button id="recent_contracts_button" class="active" onclick="ToggleWidgets('contracts', this)">Latest Contract</button>
+                            <button id="recent_contracts_button" class="active" onclick="ToggleWidgets('contracts', this)">Latest Contracts</button>
                             <button id="recent_purchases_button" onclick="ToggleWidgets('purchases', this)">Latest Purchases</button>
                             <button id="recent_activities_button" onclick="ToggleWidgets('activities', this)">Registered Activities</button>
                             <button id="matching_activities_button" onclick="ToggleWidgets('matching_activities', this)">Matching Activities</button>

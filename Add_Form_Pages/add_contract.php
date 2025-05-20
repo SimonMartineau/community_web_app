@@ -75,95 +75,95 @@
 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Contract Form</span>
+                    <span style="font-size: 24px; font-weight: bold;"><?= __('Contract Form') ?></span>
                 </div>
 
                 <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
-                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                        <?= isset($submit_success) ? __('Missing information. Could not send. Please try again.') : '' ?>
                     </span>
                 </div>
 
                 <!-- Form Area -->
-                <form method="post" action="../Add_Form_Pages/add_contract.php?volunteer_id=<?php echo $volunteer_id; ?>" class="form-layout" form>
+                <form method="post" action="../Add_Form_Pages/add_contract.php?volunteer_id=<?= $volunteer_id ?>" class="form-layout" form>
 
                     <!-- Start Date Input -->
                     <div class="form-field">
                         <label for="start_date">
-                            Start Date: 
+                            <?= __('Start Date:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the date the contract is issued. Select the calendar icon to choose a date.
+                                <span class="hint-text"><?= __('Enter the date the contract is issued. Select the calendar icon to choose a date.') ?></span>
                             </span>
                         </label>
-                        <input name="start_date" type="date" value="<?php echo $start_date ?>" value="<?php echo $start_date ?>">
-                        <span id="error_message"><?php echo isset($contract) ? $contract->start_date_error_mes : ''; ?></span>
+                        <input name="start_date" type="date" value="<?= $start_date ?>">
+                        <span id="error_message"><?= isset($contract) ? $contract->start_date_error_mes : '' ?></span>
                     </div>
 
                     <!-- End Date Input -->
                     <div class="form-field">
                         <label for="end_date">
-                            End Date: 
+                            <?= __('End Date:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the date the contract is valid until. Select the calendar icon to choose a date.
+                                <span class="hint-text"><?= __('Enter the date the contract is valid until. Select the calendar icon to choose a date.') ?></span>
                             </span>
                         </label>
-                        <input name="end_date" type="date" value="<?php echo $end_date ?>" value="<?php echo $end_date ?>">
-                        <span id="error_message"><?php echo isset($contract) ? $contract->validity_date_error_mes : ''; ?></span>
+                        <input name="end_date" type="date" value="<?= $end_date ?>">
+                        <span id="error_message"><?= isset($contract) ? $contract->validity_date_error_mes : '' ?></span>
                     </div>
 
                     <!-- Points Text Input -->
                     <div class="form-field">
                         <label for="points_deposit">
-                            Points Deposit:
+                            <?= __('Points Deposit:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the number of points given to the volunteer for the contract (ex: 30). By default, it's 30 points.
+                                <span class="hint-text"><?= __('Enter the number of points given to the volunteer for the contract (ex: 30). By default, it\'s 30 points.') ?></span>
                             </span>
                         </label>
-                        <input name="points_deposit" type="text" id="text_input" value="<?php echo $points_deposit ?>">
-                        <span id="error_message"><?php echo isset($contract) ? $contract->points_deposit_error_mes : ''; ?></span>
+                        <input name="points_deposit" type="text" id="text_input" value="<?= $points_deposit ?>">
+                        <span id="error_message"><?= isset($contract) ? $contract->points_deposit_error_mes : '' ?></span>
                     </div>
 
                     <!-- Time Requirement Input -->
                     <div class="form-field">
                         <label for="hours_required">
-                            Hours Required:
+                            <?= __('Hours Required:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the number of hours required for the contract (ex: 6). By default, it's 6 hours.
+                                <span class="hint-text"><?= __('Enter the number of hours required for the contract (ex: 6). By default, it\'s 6 hours.') ?></span>
                             </span>
                         </label>
-                        <input name="hours_required" type="text" id="text_input" value="<?php echo $hours_required ?>">
-                        <span id="error_message"><?php echo isset($contract) ? $contract->hours_required_error_mes : ''; ?></span>
+                        <input name="hours_required" type="text" id="text_input" value="<?= $hours_required ?>">
+                        <span id="error_message"><?= isset($contract) ? $contract->hours_required_error_mes : '' ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
                     <div class="form-field">
                         <label for="entry_clerk">
-                            Entry Clerk:
+                            <?= __('Entry Clerk:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                                <span class="hint-text"><?= __('Enter the name of the person filling out this form (ex: "Jane Smith").') ?></span>
                             </span>
                         </label>
-                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
-                        <span id="error_message"><?php echo isset($contract) ? $contract->entry_clerk_error_mes : ''; ?></span>
+                        <input name="entry_clerk" type="text" id="text_input" value="<?= $entry_clerk ?>">
+                        <span id="error_message"><?= isset($contract) ? $contract->entry_clerk_error_mes : '' ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
-                            <?php echo __('Additional Notes:'); ?>
+                            <?= __('Additional Notes:') ?>
                             <span class="hint">?
-                                <span class="hint-text"><?php echo __('Enter any additional notes or comments about the volunteer. This field is optional.'); ?>
+                                <span class="hint-text"><?= __('Enter any additional notes or comments about the volunteer. This field is optional.') ?></span>
                             </span>
                         </label>                   
-                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="<?php echo __('(Optional)'); ?>"><?php echo $additional_notes ?></textarea>
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="<?= __('(Optional)') ?>"><?= $additional_notes ?></textarea>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="input_container">
-                        <input type="submit" id="submit_button" value="<?php echo __('Submit'); ?>">
+                        <input type="submit" id="submit_button" value="<?= __('Submit') ?>">
                     </div>
-
+                    
                 </form>
     
             </div>

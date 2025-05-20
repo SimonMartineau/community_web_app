@@ -77,13 +77,13 @@
                 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Edit Purchase Data</span>
+                    <span style="font-size: 24px; font-weight: bold;"><?= __('Edit Purchase Data') ?></span>
                 </div>
 
                 <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
-                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                        <?= isset($submit_success) ? __('Missing information. Could not send. Please try again.') : '' ?>
                     </span>
                 </div>
 
@@ -93,65 +93,65 @@
                     <!-- Item Names Text Input -->
                     <div class="form-field">
                         <label for="item_names">
-                            Item Names:
+                            <?= __('Item Names:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the names of the purchased items (ex: Apples).
+                                <span class="hint-text"><?= __('Enter the names of the purchased items (ex: Apples).') ?></span>
                             </span>
                         </label>
-                        <input name="item_names" type="text" id="text_input" value="<?php echo $item_names ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->item_names_error_mes : ''; ?></span>
+                        <input name="item_names" type="text" id="text_input" value="<?= $item_names ?>">
+                        <span id="error_message"><?= isset($purchase) ? $purchase->item_names_error_mes : '' ?></span>
                     </div>
 
                     <!-- Total Cost Text Input -->
                     <div class="form-field">
                         <label for="total_cost">
-                            Total Cost:
+                            <?= __('Total Cost:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the total cost (in points) of the purchase (ex: 3).
+                                <span class="hint-text"><?= __('Enter the total cost (in points) of the purchase (ex: 3).') ?></span>
                             </span>
                         </label>
-                        <input name="total_cost" type="text" id="text_input" value="<?php echo $total_cost ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->total_cost_error_mes : ''; ?></span>
+                        <input name="total_cost" type="text" id="text_input" value="<?= $total_cost ?>">
+                        <span id="error_message"><?= isset($purchase) ? $purchase->total_cost_error_mes : '' ?></span>
                     </div>
 
                     <!-- Purchase Date Input -->
                     <div class="form-field">
                         <label for="purchase_date">
-                            Purchase Date:
+                            <?= __('Purchase Date:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the date of the purchase. Click the calendar icon to choose a date.
+                                <span class="hint-text"><?= __('Enter the date of the purchase. Click the calendar icon to choose a date.') ?></span>
                             </span>
                         </label>
-                        <input type="date" name="purchase_date" value="<?php echo $purchase_date ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->purchase_date_error_mes : ''; ?></span>
+                        <input type="date" name="purchase_date" value="<?= $purchase_date ?>">
+                        <span id="error_message"><?= isset($purchase) ? $purchase->purchase_date_error_mes : '' ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
                     <div class="form-field">
-                        <label for="hours_required">
-                            Entry Clerk:
+                        <label for="entry_clerk">
+                            <?= __('Entry Clerk:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                                <span class="hint-text"><?= __('Enter the name of the person filling out this form (ex: "Jane Smith").') ?></span>
                             </span>
                         </label>
-                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
-                        <span id="error_message"><?php echo isset($purchase) ? $purchase->entry_clerk_error_mes : ''; ?></span>
+                        <input name="entry_clerk" type="text" id="text_input" value="<?= $entry_clerk ?>">
+                        <span id="error_message"><?= isset($purchase) ? $purchase->entry_clerk_error_mes : '' ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
-                            Additional Notes:
+                            <?= __('Additional Notes:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                                <span class="hint-text"><?= __('Enter any additional notes or comments about the volunteer. This field is optional.') ?></span>
                             </span>
                         </label>                   
-                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="<?= __('(Optional)') ?>"><?= $additional_notes ?></textarea>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="input_container">
-                        <input type="submit" id="submit_button" value="Submit">
+                        <input type="submit" id="submit_button" value="<?= __('Submit') ?>">
                     </div>
 
                 </form>

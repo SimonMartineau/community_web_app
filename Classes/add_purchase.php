@@ -22,46 +22,46 @@ class Add_Purchase{
         $error = false;
 
         // Check item names
-        if (isset($_POST['item_names'])){
+        if (isset($_POST['item_names'])) {
             $value = $_POST['item_names'];
-            if (empty($value)){
-                $this->item_names_error_mes = "*Item names is empty.<br>";
+            if (empty($value)) {
+                $this->item_names_error_mes = __('*Item names is empty.<br>');
                 $error = true; // There is an error
             }
         }
 
         // Check total cost
-        if (isset($_POST['total_cost'])){
+        if (isset($_POST['total_cost'])) {
             $value = $_POST['total_cost'];
-            if (empty($value)){
-                $this->total_cost_error_mes = "*Total cost is empty.<br>";
+            if (empty($value)) {
+                $this->total_cost_error_mes = __('*Total cost is empty.<br>');
                 $error = true; // There is an error
-            } elseif (!is_numeric($value)){
-                $this->total_cost_error_mes = "*Please enter a valid number.<br>";
+            } elseif (!is_numeric($value)) {
+                $this->total_cost_error_mes = __('*Please enter a valid number.<br>');
                 $error = true; // There is an error
-            } elseif ($value < 0){
-                $this->total_cost_error_mes = "*Please enter a positive number.<br>";
+            } elseif ($value < 0) {
+                $this->total_cost_error_mes = __('*Please enter a positive number.<br>');
                 $error = true; // There is an error
-            } elseif ($value > 1000){
-                $this->total_cost_error_mes = "*Please enter a number less than 1000.<br>";
+            } elseif ($value > 1000) {
+                $this->total_cost_error_mes = __('*Please enter a number less than 1000.<br>');
                 $error = true; // There is an error
             }
         }
 
         // Check purchase date
-        if (isset($_POST['purchase_date'])){
+        if (isset($_POST['purchase_date'])) {
             $value = $_POST['purchase_date'];
-            if (empty($value)){
-                $this->purchase_date_error_mes = "*Purchase date is empty.<br>";
+            if (empty($value)) {
+                $this->purchase_date_error_mes = __('*Purchase date is empty.<br>');
                 $error = true; // There is an error
             }
         }
 
         // Check entry clerk name
-        if (isset($_POST['entry_clerk'])){
+        if (isset($_POST['entry_clerk'])) {
             $value = $_POST['entry_clerk'];
-            if (empty($value)){
-                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
+            if (empty($value)) {
+                $this->entry_clerk_error_mes = __('*Entry clerk is empty.<br>');
                 $error = true; // There is an error
             }
         }

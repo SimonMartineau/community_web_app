@@ -85,13 +85,13 @@
 
                 <!-- Title -->
                 <div id="section_title" style="margin-bottom: 20px;">
-                    <span style="font-size: 24px; font-weight: bold;">Add Activity Form</span>
+                    <span style="font-size: 24px; font-weight: bold;"><?= __('Add Activity Form') ?></span>
                 </div>
 
                 <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
-                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                        <?= isset($submit_success) ? __('Missing information. Could not send. Please try again.') : '' ?>
                     </span>
                 </div>
 
@@ -101,58 +101,56 @@
                     <!-- Activity Name Text Input -->
                     <div class="form-field">
                         <label for="activity_name">
-                            Activity Name:
+                            <?= __('Activity Name:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the name of the activity (ex: "Community Cleanup").
+                                <span class="hint-text"><?= __('Enter the name of the activity (ex: "Community Cleanup").') ?></span>
                             </span>
-                        </span>
                         </label>
-                        <input name="activity_name" type="text" id="text_input" value="<?php echo $activity_name ?>">
-                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_name_error_mes : ''; ?></span>
+                        <input name="activity_name" type="text" id="text_input" value="<?= $activity_name ?>">
+                        <span id="error_message"><?= isset($activity) ? $activity->activity_name_error_mes : '' ?></span>
                     </div>
 
                     <!-- Activity Number of Places Text Input -->
                     <div class="form-field">
                         <label for="number_of_places">
-                            Number of Places:
+                            <?= __('Number of Places:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the number of places available for this activity (ex: 10).
+                                <span class="hint-text"><?= __('Enter the number of places available for this activity (ex: 10).') ?></span>
                             </span>
-                        </span>
                         </label>
-                        <input name="number_of_places" type="text" id="text_input" value="<?php echo $number_of_places ?>">
-                        <span id="error_message"><?php echo isset($activity) ? $activity->number_of_places_error_mes : ''; ?></span>
+                        <input name="number_of_places" type="text" id="text_input" value="<?= $number_of_places ?>">
+                        <span id="error_message"><?= isset($activity) ? $activity->number_of_places_error_mes : '' ?></span>
                     </div>
 
                     <!-- Activity Duration Text Input -->
                     <div class="form-field">
                         <label for="activity_duration">
-                            Activity Duration:
+                            <?= __('Activity Duration:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the duration (in hours) of the activity (ex: 3).
+                                <span class="hint-text"><?= __('Enter the duration (in hours) of the activity (ex: 3).') ?></span>
                             </span>
                         </label>
-                        <input name="activity_duration" type="text" id="text_input" value="<?php echo $activity_duration ?>">
-                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_duration_error_mes : ''; ?></span>
+                        <input name="activity_duration" type="text" id="text_input" value="<?= $activity_duration ?>">
+                        <span id="error_message"><?= isset($activity) ? $activity->activity_duration_error_mes : '' ?></span>
                     </div>
 
                     <!-- Activity Location Text Input -->
                     <div class="form-field">
                         <label for="activity_location">
-                            Activity Location:
+                            <?= __('Activity Location:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the location of the activity (ex: "Miratejo"). This field is optional.
+                                <span class="hint-text"><?= __('Enter the location of the activity (ex: "Miratejo"). This field is optional.') ?></span>
                             </span>
                         </label>
-                        <input name="activity_location" type="text" id="text_input" placeholder="(Optional)" value="<?php echo $activity_location ?>">
+                        <input name="activity_location" type="text" id="text_input" placeholder="<?= __('(Optional)') ?>" value="<?= $activity_location ?>">
                     </div>
 
                     <!-- Dates Input -->
                     <div class="form-field">
                         <label for="activity_dates">
-                            Activity Dates:
+                            <?= __('Activity Dates:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the dates when the activity takes place. Select the calendar icon to choose a date. You can select multiple dates if this activity occurs multiple times.
+                                <span class="hint-text"><?= __('Enter the dates when the activity takes place. Select the calendar icon to choose a date. You can select multiple dates if this activity occurs multiple times.') ?></span>
                             </span>
                         </label>
                         <!-- Include Flatpickr CSS & JS -->
@@ -174,18 +172,18 @@
                     <!-- Activity Time Period Table -->
                     <div class="form-field form-field-top">
                         <label for="activity_time_periods">
-                            Activity Time Period:
+                            <?= __('Activity Time Period:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Select the time periods when the activity takes place.
+                                <span class="hint-text"><?= __('Select the time periods when the activity takes place.') ?></span>
                             </span>
                         </label>
                         <div class="form-checkbox-group">
                             <?php
                             // Time periods
                             $time_periods = [
-                                "Morning", 
-                                "Afternoon", 
-                                "Evening"
+                                __('Morning'),
+                                __('Afternoon'),
+                                __('Evening')
                             ];
 
                             // Create vertical list with checkboxes on the left
@@ -198,15 +196,15 @@
                             }
                             ?>
                         </div>
-                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_time_periods_error_mes : ''; ?></span>
+                        <span id="error_message"><?= isset($activity) ? $activity->activity_time_periods_error_mes : '' ?></span>
                     </div>
 
                     <!-- Activity Domain Section -->
                     <div class="form-field form-field-top">
                         <label>
-                            Activity Domains:
+                            <?= __('Activity Domains:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Select the domains this activity is related to.
+                                <span class="hint-text"><?= __('Select the domains this activity is related to.') ?></span>
                             </span>
                         </label>
 
@@ -214,12 +212,12 @@
                             <?php
                             // Activity domains
                             $domain_types = [
-                                "Organization of community events", 
-                                "Library support", 
-                                "Help in the community store", 
-                                "Support in the community grocery store", 
-                                "Cleaning and maintenance of public spaces", 
-                                "Participation in urban gardening projects"
+                                __('Organization of community events'),
+                                __('Library support'),
+                                __('Help in the community store'),
+                                __('Support in the community grocery store'),
+                                __('Cleaning and maintenance of public spaces'),
+                                __('Participation in urban gardening projects')
                             ];
 
                             // Create list with checkboxes and text
@@ -232,35 +230,35 @@
                             }
                             ?>
                         </div>
-                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_domains_error_mes : ''; ?></span>
+                        <span id="error_message"><?= isset($activity) ? $activity->activity_domains_error_mes : '' ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
                     <div class="form-field">
                         <label for="entry_clerk">
-                            Entry Clerk:
+                            <?= __('Entry Clerk:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter the name of the person filling out this form (ex: "Jane Smith").
+                                <span class="hint-text"><?= __('Enter the name of the person filling out this form (ex: "Jane Smith").') ?></span>
                             </span>
                         </label>
-                        <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk ?>">
-                        <span id="error_message"><?php echo isset($activity) ? $activity->entry_clerk_error_mes : ''; ?></span>
+                        <input name="entry_clerk" type="text" id="text_input" value="<?= $entry_clerk ?>">
+                        <span id="error_message"><?= isset($activity) ? $activity->entry_clerk_error_mes : '' ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->
                     <div class="form-field form-field-top">
                         <label for="additional_notes">
-                            Additional Notes:
+                            <?= __('Additional Notes:') ?>
                             <span class="hint">?
-                                <span class="hint-text">Enter any additional notes or comments about the volunteer. This field is optional.
+                                <span class="hint-text"><?= __('Enter any additional notes or comments about the volunteer. This field is optional.') ?></span>
                             </span>
-                        </label>                   
-                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="(Optional)"><?php echo $additional_notes ?></textarea>
+                        </label>
+                        <textarea name="additional_notes" rows="10" cols="60" id="additional_notes" placeholder="<?= __('(Optional)') ?>"><?= $additional_notes ?></textarea>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="input_container">
-                        <input type="submit" id="submit_button" value="Submit">
+                        <input type="submit" id="submit_button" value="<?= __('Submit') ?>">
                     </div>
 
                 </form>

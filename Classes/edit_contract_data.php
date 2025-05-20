@@ -20,70 +20,79 @@ class Edit_Contract{
     public function evaluate($contract_id, $data){
 
         // Initialize error contract variable
-        $error = false;
+    $error = false;
 
-        // Check Start Date
-        if (isset($_POST['start_date'])){
-            $value = $_POST['start_date'];
-            if (empty($value)){
-                $this->start_date_error_mes = "*Start Date is empty.<br>";
-                $error = true; // There is an error
-            }
+    // Check Start Date
+    if (isset($_POST['start_date'])){
+        $value = $_POST['start_date'];
+        if (empty($value)){
+            $this->start_date_error_mes = __('*Start Date is empty.<br>');
+            $error = true;
         }
+    }
 
-        // Check End Date
-        if (isset($_POST['end_date'])){
-            $value = $_POST['end_date'];
-            if (empty($value)){
-                $this->validity_date_error_mes = "*End Date is empty.<br>";
-                $error = true; // There is an error
-            }
+    // Check End Date
+    if (isset($_POST['end_date'])){
+        $value = $_POST['end_date'];
+        if (empty($value)){
+            $this->validity_date_error_mes = __('*End Date is empty.<br>');
+            $error = true;
         }
+    }
 
-        // Check points deposit
-        if (isset($_POST['points_deposit'])){
-            $value = $_POST['points_deposit'];
-            if (empty($value)){
-                $this->points_deposit_error_mes = "*Points amount is empty.<br>";
-                $error = true; // There is an error
-            } elseif (!is_numeric($value)){
-                $this->points_deposit_error_mes = "*Please enter a valid number.<br>";
-                $error = true; // There is an error
-            } elseif ($value < 0){
-                $this->points_deposit_error_mes = "*Please enter a positive number.<br>";
-                $error = true; // There is an error
-            } elseif ($value > 1000){
-                $this->points_deposit_error_mes = "*Please enter a number less than 1000.<br>";
-                $error = true; // There is an error
-            }
+    // Check points deposit
+    if (isset($_POST['points_deposit'])){
+        $value = $_POST['points_deposit'];
+        if (empty($value)){
+            $this->points_deposit_error_mes = __('*Points amount is empty.<br>');
+            $error = true;
+        } elseif (!is_numeric($value)){
+            $this->points_deposit_error_mes = __('*Please enter a valid number.<br>');
+            $error = true;
+        } elseif ($value < 0){
+            $this->points_deposit_error_mes = __('*Please enter a positive number.<br>');
+            $error = true;
+        } elseif ($value > 1000){
+            $this->points_deposit_error_mes = __('*Please enter a number less than 1000.<br>');
+            $error = true;
         }
+    }
 
-        // Check hours required
-        if (isset($_POST['hours_required'])){
-            $value = $_POST['hours_required'];
-            if (empty($value)){
-                $this->hours_required_error_mes = "*Hours required is empty.<br>";
-                $error = true; // There is an error
-            } elseif (!is_numeric($value)){
-                $this->hours_required_error_mes = "*Please enter a valid number.<br>";
-                $error = true; // There is an error
-            } elseif ($value < 0){
-                $this->hours_required_error_mes = "*Please enter a positive number.<br>";
-                $error = true; // There is an error
-            } elseif ($value > 1000){
-                $this->hours_required_error_mes = "*Please enter a number less than 1000.<br>";
-                $error = true; // There is an error
-            }
+    // Check hours required
+    if (isset($_POST['hours_required'])){
+        $value = $_POST['hours_required'];
+        if (empty($value)){
+            $this->hours_required_error_mes = __('*Hours required is empty.<br>');
+            $error = true;
+        } elseif (!is_numeric($value)){
+            $this->hours_required_error_mes = __('*Please enter a valid number.<br>');
+            $error = true;
+        } elseif ($value < 0){
+            $this->hours_required_error_mes = __('*Please enter a positive number.<br>');
+            $error = true;
+        } elseif ($value > 1000){
+            $this->hours_required_error_mes = __('*Please enter a number less than 1000.<br>');
+            $error = true;
         }
+    }
 
-        // Check entry clerk name
-        if (isset($_POST['entry_clerk'])){
-            $value = $_POST['entry_clerk'];
-            if (empty($value)){
-                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
-                $error = true; // There is an error
-            }
+    // Check entry clerk name
+    if (isset($_POST['entry_clerk'])){
+        $value = $_POST['entry_clerk'];
+        if (empty($value)){
+            $this->entry_clerk_error_mes = __('*Entry clerk is empty.<br>');
+            $error = true;
         }
+    }
+
+    // Ensure all expected keys exist
+    if (! (isset($data['start_date'])
+        && isset($data['end_date'])
+        && isset($data['points_deposit'])
+        && isset($data['hours_required'])
+        && isset($data['entry_clerk'])) ) {
+        return false;
+    }
 
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){

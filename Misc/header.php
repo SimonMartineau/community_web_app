@@ -5,20 +5,20 @@
     // Include classes
     include("../Languages/translate.php");
 
-// Handle a POSTed language choice
-if ($_SERVER['REQUEST_METHOD'] === 'POST'
-    && isset($_POST['lang'])
-    && in_array($_POST['lang'], ['en','pt'], true)
-) {
-    $_SESSION['lang'] = $_POST['lang'];
-    // Redirect to self to clear POST data (and keep URL clean)
-    header('Location: ' . $_SERVER['REQUEST_URI']);
-    exit;
-}
+    // Handle a POSTed language choice
+    if ($_SERVER['REQUEST_METHOD'] === 'POST'
+        && isset($_POST['lang'])
+        && in_array($_POST['lang'], ['en','pt'], true)
+    ) {
+        $_SESSION['lang'] = $_POST['lang'];
+        // Redirect to self to clear POST data (and keep URL clean)
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
+    }
 
-// Determine current language (fallback to Portugese)
-$_SESSION['lang'] = $_SESSION['lang'] ?? 'pt';
-$lang = $_SESSION['lang'];
+    // Determine current language (fallback to Portugese)
+    $_SESSION['lang'] = $_SESSION['lang'] ?? 'pt';
+    $lang = $_SESSION['lang'];
 ?>
 
 
@@ -75,7 +75,6 @@ $lang = $_SESSION['lang'];
                 <!-- Logout Button -->
                 <a href="../Login_Pages/logout.php" class="logout"><?= __('Logout') ?></a>
 
-        
             </div>
         </div>
 

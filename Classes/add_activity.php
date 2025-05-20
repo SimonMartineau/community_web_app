@@ -23,91 +23,91 @@ class Add_Activity{
     public function evaluate($data){
 
         // Initialise error contract variable
-        $error = false; 
+        $error = false;
 
         // Check activity name
-        if (isset($_POST['activity_name'])){
+        if (isset($_POST['activity_name'])) {
             $value = $_POST['activity_name'];
-            if (empty($value)){
-                $this->activity_name_error_mes = "*Activity name is empty.<br>";
+            if (empty($value)) {
+                $this->activity_name_error_mes = __('*Activity name is empty.<br>');
                 $error = true; // There is an error
             }
         }
 
         // Check activity number of participants
-        if (isset($_POST['number_of_places'])){
+        if (isset($_POST['number_of_places'])) {
             $value = $_POST['number_of_places'];
-            if (empty($value)){
-                $this->number_of_places_error_mes = "*Number of participants is empty.<br>";
+            if (empty($value)) {
+                $this->number_of_places_error_mes = __('*Number of participants is empty.<br>');
                 $error = true; // There is an error
-            } elseif (!preg_match("/^[0-9]*$/",$value)){
-                $this->number_of_places_error_mes = "*Please enter a number.<br>";
+            } elseif (!preg_match("/^[0-9]*$/", $value)) {
+                $this->number_of_places_error_mes = __('*Please enter a number.<br>');
                 $error = true; // There is an error
-            } elseif ($value < 0){
-                $this->number_of_places_error_mes = "*Please enter a positive number.<br>";
+            } elseif ($value < 0) {
+                $this->number_of_places_error_mes = __('*Please enter a positive number.<br>');
                 $error = true; // There is an error
-            } elseif ($value > 1000){
-                $this->number_of_places_error_mes = "*Please enter a number less than 1000.<br>";
+            } elseif ($value > 1000) {
+                $this->number_of_places_error_mes = __('*Please enter a number less than 1000.<br>');
                 $error = true; // There is an error
             }
         }
 
         // Check activity duration
-        if (isset($_POST['activity_duration'])){
+        if (isset($_POST['activity_duration'])) {
             $value = $_POST['activity_duration'];
-            if (empty($value)){
-                $this->activity_duration_error_mes = "*Activity duration is empty.<br>";
+            if (empty($value)) {
+                $this->activity_duration_error_mes = __('*Activity duration is empty.<br>');
                 $error = true; // There is an error
-            } elseif (!preg_match("/^[0-9]*$/",$value)){
-                $this->activity_duration_error_mes = "*Please enter a number.<br>";
+            } elseif (!preg_match("/^[0-9]*$/", $value)) {
+                $this->activity_duration_error_mes = __('*Please enter a number.<br>');
                 $error = true; // There is an error
-            } elseif ($value < 0){
-                $this->activity_duration_error_mes = "*Please enter a positive number.<br>";
+            } elseif ($value < 0) {
+                $this->activity_duration_error_mes = __('*Please enter a positive number.<br>');
                 $error = true; // There is an error
-            } elseif ($value > 1000){
-                $this->activity_duration_error_mes = "*Please enter a number less than 1000.<br>";
+            } elseif ($value > 1000) {
+                $this->activity_duration_error_mes = __('*Please enter a number less than 1000.<br>');
                 $error = true; // There is an error
             }
         }
 
-        // Check activity date
-        if (isset($_POST['activity_dates'])){
+        // Check activity dates
+        if (isset($_POST['activity_dates'])) {
             $value = $_POST['activity_dates'];
-            if (empty($value)){
-                $this->activity_dates_error_mes = "*Activity date is empty.<br>";
+            if (empty($value)) {
+                $this->activity_dates_error_mes = __('*Activity dates are empty.<br>');
                 $error = true; // There is an error
             }
         }
 
         // Check activity time period
-        if (isset($_POST['activity_time_periods'])){
+        if (isset($_POST['activity_time_periods'])) {
             $value = $_POST['activity_time_periods'];
-            if (empty($value)){
-                $this->activity_time_periods_error_mes = "*Activity time period is empty.<br>";
+            if (empty($value)) {
+                $this->activity_time_periods_error_mes = __('*Activity time period is empty.<br>');
                 $error = true; // There is an error
-            } 
-        } else{
-            $this->activity_time_periods_error_mes = "*Activity time period is empty.<br>";
+            }
+        } else {
+            $this->activity_time_periods_error_mes = __('*Activity time period is empty.<br>');
             $error = true; // There is an error
         }
 
         // Check activity domains
-        if (isset($_POST['activity_domains'])){
+        if (isset($_POST['activity_domains'])) {
             $value = $_POST['activity_domains'];
-            if (empty($value)){
-                $this->activity_domains_error_mes = "*Activity domains is empty.<br>";
+            if (empty($value)) {
+                $this->activity_domains_error_mes = __('*Activity domains is empty.<br>');
                 $error = true; // There is an error
             }
-        } else{
-            $this->activity_domains_error_mes = "*Activity domains is empty.<br>";
-                $error = true; // There is an error
+        } else {
+            $this->activity_domains_error_mes = __('*Activity domains is empty.<br>');
+            $error = true; // There is an error
         }
 
         // Check entry clerk name
-        if (isset($_POST['entry_clerk'])){
+        if (isset($_POST['entry_clerk'])) {
             $value = $_POST['entry_clerk'];
-            if (empty($value)){
-                $this->entry_clerk_error_mes = "*Entry clerk is empty.<br>";
+            if (empty($value)) {
+                $this->entry_clerk_error_mes = __('*Entry clerk is empty.<br>');
                 $error = true; // There is an error
             }
         }
