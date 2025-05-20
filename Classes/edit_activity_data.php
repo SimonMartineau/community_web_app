@@ -110,6 +110,17 @@ class Edit_Activity{
             }
         }
 
+        // Ensure all expected keys exist
+        if (! (isset($data['activity_name'])
+            && isset($data['number_of_places'])
+            && isset($data['activity_duration'])
+            && isset($data['activity_date'])
+            && isset($data['activity_time_periods'])
+            && isset($data['activity_domains'])
+            && isset($data['entry_clerk'])) ) {
+            $error = true; // There is an error
+        }
+
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error

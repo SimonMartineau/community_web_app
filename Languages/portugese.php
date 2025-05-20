@@ -1,6 +1,7 @@
 <?php
 // This file contains the Portuguese translations for the strings used in the "About" page of the application.
 return [
+    'Edit Volunteer Data'  => 'Editar Dados de Voluntários',
     '*Activity date is empty.<br>'  => '*A data da atividade<br>está vazia.<br>',
     '*Activity dates are empty.<br>'  => '*As datas das atividades<br>estão vazias.<br>',
     '*Activity time period is empty.<br>'  => '*O período de tempo da atividade<br>está vazio.<br>',
@@ -86,32 +87,32 @@ return [
     'Enter the number of hours required for the contract (ex: 6). By default, it\'s 6 hours.'  
                                                                     => 'Insira o número de horas exigidas para o contrato (ex.: 6). Por padrão, são 6 horas.',
 
-    'First name is empty.'                      => 'O primeiro nome está vazio.',
-    'Please enter a valid first name.'           => 'Por favor, insira um primeiro nome válido.',
+    '*First name is empty.'                      => '*O primeiro nome está vazio.',
+    '*Please enter a valid first name.'           => '*Por favor, insira um primeiro nome válido.',
 
-    'Last name is empty.'                       => 'O sobrenome está vazio.',
-    'Please enter a valid last name.'            => 'Por favor, insira um sobrenome válido.',
+    '*Last name is empty.'                       => '*O sobrenome está vazio.',
+    '*Please enter a valid last name.'            => '*Por favor, insira um sobrenome válido.',
 
-    'Gender is empty.'                          => 'O gênero está vazio.',
+    '*Gender is empty.'                          => '*O gênero está vazio.',
 
-    'Date of birth is empty.'                   => 'A data de nascimento está<br>vazia.',
+    '*Date of birth is empty.'                   => '*A data de nascimento está<br>vazia.',
 
-    'Address is empty.'                         => 'O endereço está vazio.',
+    '*Address is empty.'                         => '*O endereço está vazio.',
 
-    'ZIP code is empty.'                        => 'O CEP está vazio.',
+    '*ZIP code is empty.'                        => '*O CEP está vazio.',
 
-    'Telephone number is empty.'                => 'O número de telefone está vazio.',
+    '*Telephone number is empty.'                => '*O número de telefone está vazio.',
 
-    'Email is empty.'                           => 'O e-mail está vazio.',
-    'Please enter a valid email.'               => 'Por favor, insira um e-mail válido.',
+    '*Email is empty.'                           => '*O e-mail está vazio.',
+    '*Please enter a valid email.'               => '*Por favor, insira um e-mail válido.',
 
-    'Volunteer availability is empty.'          => 'A disponibilidade do voluntário<br>está vazia.',
+    '*Volunteer availability is empty.'          => '*A disponibilidade do voluntário<br>está vazia.',
 
-    'Volunteer interests is empty.'             => 'Os interesses do voluntário estão<br>vazios.',
+    '*Volunteer interests is empty.'             => '*Os interesses do voluntário estão<br>vazios.',
 
-    'Volunteer manager is empty.'               => 'O gerente de voluntários está<br>vazio.',
+    '*Volunteer manager is empty.'               => '*O gerente de voluntários está<br>vazio.',
 
-    'Entry clerk is empty.'                     => 'O responsável pelo registro está<br>vazio.',
+    '*Entry clerk is empty.'                     => '*O responsável pelo registro está<br>vazio.',
 
     'Volunteer\'s Interests' => 'Interesses do Voluntário',
     'Select the activities the volunteer is interested in doing.' => 'Selecione as atividades pelas quais o voluntário tem interesse.',

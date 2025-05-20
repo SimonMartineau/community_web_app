@@ -34,10 +34,10 @@ class Add_Volunteer{
         if (isset($_POST['first_name'])) {
             $value = $_POST['first_name'];
             if (empty($value)) {
-                $this->first_name_error_mes = '*' . __('First name is empty.') . "<br>";
+                $this->first_name_error_mes = __('*First name is empty.') . "<br>";
                 $error = true;
             } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $value)) {
-                $this->first_name_error_mes = '*' . __('Please enter a valid first name.') . "<br>";
+                $this->first_name_error_mes = __('*Please enter a valid first name.') . "<br>";
                 $error = true;
             }
         }
@@ -46,10 +46,10 @@ class Add_Volunteer{
         if (isset($_POST['last_name'])) {
             $value = $_POST['last_name'];
             if (empty($value)) {
-                $this->last_name_error_mes = '*' . __('Last name is empty.') . "<br>";
+                $this->last_name_error_mes = __('*Last name is empty.') . "<br>";
                 $error = true;
             } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $value)) {
-                $this->last_name_error_mes = '*' . __('Please enter a valid last name.') . "<br>";
+                $this->last_name_error_mes = __('*Please enter a valid last name.') . "<br>";
                 $error = true;
             }
         }
@@ -58,11 +58,11 @@ class Add_Volunteer{
         if (isset($_POST['gender'])) {
             $value = $_POST['gender'];
             if (empty($value)) {
-                $this->gender_error_mes = '*' . __('Gender is empty.') . "<br>";
+                $this->gender_error_mes = __('*Gender is empty.') . "<br>";
                 $error = true;
             }
         } else {
-            $this->gender_error_mes = '*' . __('Gender is empty.') . "<br>";
+            $this->gender_error_mes = __('*Gender is empty.') . "<br>";
             $error = true;
         }
 
@@ -70,7 +70,7 @@ class Add_Volunteer{
         if (isset($_POST['date_of_birth'])) {
             $value = $_POST['date_of_birth'];
             if (empty($value)) {
-                $this->date_of_birth_error_mes = '*' . __('Date of birth is empty.') . "<br>";
+                $this->date_of_birth_error_mes = __('*Date of birth is empty.') . "<br>";
                 $error = true;
             }
         }
@@ -79,7 +79,7 @@ class Add_Volunteer{
         if (isset($_POST['address'])) {
             $value = $_POST['address'];
             if (empty($value)) {
-                $this->address_error_mes = '*' . __('Address is empty.') . "<br>";
+                $this->address_error_mes = __('*Address is empty.') . "<br>";
                 $error = true;
             }
         }
@@ -88,7 +88,7 @@ class Add_Volunteer{
         if (isset($_POST['zip_code'])) {
             $value = $_POST['zip_code'];
             if (empty($value)) {
-                $this->zip_code_error_mes = '*' . __('ZIP code is empty.') . "<br>";
+                $this->zip_code_error_mes = __('*ZIP code is empty.') . "<br>";
                 $error = true;
             }
         }
@@ -97,7 +97,7 @@ class Add_Volunteer{
         if (isset($_POST['telephone_number'])) {
             $value = $_POST['telephone_number'];
             if (empty($value)) {
-                $this->telephone_number_error_mes = '*' . __('Telephone number is empty.') . "<br>";
+                $this->telephone_number_error_mes = __('*Telephone number is empty.') . "<br>";
                 $error = true;
             }
         }
@@ -106,10 +106,10 @@ class Add_Volunteer{
         if (isset($_POST['email'])) {
             $value = $_POST['email'];
             if (empty($value)) {
-                $this->email_error_mes = '*' . __('Email is empty.') . "<br>";
+                $this->email_error_mes = __('*Email is empty.') . "<br>";
                 $error = true;
             } elseif (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                $this->email_error_mes = '*' . __('Please enter a valid email.') . "<br>";
+                $this->email_error_mes = __('*Please enter a valid email.') . "<br>";
                 $error = true;
             }
         }
@@ -118,11 +118,11 @@ class Add_Volunteer{
         if (isset($_POST['volunteer_availability'])) {
             $value = $_POST['volunteer_availability'];
             if (empty($value)) {
-                $this->volunteer_availability_error_mes = '*' . __('Volunteer availability is empty.') . "<br>";
+                $this->volunteer_availability_error_mes = __('*Volunteer availability is empty.') . "<br>";
                 $error = true;
             }
         } else {
-            $this->volunteer_availability_error_mes = '*' . __('Volunteer availability is empty.') . "<br>";
+            $this->volunteer_availability_error_mes = __('*Volunteer availability is empty.') . "<br>";
             $error = true;
         }
 
@@ -130,11 +130,11 @@ class Add_Volunteer{
         if (isset($_POST['volunteer_interests'])) {
             $value = $_POST['volunteer_interests'];
             if (empty($value)) {
-                $this->volunteer_interests_error_mes = '*' . __('Volunteer interests is empty.') . "<br>";
+                $this->volunteer_interests_error_mes = __('*Volunteer interests is empty.') . "<br>";
                 $error = true;
             }
         } else {
-            $this->volunteer_interests_error_mes = '*' . __('Volunteer interests is empty.') . "<br>";
+            $this->volunteer_interests_error_mes = __('*Volunteer interests is empty.') . "<br>";
             $error = true;
         }
 
@@ -142,7 +142,7 @@ class Add_Volunteer{
         if (isset($_POST['volunteer_manager'])) {
             $value = $_POST['volunteer_manager'];
             if (empty($value)) {
-                $this->volunteer_manager_error_mes = '*' . __('Volunteer manager is empty.') . "<br>";
+                $this->volunteer_manager_error_mes = __('*Volunteer manager is empty.') . "<br>";
                 $error = true;
             }
         }
@@ -151,21 +151,26 @@ class Add_Volunteer{
         if (isset($_POST['entry_clerk'])) {
             $value = $_POST['entry_clerk'];
             if (empty($value)) {
-                $this->entry_clerk_error_mes = '*' . __('Entry clerk is empty.') . "<br>";
+                $this->entry_clerk_error_mes = __('*Entry clerk is empty.') . "<br>";
                 $error = true;
             }
         }
 
-        // Check if the keys exist in the data array
-        if (isset($data['first_name']) && isset($data['last_name']) && isset($data['gender']) && isset($data['date_of_birth']) && 
-            isset($data['address']) && isset($data['zip_code']) && isset($data['telephone_number']) && isset($data['email']) && 
-            isset($data['volunteer_availability']) && isset($data['volunteer_interests']) && isset($data['volunteer_manager']) && 
-            isset($data['entry_clerk'])) {
-            // All keys exist
-        } else {
+        // Ensure all expected keys exist
+        if (! (isset($data['first_name']) 
+            && isset($data['last_name']) 
+            && isset($data['gender']) 
+            && isset($data['date_of_birth']) 
+            && isset($data['address']) 
+            && isset($data['zip_code']) 
+            && isset($data['telephone_number']) 
+            && isset($data['email']) 
+            && isset($data['volunteer_availability']) 
+            && isset($data['volunteer_interests']) 
+            && isset($data['volunteer_manager']) 
+            && isset($data['entry_clerk']))) {
             $error = true; // There is an error
         }
-
 
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){

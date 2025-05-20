@@ -199,9 +199,9 @@
                             <?php
                             // Time periods
                             $time_periods = [
-                                __('Morning'),
-                                __('Afternoon'),
-                                __('Evening')
+                                'Morning',
+                                'Afternoon',
+                                'Evening'
                             ];
 
                             // Create vertical list with checkboxes on the left
@@ -209,7 +209,7 @@
                                 $checked = in_array($time_period, $activity_time_periods) ? "checked" : "";
                                 echo "<div class='form-checkbox-item'>";
                                 echo "<input type='checkbox' name='activity_time_periods[]' value='$time_period' $checked>";
-                                echo "<label style='margin: 0;'>$time_period</label>";
+                                echo "<label style='margin: 0;'>" . __($time_period) . "</label>";
                                 echo "</div>";
                             }
                             ?>
@@ -230,12 +230,12 @@
                             <?php
                             // Activity domains
                             $domain_types = [
-                                __('Organization of community events'),
-                                __('Library support'),
-                                __('Help in the community store'),
-                                __('Support in the community grocery store'),
-                                __('Cleaning and maintenance of public spaces'),
-                                __('Participation in urban gardening projects')
+                                'Organization of community events',
+                                'Library support',
+                                'Help in the community store',
+                                'Support in the community grocery store',
+                                'Cleaning and maintenance of public spaces',
+                                'Participation in urban gardening projects'
                             ];
 
                             // Create list with checkboxes and text
@@ -243,7 +243,7 @@
                                 $checked = in_array($domain, $activity_domains) ? "checked" : "";
                                 echo "<div class='form-checkbox-item'>";
                                 echo "<input type='checkbox' name='activity_domains[]' value='$domain' $checked>";
-                                echo "<label style='margin: 0;'>$domain</label>";
+                                echo "<label style='margin: 0;'>" . __($domain) . "</label>";
                                 echo "</div>";
                             }
                             ?>

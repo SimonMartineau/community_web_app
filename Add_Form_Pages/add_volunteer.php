@@ -295,7 +295,6 @@
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
                     </div>
 
-
                     <!-- Entry Clerk Text Input -->
                     <div class="form-field">
                         <label for="entry_clerk">

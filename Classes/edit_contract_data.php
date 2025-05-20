@@ -91,7 +91,7 @@ class Edit_Contract{
         && isset($data['points_deposit'])
         && isset($data['hours_required'])
         && isset($data['entry_clerk'])) ) {
-        return false;
+        $error = true; // There is an error
     }
 
         // If no error, create add volunteer. Otherwise, echo error

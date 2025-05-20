@@ -66,6 +66,14 @@ class Edit_Purchase{
             }
         }
 
+        // Ensure all expected keys exist
+        if (! (isset($data['item_names']) 
+            && isset($data['total_cost']) 
+            && isset($data['purchase_date']) 
+            && isset($data['entry_clerk']))) {
+            $error = true; // There is an error
+        } 
+
         // If no error, create add volunteer. Otherwise, echo error
         if(!$error){
             // No error
