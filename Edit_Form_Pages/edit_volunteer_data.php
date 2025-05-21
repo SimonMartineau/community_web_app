@@ -128,6 +128,7 @@
                 <form method="post" action="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>" class="form-layout" form>
 
                     <!-- First Name Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="first_name">
                             <?php echo __('First Name:'); ?>
@@ -136,10 +137,10 @@
                             </span>
                         </label>
                         <input name="first_name" type="text" id="text_input" value="<?php echo $first_name; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->first_name_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Last Name Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="last_name">
                             <?php echo __('Last name:'); ?>
@@ -148,10 +149,10 @@
                             </span>
                         </label>
                         <input name="last_name" type="text" id="text_input" value="<?php echo $last_name; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->last_name_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Gender Bubble -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="gender">
                             <?php echo __('Gender:'); ?>
@@ -164,10 +165,10 @@
                             <input type="radio" name="gender" value="Woman" <?php echo ($gender == 'Woman') ? 'checked' : ''; ?>> <?php echo __('Woman'); ?>
                             <input type="radio" name="gender" value="Other" <?php echo ($gender == 'Other') ? 'checked' : ''; ?>> <?php echo __('Other'); ?>
                         </div>
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Date of Birth Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="date_of_birth">
                             <?php echo __('Date of Birth: '); ?>
@@ -176,10 +177,10 @@
                             </span>
                         </label>
                         <input type="date" name="date_of_birth" value="<?php echo $date_of_birth; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->date_of_birth_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Address Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="address">
                             <?php echo __('Address:'); ?>
@@ -188,10 +189,10 @@
                             </span>
                         </label>
                         <input name="address" type="text" id="text_input" value="<?php echo $address; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->address_error_mes : ''; ?></span>
                     </div>
 
                     <!-- ZIP Code Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="zip_code">
                             <?php echo __('ZIP code:'); ?>
@@ -200,10 +201,10 @@
                             </span>
                         </label>
                         <input name="zip_code" type="text" id="text_input" value="<?php echo $zip_code; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->zip_code_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Telephone Number Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="telephone_number">
                             <?php echo __('Telephone number:'); ?>
@@ -212,10 +213,10 @@
                             </span>
                         </label>
                         <input name="telephone_number" type="text" id="text_input" value="<?php echo $telephone_number; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->telephone_number_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Email Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="email">
                             <?php echo __('Email:'); ?>
@@ -224,10 +225,10 @@
                             </span>
                         </label>
                         <input name="email" type="text" id="text_input" value="<?php echo $email; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->email_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Volunteer's Interests Table -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>
                     <div class="form-field form-field-top">
                         <label for="volunteer_interests">
                             <?php echo __('Volunteer\'s Interests'); ?>
@@ -257,10 +258,10 @@
                             }
                             ?>
                         </div>
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_interests_error_mes : ''; ?></span>                    
                     </div>
 
                     <!-- Volunteer Availability Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
                     <div class="form-field form-field-top">
                         <label for="volunteer_availability">
                             <?php echo __('Weekly Availability:'); ?>
@@ -300,10 +301,10 @@
                                 ?>
                             </table>
                         </div>
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_availability_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Volunteer Manager Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="volunteer_manager">
                             <?php echo __('Volunteer Manager:'); ?>
@@ -312,10 +313,10 @@
                             </span>
                         </label>
                         <input name="volunteer_manager" type="text" id="text_input" value="<?php echo $volunteer_manager; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->volunteer_manager_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
+                    <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="entry_clerk">
                             <?php echo __('Entry Clerk:'); ?>
@@ -324,7 +325,6 @@
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?php echo $entry_clerk; ?>">
-                        <span id="error_message"><?php echo isset($volunteer) ? $volunteer->entry_clerk_error_mes : ''; ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->

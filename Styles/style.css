@@ -84,8 +84,9 @@
 
 /* individual error message */
 #error_message{
-    position: absolute;
-    left: 75%; /* Places the error message to the right of the input */
+    position: relative;
+    left: 830px; /* Places the error message to the right of the input */
+    top: 30px; /* Aligns the error message vertically with the input */
     margin-left: 10px; /* Adds space between the input and error message */
     color: red;
     font-weight: bold; /* Optional: Make it bold for emphasis */

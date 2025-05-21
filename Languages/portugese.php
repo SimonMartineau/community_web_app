@@ -21,7 +21,7 @@ return [
     "*Hours required is empty.<br>"                                                                     => "*Horas necessárias estão vazias.<br>",
     "*Item names is empty.<br>"                                                                         => "*Os nomes dos itens estão vazios.<br>",
     "*Last name is empty."                                                                              => "*O sobrenome está vazio.",
-    "*Number of participants is empty.<br>"                                                             => "*O número de participantes<br>está vazio.<br>",
+    "*Number of places is empty.<br>"                                                                   => "*O número de lugares<br>está vazio.<br>",
     "*Please enter a number less than 1000.<br>"                                                        => "*Por favor, insira um número<br>inferior a 1000.<br>",
     "*Please enter a number.<br>"                                                                       => "*Por favor, insira um número.<br>",
     "*Please enter a positive number.<br>"                                                              => "*Por favor, insira um número positivo.<br>",

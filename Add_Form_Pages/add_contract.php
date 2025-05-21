@@ -89,6 +89,7 @@
                 <form method="post" action="../Add_Form_Pages/add_contract.php?volunteer_id=<?= $volunteer_id ?>" class="form-layout" form>
 
                     <!-- Start Date Input -->
+                    <span id="error_message"><?= isset($contract) ? $contract->start_date_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="start_date">
                             <?= __('Start Date:') ?>
@@ -97,10 +98,10 @@
                             </span>
                         </label>
                         <input name="start_date" type="date" value="<?= $start_date ?>">
-                        <span id="error_message"><?= isset($contract) ? $contract->start_date_error_mes : '' ?></span>
                     </div>
 
                     <!-- End Date Input -->
+                    <span id="error_message"><?= isset($contract) ? $contract->validity_date_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="end_date">
                             <?= __('End Date:') ?>
@@ -109,10 +110,10 @@
                             </span>
                         </label>
                         <input name="end_date" type="date" value="<?= $end_date ?>">
-                        <span id="error_message"><?= isset($contract) ? $contract->validity_date_error_mes : '' ?></span>
                     </div>
 
                     <!-- Points Text Input -->
+                    <span id="error_message"><?= isset($contract) ? $contract->points_deposit_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="points_deposit">
                             <?= __('Points Deposit:') ?>
@@ -121,10 +122,10 @@
                             </span>
                         </label>
                         <input name="points_deposit" type="text" id="text_input" value="<?= $points_deposit ?>">
-                        <span id="error_message"><?= isset($contract) ? $contract->points_deposit_error_mes : '' ?></span>
                     </div>
 
                     <!-- Time Requirement Input -->
+                    <span id="error_message"><?= isset($contract) ? $contract->hours_required_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="hours_required">
                             <?= __('Hours Required:') ?>
@@ -133,10 +134,10 @@
                             </span>
                         </label>
                         <input name="hours_required" type="text" id="text_input" value="<?= $hours_required ?>">
-                        <span id="error_message"><?= isset($contract) ? $contract->hours_required_error_mes : '' ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
+                    <span id="error_message"><?= isset($contract) ? $contract->entry_clerk_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="entry_clerk">
                             <?= __('Entry Clerk:') ?>
@@ -145,7 +146,6 @@
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?= $entry_clerk ?>">
-                        <span id="error_message"><?= isset($contract) ? $contract->entry_clerk_error_mes : '' ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->

@@ -99,6 +99,7 @@
                 <form method="post" action="../Add_Form_Pages/add_activity.php" class="form-layout" form>
 
                     <!-- Activity Name Text Input -->
+                    <span id="error_message"><?= isset($activity) ? $activity->activity_name_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="activity_name">
                             <?= __('Activity Name:') ?>
@@ -107,10 +108,10 @@
                             </span>
                         </label>
                         <input name="activity_name" type="text" id="text_input" value="<?= $activity_name ?>">
-                        <span id="error_message"><?= isset($activity) ? $activity->activity_name_error_mes : '' ?></span>
                     </div>
 
                     <!-- Activity Number of Places Text Input -->
+                    <span id="error_message"><?= isset($activity) ? $activity->number_of_places_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="number_of_places">
                             <?= __('Number of Places:') ?>
@@ -119,10 +120,10 @@
                             </span>
                         </label>
                         <input name="number_of_places" type="text" id="text_input" value="<?= $number_of_places ?>">
-                        <span id="error_message"><?= isset($activity) ? $activity->number_of_places_error_mes : '' ?></span>
                     </div>
 
                     <!-- Activity Duration Text Input -->
+                    <span id="error_message"><?= isset($activity) ? $activity->activity_duration_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="activity_duration">
                             <?= __('Activity Duration:') ?>
@@ -130,8 +131,7 @@
                                 <span class="hint-text"><?= __('Enter the duration (in hours) of the activity (ex: 3).') ?></span>
                             </span>
                         </label>
-                        <input name="activity_duration" type="text" id="text_input" value="<?= $activity_duration ?>">
-                        <span id="error_message"><?= isset($activity) ? $activity->activity_duration_error_mes : '' ?></span>
+                        <input name="activity_duration" type="text" id="text_input" value="<?= $activity_duration ?>"> 
                     </div>
 
                     <!-- Activity Location Text Input -->
@@ -146,6 +146,7 @@
                     </div>
 
                     <!-- Dates Input -->
+                    <span id="error_message"><?php echo isset($activity) ? $activity->activity_dates_error_mes : ''; ?></span>
                     <div class="form-field">
                         <label for="activity_dates">
                             <?= __('Activity Dates:') ?>
@@ -158,7 +159,6 @@
                         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
                         <!-- Multi-date picker Input -->
                         <input type="text" id="activity_dates" name="activity_dates" value="<?php echo $activity_dates ?>">
-                        <span id="error_message"><?php echo isset($activity) ? $activity->activity_dates_error_mes : ''; ?></span>
 
                         <!-- Flatpickr JS -->
                         <script>
@@ -170,6 +170,7 @@
                     </div>
 
                     <!-- Activity Time Period Table -->
+                    <span id="error_message"><?= isset($activity) ? $activity->activity_time_periods_error_mes : '' ?></span>
                     <div class="form-field form-field-top">
                         <label for="activity_time_periods">
                             <?= __('Activity Time Period:') ?>
@@ -196,10 +197,10 @@
                             }
                             ?>
                         </div>
-                        <span id="error_message"><?= isset($activity) ? $activity->activity_time_periods_error_mes : '' ?></span>
                     </div>
 
                     <!-- Activity Domain Section -->
+                    <span id="error_message"><?= isset($activity) ? $activity->activity_domains_error_mes : '' ?></span>
                     <div class="form-field form-field-top">
                         <label>
                             <?= __('Activity Domains:') ?>
@@ -230,10 +231,10 @@
                             }
                             ?>
                         </div>
-                        <span id="error_message"><?= isset($activity) ? $activity->activity_domains_error_mes : '' ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
+                    <span id="error_message"><?= isset($activity) ? $activity->entry_clerk_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="entry_clerk">
                             <?= __('Entry Clerk:') ?>
@@ -242,7 +243,6 @@
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?= $entry_clerk ?>">
-                        <span id="error_message"><?= isset($activity) ? $activity->entry_clerk_error_mes : '' ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->

@@ -38,7 +38,7 @@ class Add_Activity{
         if (isset($_POST['number_of_places'])) {
             $value = $_POST['number_of_places'];
             if (empty($value)) {
-                $this->number_of_places_error_mes = __('*Number of participants is empty.<br>');
+                $this->number_of_places_error_mes = __('*Number of places is empty.<br>');
                 $error = true; // There is an error
             } elseif (!preg_match("/^[0-9]*$/", $value)) {
                 $this->number_of_places_error_mes = __('*Please enter a number.<br>');

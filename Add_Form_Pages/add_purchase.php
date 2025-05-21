@@ -88,6 +88,7 @@
                 <form method="post" action="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>" class="form-layout" form>
 
                     <!-- Item Names Text Input -->
+                    <span id="error_message"><?= isset($purchase) ? $purchase->item_names_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="item_names">
                             <?= __('Item Names:') ?>
@@ -96,10 +97,10 @@
                             </span>
                         </label>
                         <input name="item_names" type="text" id="text_input" value="<?= $item_names ?>">
-                        <span id="error_message"><?= isset($purchase) ? $purchase->item_names_error_mes : '' ?></span>
                     </div>
 
                     <!-- Total Cost Text Input -->
+                    <span id="error_message"><?= isset($purchase) ? $purchase->total_cost_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="total_cost">
                             <?= __('Total Cost:') ?>
@@ -108,10 +109,10 @@
                             </span>
                         </label>
                         <input name="total_cost" type="text" id="text_input" value="<?= $total_cost ?>">
-                        <span id="error_message"><?= isset($purchase) ? $purchase->total_cost_error_mes : '' ?></span>
                     </div>
 
                     <!-- Purchase Date Input -->
+                    <span id="error_message"><?= isset($purchase) ? $purchase->purchase_date_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="purchase_date">
                             <?= __('Purchase Date:') ?>
@@ -120,10 +121,10 @@
                             </span>
                         </label>
                         <input type="date" name="purchase_date" value="<?= $purchase_date ?>">
-                        <span id="error_message"><?= isset($purchase) ? $purchase->purchase_date_error_mes : '' ?></span>
                     </div>
 
                     <!-- Entry Clerk Text Input -->
+                    <span id="error_message"><?= isset($purchase) ? $purchase->entry_clerk_error_mes : '' ?></span>
                     <div class="form-field">
                         <label for="entry_clerk">
                             <?= __('Entry Clerk:') ?>
@@ -132,7 +133,6 @@
                             </span>
                         </label>
                         <input name="entry_clerk" type="text" id="text_input" value="<?= $entry_clerk ?>">
-                        <span id="error_message"><?= isset($purchase) ? $purchase->entry_clerk_error_mes : '' ?></span>
                     </div>
 
                     <!-- Additional Notes Text Input -->
