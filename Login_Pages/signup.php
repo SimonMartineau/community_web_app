@@ -86,7 +86,7 @@
                 }
             }
         } else {
-            echo "Please enter valid information";
+            echo __("Please enter valid information.");
         }
     }
 ?>

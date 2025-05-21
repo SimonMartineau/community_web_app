@@ -1,7 +1,7 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Misc/header.php");
+    include("../Header/header.php");
 
     // Include necessary files
     include("../Classes/connect.php");
@@ -193,6 +193,13 @@
                                                 echo $number_of_points_spent . ' ' . $point_label;
                                             ?>
                                         </span>
+                                    </li>
+
+                                    <!-- Download Database Link -->
+                                    <li>
+                                        <a href="../Classes/export.php" class="reset-link" download="CivicLink_Web_App.xlsx">
+                                            <?php echo __('Download Database'); ?>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

@@ -7,7 +7,7 @@ class Database{
     private $host = "localhost"; // host name
     private $username = "root"; // username
     private $password = ""; // password
-    private $db = "association_database_v3"; // database name
+    private $db = "CivicLink_Database"; // database name
     public $last_insert_id;
 
 

@@ -1,7 +1,7 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Misc/header.php");
+    include("../Header/header.php");
 
     // Include classes
     include("../Classes/connect.php");

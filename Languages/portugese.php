@@ -153,6 +153,7 @@ return [
     "Domains:"                                                 => "Domínios:",
     "Domains"                                                  => "Domínios",
     "Don't have an account? "                                  => "Não tem uma conta? ",
+    "Download Database"                                        => "Baixar Banco de Dados",
     "Duration (Longest to Shortest)"                           => "Duração (Mais Longa para Mais Curta)",
     "Duration (Shortest to Longest)"                           => "Duração (Mais Curta para Mais Longa)",
     "Duration: "                                               => "Duração: ",
@@ -361,6 +362,7 @@ return [
     "Place"                                                      => "Lugar",
     "Places"                                                     => "Lugares",
     "Please change the purchase date so it's inside a contract." => "Por favor, altere a data da compra para que esteja num contrato.",
+    "Please enter valid information."                            => "Por favor, insira informações válidas.",
     "Please lower the points spent or increase the points deposit in the current contract."                                                                           
                                                                     =>  "Por favor, reduza os pontos gastos ou aumente o depósito de pontos no contrato atual.",
     "Please lower the points spent or increase the points deposit." => "Por favor, reduza os pontos gastos ou aumente o depósito de pontos.",
