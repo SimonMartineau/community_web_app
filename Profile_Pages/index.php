@@ -197,7 +197,7 @@
 
                                     <!-- Download Database Link -->
                                     <li>
-                                        <a href="../Classes/export.php" class="reset-link" download="CivicLink_Web_App.xlsx">
+                                        <a href="../Classes/export_database.php" class="reset-link" download="CivicLink_Web_App.xlsx">
                                             <?php echo __('Download Database'); ?>
                                         </a>
                                     </li>
@@ -282,8 +282,8 @@
                                 xaxis_availability_title = "Weekday";
                                 yaxis_interest_title = "Count";
                                 yaxis_availability_title = "Count";
-                                volunteer_legend_title = "Volunteer";
-                                activity_legend_title = "Activity";
+                                volunteer_legend_title = "Volunteers";
+                                activity_legend_title = "Activities";
                             } else {
                                 // Portuguese labels
                                 xArray_interests_labels = [
