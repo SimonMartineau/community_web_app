@@ -40,7 +40,7 @@
     }
 
     // Retain previous filter values or set default
-    $order_filter = $_SESSION['all_activities_order_filter'] ?? 'registration_date_desc';
+    $order_filter = $_SESSION['all_activities_order_filter'] ?? 'activity_date_asc';
     $status_filter = $_SESSION['all_activities_status_filter'] ?? 'only_active';
     $occupancy_filter = $_SESSION['all_activities_occupancy_filter'] ?? 'all_activities';
     $domains_filter = $_SESSION['all_activities_domains_filter'] ?? [];
@@ -123,12 +123,6 @@
     // Order of appearance filter
     if (!empty($order_filter)){
         switch ($order_filter){
-            case 'registration_date_desc':
-                $sql_filter_query .= " ORDER BY a.registration_date DESC";
-                break;
-            case 'registration_date_asc':
-                $sql_filter_query .= " ORDER BY a.registration_date ASC";
-                break;
             case 'activity_date_asc':
                 $sql_filter_query .= " ORDER BY a.activity_date ASC";
                 break;
@@ -140,6 +134,12 @@
                 break;
             case 'activity_duration_asc':
                 $sql_filter_query .= " ORDER BY a.activity_duration ASC";
+                break;
+            case 'registration_date_desc':
+                $sql_filter_query .= " ORDER BY a.registration_date DESC";
+                break;
+            case 'registration_date_asc':
+                $sql_filter_query .= " ORDER BY a.registration_date ASC";
                 break;
             case 'activity_name_asc':
                 $sql_filter_query .= " ORDER BY a.activity_name ASC";
@@ -203,12 +203,12 @@
                                 <div style="margin-bottom: 15px;">
                                     <label for="order_filter" style="font-weight: bold;"><?= __('Sort Activities By:') ?></label><br>
                                     <select name="order_filter" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                                        <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>><?= __('Registration Date (Latest to Oldest)') ?></option>
-                                        <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>><?= __('Registration Date (Oldest to Latest)') ?></option>
                                         <option value="activity_date_asc" <?php echo ($order_filter == 'activity_date_asc') ? 'selected' : ''; ?>><?= __('Date (Oldest to Latest)') ?></option>
                                         <option value="activity_date_desc" <?php echo ($order_filter == 'activity_date_desc') ? 'selected' : ''; ?>><?= __('Date (Latest to Oldest)') ?></option>
                                         <option value="activity_duration_desc" <?php echo ($order_filter == 'activity_duration_desc') ? 'selected' : ''; ?>><?= __('Duration (Longest to Shortest)') ?></option>
                                         <option value="activity_duration_asc" <?php echo ($order_filter == 'activity_duration_asc') ? 'selected' : ''; ?>><?= __('Duration (Shortest to Longest)') ?></option>                                    
+                                        <option value="registration_date_desc" <?php echo ($order_filter == 'registration_date_desc') ? 'selected' : ''; ?>><?= __('Registration Date (Latest to Oldest)') ?></option>
+                                        <option value="registration_date_asc" <?php echo ($order_filter == 'registration_date_asc') ? 'selected' : ''; ?>><?= __('Registration Date (Oldest to Latest)') ?></option>
                                         <option value="activity_name_asc" <?php echo ($order_filter == 'activity_name_asc') ? 'selected' : ''; ?>><?= __('Activity Name (A-Z)') ?></option>
                                     </select>
                                 </div>
@@ -303,13 +303,17 @@
 
                         <!-- Counting Number of Elements Post Filter -->
                         <?php 
-                        if (empty($all_activities_data_rows)) {
-                            echo "No activities found.";
-                        } elseif (count($all_activities_data_rows) == 1){
-                            echo count($all_activities_data_rows) . " activity found.";
-                        } else {
-                            echo count($all_activities_data_rows) . " activities found.";
-                        } ?>
+                            if (empty($all_activities_data_rows)) {
+                                echo __('No activities found.');
+                            } else {
+                                $count = count($all_activities_data_rows);
+                                if ($count === 1) {
+                                    echo sprintf(__('1 activity found.'), $count);
+                                } else {
+                                    echo sprintf(__('%d activities found.'), $count);
+                                }
+                            }
+                        ?>
 
                         <!-- Display Activity Widgets --> 
                         <?php

@@ -56,7 +56,7 @@
                     <!-- Activity Dates Info -->
                     <span class="info_line">
                         <span class="info_label"><span class="material-symbols-outlined">calendar_month</span></span>
-                        <span class="info_value"><?= __('Date:') ?> <?= formatDate($activity_data_row['activity_date']) ?></span>
+                        <span class="info_value"> <?= formatDate($activity_data_row['activity_date']) ?></span>
                     </span>
 
                     <!-- Activity Occupancy Info -->

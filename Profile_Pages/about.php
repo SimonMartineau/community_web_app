@@ -59,7 +59,7 @@
                     <li><strong><?= __('Filters:') ?></strong> <?= __('Refine by status (active, trashed), contract status (completed, in progress, none), interests, or weekly availability.') ?></li>
                     <li><strong><?= __('Buttons:') ?></strong>
                         <ul style="margin-left:20px;">
-                            <li><strong><?= __('Add Volunteer:') ?></strong> <?= __('Register new volunteers via the') ?> <a href="../Add_Form_Pages/add_volunteer.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Volunteer') ?></a> <?= __('form.') ?></li>
+                            <li><strong><?= __('Add Volunteer:') ?></strong> <?= __('Register new volunteers via the') ?> <a href="../Add_Form_Pages/add_volunteer.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Volunteer') ?></a><?= __(' form.') ?></li>
                         </ul>
                     </li>
                 </ul>
@@ -70,7 +70,7 @@
                     <li><strong><?= __('Filters:') ?></strong> <?= __('Narrow by status (active, past, trashed), occupancy (full, available, empty), interests, or weekly schedule.') ?></li>
                     <li><strong><?= __('Buttons:') ?></strong>
                         <ul style="margin-left:20px;">
-                            <li><strong><?= __('Add Activity:') ?></strong> <?= __('Create new events using the') ?> <a href="../Add_Form_Pages/add_activity.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Activity') ?></a> <?= __('button.') ?></li>
+                            <li><strong><?= __('Add Activity:') ?></strong> <?= __('Create new events using the') ?> <a href="../Add_Form_Pages/add_activity.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Activity') ?></a><?= __(' button.') ?></li>
                         </ul>
                     </li>
                 </ul>

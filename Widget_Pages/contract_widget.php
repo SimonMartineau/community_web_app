@@ -22,7 +22,7 @@
                         $last  = $volunteer_data_row['last_name'];
 
                         if ($lang === 'pt') {
-                            if ($volunteer_data_row['gender'] == 'female'){
+                            if ($volunteer_data_row['gender'] == 'woman'){
                                 echo "Contrato de {$month} da {$first} {$last}";
                             } else {
                                 echo "Contrato de {$month} do {$first} {$last}";

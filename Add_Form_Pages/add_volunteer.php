@@ -140,8 +140,8 @@
                             </span>
                         </label>
                         <div style="margin-bottom: 20px;">
-                            <input type="radio" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>> <?php echo __('Male'); ?>
-                            <input type="radio" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>> <?php echo __('Female'); ?>
+                            <input type="radio" name="gender" value="Man" <?php echo ($gender == 'Man') ? 'checked' : ''; ?>> <?php echo __('Man'); ?>
+                            <input type="radio" name="gender" value="Woman" <?php echo ($gender == 'Woman') ? 'checked' : ''; ?>> <?php echo __('Woman'); ?>
                             <input type="radio" name="gender" value="Other" <?php echo ($gender == 'Other') ? 'checked' : ''; ?>> <?php echo __('Other'); ?>
                         </div>
                         <span id="error_message"><?php echo isset($volunteer) ? $volunteer->gender_error_mes : ''; ?></span>

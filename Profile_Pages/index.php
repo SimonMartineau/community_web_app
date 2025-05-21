@@ -153,26 +153,46 @@
                                 <ul>
                                     <!-- Number of Volunteers -->
                                     <li>
-                                        <span class="label"><?= __('Number of Active Volunteers :') ?></span>
-                                        <span class="value"><?php echo $number_of_volunteers . ' ' . __('Volunteers'); ?></span>
+                                        <span class="label"><?= __('Number of Active Volunteers:') ?></span>
+                                        <span class="value">
+                                            <?php
+                                                $volunteer_label = ($number_of_volunteers == 1) ? __('Volunteer') : __('Volunteers');
+                                                echo $number_of_volunteers . ' ' . $volunteer_label;
+                                            ?>
+                                        </span>
                                     </li>
 
                                     <!-- Number of Activities -->
                                     <li>
-                                        <span class="label"><?= __('Number of Completed Activities :') ?></span>
-                                        <span class="value"><?php echo $number_of_activities_completed . ' ' . __('Activities'); ?></span>
+                                        <span class="label"><?= __('Number of Completed Activities:') ?></span>
+                                        <span class="value">
+                                            <?php
+                                                $activity_label = ($number_of_activities_completed == 1) ? __('Activity') : __('Activities');
+                                                echo $number_of_activities_completed . ' ' . $activity_label;
+                                            ?>
+                                        </span>
                                     </li>
 
                                     <!-- Number of Hours -->
                                     <li>
-                                        <span class="label"><?= __('Number of Hours Assigned :') ?></span>
-                                        <span class="value"><?php echo $number_of_hours_completed . ' ' . __('Hours'); ?></span>
+                                        <span class="label"><?= __('Number of Hours Assigned:') ?></span>
+                                        <span class="value">
+                                            <?php
+                                                $hour_label = ($number_of_hours_completed == 1) ? __('Hour') : __('Hours');
+                                                echo $number_of_hours_completed . ' ' . $hour_label;
+                                            ?>
+                                        </span>
                                     </li>
 
                                     <!-- Number of Points -->
                                     <li>
-                                        <span class="label"><?= __('Number of Points Spent :') ?></span>
-                                        <span class="value"><?php echo $number_of_points_spent . ' ' . __('Points'); ?></span>
+                                        <span class="label"><?= __('Number of Points Spent:') ?></span>
+                                        <span class="value">
+                                            <?php
+                                                $point_label = ($number_of_points_spent == 1) ? __('Point') : __('Points');
+                                                echo $number_of_points_spent . ' ' . $point_label;
+                                            ?>
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
@@ -282,8 +302,8 @@
                                 xaxis_availability_title = "Dia da Semana";
                                 yaxis_interest_title = "Contagem";
                                 yaxis_availability_title = "Contagem";
-                                volunteer_legend_title = "Voluntário";
-                                activity_legend_title = "Atividade";
+                                volunteer_legend_title = "Voluntários";
+                                activity_legend_title = "Atividades";
 
                             }
                     

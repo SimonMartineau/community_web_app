@@ -345,7 +345,7 @@
                         <h2 style="font-size: 20px; color: #555;"><?= __('Personal Information') ?></h2>
                         <p><strong><?= __('First Name:') ?></strong> <?= htmlspecialchars($volunteer_data_row['first_name']) ?></p>
                         <p><strong><?= __('Last Name:') ?></strong> <?= htmlspecialchars($volunteer_data_row['last_name']) ?></p>
-                        <p><strong><?= __('Gender:') ?></strong> <?= htmlspecialchars($volunteer_data_row['gender']) ?></p>
+                        <p><strong><?= __('Gender:') ?></strong> <?= htmlspecialchars(__($volunteer_data_row['gender'])) ?></p>
                         <p><strong><?= __('Date of Birth:') ?></strong> <?= htmlspecialchars(formatDate($volunteer_data_row['date_of_birth'])) ?></p>
                         <p><strong><?= __('Address:') ?></strong> <?= htmlspecialchars($volunteer_data_row['address']) ?></p>
                         <p><strong><?= __('Zip Code:') ?></strong> <?= htmlspecialchars($volunteer_data_row['zip_code']) ?></p>

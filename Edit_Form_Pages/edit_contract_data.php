@@ -86,7 +86,7 @@
                 <!-- Error Message -->
                 <div style="text-align: center;">
                     <span id="main_error" style="color: red; font-weight: bold;">
-                        <?php echo isset($submit_success) ? "Missing information. Could not send. Please try again." : ""; ?>
+                        <?php echo isset($submit_success) ? __("Missing information. Could not send. Please try again.") : ""; ?>
                     </span>
                 </div>
 

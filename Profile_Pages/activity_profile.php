@@ -470,8 +470,15 @@
                                     echo __('This activity has') . ' ' . $count . ' ' . 
                                         ($count == 1 
                                             ? __('volunteer that matches.') 
-                                            : __('volunteers that match'));
+                                            : __('volunteers that match.'));
                                 }
+                                ?>
+
+                                <span class="hint">?
+                                    <span class="hint-text"><?php echo __(__('Only volunteers with active contracts will be available to match with an activity.')); ?></span>
+                                </span>
+
+                                <?php
 
                                 // Display the widgets
                                 if ($all_matching_participants_data_rows) {

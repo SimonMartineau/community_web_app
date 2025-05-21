@@ -47,17 +47,17 @@
                     $_SESSION['email_exists'] = true;
 
                 // Email is good, check password
-                } elseif (strlen($password) < 8){
+                } if (strlen($password) < 8){
                     $error[] = "Password must be at least 8 characters long.";
-                } elseif (!preg_match('/[A-Z]/', $password)) {
+                } if (!preg_match('/[A-Z]/', $password)) {
                     $error[] = "Password must contain at least one uppercase letter.";
-                } elseif (!preg_match('/[a-z]/', $password)) {
+                } if (!preg_match('/[a-z]/', $password)) {
                     $error[] = "Password must contain at least one lowercase letter.";
-                } elseif (!preg_match('/[0-9]/', $password)) {
+                } if (!preg_match('/[0-9]/', $password)) {
                     $error[] = "Password must contain at least one number.";
-                } elseif (!preg_match('/[\W_]/', $password)) {
+                } if (!preg_match('/[\W_]/', $password)) {
                     $error[] = "Password must contain at least one special character.";
-                } else {
+                } if (empty($error) && $_SESSION['email_exists'] == false) {
                     // Password is valid and email does not exist, proceed to save to database
                     $user_id = random_num(20); // Generate a random user ID
 
