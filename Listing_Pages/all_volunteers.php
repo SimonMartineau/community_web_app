@@ -22,6 +22,7 @@
         $_SESSION['all_volunteer_trash_filter'] = $_POST['trash_filter'] ?? '';  
         $_SESSION['all_volunteer_time_filter'] = $_POST['time_filter'] ?? '';
         $_SESSION['all_volunteer_interests_filter'] = $_POST['interests_filter'] ?? [];
+        $_SESSION['all_volunteer_time_periods_filter'] = $_POST['time_periods_filter'] ?? [];
         $_SESSION['all_volunteer_available_days_filter'] = $_POST['available_days_filter'] ?? [];
     }
 
@@ -30,6 +31,7 @@
         unset($_SESSION['all_volunteer_trash_filter']);
         unset($_SESSION['all_volunteer_time_filter']);
         unset($_SESSION['all_volunteer_interests_filter']);
+        unset($_SESSION['all_volunteer_time_periods_filter']);
         unset($_SESSION['all_volunteer_available_days_filter']);
     
         // Redirect to clear the query string
@@ -42,6 +44,7 @@
     $trash_filter = $_SESSION['all_volunteer_trash_filter'] ?? "only_active_volunteers";
     $time_filter = $_SESSION['all_volunteer_time_filter'] ?? "all_volunteers";
     $interests_filter = $_SESSION['all_volunteer_interests_filter'] ?? [];
+    $time_periods_filter = $_SESSION['all_volunteer_time_periods_filter'] ?? [];
     $available_days_filter = $_SESSION['all_volunteer_available_days_filter'] ?? [];
 
     // Default sql query
@@ -53,7 +56,7 @@
     }
 
     // Add JOIN only if availability filter is not empty
-    if (!empty($available_days_filter)) {
+    if (!empty($available_days_filter) || !empty($time_periods_filter)) {
         $sql_filter_query .= " JOIN Volunteer_Availability va ON v.id = va.volunteer_id";
     }
 
@@ -101,6 +104,15 @@
         $sql_filter_query .= " AND (";
         foreach ($interests_filter as $interest) {
             $sql_filter_query .= " vi.interest = '$interest' OR";
+        }
+        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+    }
+
+    // Add time periods filter
+    if (!empty($time_periods_filter)) {
+        $sql_filter_query .= " AND (";
+        foreach ($time_periods_filter as $time_period) {
+            $sql_filter_query .= " va.time_period = '$time_period' OR";
         }
         $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
@@ -245,9 +257,19 @@
                                 </div>
                             </div>
 
+                            <!-- Time Periods Filter -->
+                            <div style="margin-bottom: 15px;">
+                                <label style="font-weight: bold;"><?= __('Available Time Periods:') ?></label><br>
+                                <div>
+                                    <label><input type="checkbox" name="time_periods_filter[]" value="Morning" <?php echo (isset($_SESSION['all_volunteer_time_periods_filter']) && in_array('Morning', $_SESSION['all_volunteer_time_periods_filter'])) ? 'checked' : ''; ?>> <?= __('Morning') ?></label><br>
+                                    <label><input type="checkbox" name="time_periods_filter[]" value="Afternoon" <?php echo (isset($_SESSION['all_volunteer_time_periods_filter']) && in_array('Afternoon', $_SESSION['all_volunteer_time_periods_filter'])) ? 'checked' : ''; ?>> <?= __('Afternoon') ?></label><br>
+                                    <label><input type="checkbox" name="time_periods_filter[]" value="Evening" <?php echo (isset($_SESSION['all_volunteer_time_periods_filter']) && in_array('Evening', $_SESSION['all_volunteer_time_periods_filter'])) ? 'checked' : ''; ?>> <?= __('Evening') ?></label><br>
+                                </div>
+                            </div>
+
                             <!-- Day Availability Filter -->
                             <div style="margin-bottom: 15px;">
-                                <label style="font-weight: bold;"><?= __('Available Days:') ?></label><br>
+                                <label style="font-weight: bold;"><?= __('Available Weekdays:') ?></label><br>
                                 <div>
                                     <label><input type="checkbox" name="available_days_filter[]" value="monday" <?php echo (isset($_SESSION['all_volunteer_available_days_filter']) && in_array('monday', $_SESSION['all_volunteer_available_days_filter'])) ? 'checked' : ''; ?>> <?= __('Monday') ?></label><br>
                                     <label><input type="checkbox" name="available_days_filter[]" value="tuesday" <?php echo (isset($_SESSION['all_volunteer_available_days_filter']) && in_array('tuesday', $_SESSION['all_volunteer_available_days_filter'])) ? 'checked' : ''; ?>> <?= __('Tuesday') ?></label><br>

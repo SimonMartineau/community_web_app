@@ -250,7 +250,7 @@
 
                                 <!-- Time Periods Filter -->
                                 <div style="margin-bottom: 15px;">
-                                    <label style="font-weight: bold;"><?= __('Activity Period:') ?></label><br>
+                                    <label style="font-weight: bold;"><?= __('Activity Time Period:') ?></label><br>
                                     <div>
                                         <label><input type="checkbox" name="time_periods_filter[]" value="Morning" <?php echo (isset($_SESSION['all_activities_time_periods_filter']) && in_array('Morning', $_SESSION['all_activities_time_periods_filter'])) ? 'checked' : ''; ?>> <?= __('Morning') ?></label><br>
                                         <label><input type="checkbox" name="time_periods_filter[]" value="Afternoon" <?php echo (isset($_SESSION['all_activities_time_periods_filter']) && in_array('Afternoon', $_SESSION['all_activities_time_periods_filter'])) ? 'checked' : ''; ?>> <?= __('Afternoon') ?></label><br>
@@ -260,7 +260,7 @@
 
                                 <!-- Day Availability Filter -->
                                 <div style="margin-bottom: 15px;">
-                                    <label style="font-weight: bold;"><?= __('Available Days:') ?></label><br>
+                                    <label style="font-weight: bold;"><?= __('Activity Weekdays:') ?></label><br>
                                     <div>
                                         <label><input type="checkbox" name="available_days_filter[]" value="Monday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Monday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> <?= __('Monday') ?></label><br>
                                         <label><input type="checkbox" name="available_days_filter[]" value="Tuesday" <?php echo (isset($_SESSION['all_activities_available_days_filter']) && in_array('Tuesday', $_SESSION['all_activities_available_days_filter'])) ? 'checked' : ''; ?>> <?= __('Tuesday') ?></label><br>

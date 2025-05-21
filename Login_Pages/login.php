@@ -42,7 +42,7 @@
                     // Set session variables
                     if ($user_data['email'] == $email && $user_data['password'] == $password){
                         $_SESSION['user_id'] = $user_data['user_id'];
-                        header("Location: ../Listing_Pages/all_volunteers.php");
+                        header("Location: ../Profile_Pages/index.php");
                         die;
                     }
                 }
