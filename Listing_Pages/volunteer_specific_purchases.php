@@ -1,11 +1,11 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/../Header/header.php");
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
 
     // Connect to the database
     $DB = new Database();
@@ -71,7 +71,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | Purchases') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -163,7 +163,7 @@
                                 foreach($all_purchases_data_rows as $purchase_data_row){
                                     $purchase_id = $purchase_data_row['id'];
                                     $volunteer_data_row = fetch_volunteer_data_row($user_id,$purchase_data_row['volunteer_id']);
-                                    include("../Widget_Pages/purchase_widget.php");
+                                    include(__DIR__ . "/../Widget_Pages/purchase_widget.php");
                                 }
                             }
                         ?>

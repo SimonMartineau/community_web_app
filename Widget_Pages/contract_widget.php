@@ -1,9 +1,9 @@
 <!-- Imports -->
-<link rel="stylesheet" href="../Styles/style.css">
+<link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
 <script src="../JavaScript/functions.js"></script>
 
 <!-- HTML Code -->
-<a href="../Profile_Pages/contract_profile.php?contract_id=<?php echo $contract_id; ?>" style="text-decoration: none;">
+<a href="/CivicLink_Web_App/Profile_Pages/contract_profile.php?contract_id=<?php echo $contract_id; ?>" style="text-decoration: none;">
     <div id="widget">
         <div class="widget_row">
 

@@ -1,11 +1,11 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/../Header/header.php");
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
 
     // Connect to the database
     $DB = new Database();
@@ -21,7 +21,7 @@
     }
 
     // Retrieve filter form data
-    $order_filter = $_POST['order_filter'] ?? 'registration_date_desc';
+    $order_filter = $_POST['order_filter'] ?? 'activity_date_asc';
     $status_filter = $_POST['status_filter'] ?? 'all_activities';
     $occupancy_filter = $_POST['occupancy_filter'] ?? 'all_activities';
     $domains_filter = $_POST['domains_filter'] ?? [];
@@ -104,11 +104,11 @@
     // Order of appearance filter
     if (!empty($order_filter)){
         switch ($order_filter){
-            case 'registration_date_desc':
-                $sql_filter_query .= " ORDER BY a.registration_date DESC";
+            case 'activity_date_asc':
+                $sql_filter_query .= " ORDER BY a.activity_date ASC";
                 break;
-            case 'registration_date_asc':
-                $sql_filter_query .= " ORDER BY a.registration_date ASC";
+            case 'activity_date_desc':
+                $sql_filter_query .= " ORDER BY a.activity_date DESC";
                 break;
             case 'activity_duration_desc':
                 $sql_filter_query .= " ORDER BY a.activity_duration DESC";
@@ -116,11 +116,11 @@
             case 'activity_duration_asc':
                 $sql_filter_query .= " ORDER BY a.activity_duration ASC";
                 break;
-            case 'activity_date_desc':
-                $sql_filter_query .= " ORDER BY a.activity_date DESC";
+            case 'registration_date_desc':
+                $sql_filter_query .= " ORDER BY a.registration_date DESC";
                 break;
-            case 'activity_date_asc':
-                $sql_filter_query .= " ORDER BY a.activity_date ASC";
+            case 'registration_date_asc':
+                $sql_filter_query .= " ORDER BY a.registration_date ASC";
                 break;
             case 'activity_name_asc':
                 $sql_filter_query .= " ORDER BY a.activity_name ASC";
@@ -143,7 +143,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | Activities') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -172,12 +172,12 @@
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;"><?= __('Sort Volunteers By:') ?></label><br>
                                 <select name="order_filter" style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc;">
-                                    <option value="registration_date_desc" <?= ($order_filter=='registration_date_desc')?'selected':''; ?>><?= __('Registration Date (Latest to Oldest)') ?></option>
-                                    <option value="registration_date_asc" <?= ($order_filter=='registration_date_asc')?'selected':''; ?>><?= __('Registration Date (Oldest to Latest)') ?></option>
                                     <option value="activity_date_asc" <?= ($order_filter=='activity_date_asc')?'selected':''; ?>><?= __('Date (Oldest to Latest)') ?></option>
                                     <option value="activity_date_desc" <?= ($order_filter=='activity_date_desc')?'selected':''; ?>><?= __('Date (Latest to Oldest)') ?></option>
                                     <option value="activity_duration_desc" <?= ($order_filter=='activity_duration_desc')?'selected':''; ?>><?= __('Duration (Longest to Shortest)') ?></option>
                                     <option value="activity_duration_asc" <?= ($order_filter=='activity_duration_asc')?'selected':''; ?>><?= __('Duration (Shortest to Longest)') ?></option>
+                                    <option value="registration_date_desc" <?= ($order_filter=='registration_date_desc')?'selected':''; ?>><?= __('Registration Date (Latest to Oldest)') ?></option>
+                                    <option value="registration_date_asc" <?= ($order_filter=='registration_date_asc')?'selected':''; ?>><?= __('Registration Date (Oldest to Latest)') ?></option>
                                     <option value="activity_name_asc" <?= ($order_filter=='activity_name_asc')?'selected':''; ?>><?= __('Activity Name (A-Z)') ?></option>
                                 </select>
                             </div>
@@ -287,7 +287,7 @@
                                     $activity_id = $activity_data_row['id'];
                                     $activity_time_periods_data_rows = fetch_data_rows("SELECT * FROM Activity_Time_Periods WHERE activity_id = '$activity_id'");
                                     $activity_domains_data_rows = fetch_data_rows("SELECT * FROM Activity_Domains WHERE activity_id = '$activity_id'");
-                                    include("../Widget_Pages/activity_widget.php");
+                                    include(__DIR__ . "/../Widget_Pages/activity_widget.php");
                                 }
                             }
                         ?>

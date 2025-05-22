@@ -1,5 +1,5 @@
 <!-- Imports -->
-<link rel="stylesheet" href="../Styles/style.css">
+<link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
 <script src="../JavaScript/functions.js"></script>
 
 <!-- PHP Code -->
@@ -36,7 +36,7 @@
 
 
 <!-- HTML Code -->
-<a href="../Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+<a href="/CivicLink_Web_App/Profile_Pages/volunteer_profile.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
     <div id="widget">
         <div class="widget_row">
 

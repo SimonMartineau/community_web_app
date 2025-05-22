@@ -1,11 +1,11 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/../Header/header.php");
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
 
     // Default to English if not set
     $lang = $_SESSION['lang'] ?? 'en';
@@ -27,7 +27,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | About') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -59,7 +59,7 @@
                     <li><strong><?= __('Filters:') ?></strong> <?= __('Refine by status (active, trashed), contract status (completed, in progress, none), interests, or weekly availability.') ?></li>
                     <li><strong><?= __('Buttons:') ?></strong>
                         <ul style="margin-left:20px;">
-                            <li><strong><?= __('Add Volunteer:') ?></strong> <?= __('Register new volunteers via the') ?> <a href="../Add_Form_Pages/add_volunteer.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Volunteer') ?></a><?= __(' form.') ?></li>
+                            <li><strong><?= __('Add Volunteer:') ?></strong> <?= __('Register new volunteers via the') ?> <a href="/CivicLink_Web_App/Add_Form_Pages/add_volunteer.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Volunteer') ?></a><?= __(' form.') ?></li>
                         </ul>
                     </li>
                 </ul>
@@ -70,7 +70,7 @@
                     <li><strong><?= __('Filters:') ?></strong> <?= __('Narrow by status (active, past, trashed), occupancy (full, available, empty), interests, or weekly schedule.') ?></li>
                     <li><strong><?= __('Buttons:') ?></strong>
                         <ul style="margin-left:20px;">
-                            <li><strong><?= __('Add Activity:') ?></strong> <?= __('Create new events using the') ?> <a href="../Add_Form_Pages/add_activity.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Activity') ?></a><?= __(' button.') ?></li>
+                            <li><strong><?= __('Add Activity:') ?></strong> <?= __('Create new events using the') ?> <a href="/CivicLink_Web_App/Add_Form_Pages/add_activity.php" style="color: #405d9b; text-decoration: none;"><?= __('Add Activity') ?></a><?= __(' button.') ?></li>
                         </ul>
                     </li>
                 </ul>

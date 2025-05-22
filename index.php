@@ -1,11 +1,11 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/Header/header.php");
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/Classes/connect.php");
+    include(__DIR__ . "/Classes/functions.php");
 
     // Connect to the database
     $DB = new Database();
@@ -119,8 +119,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | Home') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
-        <link rel="stylesheet" href="../Styles/home_page.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/home_page.css">
     </head>
 
     <!-- Plotly.js -->
@@ -128,7 +128,7 @@
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
-        <script src="../JavaScript/plot.js"></script>
+        <script src="/CivicLink_Web_App/JavaScript/plot.js"></script>
 
             <!-- Cover Area -->
             <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -197,7 +197,7 @@
 
                                     <!-- Download Database Link -->
                                     <li>
-                                        <a href="../Classes/export_database.php" class="reset-link" download="CivicLink_Web_App.xlsx">
+                                        <a href="/CivicLink_Web_App/Classes/export_database.php" class="reset-link" download="CivicLink_Web_App.xlsx">
                                             <?php echo __('Download Database'); ?>
                                         </a>
                                     </li>

@@ -1,11 +1,11 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/../Header/header.php");
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
 
     // Connect to the database
     $DB = new Database();
@@ -185,7 +185,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | Activity Profile') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
@@ -198,7 +198,7 @@
 
             <!-- Edit Activity Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="/CivicLink_Web_App/Edit_Form_Pages/edit_activity_data.php?activity_id=<?php echo $activity_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
                         <span><?php echo __('Edit Activity Profile'); ?></span>
@@ -392,7 +392,7 @@
                                         $volunteer_id = $volunteer_data_row['id'];
                                         $interest_data_rows = fetch_volunteer_interest_data_rows($user_id, $volunteer_id);
                                         $availability_data_rows = fetch_volunteer_availability_data_rows($user_id, $volunteer_id);
-                                        include("../Widget_Pages/volunteer_widget.php");
+                                        include(__DIR__ . "/../Widget_Pages/volunteer_widget.php");
                                     }
                                 }
                             ?>
@@ -486,7 +486,7 @@
                                         $volunteer_id = $volunteer_data_row['id'];
                                         $interest_data_rows = fetch_volunteer_interest_data_rows($user_id, $volunteer_id);
                                         $availability_data_rows = fetch_volunteer_availability_data_rows($user_id, $volunteer_id);
-                                        include("../Widget_Pages/volunteer_widget.php");
+                                        include(__DIR__ . "/../Widget_Pages/volunteer_widget.php");
                                     }
                                 }
                             ?>

@@ -1,12 +1,12 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/../Header/header.php");
 
     // Include classes
-    include("../Classes/connect.php");
-    include("../Classes/edit_contract_data.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/edit_contract_data.php");
+    include(__DIR__ . "/../Classes/functions.php");
 
     // Connect to the database
     $DB = new Database();
@@ -65,9 +65,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | Edit Contract Data') ?></title>
-        <link rel="icon" href="../Images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/CivicLink_Web_App/Images/favicon.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">

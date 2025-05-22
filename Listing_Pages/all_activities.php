@@ -1,11 +1,11 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/../Header/header.php");
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
 
     // Connect to the database
     $DB = new Database();
@@ -161,7 +161,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | Activities') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
@@ -172,7 +172,7 @@
 
             <!-- Add Activity Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_activity.php" style="text-decoration: none;">
+                <a href="/CivicLink_Web_App/Add_Form_Pages/add_activity.php" style="text-decoration: none;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">add</span>
                         <span><?= __('New Activity') ?></span>
@@ -322,7 +322,7 @@
                                     $activity_id = $activity_data_row['id'];
                                     $activity_time_periods_data_rows = fetch_data_rows("SELECT * FROM Activity_Time_Periods WHERE activity_id = '$activity_id'");
                                     $activity_domains_data_rows = fetch_data_rows("SELECT * FROM Activity_Domains WHERE activity_id = '$activity_id'");
-                                    include("../Widget_Pages/activity_widget.php");
+                                    include(__DIR__ . "/../Widget_Pages/activity_widget.php");
                                 }
                             }
                         ?>

@@ -4,9 +4,9 @@
     session_start();
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
-    include("../Languages/translate.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
+    include(__DIR__ . "/../Languages/translate.php");
 
     require "mail.php";
 
@@ -161,7 +161,7 @@ if (count($_POST) > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= __('CivicLink | Password Reset') ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="../Styles/login_style.css">
+    <link rel="stylesheet" href="/CivicLink_Web_App/Styles/login_style.css">
 </head>
 <body>
     <?php 

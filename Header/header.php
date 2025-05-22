@@ -3,7 +3,7 @@
     session_start();
     
     // Include classes
-    include("../Languages/translate.php");
+    include(__DIR__ . "/../Languages/translate.php");
 
     // Handle a POSTed language choice
     if ($_SERVER['REQUEST_METHOD'] === 'POST'
@@ -29,23 +29,23 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/header_style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/header_style.css">
     </head>
 
     <body>
         <div id="blue_bar">
             <div>
                 <!-- Logo -->
-                <a href="../Profile_Pages/index.php" class="logo">CivicLink</a>
+                <a href="/CivicLink_Web_App/index.php" class="logo">CivicLink</a>
 
                 <!-- Navigation Menu -->
                 <div id="menu_container">
-                    <a href="../Profile_Pages/index.php" class="menu_button"><?= __('Home') ?></a>
-                    <a href="../Listing_Pages/all_volunteers.php" class="menu_button"><?= __('Volunteers') ?></a>
-                    <a href="../Listing_Pages/all_activities.php" class="menu_button"><?= __('Activities') ?></a>
-                    <a href="../Listing_Pages/all_contracts.php" class="menu_button"><?= __('Contracts') ?></a>
-                    <a href="../Listing_Pages/all_purchases.php" class="menu_button"><?= __('Purchases') ?></a>
-                    <a href="../Profile_Pages/about.php" class="menu_button"><?= __('About') ?></a>
+                    <a href="/CivicLink_Web_App/index.php" class="menu_button"><?= __('Home') ?></a>
+                    <a href="/CivicLink_Web_App/Listing_Pages/all_volunteers.php" class="menu_button"><?= __('Volunteers') ?></a>
+                    <a href="/CivicLink_Web_App/Listing_Pages/all_activities.php" class="menu_button"><?= __('Activities') ?></a>
+                    <a href="/CivicLink_Web_App/Listing_Pages/all_contracts.php" class="menu_button"><?= __('Contracts') ?></a>
+                    <a href="/CivicLink_Web_App/Listing_Pages/all_purchases.php" class="menu_button"><?= __('Purchases') ?></a>
+                    <a href="/CivicLink_Web_App/Profile_Pages/about.php" class="menu_button"><?= __('About') ?></a>
                 </div>
 
                 <!-- Language Dropdown -->
@@ -72,7 +72,7 @@
                 </div>
 
                 <!-- Logout Button -->
-                <a href="../Login_Pages/logout.php" class="logout"><?= __('Logout') ?></a>
+                <a href="/CivicLink_Web_App/Login_Pages/logout.php" class="logout"><?= __('Logout') ?></a>
 
             </div>
         </div>

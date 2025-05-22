@@ -1,11 +1,11 @@
 <!-- PHP Code -->
 <?php
     // Include header
-    include("../Header/header.php");
+    include(__DIR__ . "/../Header/header.php");
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
 
     // Connect to the database
     $DB = new Database();
@@ -223,12 +223,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= __('CivicLink | Volunteer Profile') ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="/CivicLink_Web_App/Styles/style.css">
     </head>
 
     <body style="font-family: sans-serif; background-color: #d0d8e4;">
 
-        <script src="../JavaScript/functions.js"></script>
+        <script src="/CivicLink_Web_App/JavaScript/functions.js"></script>
 
         <!-- Cover Area -->
         <div style="width: 1500px; min-height: 400px; margin:auto;">
@@ -236,7 +236,7 @@
 
             <!-- Edit Volunteer Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="/CivicLink_Web_App/Edit_Form_Pages/edit_volunteer_data.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">edit_document</span>
                         <span><?= __('Edit Volunteer Profile') ?></span>
@@ -246,7 +246,7 @@
 
             <!-- Add Contract Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_contract.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="/CivicLink_Web_App/Add_Form_Pages/add_contract.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">contract</span>
                         <span><?= __('New Contract') ?></span>
@@ -256,7 +256,7 @@
 
             <!-- Add Purchase Button -->
             <div style="text-align: right; padding: 10px 20px;display: inline-block;">
-                <a href="../Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
+                <a href="/CivicLink_Web_App/Add_Form_Pages/add_purchase.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none; display: inline-block;">
                     <button id="submenu_button">
                         <span class="material-symbols-outlined" style="margin-right: 8px;">add_shopping_cart</span>
                         <span><?= __('New Purchase') ?></span>
@@ -474,13 +474,13 @@
                                     $volunteer_data_row = fetch_volunteer_data_row($user_id,$contract_data_row['volunteer_id']);
                                     $date = new DateTime($contract_data_row['start_date']);
                                     $month = __($date->format('F'));
-                                    include("../Widget_Pages/contract_widget.php");
+                                    include(__DIR__ . "/../Widget_Pages/contract_widget.php");
                                 }
                             }
                             ?>
                             <!-- All Volunteer Contracts Button -->
                             <div id="volunteer_specific_contracts_button" style="text-align: right; padding: 10px 20px; display: inline-block;">
-                                <a href="../Listing_Pages/volunteer_specific_contracts.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                <a href="/CivicLink_Web_App/Listing_Pages/volunteer_specific_contracts.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
                                     <button name="volunteer_specific_contracts_button" id="submenu_button">
                                         <?= sprintf(__('See All %s\'s Contracts'), htmlspecialchars($volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'])) ?>
                                     </button>
@@ -495,13 +495,13 @@
                                 foreach ($purchases_data_rows as $purchase_data_row) {
                                     $purchase_id = $purchase_data_row['id'];
                                     $volunteer_data_row = fetch_volunteer_data_row($user_id, $purchase_data_row['volunteer_id']);
-                                    include("../Widget_Pages/purchase_widget.php");
+                                    include(__DIR__ . "/../Widget_Pages/purchase_widget.php");
                                 }
                             }
                             ?>
                             <!-- All Volunteer Purchases Button -->
                             <div id="volunteer_specific_purchases_button" style="text-align: right; padding: 10px 20px;">
-                                <a href="../Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                <a href="/CivicLink_Web_App/Listing_Pages/volunteer_specific_purchases.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
                                     <button name="volunteer_specific_purchases_button" id="submenu_button">
                                         <?= sprintf(__('See All %s\'s Purchases'), htmlspecialchars($volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'])) ?>
                                     </button>
@@ -517,13 +517,13 @@
                                     $activity_id = $activity_data_row['id'];
                                     $activity_time_periods_data_rows = fetch_data_rows("SELECT * FROM Activity_Time_Periods WHERE activity_id = '$activity_id'");
                                     $activity_domains_data_rows = fetch_data_rows("SELECT * FROM Activity_Domains WHERE activity_id = '$activity_id'");
-                                    include("../Widget_Pages/activity_widget.php");
+                                    include(__DIR__ . "/../Widget_Pages/activity_widget.php");
                                 }
                             }
                             ?>
                             <!-- All Volunteer Activities Button (Initially hidden) -->
                             <div id="volunteer_specific_activities_button" style="text-align: right; padding: 10px 20px;">
-                                <a href="../Listing_Pages/volunteer_specific_activities.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
+                                <a href="/CivicLink_Web_App/Listing_Pages/volunteer_specific_activities.php?volunteer_id=<?php echo $volunteer_id; ?>" style="text-decoration: none;">
                                     <button name="volunteer_specific_activities_button" id="submenu_button">
                                         <?= sprintf(__('See All %s\'s Activities'), htmlspecialchars($volunteer_data_row['first_name'] . ' ' . $volunteer_data_row['last_name'])) ?>
                                     </button>
@@ -595,12 +595,11 @@
                             ?>
                                 
                             <?php
-                               // Counting the number of elements post filter
-                                $activity_match_count = count($all_matching_activities_data_rows);
-
                                 if (empty($all_matching_activities_data_rows)) {
                                     echo __('No activities found.');
                                 } else {
+                                    // Counting the number of elements post filter
+                                    $activity_match_count = count($all_matching_activities_data_rows);
                                     echo sprintf(
                                         __('This volunteer has %d %s that match.'),
                                         $activity_match_count,
@@ -614,7 +613,7 @@
                                         $activity_id = $activity_data_row['id'];
                                         $activity_time_periods_data_rows = fetch_data_rows("SELECT * FROM Activity_Time_Periods WHERE activity_id = '$activity_id'");
                                         $activity_domains_data_rows = fetch_data_rows("SELECT * FROM Activity_Domains WHERE activity_id = '$activity_id'");
-                                        include("../Widget_Pages/activity_widget.php");
+                                        include(__DIR__ . "/../Widget_Pages/activity_widget.php");
                                     }
                                 }
                             ?>

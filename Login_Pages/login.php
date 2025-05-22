@@ -4,9 +4,9 @@
     session_start();
 
     // Include necessary files
-    include("../Classes/connect.php");
-    include("../Classes/functions.php");
-    include("../Languages/translate.php");
+    include(__DIR__ . "/../Classes/connect.php");
+    include(__DIR__ . "/../Classes/functions.php");
+    include(__DIR__ . "/../Languages/translate.php");
 
     // Connect to the database
     $DB = new Database();
@@ -42,7 +42,7 @@
                     // Set session variables
                     if ($user_data['email'] == $email && $user_data['password'] == $password){
                         $_SESSION['user_id'] = $user_data['user_id'];
-                        header("Location: ../Profile_Pages/index.php");
+                        header("Location: ../index.php");
                         die;
                     }
                 }
@@ -63,7 +63,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= __('CivicLink | Login') ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="../Styles/login_style.css">
+    <link rel="stylesheet" href="/CivicLink_Web_App/Styles/login_style.css">
 </head>
 <body>
 
