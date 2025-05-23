@@ -116,11 +116,12 @@ class Add_Activity{
         if (! (isset($data['activity_name'])
             && isset($data['number_of_places'])
             && isset($data['activity_duration'])
-            && isset($data['activity_date'])
+            && isset($data['activity_dates'])
             && isset($data['activity_time_periods'])
             && isset($data['activity_domains'])
             && isset($data['entry_clerk'])) ) {
             $error = true; // There is an error
+            echo __('*Please fill in all fields.<br>');
         }
 
         // If no error, create add activity. Otherwise, echo error

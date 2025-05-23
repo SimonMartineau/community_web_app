@@ -33,19 +33,63 @@
         AND user_id = '$user_id'"
     )[0]['total_activities'];
 
-    // Collect contracts data
+    // Collect activities data for the last 30 days
+    $number_of_activities_completed_in_month = fetch_data_rows("
+        SELECT COUNT(*) AS total_activities
+        FROM Activities 
+        WHERE activity_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE()
+        AND number_of_participants > 0
+        AND user_id = '$user_id'"
+    )[0]['total_activities'];
+
+    // Collect activity time data
     $number_of_hours_completed = fetch_data_rows("
-        SELECT SUM(hours_completed) AS total_hours
-        FROM Contracts
-        WHERE user_id = '$user_id'"
-    )[0]['total_hours'];
+        SELECT
+        COALESCE(
+            SUM(activity_duration * number_of_participants),
+            0
+        ) AS hours_completed
+        FROM Activities 
+        WHERE activity_date < CURDATE()
+        AND number_of_participants > 0
+        AND user_id = '$user_id'"
+    )[0]['hours_completed'];
+
+    // Collect activity time data for the last 30 days
+    $number_of_hours_completed_in_month = fetch_data_rows("
+        SELECT
+        COALESCE(
+            SUM(activity_duration * number_of_participants),
+            0
+        ) AS hours_completed
+        FROM Activities 
+        WHERE activity_date = DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        AND number_of_participants > 0
+        AND user_id = '$user_id'
+    ")[0]['hours_completed'];
 
     // Collect purchases data
     $number_of_points_spent = fetch_data_rows("
-        SELECT SUM(points_spent) AS total_points
-        FROM Contracts
+        SELECT
+        COALESCE(
+            SUM(total_cost),
+            0
+        ) AS total_points_spent
+        FROM Purchases
         WHERE user_id = '$user_id'"
-    )[0]['total_points'];
+    )[0]['total_points_spent'];
+
+    // Collect purchases data for the last 30 days
+    $number_of_points_spent_in_month = fetch_data_rows("
+        SELECT
+        COALESCE(
+            SUM(total_cost),
+            0
+        ) AS total_points_spent
+        FROM Purchases
+        WHERE purchase_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE()
+        AND user_id = '$user_id'"
+    )[0]['total_points_spent'];
 
     // Collect volunteer interests data
     $volunteer_interest_count_data_rows = fetch_data_rows("
@@ -62,12 +106,13 @@
         $volunteer_interests_count[$row['interest']] = $row['total_count'];
     }
 
-    // Collect activity interests data
+    // Collect activity interests data for the last 30 days
     $activity_interest_count_data_rows = fetch_data_rows("
-        SELECT domain, COUNT(*) AS total_count
+        SELECT domain, SUM(number_of_places) AS total_count
         FROM Activity_Domains
         JOIN Activities ON Activity_Domains.activity_id = Activities.id
         WHERE Activities.trashed = 0
+        AND Activities.activity_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE()
         AND Activities.user_id = '$user_id'
         GROUP BY domain
         ORDER BY total_count DESC;
@@ -75,6 +120,7 @@
     // Process the data
     $activity_interests_count = [];
     foreach($activity_interest_count_data_rows as $row){
+        // Assigning the domain as the key and the total count as the value
         $activity_interests_count[$row['domain']] = $row['total_count'];
     }
 
@@ -94,11 +140,12 @@
         $volunteer_availability_count[$row['weekday']] = $row['total_count'];
     }
 
-    // Collect activity availability data
+    // Collect activity availability data for the last 30 days
     $activity_weekdays_count_data_rows = fetch_data_rows("
         SELECT DAYNAME(activity_date) AS weekday, SUM(number_of_places) AS total_count
         FROM Activities
         WHERE trashed = 0
+        AND activity_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE()
         AND user_id = '$user_id'
         GROUP BY weekday
     ");
@@ -162,24 +209,41 @@
                                         </span>
                                     </li>
 
-                                    <!-- Number of Activities -->
+                                    <!-- Last 30 Days Subheader-->
+                                    <h4><?= __('Last 30 Days') ?></h4>
+
+                                    <!-- Number of Activities Completed in the last 30 days -->
                                     <li>
-                                        <span class="label"><?= __('Number of Completed Activities:') ?></span>
+                                        <span class="label"><?= __('Number of Activities Completed:') ?></span>
                                         <span class="value">
                                             <?php
-                                                $activity_label = ($number_of_activities_completed == 1) ? __('Activity') : __('Activities');
-                                                echo $number_of_activities_completed . ' ' . $activity_label;
+                                                $activity_label = ($number_of_activities_completed_in_month == 1) ? __('Activity') : __('Activities');
+                                                echo $number_of_activities_completed_in_month . ' ' . $activity_label;
                                             ?>
                                         </span>
                                     </li>
 
-                                    <!-- Number of Hours -->
+                                    <!-- Number of Points Spent in the last 30 days -->
                                     <li>
-                                        <span class="label"><?= __('Number of Hours Assigned:') ?></span>
+                                        <span class="label"><?= __('Number of Points Spent:') ?></span>
                                         <span class="value">
                                             <?php
-                                                $hour_label = ($number_of_hours_completed == 1) ? __('Hour') : __('Hours');
-                                                echo $number_of_hours_completed . ' ' . $hour_label;
+                                                $point_label = ($number_of_points_spent_in_month == 1) ? __('Point') : __('Points');
+                                                echo $number_of_points_spent_in_month . ' ' . $point_label;
+                                            ?>
+                                        </span>
+                                    </li>
+
+                                    <!-- All Time Subheader-->
+                                    <h4><?= __('All Time') ?></h4>
+
+                                    <!-- Number of Activities -->
+                                    <li>
+                                        <span class="label"><?= __('Number of Activities Completed:') ?></span>
+                                        <span class="value">
+                                            <?php
+                                                $activity_label = ($number_of_activities_completed == 1) ? __('Activity') : __('Activities');
+                                                echo $number_of_activities_completed . ' ' . $activity_label;
                                             ?>
                                         </span>
                                     </li>
@@ -194,6 +258,7 @@
                                             ?>
                                         </span>
                                     </li>
+                                    <br>
 
                                     <!-- Download Database Link -->
                                     <li>
@@ -276,14 +341,14 @@
                                     "Saturday", 
                                     "Sunday"
                                 ];
-                                interest_plot_title = "Volunteer & Activity Interests History";
-                                availability_plot_title = "Volunteer & Activity Availability History";
+                                interest_plot_title = "Volunteer & Activity Interests In The Past 30 Days";
+                                availability_plot_title = "Volunteer & Activity Availability In The Past 30 Days";
                                 xaxis_interest_title = "Interests";
                                 xaxis_availability_title = "Weekday";
                                 yaxis_interest_title = "Count";
                                 yaxis_availability_title = "Count";
                                 volunteer_legend_title = "Volunteers";
-                                activity_legend_title = "Activities";
+                                activity_legend_title = "Activity Capacity";
                             } else {
                                 // Portuguese labels
                                 xArray_interests_labels = [
@@ -292,25 +357,25 @@
                                     "Ajuda na<br>loja comunitária", 
                                     "Apoio na<br>mercearia comunitária", 
                                     "Limpeza e manutenção<br>de espaços públicos", 
-                                    "Participação em projetos de<br>jardinagem urbana"
+                                    "Participação em<br>projetos de<br>jardinagem urbana"
                                 ];
                                 xArray_weekdays_labels = [
-                                    "Segunda‑feira", 
-                                    "Terça‑feira", 
-                                    "Quarta‑feira", 
-                                    "Quinta‑feira", 
-                                    "Sexta‑feira", 
+                                    "Segunda-feira", 
+                                    "Terça-feira", 
+                                    "Quarta-feira", 
+                                    "Quinta-feira", 
+                                    "Sexta-feira", 
                                     "Sábado", 
                                     "Domingo"
                                 ];
-                                interest_plot_title = "Histórico de Interesses de Voluntariado e Atividades";
-                                availability_plot_title = "Histórico de Disponibilidade de Voluntariado e Atividades";
+                                interest_plot_title = "Interesses em Voluntariado e Atividades nos Últimos 30 Dias";
+                                availability_plot_title = "Disponibilidade para Voluntariado e Atividades nos Últimos 30 Dias";
                                 xaxis_interest_title = "Interesses";
                                 xaxis_availability_title = "Dia da Semana";
                                 yaxis_interest_title = "Contagem";
                                 yaxis_availability_title = "Contagem";
                                 volunteer_legend_title = "Voluntários";
-                                activity_legend_title = "Atividades";
+                                activity_legend_title = "Capacidade<br>da Atividade";
 
                             }
                     
