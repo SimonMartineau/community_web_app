@@ -1,6 +1,6 @@
 #blue_bar {
-    width: 1500px;
-    min-width: 1500px;
+    width: 1600px;
+    min-width: 1600px;
     position: relative;
     margin: auto;
     height: 60px;
@@ -16,7 +16,7 @@
 
 #blue_bar > div {
     width: 100%;
-    width: 1500px;
+    width: 1600px;
     margin: auto;
     display: flex;
     justify-content: space-between;

@@ -129,6 +129,7 @@ return [
     "CivicLink | Signup"                                                                                => "CivicLink | Inscrição",
     "CivicLink | Volunteer Profile"                                                                     => "CivicLink | Perfil do Voluntário",
     "CivicLink | Volunteers"                                                                            => "CivicLink | Voluntários",
+    "CivicLink_Database_Export.xls"                                                                     => "CivicLink_Base_de_Dados_Exportacao.xls",
     "CivicLink: A Volunteer & Activity Management Application"                                          => "CivicLink: Uma Aplicação de Gestão de Voluntários e Atividades",
     "Cleaning and maintenance of public spaces"                                                         => "Limpeza e manutenção de espaços públicos",
     "Cleaning and maintenance<br>of public spaces"                                                      => "Limpeza e manutenção<br>de espaços públicos",

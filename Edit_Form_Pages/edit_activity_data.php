@@ -108,7 +108,7 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Middle Area -->
-        <div style="width: 1500px; min-height: 400px; margin:auto;">
+        <div style="width: 1600px; min-height: 400px; margin:auto;">
             
             <!-- Major Rectangle Area -->
             <div id="major_rectangle">

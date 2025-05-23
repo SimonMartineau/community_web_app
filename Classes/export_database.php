@@ -17,9 +17,12 @@
         die('Connect error: ' . mysqli_connect_error());
     }
 
+    // Define filename
+    $filename = __('CivicLink_Database_Export.xls');
+
     // Set Excel headers
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment; filename="CivicLink_Web_App_export.xls"');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
 
     // Start XML structure
     echo '<?xml version="1.0"?>';

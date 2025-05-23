@@ -131,7 +131,7 @@
         <script src="/CivicLink_Web_App/JavaScript/plot.js"></script>
 
             <!-- Cover Area -->
-            <div style="width: 1500px; min-height: 400px; margin:auto;">
+            <div style="width: 1600px; min-height: 400px; margin:auto;">
             
                 <!-- Below Cover Area -->
                 <div style="display: flex;">

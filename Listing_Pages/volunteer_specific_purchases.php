@@ -77,7 +77,7 @@
     <body style="font-family: sans-serif ; background-color: #d0d8e4;">
 
         <!-- Cover Area -->
-        <div style="width: 1500px; min-height: 400px; margin:auto;">
+        <div style="width: 1600px; min-height: 400px; margin:auto;">
             <br>
     
             <!-- Below Cover Area -->

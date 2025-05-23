@@ -63,7 +63,7 @@
         <script src="../JavaScript/functions.js"></script>
 
         <!-- Cover Area -->
-        <div style="width: 1500px; min-height: 400px; margin:auto;">
+        <div style="width: 1600px; min-height: 400px; margin:auto;">
             <br>
 
             <!-- Edit Purchase Button -->
