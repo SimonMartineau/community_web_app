@@ -1,6 +1,8 @@
 #blue_bar {
+    width: 1500px;
+    min-width: 1500px;
     position: relative;
-    left: 0;
+    margin: auto;
     height: 60px;
     z-index: 1000;
     background-color: #405d9b;
@@ -14,7 +16,8 @@
 
 #blue_bar > div {
     width: 100%;
-    max-width: 1400px;
+    width: 1500px;
+    margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,7 +32,7 @@
     color: #d0d8e4;
     text-decoration: none;
     font-weight: bold;
-    white-space: nowrap; /* Prevent logo wrapping */
+    white-space: nowrap;
 }
 
 .menu_button {
@@ -76,50 +79,7 @@
     background-color: white;
     color: #405d9b;
 }
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    #blue_bar > div {
-        padding: 0 15px;
-    }
     
-    .menu_button {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 992px) {
-    #menu_container {
-        gap: 8px;
-    }
-    
-    .menu_button {
-        padding: 6px 10px;
-        font-size: 0.85rem;
-    }
-    
-    #blue_bar a.logo {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    #blue_bar > div {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 10px 15px;
-    }
-    
-    #menu_container {
-        order: 3;
-        width: 100%;
-        justify-content: flex-start;
-        margin-top: 10px;
-        padding: 5px 0;
-    }
-}
-
 .dropbtn {
     background-color: #506db8;
     color: white;

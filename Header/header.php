@@ -77,32 +77,6 @@
             </div>
         </div>
 
-        <script>
-        (function() {
-            const bar = document.getElementById('blue_bar');
-            bar.style.position = 'relative';
-
-            let targetX = 0;    // where we want to go
-            let currentX = 0;   // where we are now
-            const ease = 0.1;   // lower = more smoothing
-
-            function animate() {
-            // Update the target each frame
-            targetX = window.scrollX || window.pageXOffset;
-
-            // Ease currentX toward targetX
-            currentX += (targetX - currentX) * ease;
-
-            // Apply the transform
-            bar.style.transform = `translateX(${currentX}px)`;
-
-            // Loop
-            requestAnimationFrame(animate);
-            }
-
-            // Kick it off
-            animate();
-        })();
-        </script>
+        
 
     </body>
