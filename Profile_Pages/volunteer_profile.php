@@ -118,7 +118,7 @@
                 FROM Contracts c
                 WHERE c.volunteer_id = '$volunteer_id'
                     AND a.activity_date BETWEEN c.start_date AND c.end_date
-            )            
+            )
             ";
 
     // Interest filter
@@ -142,7 +142,7 @@
             WHERE vaj.activity_id = a.id 
             AND vaj.volunteer_id = '$volunteer_id'
         )
-        ORDER BY a.id DESC
+        ORDER BY a.activity_date ASC
     ";
 
     $all_matching_activities_data_rows = fetch_data_rows($sql_filter_query);
@@ -603,7 +603,7 @@
                                     echo sprintf(
                                         __('This volunteer has %d %s that match.'),
                                         $activity_match_count,
-                                        $activity_match_count === 1 ? __('activity') : __('activities')
+                                        $activity_match_count == 1 ? __('activity') : __('activities')
                                     );
                                 }
 

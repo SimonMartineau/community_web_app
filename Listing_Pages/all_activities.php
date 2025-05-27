@@ -9,12 +9,18 @@
 
     // Connect to the database
     $DB = new Database();
+    
     // Check if user is logged in. If not, redirect to login page.
     $user_data = $DB->check_login();
     $user_id = $user_data['user_id'];
 
     // Updating all backend processes
     update_backend_data();
+
+    // Listing variables
+    $items_per_page = 30; // Adjust as needed
+    $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $offset = ($page - 1) * $items_per_page;
 
     // Check if the filter form is submitted, "apply_filter" is the name of the submit button
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
@@ -24,8 +30,12 @@
         $_SESSION['all_activities_domains_filter'] = $_POST['domains_filter'] ?? [];
         $_SESSION['all_activities_time_periods_filter'] = $_POST['time_periods_filter'] ?? [];  
         $_SESSION['all_activities_available_days_filter'] = $_POST['available_days_filter'] ?? [];
+
+        // Reset to the first page after applying filters
+        $page = 1;
     }
 
+    // Check if the reset_filters parameter is set in the URL, if so reset the filters to default   
     if (isset($_GET['reset_filters'])) {
         unset($_SESSION['all_activities_order_filter']);
         unset($_SESSION['all_activities_status_filter']);
@@ -49,23 +59,23 @@
 
     // Default sql query
     $sql_filter_query = "SELECT DISTINCT a.* FROM Activities a 
-                                JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
-                                JOIN Activity_Domains ad ON a.id = ad.activity_id";
+                            JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
+                            JOIN Activity_Domains ad ON a.id = ad.activity_id";
 
-    // Initialize Where clause
-    $sql_filter_query .= " WHERE 1=1 AND a.user_id = '$user_id'";
+    // Initialize the Where clause
+    $sql_where_clause = " WHERE 1=1 AND a.user_id = '$user_id'";
 
     // Activity status filter
     if (!empty($status_filter)){
         switch ($status_filter){
             case 'only_active':
-                $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date >= CURDATE()";
+                $sql_where_clause .= " AND a.trashed = '0' AND a.activity_date >= CURDATE()";
                 break;
             case 'only_past':
-                $sql_filter_query .= " AND a.trashed = '0' AND a.activity_date < CURDATE()";
+                $sql_where_clause .= " AND a.trashed = '0' AND a.activity_date < CURDATE()";
                 break;
             case 'only_in_trash':
-                $sql_filter_query .= " AND a.trashed = '1'";
+                $sql_where_clause .= " AND a.trashed = '1'";
                 break;
             case 'all_activities':
                 // No additional condition needed (show all volunteers)
@@ -80,42 +90,42 @@
                 // No additional condition needed (show all volunteers)
                 break;
             case 'not_full':
-                $sql_filter_query .= " AND a.number_of_places - a.number_of_participants > 0";
+                $sql_where_clause .= " AND a.number_of_places - a.number_of_participants > 0";
                 break;
             case 'full':
-                $sql_filter_query .= " AND a.number_of_places - a.number_of_participants <= 0";
+                $sql_where_clause .= " AND a.number_of_places - a.number_of_participants <= 0";
                 break;
             case 'empty':
-                $sql_filter_query .= " AND a.number_of_participants = 0";
+                $sql_where_clause .= " AND a.number_of_participants = 0";
                 break;
         }
     }
 
     // Add domain filter
     if (!empty($domains_filter)) {
-        $sql_filter_query .= " AND (";
+        $sql_where_clause .= " AND (";
         foreach ($domains_filter as $domain) {
-            $sql_filter_query .= " ad.domain = '$domain' OR";
+            $sql_where_clause .= " ad.domain = '$domain' OR";
         }
-        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        $sql_where_clause = rtrim($sql_where_clause, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
     // Add time periods filter
     if (!empty($time_periods_filter)) {
-        $sql_filter_query .= " AND (";
+        $sql_where_clause .= " AND (";
         foreach ($time_periods_filter as $time_period) {
-            $sql_filter_query .= " atp.time_period = '$time_period' OR";
+            $sql_where_clause .= " atp.time_period = '$time_period' OR";
         }
-        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        $sql_where_clause = rtrim($sql_where_clause, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
     // Add available days filter
     if (!empty($available_days_filter)) {
-        $sql_filter_query .= " AND (";
+        $sql_where_clause .= " AND (";
         foreach ($available_days_filter as $weekday) {
-            $sql_filter_query .= " DAYNAME(a.activity_date) = '$weekday' OR";
+            $sql_where_clause .= " DAYNAME(a.activity_date) = '$weekday' OR";
         }
-        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        $sql_where_clause = rtrim($sql_where_clause, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
     
@@ -124,31 +134,51 @@
     if (!empty($order_filter)){
         switch ($order_filter){
             case 'activity_date_asc':
-                $sql_filter_query .= " ORDER BY a.activity_date ASC";
+                $sql_where_clause .= " ORDER BY a.activity_date ASC";
                 break;
             case 'activity_date_desc':
-                $sql_filter_query .= " ORDER BY a.activity_date DESC";
+                $sql_where_clause .= " ORDER BY a.activity_date DESC";
                 break;
             case 'activity_duration_desc':
-                $sql_filter_query .= " ORDER BY a.activity_duration DESC";
+                $sql_where_clause .= " ORDER BY a.activity_duration DESC";
                 break;
             case 'activity_duration_asc':
-                $sql_filter_query .= " ORDER BY a.activity_duration ASC";
+                $sql_where_clause .= " ORDER BY a.activity_duration ASC";
                 break;
             case 'registration_date_desc':
-                $sql_filter_query .= " ORDER BY a.registration_date DESC";
+                $sql_where_clause .= " ORDER BY a.registration_date DESC";
                 break;
             case 'registration_date_asc':
-                $sql_filter_query .= " ORDER BY a.registration_date ASC";
+                $sql_where_clause .= " ORDER BY a.registration_date ASC";
                 break;
             case 'activity_name_asc':
-                $sql_filter_query .= " ORDER BY a.activity_name ASC";
+                $sql_where_clause .= " ORDER BY a.activity_name ASC";
                 break;
         }
     }
 
+    // Append the WHERE clause to the main query
+    $sql_filter_query .= $sql_where_clause;
+
+    // After applying ORDER BY
+    $sql_filter_query .= " LIMIT $items_per_page OFFSET $offset";
+    
     // Final query
     $all_activities_data_rows = fetch_data_rows($sql_filter_query);
+
+    // Build count query using the same WHERE and JOINs
+    $count_query = "SELECT COUNT(DISTINCT a.id) as total 
+                        FROM Activities a 
+                        JOIN Activity_Time_Periods atp ON a.id = atp.activity_id 
+                        JOIN Activity_Domains ad ON a.id = ad.activity_id";
+
+    // Append all WHERE conditions used in the data query
+    $count_query .= $sql_where_clause; // Assuming $where_clause holds all conditions
+
+    // Execute count query
+    $total_result = fetch_data_rows($count_query);
+    $total_activities_count = $total_result[0]['total'] ?? 0;
+    $total_pages = ceil($total_activities_count / $items_per_page);
 ?>
 
 
@@ -197,7 +227,7 @@
                             </div>
 
                             <!-- Filter Form -->
-                            <form action="" method="post">                                
+                            <form action="?page=1" method="post">                                
 
                                 <!-- Sort by Options -->
                                 <div style="margin-bottom: 15px;">
@@ -302,15 +332,21 @@
                         </div>
 
                         <!-- Counting Number of Elements Post Filter -->
-                        <?php 
-                            if (empty($all_activities_data_rows)) {
+                        <?php
+                            if ($total_activities_count == 0) {
                                 echo __('No activities found.');
                             } else {
-                                $count = count($all_activities_data_rows);
-                                if ($count === 1) {
-                                    echo sprintf(__('1 activity found.'), $count);
+                                if ($total_activities_count == 1) {
+                                    echo sprintf(__('1 activity found.'), $total_activities_count);
                                 } else {
-                                    echo sprintf(__('%d activities found.'), $count);
+                                    $start = $offset + 1;
+                                    $end   = min($offset + $items_per_page, $total_activities_count);
+                                    echo sprintf(
+                                    __('%1$d-%2$d of %3$d activities.'),
+                                    $start,
+                                    $end,
+                                    $total_activities_count
+                                    );
                                 }
                             }
                         ?>
@@ -325,6 +361,62 @@
                                     include(__DIR__ . "/../Widget_Pages/activity_widget.php");
                                 }
                             }
+                        ?>
+
+                        <!-- Pagination -->
+                        <?php
+                        if ($total_pages > 1):
+                            $current_params = $_GET;
+                            unset($current_params['page']);
+                            $query_string = http_build_query($current_params);
+
+                            // How many links to show on either side of the current page
+                            $window  = 2;
+                            $start   = max(1, $page - $window);
+                            $end     = min($total_pages, $page + $window);
+                        ?>
+                            <div class="pagination">
+                                <!-- Previous button -->
+                                <?php if ($page > 1): ?>
+                                    <a href="?<?= $query_string ?>&page=<?= $page - 1 ?>" class="prev">‹ <?= __('Prev') ?></a>
+                                <?php else: ?>
+                                    <span class="disabled prev">‹ <?= __('Prev') ?></span>
+                                <?php endif; ?>
+
+                                <!-- Left ellipsis -->
+                                <?php if ($start > 1): ?>
+                                    <a href="?<?= $query_string ?>&page=1">1</a>
+                                    <?php if ($start > 2): ?>
+                                        <span class="ellipsis">…</span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
+                                <!-- Page window -->
+                                <?php for ($i = $start; $i <= $end; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <span class="active"><?= $i ?></span>
+                                    <?php else: ?>
+                                        <a href="?<?= $query_string ?>&page=<?= $i ?>"><?= $i ?></a>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+
+                                <!-- Right ellipsis -->
+                                <?php if ($end < $total_pages): ?>
+                                    <?php if ($end < $total_pages - 1): ?>
+                                        <span class="ellipsis">…</span>
+                                    <?php endif; ?>
+                                    <a href="?<?= $query_string ?>&page=<?= $total_pages ?>"><?= $total_pages ?></a>
+                                <?php endif; ?>
+
+                                <!-- Next button -->
+                                <?php if ($page < $total_pages): ?>
+                                    <a href="?<?= $query_string ?>&page=<?= $page + 1 ?>" class="next"><?= __('Next') ?> ›</a>
+                                <?php else: ?>
+                                    <span class="disabled next"><?= __('Next') ?> ›</span>
+                                <?php endif; ?>
+                            </div>
+                        <?php
+                        endif;
                         ?>
 
                     </div>

@@ -16,6 +16,11 @@
     // Updating all backend processes
     update_backend_data();
 
+    // Listing variables
+    $items_per_page = 30; // Adjust as needed
+    $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $offset = ($page - 1) * $items_per_page;
+
     // Check if the filter form is submitted, "apply_filter" is the name of the submit button
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply_filter'])) {
         $_SESSION['all_volunteer_order_filter'] = $_POST['order_filter'] ?? '';
@@ -24,8 +29,12 @@
         $_SESSION['all_volunteer_interests_filter'] = $_POST['interests_filter'] ?? [];
         $_SESSION['all_volunteer_time_periods_filter'] = $_POST['time_periods_filter'] ?? [];
         $_SESSION['all_volunteer_available_days_filter'] = $_POST['available_days_filter'] ?? [];
+
+        // Reset to the first page after applying filters
+        $page = 1;
     }
 
+    // Check if the reset_filters parameter is set in the URL, if so reset the filters to default   
     if (isset($_GET['reset_filters'])) {
         unset($_SESSION['all_volunteer_order_filter']);
         unset($_SESSION['all_volunteer_trash_filter']);
@@ -48,29 +57,21 @@
     $available_days_filter = $_SESSION['all_volunteer_available_days_filter'] ?? [];
 
     // Default sql query
-    $sql_filter_query = "SELECT DISTINCT v.* FROM Volunteers v";
+    $sql_filter_query = "SELECT DISTINCT v.* FROM Volunteers v
+                            JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
+                            JOIN Volunteer_Availability va ON v.id = va.volunteer_id";
 
-    // Add JOIN only if interests filter is not empty
-    if (!empty($interests_filter)) {
-        $sql_filter_query .= " JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id";
-    }
-
-    // Add JOIN only if availability filter is not empty
-    if (!empty($available_days_filter) || !empty($time_periods_filter)) {
-        $sql_filter_query .= " JOIN Volunteer_Availability va ON v.id = va.volunteer_id";
-    }
-
-    // Initialize Where clause
-    $sql_filter_query .= " WHERE 1=1 AND v.user_id = '$user_id'";
+    // Initialize the Where clause
+    $sql_where_clause = " WHERE 1=1 AND v.user_id = '$user_id'";
 
     // Volunteer status filter
     if (!empty($trash_filter)){
         switch ($trash_filter){
             case 'only_active_volunteers':
-                $sql_filter_query .= " AND v.trashed = '0'";
+                $sql_where_clause .= " AND v.trashed = '0'";
                 break;
             case 'only_in_trash':
-                $sql_filter_query .= " AND v.trashed = '1'";
+                $sql_where_clause .= " AND v.trashed = '1'";
                 break;
             case 'all_volunteers':
                 // No additional condition needed (show all volunteers)
@@ -86,79 +87,98 @@
                 break;
             case 'time_completed':
                 // Volunteers who have a time contract and have completed the hours.
-                $sql_filter_query .= " AND v.hours_required > 0 AND v.hours_required <= hours_completed";
+                $sql_where_clause .= " AND v.hours_required > 0 AND v.hours_required <= hours_completed";
                 break;
             case 'time_not_completed':
                 // Volunteers who have a time contract and have not yet completed the hours.
-                $sql_filter_query .= " AND v.hours_required > 0 AND v.hours_required > hours_completed";
+                $sql_where_clause .= " AND v.hours_required > 0 AND v.hours_required > hours_completed";
                 break;
             case 'no_contract':
                 // Volunteers who do not currently have a contract
-                $sql_filter_query .= " AND v.hours_required = 0";
+                $sql_where_clause .= " AND v.hours_required = 0";
                 break;
         }
     }
 
     // Add interests filter
     if (!empty($interests_filter)) {
-        $sql_filter_query .= " AND (";
+        $sql_where_clause .= " AND (";
         foreach ($interests_filter as $interest) {
-            $sql_filter_query .= " vi.interest = '$interest' OR";
+            $sql_where_clause .= " vi.interest = '$interest' OR";
         }
-        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        $sql_where_clause = rtrim($sql_where_clause, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
     // Add time periods filter
     if (!empty($time_periods_filter)) {
-        $sql_filter_query .= " AND (";
+        $sql_where_clause .= " AND (";
         foreach ($time_periods_filter as $time_period) {
-            $sql_filter_query .= " va.time_period = '$time_period' OR";
+            $sql_where_clause .= " va.time_period = '$time_period' OR";
         }
-        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        $sql_where_clause = rtrim($sql_where_clause, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
     // Add available days filter
     if (!empty($available_days_filter)) {
-        $sql_filter_query .= " AND (";
+        $sql_where_clause .= " AND (";
         foreach ($available_days_filter as $weekday) {
-            $sql_filter_query .= " va.weekday = '$weekday' OR";
+            $sql_where_clause .= " va.weekday = '$weekday' OR";
         }
-        $sql_filter_query = rtrim($sql_filter_query, "OR") . ")"; // Remove the last "OR" and close the parentheses
+        $sql_where_clause = rtrim($sql_where_clause, "OR") . ")"; // Remove the last "OR" and close the parentheses
     }
 
     // Order of appearance filter
     if (!empty($order_filter)){
         switch ($order_filter){
             case 'registration_date_desc':
-                $sql_filter_query .= " ORDER BY v.registration_date DESC";
+                $sql_where_clause .= " ORDER BY v.registration_date DESC";
                 break;
             case 'registration_date_asc':
-                $sql_filter_query .= " ORDER BY v.registration_date ASC";
+                $sql_where_clause .= " ORDER BY v.registration_date ASC";
                 break;
             case 'points_asc':
-                $sql_filter_query .= " ORDER BY v.points ASC";
+                $sql_where_clause .= " ORDER BY v.points ASC";
                 break;
             case 'points_desc':
-                $sql_filter_query .= " ORDER BY v.points DESC";
+                $sql_where_clause .= " ORDER BY v.points DESC";
                 break;
             case 'hours_completed_asc':
-                $sql_filter_query .= " ORDER BY v.hours_completed ASC";
+                $sql_where_clause .= " ORDER BY v.hours_completed ASC";
                 break;
             case 'hours_completed_desc':
-                $sql_filter_query .= " ORDER BY v.hours_completed DESC";
+                $sql_where_clause .= " ORDER BY v.hours_completed DESC";
                 break;
             case 'first_name_asc':
-                $sql_filter_query .= " ORDER BY v.first_name ASC";
+                $sql_where_clause .= " ORDER BY v.first_name ASC";
                 break;
             case 'last_name_asc':
-                $sql_filter_query .= " ORDER BY v.last_name ASC";
+                $sql_where_clause .= " ORDER BY v.last_name ASC";
                 break;
         }
     }
 
+    // Append the WHERE clause to the main query
+    $sql_filter_query .= $sql_where_clause;
+
+    // After applying ORDER BY
+    $sql_filter_query .= " LIMIT $items_per_page OFFSET $offset";
+    
     // Final query
     $all_volunteer_data_rows = fetch_data_rows($sql_filter_query);
 
+    // Build count query using the same WHERE and JOINs
+    $count_query = "SELECT COUNT(DISTINCT v.id) as total
+                        FROM Volunteers v
+                        JOIN Volunteer_Interests vi ON v.id = vi.volunteer_id
+                        JOIN Volunteer_Availability va ON v.id = va.volunteer_id";
+
+    // Append all WHERE conditions used in the data query
+    $count_query .= $sql_where_clause; // Assuming $where_clause holds all conditions
+
+    // Execute count query
+    $total_result = fetch_data_rows($count_query);
+    $total_activities_count = $total_result[0]['total'] ?? 0;
+    $total_pages = ceil($total_activities_count / $items_per_page);
 ?>
 
 
@@ -207,7 +227,7 @@
                         </div>
 
                         <!-- Filter Form -->
-                        <form action="" method="post">
+                        <form action="?page=1" method="post">
                             <!-- Sort by Options -->
                             <div style="margin-bottom: 15px;">
                                 <label for="order_filter" style="font-weight: bold;"><?= __('Sort Volunteers By:') ?></label><br>
@@ -309,14 +329,24 @@
                         </div>
 
                         <!-- Counting Number of Elements Post Filter -->
-                        <?php 
-                        if (empty($all_volunteer_data_rows)) {
-                            echo __('No volunteers found.');
-                        } elseif (count($all_volunteer_data_rows) == 1) {
-                            echo count($all_volunteer_data_rows) . ' ' . __('volunteer found.');
-                        } else {
-                            echo count($all_volunteer_data_rows) . ' ' . __('volunteers found.');
-                        } ?>
+                        <?php
+                            if ($total_activities_count == 0) {
+                                echo __('No volunteers found.');
+                            } else {
+                                if ($total_activities_count == 1) {
+                                    echo sprintf(__('1 volunteer found.'), $total_activities_count);
+                                } else {
+                                    $start = $offset + 1;
+                                    $end   = min($offset + $items_per_page, $total_activities_count);
+                                    echo sprintf(
+                                    __('%1$d-%2$d of %3$d volunteers.'),
+                                    $start,
+                                    $end,
+                                    $total_activities_count
+                                    );
+                                }
+                            }
+                        ?>
 
                         <!-- Display Volunteer Widgets --> 
                         <?php
@@ -329,7 +359,62 @@
                                 }
                             }
                         ?>
-                        
+
+                        <!-- Pagination -->
+                        <?php
+                        if ($total_pages > 1):
+                            $current_params = $_GET;
+                            unset($current_params['page']);
+                            $query_string = http_build_query($current_params);
+
+                            // How many links to show on either side of the current page
+                            $window  = 2;
+                            $start   = max(1, $page - $window);
+                            $end     = min($total_pages, $page + $window);
+                        ?>
+                            <div class="pagination">
+                                <!-- Previous button -->
+                                <?php if ($page > 1): ?>
+                                    <a href="?<?= $query_string ?>&page=<?= $page - 1 ?>" class="prev">‹ <?= __('Prev') ?></a>
+                                <?php else: ?>
+                                    <span class="disabled prev">‹ <?= __('Prev') ?></span>
+                                <?php endif; ?>
+
+                                <!-- Left ellipsis -->
+                                <?php if ($start > 1): ?>
+                                    <a href="?<?= $query_string ?>&page=1">1</a>
+                                    <?php if ($start > 2): ?>
+                                        <span class="ellipsis">…</span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
+                                <!-- Page window -->
+                                <?php for ($i = $start; $i <= $end; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <span class="active"><?= $i ?></span>
+                                    <?php else: ?>
+                                        <a href="?<?= $query_string ?>&page=<?= $i ?>"><?= $i ?></a>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+
+                                <!-- Right ellipsis -->
+                                <?php if ($end < $total_pages): ?>
+                                    <?php if ($end < $total_pages - 1): ?>
+                                        <span class="ellipsis">…</span>
+                                    <?php endif; ?>
+                                    <a href="?<?= $query_string ?>&page=<?= $total_pages ?>"><?= $total_pages ?></a>
+                                <?php endif; ?>
+
+                                <!-- Next button -->
+                                <?php if ($page < $total_pages): ?>
+                                    <a href="?<?= $query_string ?>&page=<?= $page + 1 ?>" class="next"><?= __('Next') ?> ›</a>
+                                <?php else: ?>
+                                    <span class="disabled next"><?= __('Next') ?> ›</span>
+                                <?php endif; ?>
+                            </div>
+                        <?php
+                        endif;
+                        ?>
 
                     </div>
 
